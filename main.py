@@ -243,12 +243,14 @@ def build_user_prompt(req: FeedbackRequest) -> str:
     )
 
     return (
+        f"⚠️ IMPORTANT: Write ALL feedback, grammar notes, vocabulary explanations, structure tips, and encouragement in ENGLISH. "
+        f"The only French permitted is: quoting student phrases inside « … », the followUpQuestion field, and vocabulary upgrade examples.\n\n"
         f"QUESTION (French): {req.question}\n\n"
         f"STUDENT TRANSCRIPT (French): {req.transcript}\n\n"
         f"DELIVERY METRICS: {json.dumps(m, ensure_ascii=False)}"
         f"{pron_section}"
         f"{detail_instruction}\n\n"
-        f"Return the JSON feedback now."
+        f"Return the JSON feedback now. Remember: feedback text in ENGLISH only."
     )
 
 

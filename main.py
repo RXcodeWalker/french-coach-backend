@@ -171,6 +171,7 @@ class FeedbackRequest(BaseModel):
     question: str = Field(..., description="The question the student was answering")
     transcript: str = Field(..., description="Student's spoken answer, transcribed")
     metrics: FeedbackMetrics | None = None
+    model: str | None = None  # "groq" | "gemini" | None (auto)
 
 
 SYSTEM_PROMPT = """You are a strict, expert IGCSE French speaking examiner with 15 years of experience.
@@ -248,38 +249,62 @@ def extract_json(text: str) -> dict[str, Any]:
     return json.loads(text[start:end + 1])
 
 
-async def call_ai_feedback(req: FeedbackRequest) -> dict[str, Any]:
-    """Try Groq (Llama 3.3 70B) first, fall back to Gemini Flash-Lite."""
-    prompt = build_user_prompt(req)
-
+async def _call_groq(prompt: str) -> dict[str, Any]:
     groq = get_groq()
-    if groq:
+    if not groq:
+        raise RuntimeError("Groq not configured")
+    resp = await groq.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        response_format={"type": "json_object"},
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0.4,
+        max_tokens=1024,
+    )
+    result = extract_json(resp.choices[0].message.content)
+    result["modelUsed"] = "groq/llama-3.3-70b-versatile"
+    return result
+
+
+async def _call_gemini(prompt: str) -> dict[str, Any]:
+    gemini = get_gemini()
+    if not gemini:
+        raise RuntimeError("Gemini not configured")
+    response = await asyncio.to_thread(gemini.generate_content, prompt)
+    result = extract_json(response.text)
+    result["modelUsed"] = "gemini/gemini-2.0-flash"
+    return result
+
+
+async def call_ai_feedback(req: FeedbackRequest) -> dict[str, Any]:
+    prompt = build_user_prompt(req)
+    requested = (req.model or "").lower()
+
+    if requested == "gemini":
         try:
-            resp = await groq.chat.completions.create(
-                model="llama-3.3-70b-versatile",
-                response_format={"type": "json_object"},
-                messages=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": prompt},
-                ],
-                temperature=0.4,
-                max_tokens=1024,
-            )
-            result = extract_json(resp.choices[0].message.content)
-            result["modelUsed"] = "groq/llama-3.3-70b-versatile"
-            return result
+            return await _call_gemini(prompt)
+        except Exception as e:
+            log.warning("Gemini failed, falling back to Groq: %s", e)
+            return await _call_groq(prompt)
+
+    if requested == "groq":
+        try:
+            return await _call_groq(prompt)
         except Exception as e:
             log.warning("Groq failed, falling back to Gemini: %s", e)
+            return await _call_gemini(prompt)
 
-    gemini = get_gemini()
-    if gemini:
-        try:
-            response = await asyncio.to_thread(gemini.generate_content, prompt)
-            result = extract_json(response.text)
-            result["modelUsed"] = "gemini/gemini-2.0-flash-lite"
-            return result
-        except Exception as e:
-            log.warning("Gemini also failed: %s", e)
+    # Auto: try Groq first, then Gemini
+    try:
+        return await _call_groq(prompt)
+    except Exception as e:
+        log.warning("Groq failed, falling back to Gemini: %s", e)
+    try:
+        return await _call_gemini(prompt)
+    except Exception as e:
+        log.warning("Gemini also failed: %s", e)
 
     raise HTTPException(
         status_code=503,

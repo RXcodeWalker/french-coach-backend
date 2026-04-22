@@ -171,34 +171,41 @@ class FeedbackRequest(BaseModel):
     question: str = Field(..., description="The question the student was answering")
     transcript: str = Field(..., description="Student's spoken answer, transcribed")
     metrics: FeedbackMetrics | None = None
-    model: str | None = None  # "groq" | "gemini" | None (auto)
+    model: str | None = None      # "groq" | "gemini" | None (auto)
+    detailed: bool = False         # True = expanded feedback with more items
 
 
 SYSTEM_PROMPT = """You are a strict, expert IGCSE French speaking examiner with 15 years of experience.
 You analyse a student's spoken French answer and return ONLY a raw JSON object — no prose, no markdown fences, no code blocks.
 
+LANGUAGE RULE — CRITICAL: ALL feedback text must be written in English. The ONLY French allowed is:
+- Quoting the student's exact words inside « … » when correcting or praising them
+- The followUpQuestion field (which must be in French)
+- The upgrade/example fields in vocabulary (which show the French phrase)
+Do NOT write explanations, grammar notes, or encouragement in French. English only.
+
 JSON schema (return exactly this shape):
 {
-  "fluency": number,         // 0.0–10.0 (one decimal). Be honest and strict: 8+ = genuinely impressive for IGCSE. Most answers score 4–6.
-  "grammar": string[],       // EXACTLY 3–5 items. Each MUST quote a specific phrase from the transcript with « … » and explain the error or confirm correct usage. Never give generic tips — always tie to what the student actually said.
-  "vocabulary": [            // EXACTLY 2–4 items. Each MUST reference a word/phrase the student actually used and offer a richer IGCSE-appropriate upgrade.
+  "fluency": number,         // 0.0–10.0 (one decimal). Strict: 8+ = genuinely impressive. Most answers score 4–6.
+  "grammar": string[],       // 3–5 items (standard) or 5–8 items (detailed). Each MUST quote exact student words with « … » and explain the error or praise correct usage. Written in English.
+  "vocabulary": [            // 2–4 items (standard) or 4–7 items (detailed). Each references a word the student actually used and suggests a richer upgrade. All explanations in English.
     { "basic": string, "upgrade": string, "example": string }
   ],
-  "structure": string[],     // EXACTLY 2–3 items. Comment on answer length, use of connectives, tense variety, opinion phrases — all tied to this specific answer.
-  "pronunciationTips": string[], // 1–3 items OR empty []. Only include if word probability data flags issues. Explain the phonetic rule (nasal vowels, silent letters, liaisons).
-  "encouragement": string,   // 1–2 warm, specific sentences referencing something the student did well. Not generic praise.
-  "followUpQuestion": string, // One natural IGCSE-style follow-up question in French that directly continues THIS conversation.
+  "structure": string[],     // 2–3 items (standard) or 3–5 items (detailed). English commentary on answer length, connectives, tense variety, opinion phrases — tied to this specific answer.
+  "pronunciationTips": string[], // 1–3 items OR []. English explanation of the phonetic issue (nasal vowels, silent letters, liaisons). Only include if pronunciation data flags issues.
+  "encouragement": string,   // 1–2 warm, specific sentences in English referencing something the student actually did well.
+  "followUpQuestion": string, // ONE natural French follow-up question that directly continues THIS conversation.
   "igcseLevel": string       // Exactly one of: "Foundation — Developing" | "Core — Secure" | "Extended — Mid Band" | "Extended — High Band"
 }
 
-CRITICAL rules — your feedback MUST feel human and specific, not generic:
-1. Read the transcript carefully. Every grammar and vocabulary comment must quote exact words or phrases the student used.
-2. If the student used good grammar, say so and quote it — positive reinforcement is as important as correction.
-3. Fluency score: factor in word count, tense variety, use of connectives (parce que, donc, cependant, d'abord), and opinion phrases. A 30-word answer with no connectives is 4.0–5.0 max.
-4. The followUpQuestion must feel like a real conversation — it should directly reference something the student mentioned.
-5. If the transcript is very short (< 15 words), all grammar/vocab/structure comments must still reference the actual words said.
-6. igcseLevel: Foundation if answer is minimal/broken French; Core if adequate but simple; Extended Mid if good range with some errors; Extended High if impressive range, accuracy, and fluency.
-7. Output raw JSON only — absolutely no wrapping text, code fences, or explanation outside the JSON object.
+CRITICAL rules:
+1. ALL explanatory text is in English. Quote student French with « … » but explain it in English.
+2. Every grammar and vocabulary comment must quote the student's actual words from the transcript.
+3. If the student used something correctly, say so and quote it — positive reinforcement matters.
+4. Fluency score: factor in word count, tense variety, connectives (parce que, donc, cependant), opinion phrases. A 30-word answer with no connectives is 4.0–5.0 max.
+5. followUpQuestion must directly reference something the student mentioned — make it feel like a real conversation.
+6. igcseLevel: Foundation = minimal/broken French; Core = adequate but simple; Extended Mid = good range with some errors; Extended High = impressive range, accuracy, fluency.
+7. Output raw JSON only — no wrapping text, code fences, or anything outside the JSON object.
 """
 
 
@@ -227,11 +234,20 @@ def build_user_prompt(req: FeedbackRequest) -> str:
     # Remove wordProbabilities from metrics dict for the prompt (too verbose)
     m.pop("wordProbabilities", None)
 
+    detail_instruction = (
+        "\n\nDETAILED MODE: Provide maximum depth. Use the upper end of all item ranges "
+        "(5–8 grammar items, 4–7 vocabulary items, 3–5 structure items). "
+        "Go beyond surface corrections — explain WHY each error matters for IGCSE, "
+        "what mark band it affects, and give a corrected model sentence for each grammar issue."
+        if req.detailed else ""
+    )
+
     return (
         f"QUESTION (French): {req.question}\n\n"
         f"STUDENT TRANSCRIPT (French): {req.transcript}\n\n"
         f"DELIVERY METRICS: {json.dumps(m, ensure_ascii=False)}"
-        f"{pron_section}\n\n"
+        f"{pron_section}"
+        f"{detail_instruction}\n\n"
         f"Return the JSON feedback now."
     )
 
@@ -249,7 +265,7 @@ def extract_json(text: str) -> dict[str, Any]:
     return json.loads(text[start:end + 1])
 
 
-async def _call_groq(prompt: str) -> dict[str, Any]:
+async def _call_groq(prompt: str, detailed: bool = False) -> dict[str, Any]:
     groq = get_groq()
     if not groq:
         raise RuntimeError("Groq not configured")
@@ -261,7 +277,7 @@ async def _call_groq(prompt: str) -> dict[str, Any]:
             {"role": "user", "content": prompt},
         ],
         temperature=0.4,
-        max_tokens=1024,
+        max_tokens=2048 if detailed else 1024,
     )
     result = extract_json(resp.choices[0].message.content)
     result["modelUsed"] = "groq/llama-3.3-70b-versatile"
@@ -281,24 +297,25 @@ async def _call_gemini(prompt: str) -> dict[str, Any]:
 async def call_ai_feedback(req: FeedbackRequest) -> dict[str, Any]:
     prompt = build_user_prompt(req)
     requested = (req.model or "").lower()
+    detailed = req.detailed
 
     if requested == "gemini":
         try:
             return await _call_gemini(prompt)
         except Exception as e:
             log.warning("Gemini failed, falling back to Groq: %s", e)
-            return await _call_groq(prompt)
+            return await _call_groq(prompt, detailed)
 
     if requested == "groq":
         try:
-            return await _call_groq(prompt)
+            return await _call_groq(prompt, detailed)
         except Exception as e:
             log.warning("Groq failed, falling back to Gemini: %s", e)
             return await _call_gemini(prompt)
 
     # Auto: try Groq first, then Gemini
     try:
-        return await _call_groq(prompt)
+        return await _call_groq(prompt, detailed)
     except Exception as e:
         log.warning("Groq failed, falling back to Gemini: %s", e)
     try:

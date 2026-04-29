@@ -893,40 +893,79 @@ async def repair_pronunciation(
 
         heard = (whisper_data.get("text") or "").strip()
 
-        # Build a targeted repair prompt
+        # Shared prompt text for both Groq (text) and Gemini (multimodal)
         repair_prompt = (
             f"A French learner is trying to improve their pronunciation of the word/phrase: «{word}»\n"
             f"Context sentence: {context or '(none provided)'}\n"
             f"Original pronunciation issue: {original_problem or '(not specified)'}\n"
-            f"What Whisper heard the learner say: {heard or '(unclear)'}\n\n"
-            f"Listen to the audio recording. Evaluate ONLY the pronunciation of «{word}».\n\n"
+            f"What speech recognition heard the learner say: {heard or '(unclear)'}\n\n"
+            f"Evaluate ONLY the pronunciation of «{word}» based on the information above.\n\n"
             f"Return ONLY this JSON (nothing else):\n"
             f'{{\n'
-            f'  "score": <0–10, where 10 = perfect native pronunciation>,\n'
+            f'  "score": <0-10, where 10 = perfect native pronunciation>,\n'
             f'  "improved": <true if noticeably better than described issue>,\n'
-            f'  "heard": "<what you heard the learner say>",\n'
+            f'  "heard": "{heard or word}",\n'
             f'  "feedback": "<1-2 sentences: what was good, what still needs work>",\n'
             f'  "phonetics_guide": "<simple step-by-step guide to produce this sound correctly>",\n'
             f'  "tip": "<one specific actionable tip for this exact word>"\n'
             f'}}'
         )
 
-        # Use multimodal Gemini for repair
-        import google.generativeai as genai
-        from google.generativeai import types as gtypes
+        result = None
 
-        if not GEMINI_API_KEY:
-            raise HTTPException(status_code=503, detail="Gemini not configured; repair requires Gemini API")
+        # ── Primary: Groq (text-only, uses Whisper transcript) ───────────────
+        groq = get_groq()
+        if groq:
+            try:
+                resp = await groq.chat.completions.create(
+                    model="llama-3.3-70b-versatile",
+                    response_format={"type": "json_object"},
+                    messages=[
+                        {"role": "system", "content": "You are a French pronunciation expert. Return only valid JSON."},
+                        {"role": "user", "content": repair_prompt},
+                    ],
+                    temperature=0.3,
+                    max_tokens=400,
+                )
+                result = extract_json(resp.choices[0].message.content)
+                result["source"] = "groq"
+            except Exception as e:
+                log.warning("Groq repair failed, trying Gemini: %s", e)
 
-        gemini = get_gemini_multimodal()
-        with open(tmp_path, "rb") as f:
-            audio_bytes = f.read()
+        # ── Fallback: Gemini multimodal (sends actual audio) ─────────────────
+        if result is None and GEMINI_API_KEY:
+            try:
+                import google.generativeai as genai
+                from google.generativeai import types as gtypes
+                gemini = get_gemini_multimodal()
+                with open(tmp_path, "rb") as f:
+                    audio_bytes = f.read()
+                audio_part = gtypes.Part(
+                    inline_data=gtypes.Blob(mime_type=audio_mime, data=audio_bytes)
+                )
+                gemini_prompt = repair_prompt.replace(
+                    "Evaluate ONLY the pronunciation",
+                    "Listen to the audio recording and evaluate ONLY the pronunciation"
+                )
+                response = await asyncio.to_thread(gemini.generate_content, [audio_part, gemini_prompt])
+                result = extract_json(response.text)
+                result["source"] = "gemini"
+            except Exception as e:
+                log.warning("Gemini repair also failed: %s", e)
 
-        audio_part = gtypes.Part(
-            inline_data=gtypes.Blob(mime_type=audio_mime, data=audio_bytes)
-        )
-        response = await asyncio.to_thread(gemini.generate_content, [audio_part, repair_prompt])
-        result = extract_json(response.text)
+        # ── Both failed: return graceful degraded response ────────────────────
+        if result is None:
+            return {
+                "word": word,
+                "heard": heard or word,
+                "score": None,
+                "improved": None,
+                "feedback": "Pronunciation analysis is temporarily unavailable. Keep practising — record yourself again and compare with the model IPA above.",
+                "phonetics_guide": "Try listening to the word on Forvo or Google Translate, then record yourself matching the rhythm and sounds.",
+                "tip": f"Break «{word}» into syllables and practise each one slowly before combining them.",
+                "source": "unavailable",
+            }
+
         result["word"] = word
         result["heard"] = result.get("heard") or heard
         return result

@@ -1,4 +1,3 @@
-from fastapi.middleware.cors import CORSMiddleware
 """
 French AI Speaking Coach — backend service.
 
@@ -23,6 +22,7 @@ Run locally:
 """
 
 from __future__ import annotations
+from fastapi.middleware.cors import CORSMiddleware
 
 import asyncio
 import json

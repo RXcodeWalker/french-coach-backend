@@ -1,3 +1,4 @@
+from fastapi.middleware.cors import CORSMiddleware
 """
 French AI Speaking Coach — backend service.
 
@@ -138,7 +139,11 @@ def get_whisper():
 app = FastAPI(title="French AI Speaking Coach")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=CORS_ORIGINS or ["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "https://frenchcoach.vercel.app/",
+        "https://french.beyondthebasics.me/",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -322,7 +327,8 @@ def fetch_igcse_paper_details(paper_id: str) -> Dict[str, Any]:
     return paper
 
 # IGCSE_PAPERS = [ ... ]  <-- We will remove the static list and update the endpoints below
-
+# Temporary static fallback (used by legacy endpoints while DB migration completes)
+IGCSE_PAPERS = [
     {
         "id": "rp-24-c2",
         "year": 2024,
@@ -2284,6 +2290,10 @@ class RoleplayTurnRequest(BaseModel):
     student_transcript: str
     is_final_turn: bool = False
     custom_scenario: dict | None = None
+
+
+class ScenarioGenerateRequest(BaseModel):
+    description: str
 
 @app.post("/api/generate-scenario")
 async def api_generate_scenario(req: ScenarioGenerateRequest) -> dict:

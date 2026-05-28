@@ -1,0 +1,203 @@
+[
+  {
+    "id": "v_24_mj_c1_rp_1",
+    "text": "Bonjour ! C’est super que tu aies un job ! Où est-ce que tu travailles exactement ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:RP][SCN:Pendant les vacances, vous trouvez un job à l’office de tourisme de votre ville. Vous parlez de votre job avec un(e) ami(e) français(e).] Tell your friend where the office is.",
+    "difficulty": 2,
+    "topic_key": "role_play",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_rp_2",
+    "text": "Et qu’est-ce que tu fais comme travail là-bas ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:RP][SCN:Pendant les vacances, vous trouvez un job à l’office de tourisme de votre ville. Vous parlez de votre job avec un(e) ami(e) français(e).] Describe 1-2 tasks you do.",
+    "difficulty": 2,
+    "topic_key": "role_play",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_rp_3",
+    "text": "C’est intéressant ! À quelle heure est-ce que tu commences le matin ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:RP][SCN:Pendant les vacances, vous trouvez un job à l’office de tourisme de votre ville. Vous parlez de votre job avec un(e) ami(e) français(e).] Give a specific time.",
+    "difficulty": 2,
+    "topic_key": "role_play",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_rp_4",
+    "text": "Qu’est-ce que tu as fait au travail hier ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:RP][SCN:Pendant les vacances, vous trouvez un job à l’office de tourisme de votre ville. Vous parlez de votre job avec un(e) ami(e) français(e).] Use passé composé to describe an event.",
+    "difficulty": 2,
+    "topic_key": "role_play",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_rp_5",
+    "text": "Est-ce que tu voudrais travailler dans le tourisme à l’avenir ? Pourquoi (pas) ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:RP][SCN:Pendant les vacances, vous trouvez un job à l’office de tourisme de votre ville. Vous parlez de votre job avec un(e) ami(e) français(e).] Give a reason (future/conditional).",
+    "difficulty": 2,
+    "topic_key": "role_play",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_t1_1",
+    "text": "À quelle heure est-ce que tu te lèves ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:T1][TOP:Area A: Daily Routine]",
+    "difficulty": 2,
+    "topic_key": "Area A: Daily Routine",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_t1_2",
+    "text": "Qu'est-ce que tu fais pour aider à la maison ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:T1][TOP:Area A: Daily Routine]",
+    "difficulty": 2,
+    "topic_key": "Area A: Daily Routine",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_t1_3",
+    "text": "Décris ta routine le soir.",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:T1][TOP:Area A: Daily Routine]",
+    "difficulty": 2,
+    "topic_key": "Area A: Daily Routine",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_t1_4",
+    "text": "Qu'as-tu fait hier ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:T1][TOP:Area A: Daily Routine]",
+    "difficulty": 2,
+    "topic_key": "Area A: Daily Routine",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_t1_5",
+    "text": "Que changerais-tu à ta routine ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:T1][TOP:Area A: Daily Routine]",
+    "difficulty": 2,
+    "topic_key": "Area A: Daily Routine",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_t2_1",
+    "text": "Où se trouve ton école ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:T2][TOP:Area D: Education]",
+    "difficulty": 3,
+    "topic_key": "Area D: Education",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_t2_2",
+    "text": "Quelles matières préfères-tu ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:T2][TOP:Area D: Education]",
+    "difficulty": 3,
+    "topic_key": "Area D: Education",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_t2_3",
+    "text": "Pourquoi ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:T2][TOP:Area D: Education]",
+    "difficulty": 3,
+    "topic_key": "Area D: Education",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_t2_4",
+    "text": "Qu'as-tu fait hier à l'école ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:T2][TOP:Area D: Education]",
+    "difficulty": 3,
+    "topic_key": "Area D: Education",
+    "year": 2024
+  },
+  {
+    "id": "v_24_mj_c1_t2_5",
+    "text": "Projets après les examens ?",
+    "hint": "[S:v_24_mj_c1][SES:May/June][VAR:1][T:T2][TOP:Area D: Education]",
+    "difficulty": 3,
+    "topic_key": "Area D: Education",
+    "year": 2024
+  },
+  {
+    "id": "q_rp_24_c1_1",
+    "text": "Bonjour. Je cherche des informations sur la ville. Vous pouvez m'aider ?",
+    "instruction": "Saluez le touriste et proposez votre aide.",
+    "symbol": "•",
+    "type": "statement"
+  },
+  {
+    "id": "q_rp_24_c1_2",
+    "text": "À quelle heure est-ce que vous fermez ce soir ?",
+    "instruction": "Donnez les horaires d'ouverture de l'office.",
+    "symbol": "•",
+    "type": "statement"
+  },
+  {
+    "id": "q_rp_24_c1_3",
+    "text": "[Le touriste répond à votre question sur la durée de son séjour]",
+    "instruction": "Demandez au touriste combien de temps il/elle reste dans la ville.",
+    "symbol": "?",
+    "type": "question"
+  },
+  {
+    "id": "q_rp_24_c1_4",
+    "text": "Est-ce qu'il y a un marché local cette semaine ? Je voudrais acheter des produits régionaux.",
+    "instruction": "Répondez à la question de l'examinateur.",
+    "symbol": "!",
+    "type": "unpredictable"
+  },
+  {
+    "id": "q_rp_24_c1_5",
+    "text": "Merci. Est-ce que vous avez un plan de la ville ?",
+    "instruction": "Donnez un plan de la ville au touriste et suggérez une visite intéressante.",
+    "symbol": "•",
+    "type": "statement"
+  },
+  {
+    "id": "q_topic_24_1_1",
+    "text": "Parle-moi un peu de ta famille — vous êtes combien chez toi ?",
+    "topic": "La Famille",
+    "theme": "Vie personnelle et relations familiales"
+  },
+  {
+    "id": "q_topic_24_1_2",
+    "text": "Comment est-ce que tu t'entends avec tes parents ?",
+    "topic": "La Famille",
+    "theme": "Vie personnelle et relations familiales"
+  },
+  {
+    "id": "q_topic_24_1_3",
+    "text": "Qu'est-ce que vous avez fait ensemble le week-end dernier ?",
+    "topic": "La Famille",
+    "theme": "Vie personnelle et relations familiales"
+  },
+  {
+    "id": "q_topic_24_1_4",
+    "text": "Qu'est-ce que vous avez prévu de faire pour les prochaines vacances ?",
+    "topic": "La Famille",
+    "theme": "Vie personnelle et relations familiales"
+  },
+  {
+    "id": "q_topic_24_1_5",
+    "text": "À ton avis, est-ce que c'est important d'avoir une grande famille ?",
+    "topic": "La Famille",
+    "theme": "Vie personnelle et relations familiales"
+  },
+  {
+    "id": "t_a_home_01",
+    "text": "Où habites-tu exactement ?",
+    "hint": "[T:T1][TOP:Home Life] Describe your location (city/village/region).",
+    "difficulty": 1,
+    "topic_key": "Home Life",
+    "year": 2024
+  },
+  {
+    "id": "t_a_home_02",
+    "text": "Qu’est-ce que tu fais pour aider à la maison ?",
+    "hint": "[T:T1][TOP:Home Life] Mention chores like washing up or tidying your room.",
+    "difficulty": 2,
+    "topic_key": "Home Life",
+    "year": 2024
+  }
+]

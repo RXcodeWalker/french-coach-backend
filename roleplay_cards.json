@@ -1,0 +1,194 @@
+[
+  {
+    "id": "rp_tourism_01",
+    "title": "À l'office de tourisme",
+    "setting": "You are a tourist visiting a town in France. You go to the tourist office to get information. The examiner plays the tourist office worker.",
+    "tasks": [
+      {
+        "task_id": 1,
+        "prompt_fr": "Bonjour. Je peux vous aider?",
+        "prompt_en": "Greet the worker and ask for a list of things to do in the town."
+      },
+      {
+        "task_id": 2,
+        "prompt_fr": "Quand voulez-vous visiter la région et pour combien de temps?",
+        "prompt_en": "Say when you want to visit and for how long."
+      },
+      {
+        "task_id": 3,
+        "prompt_fr": "Vous préférez les activités sportives ou culturelles?",
+        "prompt_en": "Say what type of activities you prefer and give a reason."
+      },
+      {
+        "task_id": 4,
+        "prompt_fr": "Avez-vous des questions sur les transports?",
+        "prompt_en": "Ask about transport options available in the area."
+      },
+      {
+        "task_id": 5,
+        "prompt_fr": "Y a-t-il autre chose que je peux faire pour vous?",
+        "prompt_en": "Ask for a map of the town and say thank you."
+      }
+    ]
+  },
+  {
+    "id": "rp_hotel_01",
+    "title": "À l'hôtel",
+    "setting": "You are checking into a hotel in France for a holiday. The examiner plays the hotel receptionist.",
+    "tasks": [
+      {
+        "task_id": 1,
+        "prompt_fr": "Bonsoir. Vous avez une réservation?",
+        "prompt_en": "Say you have a reservation and give your name."
+      },
+      {
+        "task_id": 2,
+        "prompt_fr": "Pour combien de nuits, et vous souhaitez quel type de chambre?",
+        "prompt_en": "Say how many nights you are staying and what type of room you want."
+      },
+      {
+        "task_id": 3,
+        "prompt_fr": "Nous avons une chambre avec vue sur la mer et une avec vue sur le jardin. Vous préférez laquelle?",
+        "prompt_en": "Say which you prefer and give a reason."
+      },
+      {
+        "task_id": 4,
+        "prompt_fr": "Le petit-déjeuner est servi de sept heures à dix heures. Avez-vous besoin d'autre chose?",
+        "prompt_en": "Ask whether WiFi is available and if there is parking."
+      },
+      {
+        "task_id": 5,
+        "prompt_fr": "Voici votre clé, chambre numéro vingt-trois. Bon séjour!",
+        "prompt_en": "Ask where the lift is and say thank you."
+      }
+    ]
+  },
+  {
+    "id": "rp_restaurant_01",
+    "title": "Au restaurant",
+    "setting": "You are eating out at a restaurant in France with a friend. The examiner plays the waiter/waitress.",
+    "tasks": [
+      {
+        "task_id": 1,
+        "prompt_fr": "Bonsoir. Vous avez réservé?",
+        "prompt_en": "Say you have a reservation for two people and give your name."
+      },
+      {
+        "task_id": 2,
+        "prompt_fr": "Voici la carte. Vous désirez une entrée pour commencer?",
+        "prompt_en": "Order a starter and say what you would like to drink."
+      },
+      {
+        "task_id": 3,
+        "prompt_fr": "Et comme plat principal, qu'est-ce que vous prenez?",
+        "prompt_en": "Order a main course and ask what the dish of the day is."
+      },
+      {
+        "task_id": 4,
+        "prompt_fr": "Avez-vous des allergies ou des intolérances alimentaires?",
+        "prompt_en": "Mention a food allergy or say you have none."
+      },
+      {
+        "task_id": 5,
+        "prompt_fr": "Vous désirez un dessert ou bien un café?",
+        "prompt_en": "Say what you would like for dessert and ask for the bill."
+      }
+    ]
+  },
+  {
+    "id": "rp_train_01",
+    "title": "À la gare",
+    "setting": "You are at a railway station in France and need to buy train tickets. The examiner plays the ticket agent.",
+    "tasks": [
+      {
+        "task_id": 1,
+        "prompt_fr": "Bonjour. Je peux vous aider?",
+        "prompt_en": "Say where you want to go and when you want to travel."
+      },
+      {
+        "task_id": 2,
+        "prompt_fr": "Vous voulez un aller simple ou un aller-retour?",
+        "prompt_en": "Say you want a return ticket and ask which class is available."
+      },
+      {
+        "task_id": 3,
+        "prompt_fr": "Il y a un train toutes les deux heures. Vous voulez partir à quelle heure?",
+        "prompt_en": "Choose a departure time and ask how long the journey takes."
+      },
+      {
+        "task_id": 4,
+        "prompt_fr": "Vous souhaitez réserver une place assise?",
+        "prompt_en": "Ask for a window seat in a non-smoking carriage."
+      },
+      {
+        "task_id": 5,
+        "prompt_fr": "Ça fait vingt-deux euros cinquante. Comment souhaitez-vous payer?",
+        "prompt_en": "Say how you want to pay and ask whether the train is on time."
+      }
+    ]
+  },
+  {
+    "id": "rp_camping_01",
+    "title": "Au camping",
+    "setting": "You are arriving at a campsite in France without a prior reservation. The examiner plays the campsite manager.",
+    "tasks": [
+      {
+        "task_id": 1,
+        "prompt_fr": "Bonjour. Vous avez une réservation?",
+        "prompt_en": "Say you don't have a reservation but ask if there are places available."
+      },
+      {
+        "task_id": 2,
+        "prompt_fr": "Oui, il nous reste des emplacements. Vous avez une tente ou un camping-car?",
+        "prompt_en": "Say what you have and how many people are in your group."
+      },
+      {
+        "task_id": 3,
+        "prompt_fr": "D'accord. Combien de nuits voulez-vous rester?",
+        "prompt_en": "Say how many nights and ask what facilities are available."
+      },
+      {
+        "task_id": 4,
+        "prompt_fr": "Nous avons une piscine, une épicerie et des terrains de sport.",
+        "prompt_en": "Ask what time the camp shop opens and closes."
+      },
+      {
+        "task_id": 5,
+        "prompt_fr": "L'emplacement coûte seize euros par nuit. C'est tout?",
+        "prompt_en": "Ask where the shower block is and say you will pay by card."
+      }
+    ]
+  },
+  {
+    "id": "rp_lost_property_01",
+    "title": "Objets trouvés",
+    "setting": "You have lost your bag at a French train station and go to the lost property office. The examiner plays the lost property officer.",
+    "tasks": [
+      {
+        "task_id": 1,
+        "prompt_fr": "Bonjour. Qu'est-ce qui s'est passé?",
+        "prompt_en": "Explain that you have lost your bag and where you think you lost it."
+      },
+      {
+        "task_id": 2,
+        "prompt_fr": "Décrivez le sac, s'il vous plaît.",
+        "prompt_en": "Describe the bag (colour, size, type)."
+      },
+      {
+        "task_id": 3,
+        "prompt_fr": "Il y avait quoi à l'intérieur du sac?",
+        "prompt_en": "Say what was inside the bag."
+      },
+      {
+        "task_id": 4,
+        "prompt_fr": "Quand exactement avez-vous perdu le sac?",
+        "prompt_en": "Say when and where you last had the bag."
+      },
+      {
+        "task_id": 5,
+        "prompt_fr": "Laissez-moi vos coordonnées pour vous contacter si on le retrouve.",
+        "prompt_en": "Give your contact details and ask how long it will take."
+      }
+    ]
+  }
+]

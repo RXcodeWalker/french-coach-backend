@@ -38,6 +38,8 @@ import jwt as pyjwt
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, Form, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 load_dotenv()
@@ -211,6 +213,17 @@ class IGCSEFeedbackRequest(BaseModel):
     model: str | None = None
 
 
+class VocabItem(BaseModel):
+    fr: str
+    en: str
+    type: str
+
+
+class VocabPrepResponse(BaseModel):
+    vocab: list[VocabItem]
+    phrases: list[VocabItem]
+
+
 # ── IGCSE Themes (Cambridge 0520) ─────────────────────────────────────────────
 IGCSE_THEMES = {
     1: "Everyday life",
@@ -221,156 +234,774 @@ IGCSE_THEMES = {
 }
 
 # ── IGCSE Papers (static seed — move to Supabase igcse_papers table later) ────
-IGCSE_PAPERS = [
+#
+# TASK TYPE KEY (Cambridge 0520 format):
+#   "statement"     (•)  Candidate provides information or makes a statement
+#   "question"      (?)  Candidate must ASK the examiner something
+#   "unpredictable" (!)  Examiner asks something not shown on candidate's card;
+#                        candidate must respond without preparation
+#
+# TOPIC GROUP KEY:
+#   "A"  Personal / school life  → used for Topic Conversation 1
+import sqlite3
+from typing import List, Dict, Any
+
+DB_PATH = "backend/data/igcse_speaking.db"
+
+def get_db_connection():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def fetch_igcse_papers_from_db() -> List[Dict[str, Any]]:
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Fetch all papers with their associated role play cards
+    cursor.execute("""
+        SELECT p.id, p.year, p.session, p.variant, r.id as rpc_id, r.scenario
+        FROM Paper p
+        LEFT JOIN RolePlayCard r ON p.id = r.paper_id
+    """)
+    rows = cursor.fetchall()
+    
+    papers = {}
+    for row in rows:
+        pid = row['id']
+        if pid not in papers:
+            papers[pid] = {
+                "id": pid,
+                "year": row['year'],
+                "session": row['session'],
+                "variant": row['variant'],
+                "role_play_cards": []
+            }
+        if row['rpc_id']:
+            papers[pid]["role_play_cards"].append({
+                "id": row['rpc_id'],
+                "scenario": row['scenario']
+            })
+    
+    conn.close()
+    return list(papers.values())
+
+def fetch_igcse_paper_details(paper_id: str) -> Dict[str, Any]:
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # 1. Fetch Paper + Role Play
+    cursor.execute("SELECT * FROM Paper WHERE id = ?", (paper_id,))
+    paper_row = cursor.fetchone()
+    if not paper_row:
+        conn.close()
+        return None
+        
+    paper = dict(paper_row)
+    
+    # 2. Fetch Role Play Cards
+    cursor.execute("SELECT * FROM RolePlayCard WHERE paper_id = ?", (paper_id,))
+    rpc_rows = cursor.fetchall()
+    paper["role_play_cards"] = []
+    for r_row in rpc_rows:
+        rpc = dict(r_row)
+        cursor.execute("SELECT text FROM RolePlayPrompt WHERE roleplay_id = ? ORDER BY id", (rpc['id'],))
+        rpc["prompts"] = [p['text'] for p in cursor.fetchall()]
+        paper["role_play_cards"].append(rpc)
+        
+    # 3. Fetch Topics
+    cursor.execute("SELECT * FROM Topic WHERE paper_id = ?", (paper_id,))
+    topic_rows = cursor.fetchall()
+    paper["topics"] = []
+    for t_row in topic_rows:
+        topic = dict(t_row)
+        cursor.execute("SELECT text FROM Question WHERE topic_id = ? ORDER BY question_number", (topic['id'],))
+        topic["questions"] = [q['text'] for q in cursor.fetchall()]
+        paper["topics"].append(topic)
+        
+    conn.close()
+    return paper
+
+# IGCSE_PAPERS = [ ... ]  <-- We will remove the static list and update the endpoints below
+
     {
-        "id": "rp-cafe-2023",
-        "year": 2023,
-        "paper_code": "0520/11",
-        "topic": "Food & Eating Out",
-        "theme_number": 1,
-        "theme_name": IGCSE_THEMES[1],
+        "id": "rp-24-c2",
+        "year": 2024,
+        "paper_code": "0520/S24/RP2",
+        "topic": "Camping (Portable Perdu)",
         "type": "role_play",
-        "scenario": "You are at a café in Paris with a friend. The examiner plays the waiter/waitress.",
-        "examiner_role": "café waiter/waitress",
+        "scenario": "Vous avez perdu votre portable au camping. Vous allez parler au réceptionniste (l'examinateur) pour signaler la perte.",
+        "candidate_role": "campeur / campeuse",
+        "examiner_role": "réceptionniste du camping",
+        "tasks": [
+            {
+                "task_id": 1, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Expliquez que vous avez perdu votre portable et demandez de l'aide.",
+                "examiner_prompt": "Bonjour. Je peux vous aider ?"
+            },
+            {
+                "task_id": 2, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Décrivez le portable : marque, couleur, taille.",
+                "examiner_prompt": "C'est quel modèle de portable ? Quelle couleur ?"
+            },
+            {
+                "task_id": 3, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Dites où et quand vous l'avez vu pour la dernière fois.",
+                "examiner_prompt": "Où est-ce que vous l'aviez la dernière fois ?"
+            },
+            {
+                "task_id": 4, "type": "unpredictable", "symbol": "!",
+                "candidate_instruction": "Répondez à la question de l'examinateur.",
+                "examiner_prompt": "Il y a votre numéro de chambre dans le téléphone ? Vous pouvez me donner votre nom complet ?"
+            },
+            {
+                "task_id": 5, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez s'il est possible d'être contacté(e) rapidement si on retrouve le téléphone.",
+                "examiner_prompt": "[Le réceptionniste répond à votre question sur la façon d'être contacté]"
+            },
+        ],
         "bullet_points": [
-            "Say what you would like to drink",
-            "Ask what today's special dish is",
-            "Order a meal for yourself",
-            "Ask how much everything costs",
+            "Expliquez la perte du portable et demandez de l'aide",
+            "Décrivez le portable (marque, couleur, taille)",
+            "Dites où et quand vous l'avez vu pour la dernière fois",
+            "Répondez à la question inattendue de l'examinateur",
+            "Demandez comment vous serez contacté(e) si on le retrouve",
         ],
         "examiner_prompts": [
-            "Bonjour ! Je peux vous aider ? Qu'est-ce que vous voudriez boire ?",
-            "Très bien. Et voici le menu. Nous avons un plat du jour spécial aujourd'hui.",
-            "D'accord, je note ça. Voulez-vous autre chose avec votre repas ?",
-            "Entendu. Je vous apporte ça tout de suite."
+            "Bonjour. Je peux vous aider ?",
+            "C'est quel modèle de portable ? Quelle couleur ?",
+            "Où est-ce que vous l'aviez la dernière fois ?",
+            "Il y a votre numéro de chambre dans le téléphone ? Vous pouvez me donner votre nom complet ?",
+            "[Le réceptionniste répond à votre question sur la façon d'être contacté]",
         ],
         "difficulty": 3,
         "time_limit_sec": 300,
     },
     {
-        "id": "rp-doctor-2022",
-        "year": 2022,
-        "paper_code": "0520/12",
-        "topic": "Health & Body",
-        "theme_number": 1,
-        "theme_name": IGCSE_THEMES[1],
+        "id": "rp-24-c3",
+        "year": 2024,
+        "paper_code": "0520/S24/RP3",
+        "topic": "Location de Bateau",
         "type": "role_play",
-        "scenario": "You are feeling unwell and visit a French doctor. The examiner plays the doctor.",
-        "examiner_role": "French doctor",
+        "scenario": "Vous êtes en Martinique et vous voulez louer un bateau pour la journée. L'examinateur joue le rôle du loueur.",
+        "candidate_role": "client(e) souhaitant louer un bateau",
+        "examiner_role": "loueur de bateaux",
+        "tasks": [
+            {
+                "task_id": 1, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Dites que vous voulez louer un bateau et précisez le type.",
+                "examiner_prompt": "Bonjour. Vous désirez ?"
+            },
+            {
+                "task_id": 2, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Précisez pour combien de temps et pour combien de personnes.",
+                "examiner_prompt": "Vous voulez le bateau pour combien d'heures ? Et vous serez combien ?"
+            },
+            {
+                "task_id": 3, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez si des gilets de sauvetage sont fournis.",
+                "examiner_prompt": "[Le loueur répond à votre question sur les gilets de sauvetage]"
+            },
+            {
+                "task_id": 4, "type": "unpredictable", "symbol": "!",
+                "candidate_instruction": "Répondez à la question de l'examinateur.",
+                "examiner_prompt": "Est-ce que vous avez déjà conduit un bateau ? Vous avez un permis bateau ?"
+            },
+            {
+                "task_id": 5, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez le prix total et comment payer.",
+                "examiner_prompt": "[Le loueur vous donne le prix total de la location]"
+            },
+        ],
         "bullet_points": [
-            "Describe your main symptom",
-            "Say how long you have been ill",
-            "Answer the doctor's question about your lifestyle",
-            "Ask what medicine you should take",
+            "Dites que vous voulez louer un bateau et précisez le type",
+            "Précisez pour combien de temps et pour combien de personnes",
+            "Demandez si des gilets de sauvetage sont fournis",
+            "Répondez à la question inattendue sur votre expérience",
+            "Demandez le prix total et comment payer",
         ],
         "examiner_prompts": [
-            "Bonjour. Je vois que vous ne vous sentez pas très bien. Quel est le problème ?",
-            "Ah, je comprends. Et depuis quand est-ce que vous avez ces symptômes ?",
-            "D'accord. Parlez-moi un peu de vos habitudes : est-ce que vous faites du sport ou mangez équilibré ?",
-            "Bien. Je vais vous faire une ordonnance. Avez-vous une question pour moi ?"
+            "Bonjour. Vous désirez ?",
+            "Vous voulez le bateau pour combien d'heures ? Et vous serez combien ?",
+            "[Le loueur répond à votre question sur les gilets de sauvetage]",
+            "Est-ce que vous avez déjà conduit un bateau ? Vous avez un permis bateau ?",
+            "[Le loueur vous donne le prix total de la location]",
         ],
         "difficulty": 3,
         "time_limit_sec": 300,
     },
     {
-        "id": "rp-train-2023",
-        "year": 2023,
-        "paper_code": "0520/13",
-        "topic": "Travel & Transport",
-        "theme_number": 5,
-        "theme_name": IGCSE_THEMES[5],
+        "id": "rp-24-c4",
+        "year": 2024,
+        "paper_code": "0520/S24/RP4",
+        "topic": "Concert de Rock",
         "type": "role_play",
-        "scenario": "You are at a French train station and want to buy tickets. The examiner plays the ticket clerk.",
-        "examiner_role": "ticket office clerk",
+        "scenario": "Vous voulez acheter des billets pour un concert de rock. L'examinateur joue le rôle du vendeur au guichet.",
+        "candidate_role": "client(e) achetant des billets",
+        "examiner_role": "vendeur(euse) au guichet",
+        "tasks": [
+            {
+                "task_id": 1, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Demandez des billets pour le concert et précisez la date.",
+                "examiner_prompt": "Bonjour. C'est pour quel concert et pour quelle date ?"
+            },
+            {
+                "task_id": 2, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Précisez le nombre de billets et le type de place souhaité.",
+                "examiner_prompt": "Il vous en faut combien, et vous préférez quelle catégorie ?"
+            },
+            {
+                "task_id": 3, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez à quelle heure commence le concert et s'il y a une première partie.",
+                "examiner_prompt": "[Le vendeur répond à votre question sur les horaires]"
+            },
+            {
+                "task_id": 4, "type": "unpredictable", "symbol": "!",
+                "candidate_instruction": "Répondez à la question de l'examinateur.",
+                "examiner_prompt": "Vous connaissez bien ce groupe ? Vous les avez déjà vus en concert ?"
+            },
+            {
+                "task_id": 5, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez s'il y a un parking à proximité et comment payer.",
+                "examiner_prompt": "[Le vendeur répond sur le parking et les modes de paiement]"
+            },
+        ],
         "bullet_points": [
-            "Say where you want to go",
-            "Ask about the next available train",
-            "Buy two return tickets",
-            "Ask which platform the train departs from",
+            "Demandez des billets pour le concert et précisez la date",
+            "Précisez le nombre de billets et le type de place",
+            "Demandez l'heure du début et s'il y a une première partie",
+            "Répondez à la question inattendue sur votre connaissance du groupe",
+            "Demandez s'il y a un parking et comment payer",
         ],
         "examiner_prompts": [
-            "Bonjour ! Bienvenue à la gare Montparnasse. Où désirez-vous aller ?",
-            "C'est une belle destination. Nous avons plusieurs trains chaque jour.",
-            "D'accord. Vous voulez un aller simple ou un aller-retour ?",
-            "Voilà vos billets. C'est tout ?"
+            "Bonjour. C'est pour quel concert et pour quelle date ?",
+            "Il vous en faut combien, et vous préférez quelle catégorie ?",
+            "[Le vendeur répond à votre question sur les horaires]",
+            "Vous connaissez bien ce groupe ? Vous les avez déjà vus en concert ?",
+            "[Le vendeur répond sur le parking et les modes de paiement]",
         ],
         "difficulty": 3,
         "time_limit_sec": 300,
     },
     {
-        "id": "topic-school-2022",
-        "year": 2022,
-        "paper_code": "0520/21",
-        "topic": "School & Education",
-        "theme_number": 4,
-        "theme_name": IGCSE_THEMES[4],
-        "type": "topic",
-        "scenario": "Talk about your school and studies, covering all four points below.",
-        "examiner_role": "examiner",
+        "id": "rp-24-c5",
+        "year": 2024,
+        "paper_code": "0520/S24/RP5",
+        "topic": "Gare (Réservation)",
+        "type": "role_play",
+        "scenario": "Il y a un problème avec votre réservation de train. Vous parlez à un employé de la gare (l'examinateur).",
+        "candidate_role": "voyageur(euse) avec un problème de billet",
+        "examiner_role": "employé(e) de la gare",
+        "tasks": [
+            {
+                "task_id": 1, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Expliquez qu'il y a un problème avec votre réservation et décrivez le problème.",
+                "examiner_prompt": "Bonjour. Quel est le souci ?"
+            },
+            {
+                "task_id": 2, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Donnez votre numéro de place et expliquez où vous allez.",
+                "examiner_prompt": "C'est quel numéro de place sur votre billet ? Et vous allez vers quelle ville ?"
+            },
+            {
+                "task_id": 3, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez s'il y a un autre train disponible et à quelle heure.",
+                "examiner_prompt": "[L'employé répond à votre question sur les prochains trains]"
+            },
+            {
+                "task_id": 4, "type": "unpredictable", "symbol": "!",
+                "candidate_instruction": "Répondez à la question de l'examinateur.",
+                "examiner_prompt": "Vous avez une carte d'identité ou un passeport sur vous ? Je dois vérifier votre identité."
+            },
+            {
+                "task_id": 5, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Acceptez la nouvelle place proposée et remerciez l'employé.",
+                "examiner_prompt": "Voici votre nouveau billet, place 14, voiture 3. Ça vous convient ?"
+            },
+        ],
         "bullet_points": [
-            "Describe your school (size, location, facilities)",
-            "Talk about your favourite subject and why you enjoy it",
-            "Explain what you find most challenging at school",
-            "Say what you do after school or at the weekend",
+            "Expliquez le problème avec votre réservation",
+            "Donnez votre numéro de place et votre destination",
+            "Demandez s'il y a un autre train et à quelle heure",
+            "Répondez à la question inattendue sur votre identité",
+            "Acceptez la nouvelle place et remerciez",
         ],
         "examiner_prompts": [
-            "Bonjour. Commençons par parler de votre école. Pouvez-vous la décrire ?",
-            "C'est intéressant. Et quelle est votre matière préférée ? Pourquoi ?",
-            "Je vois. Et qu'est-ce que vous trouvez le plus difficile dans vos études ?",
-            "D'accord. Enfin, parlez-moi de vos activités après les cours ou pendant le week-end."
+            "Bonjour. Quel est le souci ?",
+            "C'est quel numéro de place sur votre billet ? Et vous allez vers quelle ville ?",
+            "[L'employé répond à votre question sur les prochains trains]",
+            "Vous avez une carte d'identité ou un passeport sur vous ? Je dois vérifier votre identité.",
+            "Voici votre nouveau billet, place 14, voiture 3. Ça vous convient ?",
         ],
         "difficulty": 3,
-        "time_limit_sec": 360,
+        "time_limit_sec": 300,
     },
     {
-        "id": "topic-environment-2023",
-        "year": 2023,
-        "paper_code": "0520/22",
-        "topic": "Environment",
-        "theme_number": 3,
-        "theme_name": IGCSE_THEMES[3],
-        "type": "topic",
-        "scenario": "Talk about environmental issues and what can be done about them.",
-        "examiner_role": "examiner",
+        "id": "rp-24-c6",
+        "year": 2024,
+        "paper_code": "0520/S24/RP6",
+        "topic": "Shopping (Cadeaux)",
+        "type": "role_play",
+        "scenario": "Vous cherchez un cadeau pour un(e) ami(e). Vous parlez à un(e) vendeur(euse) dans un magasin (l'examinateur).",
+        "candidate_role": "client(e) cherchant un cadeau",
+        "examiner_role": "vendeur(euse)",
+        "tasks": [
+            {
+                "task_id": 1, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Expliquez que vous cherchez un cadeau et pour qui c'est.",
+                "examiner_prompt": "Bonjour. Je peux vous conseiller ?"
+            },
+            {
+                "task_id": 2, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Décrivez les goûts et les intérêts de votre ami(e).",
+                "examiner_prompt": "Qu'est-ce qu'il ou elle aime en général ?"
+            },
+            {
+                "task_id": 3, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez le prix d'un article et s'il y a d'autres options.",
+                "examiner_prompt": "[Le vendeur vous répond sur les prix et les options disponibles]"
+            },
+            {
+                "task_id": 4, "type": "unpredictable", "symbol": "!",
+                "candidate_instruction": "Répondez à la question de l'examinateur.",
+                "examiner_prompt": "Vous avez un budget particulier en tête ? C'est pour quelle occasion exactement ?"
+            },
+            {
+                "task_id": 5, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez si l'article peut être emballé cadeau et quel est le délai de livraison.",
+                "examiner_prompt": "[Le vendeur répond sur l'emballage et la livraison]"
+            },
+        ],
         "bullet_points": [
-            "Name two environmental problems that concern you most",
-            "Explain what young people can do to help the environment",
-            "Describe what your family does to be more eco-friendly",
-            "Give your opinion on whether technology can solve environmental problems",
+            "Expliquez que vous cherchez un cadeau et pour qui",
+            "Décrivez les goûts de votre ami(e)",
+            "Demandez le prix et s'il y a d'autres options",
+            "Répondez à la question inattendue sur le budget et l'occasion",
+            "Demandez l'emballage cadeau et le délai de livraison",
         ],
         "examiner_prompts": [
-            "Bonjour. Parlons de l'environnement. Quels sont les deux problèmes qui vous inquiètent le plus ?",
-            "C'est vrai. À votre avis, que peuvent faire les jeunes pour aider la planète ?",
-            "Bien. Et chez vous, que fait votre famille pour protéger l'environnement ?",
-            "D'accord. Pour finir, pensez-vous que la technologie peut résoudre nos problèmes écologiques ?"
+            "Bonjour. Je peux vous conseiller ?",
+            "Qu'est-ce qu'il ou elle aime en général ?",
+            "[Le vendeur vous répond sur les prix et les options disponibles]",
+            "Vous avez un budget particulier en tête ? C'est pour quelle occasion exactement ?",
+            "[Le vendeur répond sur l'emballage et la livraison]",
         ],
         "difficulty": 3,
-        "time_limit_sec": 360,
+        "time_limit_sec": 300,
     },
     {
-        "id": "topic-technology-2023",
-        "year": 2023,
-        "paper_code": "0520/23",
-        "topic": "Technology & Social Media",
-        "theme_number": 3,
-        "theme_name": IGCSE_THEMES[3],
-        "type": "topic",
-        "scenario": "Talk about technology and its impact on daily life.",
-        "examiner_role": "examiner",
+        "id": "rp-24-c7",
+        "year": 2024,
+        "paper_code": "0520/S24/RP7",
+        "topic": "Match de Football",
+        "type": "role_play",
+        "scenario": "Vous planifiez d'aller voir un match de football avec un(e) ami(e) (l'examinateur).",
+        "candidate_role": "ami(e) qui organise la sortie",
+        "examiner_role": "ami(e) français(e)",
+        "tasks": [
+            {
+                "task_id": 1, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Proposez d'aller voir le match ce soir et expliquez pourquoi.",
+                "examiner_prompt": "Salut ! Tu fais quoi ce soir ? Tu veux qu'on fasse quelque chose ensemble ?"
+            },
+            {
+                "task_id": 2, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Dites quelle équipe vous supportez et depuis combien de temps.",
+                "examiner_prompt": "Moi j'adore le PSG ! Et toi, tu supportes quelle équipe ?"
+            },
+            {
+                "task_id": 3, "type": "question", "symbol": "?",
+                "candidate_instruction": "Suggérez une heure de rendez-vous et demandez à votre ami(e) si ça lui convient.",
+                "examiner_prompt": "[L'ami répond à votre suggestion pour l'heure du rendez-vous]"
+            },
+            {
+                "task_id": 4, "type": "unpredictable", "symbol": "!",
+                "candidate_instruction": "Répondez à la question de l'examinateur.",
+                "examiner_prompt": "Tu as déjà assisté à un match en direct ? C'était comment ?"
+            },
+            {
+                "task_id": 5, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Proposez où aller manger après le match et justifiez votre choix.",
+                "examiner_prompt": "J'aurai vraiment faim après le match. On va où pour manger ?"
+            },
+        ],
         "bullet_points": [
-            "Say how you use technology in your daily life",
-            "Explain the advantages of social media for young people",
-            "Discuss the disadvantages of spending too much time online",
-            "Give your opinion on whether life was better before smartphones",
+            "Proposez d'aller voir le match et expliquez pourquoi",
+            "Dites quelle équipe vous supportez et depuis combien de temps",
+            "Suggérez une heure de rendez-vous et demandez si ça convient",
+            "Répondez à la question inattendue sur un match précédent",
+            "Proposez où manger après le match",
         ],
         "examiner_prompts": [
-            "Bonjour. Aujourd'hui, nous allons discuter de la technologie. Comment l'utilisez-vous dans votre vie quotidienne ?",
-            "Je vois. Selon vous, quels sont les avantages des réseaux sociaux pour les jeunes ?",
-            "D'accord. Et quels sont les inconvénients de passer trop de temps sur Internet ?",
-            "C'est intéressant. Pour finir, pensez-vous que la vie était meilleure avant l'invention des smartphones ?"
+            "Salut ! Tu fais quoi ce soir ? Tu veux qu'on fasse quelque chose ensemble ?",
+            "Moi j'adore le PSG ! Et toi, tu supportes quelle équipe ?",
+            "[L'ami répond à votre suggestion pour l'heure du rendez-vous]",
+            "Tu as déjà assisté à un match en direct ? C'était comment ?",
+            "J'aurai vraiment faim après le match. On va où pour manger ?",
         ],
         "difficulty": 3,
-        "time_limit_sec": 360,
+        "time_limit_sec": 300,
+    },
+    {
+        "id": "rp-24-c8",
+        "year": 2024,
+        "paper_code": "0520/S24/RP8",
+        "topic": "Visite du Château",
+        "type": "role_play",
+        "scenario": "Vous visitez un château historique. L'examinateur joue le rôle du guide touristique.",
+        "candidate_role": "touriste visitant le château",
+        "examiner_role": "guide touristique",
+        "tasks": [
+            {
+                "task_id": 1, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez si une visite guidée en français est disponible et à quelle heure.",
+                "examiner_prompt": "Bonjour, bienvenue au château. Je peux vous renseigner ?"
+            },
+            {
+                "task_id": 2, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Expliquez pourquoi vous vous intéressez à l'histoire et aux vieux châteaux.",
+                "examiner_prompt": "Vous aimez les châteaux historiques ? Qu'est-ce qui vous attire dans ce genre d'endroit ?"
+            },
+            {
+                "task_id": 3, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez si vous pouvez prendre des photos à l'intérieur.",
+                "examiner_prompt": "[Le guide répond à votre question sur les photos]"
+            },
+            {
+                "task_id": 4, "type": "unpredictable", "symbol": "!",
+                "candidate_instruction": "Répondez à la question de l'examinateur.",
+                "examiner_prompt": "Vous connaissez quelque chose sur l'histoire de cette région ? D'où venez-vous ?"
+            },
+            {
+                "task_id": 5, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez où se trouve la boutique de souvenirs et ce qu'on peut y acheter.",
+                "examiner_prompt": "[Le guide répond à votre question sur la boutique de souvenirs]"
+            },
+        ],
+        "bullet_points": [
+            "Demandez si une visite guidée en français est disponible",
+            "Expliquez votre intérêt pour l'histoire et les châteaux",
+            "Demandez si vous pouvez prendre des photos",
+            "Répondez à la question inattendue sur votre origine et l'histoire",
+            "Demandez où se trouve la boutique de souvenirs",
+        ],
+        "examiner_prompts": [
+            "Bonjour, bienvenue au château. Je peux vous renseigner ?",
+            "Vous aimez les châteaux historiques ? Qu'est-ce qui vous attire dans ce genre d'endroit ?",
+            "[Le guide répond à votre question sur les photos]",
+            "Vous connaissez quelque chose sur l'histoire de cette région ? D'où venez-vous ?",
+            "[Le guide répond à votre question sur la boutique de souvenirs]",
+        ],
+        "difficulty": 3,
+        "time_limit_sec": 300,
+    },
+    {
+        "id": "rp-24-c9",
+        "year": 2024,
+        "paper_code": "0520/S24/RP9",
+        "topic": "Serveur (Entretien)",
+        "type": "role_play",
+        "scenario": "Vous passez un entretien d'embauche pour un job d'été comme serveur/serveuse. L'examinateur joue le rôle du patron.",
+        "candidate_role": "candidat(e) à un poste de serveur/serveuse",
+        "examiner_role": "patron(ne) du restaurant",
+        "tasks": [
+            {
+                "task_id": 1, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Présentez-vous et expliquez pourquoi vous voulez ce poste.",
+                "examiner_prompt": "Bonjour. Alors, pourquoi est-ce que vous voulez travailler ici ?"
+            },
+            {
+                "task_id": 2, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Parlez de votre expérience de travail passée et de vos compétences.",
+                "examiner_prompt": "Est-ce que vous avez déjà travaillé dans un café ou un restaurant ?"
+            },
+            {
+                "task_id": 3, "type": "question", "symbol": "?",
+                "candidate_instruction": "Demandez quels sont les horaires de travail et si le week-end est obligatoire.",
+                "examiner_prompt": "[Le patron répond à votre question sur les horaires]"
+            },
+            {
+                "task_id": 4, "type": "unpredictable", "symbol": "!",
+                "candidate_instruction": "Répondez à la question de l'examinateur.",
+                "examiner_prompt": "Est-ce que vous parlez d'autres langues ? Nous avons beaucoup de clients étrangers."
+            },
+            {
+                "task_id": 5, "type": "statement", "symbol": "•",
+                "candidate_instruction": "Dites à partir de quand vous êtes disponible et posez une question sur le salaire.",
+                "examiner_prompt": "Vous seriez disponible à partir de quand ?"
+            },
+        ],
+        "bullet_points": [
+            "Présentez-vous et expliquez pourquoi vous voulez ce poste",
+            "Parlez de votre expérience et de vos compétences",
+            "Demandez les horaires de travail",
+            "Répondez à la question inattendue sur vos langues",
+            "Dites votre disponibilité et demandez le salaire",
+        ],
+        "examiner_prompts": [
+            "Bonjour. Alors, pourquoi est-ce que vous voulez travailler ici ?",
+            "Est-ce que vous avez déjà travaillé dans un café ou un restaurant ?",
+            "[Le patron répond à votre question sur les horaires]",
+            "Est-ce que vous parlez d'autres langues ? Nous avons beaucoup de clients étrangers.",
+            "Vous seriez disponible à partir de quand ?",
+        ],
+        "difficulty": 3,
+        "time_limit_sec": 300,
+    },
+
+    # ── TOPIC CONVERSATIONS (1–9) ──────────────────────────────────────────────
+    # group "A" → Topic Conversation 1 (personal life, school, family, everyday)
+    # group "B" → Topic Conversation 2 (world, work, environment, future)
+    {
+        "id": "topic-24-1",
+        "year": 2024,
+        "paper_code": "0520/S24/T1",
+        "topic": "La Famille",
+        "type": "topic",
+        "group": "A",
+        "theme": "Vie personnelle et relations familiales",
+        "scenario": "Conversation sur votre famille et vos relations avec les membres de votre famille.",
+        "examiner_role": "examinateur",
+        "opening_question": "Parle-moi un peu de ta famille — vous êtes combien chez toi ?",
+        "bullet_points": [
+            "Décrire votre famille (composition, âges)",
+            "Parler de vos rapports avec vos parents ou frères/sœurs",
+            "Décrire une activité récente en famille",
+            "Parler de ce que vous ferez ensemble prochainement",
+            "Donner votre avis sur l'importance de la famille aujourd'hui",
+        ],
+        "examiner_prompts": [
+            "Parle-moi un peu de ta famille — vous êtes combien chez toi ?",
+            "Comment est-ce que tu t'entends avec tes parents ?",
+            "Qu'est-ce que vous avez fait ensemble le week-end dernier ?",
+            "Qu'est-ce que vous avez prévu de faire pour les prochaines vacances ?",
+            "À ton avis, est-ce que c'est important d'avoir une grande famille ?",
+        ],
+        "difficulty": 3,
+        "time_limit_sec": 300,
+    },
+    {
+        "id": "topic-24-2",
+        "year": 2024,
+        "paper_code": "0520/S24/T2",
+        "topic": "Les Amis",
+        "type": "topic",
+        "group": "A",
+        "theme": "Vie sociale et amitié",
+        "scenario": "Conversation sur vos amis, vos sorties et l'importance de l'amitié.",
+        "examiner_role": "examinateur",
+        "opening_question": "Décris-moi ton ou ta meilleur(e) ami(e).",
+        "bullet_points": [
+            "Décrire votre meilleur(e) ami(e) (personnalité, apparence)",
+            "Dire ce que vous aimez faire ensemble",
+            "Raconter une sortie récente avec des amis",
+            "Parler de ce que vous prévoyez de faire ensemble prochainement",
+            "Donner les qualités essentielles d'un bon ami selon vous",
+        ],
+        "examiner_prompts": [
+            "Décris-moi ton ou ta meilleur(e) ami(e).",
+            "Qu'est-ce que vous faites d'habitude quand vous êtes ensemble ?",
+            "Parle-moi d'une sortie récente avec tes amis.",
+            "Qu'est-ce que vous avez prévu de faire le week-end prochain ?",
+            "Pour toi, quelles sont les qualités les plus importantes d'un bon ami ?",
+        ],
+        "difficulty": 3,
+        "time_limit_sec": 300,
+    },
+    {
+        "id": "topic-24-3",
+        "year": 2024,
+        "paper_code": "0520/S24/T3",
+        "topic": "Mon École",
+        "type": "topic",
+        "group": "A",
+        "theme": "École et éducation",
+        "scenario": "Conversation sur votre vie scolaire, vos matières et votre avis sur l'école.",
+        "examiner_role": "examinateur",
+        "opening_question": "Fais-moi une description de ton école.",
+        "bullet_points": [
+            "Décrire votre école (taille, type, équipements)",
+            "Parler de votre matière préférée et expliquer pourquoi",
+            "Donner votre avis sur les règles ou l'uniforme scolaire",
+            "Raconter une journée scolaire mémorable",
+            "Dire ce que vous ferez après les examens",
+        ],
+        "examiner_prompts": [
+            "Fais-moi une description de ton école.",
+            "Quelle est ta matière préférée ? Pourquoi ?",
+            "Qu'est-ce que tu penses des règles dans ton école — l'uniforme, les portables, etc. ?",
+            "Raconte-moi une journée à l'école que tu as particulièrement aimée.",
+            "Qu'est-ce que tu vas faire quand tu auras fini tes examens ?",
+        ],
+        "difficulty": 3,
+        "time_limit_sec": 300,
+    },
+    {
+        "id": "topic-24-4",
+        "year": 2024,
+        "paper_code": "0520/S24/T4",
+        "topic": "Les Vacances",
+        "type": "topic",
+        "group": "A",
+        "theme": "Voyages et vacances",
+        "scenario": "Conversation sur vos habitudes de vacances, vos destinations préférées et vos expériences de voyage.",
+        "examiner_role": "examinateur",
+        "opening_question": "Où est-ce que tu vas d'habitude en vacances ?",
+        "bullet_points": [
+            "Dire où vous allez d'habitude en vacances et avec qui",
+            "Décrire vos activités préférées en vacances",
+            "Raconter vos dernières vacances en détail",
+            "Dire où vous aimeriez aller l'année prochaine et pourquoi",
+            "Donner les avantages et inconvénients de partir à l'étranger",
+        ],
+        "examiner_prompts": [
+            "Où est-ce que tu vas d'habitude en vacances ?",
+            "Qu'est-ce que tu aimes faire quand tu es en vacances ?",
+            "Parle-moi de tes dernières vacances — où es-tu allé(e) et qu'est-ce que tu as fait ?",
+            "Si tu avais le choix, où aimerais-tu aller l'été prochain ?",
+            "Quels sont les avantages de voyager dans d'autres pays ?",
+        ],
+        "difficulty": 3,
+        "time_limit_sec": 300,
+    },
+    {
+        "id": "topic-24-5",
+        "year": 2024,
+        "paper_code": "0520/S24/T5",
+        "topic": "Ma Routine",
+        "type": "topic",
+        "group": "A",
+        "theme": "Vie quotidienne et routine",
+        "scenario": "Conversation sur votre journée typique, vos habitudes et votre vie quotidienne.",
+        "examiner_role": "examinateur",
+        "opening_question": "Parle-moi de ta routine le matin avant de partir à l'école.",
+        "bullet_points": [
+            "Décrire votre routine du matin en détail",
+            "Dire ce que vous faites pour aider à la maison",
+            "Raconter ce que vous avez fait hier après l'école",
+            "Décrire à quoi ressemblera votre journée de demain",
+            "Expliquer ce que vous changeriez à votre routine si vous pouviez",
+        ],
+        "examiner_prompts": [
+            "Parle-moi de ta routine le matin avant de partir à l'école.",
+            "Qu'est-ce que tu fais pour aider tes parents à la maison ?",
+            "Qu'est-ce que tu as fait hier après l'école ?",
+            "Comment sera ta journée de demain ?",
+            "Si tu pouvais, qu'est-ce que tu changerais à ta routine quotidienne ?",
+        ],
+        "difficulty": 3,
+        "time_limit_sec": 300,
+    },
+    {
+        "id": "topic-24-6",
+        "year": 2024,
+        "paper_code": "0520/S24/T6",
+        "topic": "Le Monde du Travail",
+        "type": "topic",
+        "group": "B",
+        "theme": "Travail, carrière et projets d'avenir",
+        "scenario": "Conversation sur vos projets professionnels, vos ambitions et votre vision du monde du travail.",
+        "examiner_role": "examinateur",
+        "opening_question": "Quel travail est-ce que tu voudrais faire à l'avenir ?",
+        "bullet_points": [
+            "Dire quel métier vous voulez exercer plus tard et pourquoi",
+            "Expliquer quelles qualifications ou études sont nécessaires",
+            "Parler d'une expérience de travail ou d'un stage",
+            "Donner votre opinion sur le travail à l'étranger",
+            "Discuter de l'importance du salaire vs. la passion dans un métier",
+        ],
+        "examiner_prompts": [
+            "Quel travail est-ce que tu voudrais faire à l'avenir ?",
+            "Quelles études ou qualifications faut-il pour faire ce métier ?",
+            "Est-ce que tu as déjà fait un stage ou un petit job ?",
+            "Est-ce que tu aimerais travailler dans un autre pays ? Pourquoi ?",
+            "À ton avis, est-ce que le salaire est le plus important dans un job ?",
+        ],
+        "difficulty": 3,
+        "time_limit_sec": 300,
+    },
+    {
+        "id": "topic-24-7",
+        "year": 2024,
+        "paper_code": "0520/S24/T7",
+        "topic": "L'Environnement",
+        "type": "topic",
+        "group": "B",
+        "theme": "Environnement et développement durable",
+        "scenario": "Conversation sur les problèmes écologiques, vos actions pour la planète et l'avenir de l'environnement.",
+        "examiner_role": "examinateur",
+        "opening_question": "À ton avis, quel est le plus grand problème pour l'environnement aujourd'hui ?",
+        "bullet_points": [
+            "Identifier les problèmes écologiques les plus graves selon vous",
+            "Décrire ce que vous faites personnellement pour protéger l'environnement",
+            "Raconter une action écologique faite récemment (à l'école ou chez vous)",
+            "Imaginer comment sera la planète dans cinquante ans",
+            "Donner votre avis sur l'utilisation des transports publics vs. la voiture",
+        ],
+        "examiner_prompts": [
+            "À ton avis, quel est le plus grand problème pour l'environnement aujourd'hui ?",
+            "Qu'est-ce que tu fais personnellement pour recycler ou protéger l'environnement ?",
+            "Qu'est-ce que ton école a fait récemment pour l'environnement ?",
+            "Comment est-ce que tu imagines la Terre dans cinquante ans ?",
+            "Est-ce que tu penses que les gens devraient utiliser davantage les transports en commun ?",
+        ],
+        "difficulty": 3,
+        "time_limit_sec": 300,
+    },
+    {
+        "id": "topic-24-8",
+        "year": 2024,
+        "paper_code": "0520/S24/T8",
+        "topic": "Les Loisirs",
+        "type": "topic",
+        "group": "B",
+        "theme": "Loisirs, sport et temps libre",
+        "scenario": "Conversation sur vos passe-temps, votre façon de vous détendre et vos opinions sur les loisirs.",
+        "examiner_role": "examinateur",
+        "opening_question": "Qu'est-ce que tu aimes faire pendant ton temps libre ?",
+        "bullet_points": [
+            "Décrire vos loisirs et passe-temps préférés",
+            "Expliquer combien de temps vous y consacrez par semaine",
+            "Raconter ce que vous avez fait le week-end dernier pour vous détendre",
+            "Dire quel sport ou activité vous aimeriez essayer bientôt",
+            "Donner votre avis sur les écrans et les réseaux sociaux chez les jeunes",
+        ],
+        "examiner_prompts": [
+            "Qu'est-ce que tu aimes faire pendant ton temps libre ?",
+            "Est-ce que tu as beaucoup de temps pour tes loisirs, avec l'école et tout ça ?",
+            "Qu'est-ce que tu as fait samedi dernier pour te détendre ?",
+            "Quel sport ou activité aimerais-tu commencer bientôt ? Pourquoi ?",
+            "Qu'est-ce que tu penses des jeunes qui passent trop de temps sur les écrans ?",
+        ],
+        "difficulty": 3,
+        "time_limit_sec": 300,
+    },
+    {
+        "id": "topic-24-9",
+        "year": 2024,
+        "paper_code": "0520/S24/T9",
+        "topic": "La Nourriture",
+        "type": "topic",
+        "group": "B",
+        "theme": "Alimentation, santé et culture culinaire",
+        "scenario": "Conversation sur vos habitudes alimentaires, vos plats préférés et votre opinion sur la nourriture saine.",
+        "examiner_role": "examinateur",
+        "opening_question": "Quel est ton plat préféré ? Pourquoi est-ce que tu l'aimes ?",
+        "bullet_points": [
+            "Décrire votre plat préféré et expliquer pourquoi vous l'aimez",
+            "Dire ce que vous mangez habituellement à midi (cantine, maison, etc.)",
+            "Raconter un repas spécial au restaurant pour une occasion particulière",
+            "Parler de ce que vous allez manger ce soir ou préparer demain",
+            "Donner votre avis sur la difficulté de manger sainement de nos jours",
+        ],
+        "examiner_prompts": [
+            "Quel est ton plat préféré ? Pourquoi est-ce que tu l'aimes ?",
+            "Qu'est-ce que tu manges normalement à la cantine ou pour le déjeuner ?",
+            "Parle-moi d'une fois où tu es allé(e) au restaurant pour une occasion spéciale.",
+            "Qu'est-ce que tu vas manger ce soir ou préparer demain ?",
+            "Est-ce que c'est facile de manger équilibré de nos jours ? Pourquoi ?",
+        ],
+        "difficulty": 3,
+        "time_limit_sec": 300,
     },
 ]
 
@@ -433,6 +1064,47 @@ Return exactly this JSON (no extra keys):
   "corrected_sample": "<A 60-90 word model French response that would score 5/5 on all criteria>",
   "overall_advice": "<2-3 actionable English sentences for improving the score>"
 }"""
+
+NEWS_SYSTEM_PROMPT = """You are a professional French News Editor for a language learning platform.
+Your job is to generate a short, engaging news snippet in French (B1 level) for students to practice listening.
+Return ONLY a raw JSON object — no prose, no markdown fences, no code blocks.
+
+Guidelines:
+1. transcript: 3-4 sentences (approx 40-60 words). Clear, standard French.
+2. translation: An accurate English translation of the transcript.
+3. headline: Catchy and descriptive (in French).
+4. keywords: 4-6 essential French words used in the text.
+5. summaryPoints: 3-5 concise English sentences covering the key facts. These will be used to grade user comprehension.
+6. Difficulty: Ensure it is suitable for Intermediate (B1) level — avoid overly technical jargon but use natural phrasing.
+
+JSON schema:
+{
+  "id": "news-YYYY-MM-DD",
+  "date": "YYYY-MM-DD",
+  "headline": "string",
+  "transcript": "string",
+  "translation": "string",
+  "keywords": ["string"],
+  "summaryPoints": ["string"]
+}
+"""
+
+VOCAB_SYSTEM_PROMPT = """You are a professional French language instructor.
+Provide a list of 10 essential French words and 3 useful phrases (with English translations) for a roleplay scenario about a specific topic.
+Return ONLY a raw JSON object — no prose, no markdown fences, no code blocks.
+
+JSON schema:
+{
+  "vocab": [
+    { "fr": "French word", "en": "English translation", "type": "word" },
+    ...
+  ],
+  "phrases": [
+    { "fr": "French phrase", "en": "English translation", "type": "phrase" },
+    ...
+  ]
+}
+"""
 
 SYSTEM_PROMPT = """You are a strict, expert IGCSE French speaking examiner with 15 years of experience.
 You analyse a student's spoken French answer and return ONLY a raw JSON object — no prose, no markdown fences, no code blocks.
@@ -1108,15 +1780,15 @@ async def igcse_feedback(req: IGCSEFeedbackRequest) -> dict[str, Any]:
 
 @app.get("/api/igcse-papers")
 async def get_igcse_papers() -> list[dict]:
-    return IGCSE_PAPERS
-
+    return fetch_igcse_papers_from_db()
 
 @app.get("/api/igcse-papers/{paper_id}")
 async def get_igcse_paper(paper_id: str) -> dict:
-    for paper in IGCSE_PAPERS:
-        if paper["id"] == paper_id:
-            return paper
+    paper = fetch_igcse_paper_details(paper_id)
+    if paper:
+        return paper
     raise HTTPException(status_code=404, detail="IGCSE paper not found")
+
 
 
 # ── /api/transcribe ───────────────────────────────────────────────────────────
@@ -1302,6 +1974,54 @@ async def get_daily_question() -> dict:
         raise HTTPException(status_code=404, detail="No daily challenges found")
     day_index = (datetime.now(timezone.utc).toordinal()) % len(pool)
     return pool[day_index]
+
+
+@app.get("/api/news/daily")
+async def generate_daily_news() -> dict:
+    """Generate today's news snippet using Gemini."""
+    today = date.today().isoformat()
+    
+    # Randomly pick a topic to ensure variety
+    topics = ["Sports", "Technologie", "Culture", "Météo", "Environnement", "Société"]
+    chosen_topic = random.choice(topics)
+    
+    prompt = f"Générez un bulletin d'actualités sur le thème : {chosen_topic}. Date : {today}."
+    
+    try:
+        # Get Gemini with News Prompt
+        import google.generativeai as genai
+        if not GEMINI_API_KEY:
+             raise HTTPException(status_code=503, detail="Gemini not configured")
+        
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel(
+            "gemini-2.0-flash",
+            system_instruction=NEWS_SYSTEM_PROMPT,
+        )
+        
+        response = await asyncio.to_thread(model.generate_content, prompt)
+        news = extract_json(response.text)
+        
+        # Ensure ID and Date are correct
+        news["id"] = f"news-{today}"
+        news["date"] = today
+        
+        return news
+    except Exception as e:
+        log.error("Failed to generate news: %s", e)
+        # Fallback to a safe mock if AI fails
+        return {
+            "id": f"news-{today}",
+            "date": today,
+            "headline": "Bulletin d'Information Quotidien",
+            "transcript": "Bienvenue à votre bulletin d'actualités. Aujourd'hui en France, nous observons une amélioration générale du climat social. Les citoyens se préparent pour les festivités nationales de la semaine prochaine.",
+            "keywords": ["actualités", "climat", "social", "festivités"],
+            "summaryPoints": [
+                "Daily news update",
+                "General improvement in social climate in France",
+                "Citizens preparing for national festivities next week"
+            ]
+        }
 
 
 # ── /api/exam-sets ─────────────────────────────────────────────────────────────
@@ -1563,7 +2283,17 @@ class RoleplayTurnRequest(BaseModel):
     turn_history: list[dict]  # [{speaker: "examiner"|"student", text: str}]
     student_transcript: str
     is_final_turn: bool = False
+    custom_scenario: dict | None = None
 
+@app.post("/api/generate-scenario")
+async def api_generate_scenario(req: ScenarioGenerateRequest) -> dict:
+    from scenario_generator import generate_scenario
+    try:
+        scenario = await generate_scenario(req.description)
+        return scenario
+    except Exception as e:
+        log.error(f"Scenario generation failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/roleplay/scenarios")
 async def get_roleplay_scenarios() -> list[dict]:
@@ -1572,7 +2302,18 @@ async def get_roleplay_scenarios() -> list[dict]:
 
 @app.post("/api/roleplay/turn")
 async def roleplay_turn(req: RoleplayTurnRequest) -> dict:
-    scenario = next((s for s in ROLEPLAY_SCENARIOS if s["id"] == req.scenario_id), None)
+    scenario = None
+    if req.scenario_id == "custom" and req.custom_scenario:
+        scenario = {
+            "setting": f"Roleplay Scenario: {req.custom_scenario.get('title')}\n"
+                       f"Description: {req.custom_scenario.get('scenario')}\n"
+                       f"NPC Name: {req.custom_scenario.get('npc_name')}\n"
+                       f"NPC Personality: {req.custom_scenario.get('npc_personality')}\n"
+                       f"Objectives: {', '.join(req.custom_scenario.get('objectives', []))}"
+        }
+    else:
+        scenario = next((s for s in ROLEPLAY_SCENARIOS if s["id"] == req.scenario_id), None)
+    
     if not scenario:
         raise HTTPException(status_code=404, detail="Scenario not found")
 
@@ -1626,3 +2367,43 @@ async def roleplay_turn(req: RoleplayTurnRequest) -> dict:
     except json.JSONDecodeError:
         # Attempt to extract a reply from plain text fallback
         return {"reply": raw[:400], "is_done": req.is_final_turn, "hint": None}
+
+
+@app.get("/api/vocab-prep")
+async def vocab_prep(topic: str) -> dict[str, Any]:
+    """Generate vocabulary and phrases for a given topic."""
+    if not GEMINI_API_KEY:
+        raise HTTPException(status_code=503, detail="Gemini not configured")
+
+    prompt = f"Générez du vocabulaire et des phrases pour le sujet suivant : {topic}."
+    
+    try:
+        import google.generativeai as genai
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel(
+            "gemini-2.0-flash",
+            system_instruction=VOCAB_SYSTEM_PROMPT,
+        )
+        
+        response = await asyncio.to_thread(model.generate_content, prompt)
+        return extract_json(response.text)
+    except Exception as e:
+        log.error("Failed to generate vocab prep: %s", e)
+        raise HTTPException(status_code=500, detail=f"Failed to generate vocab: {e}")
+
+
+# ── Exam mode pipeline ────────────────────────────────────────────────────────
+# New parallel pipeline — does NOT touch any existing endpoint.
+from exam_controller import router as _exam_router
+app.include_router(_exam_router)
+
+# ── Serve frontend static files ───────────────────────────────────────────────
+# Mount last so API routes always take priority.
+import pathlib
+_FRONTEND_DIR = pathlib.Path(__file__).parent.parent
+
+@app.get("/")
+async def _serve_index():
+    return FileResponse(_FRONTEND_DIR / "index.html")
+
+app.mount("/", StaticFiles(directory=_FRONTEND_DIR, html=True), name="frontend")

@@ -1,0 +1,2422 @@
+[
+    {
+        "id": "sch_12",
+        "topic_key": "school",
+        "text": "Quelle est ta matière préférée et pourquoi ?",
+        "hint": "Talk about your favorite subject and give reasons.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Depuis combien de temps l'étudies-tu ?",
+            "Quelles matières n'aimes-tu pas ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "matière",
+                "en": "subject"
+            },
+            {
+                "fr": "passionnant",
+                "en": "exciting"
+            }
+        ],
+        "model_answer": "Ma matière préférée est le français parce que je trouve ça passionnant et j'aime apprendre de nouvelles cultures."
+    },
+    {
+        "id": "sch_13",
+        "topic_key": "school",
+        "text": "Parle-moi d'une journée scolaire typique.",
+        "hint": "Describe your daily routine at school.",
+        "difficulty": 2,
+        "follow_ups": [
+            "À quelle heure commencent les cours ?",
+            "Que fais-tu pendant la récréation ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "les cours",
+                "en": "lessons"
+            },
+            {
+                "fr": "la pause-déjeuner",
+                "en": "lunch break"
+            }
+        ],
+        "model_answer": "D'habitude, mes cours commencent à huit heures. J'ai quatre cours le matin, puis la pause-déjeuner à midi."
+    },
+    {
+        "id": "sch_14",
+        "topic_key": "school",
+        "text": "Que penses-tu du règlement scolaire dans ton école ?",
+        "hint": "Give your opinion on school rules.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Est-ce que c'est trop strict ?",
+            "Quelle règle changerais-tu ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "règlement",
+                "en": "rules/regulations"
+            },
+            {
+                "fr": "strict",
+                "en": "strict"
+            }
+        ],
+        "model_answer": "Je pense que le règlement est nécessaire, mais certaines règles, comme l'interdiction des portables, sont trop strictes."
+    },
+    {
+        "id": "sch_15",
+        "topic_key": "school",
+        "text": "Est-ce que tu portes un uniforme ? Tu l'aimes ?",
+        "hint": "Discuss school uniform.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Quels sont les avantages de l'uniforme ?",
+            "Que porterais-tu si tu avais le choix ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "uniforme",
+                "en": "uniform"
+            },
+            {
+                "fr": "confortable",
+                "en": "comfortable"
+            }
+        ],
+        "model_answer": "Oui, je porte une chemise blanche et un pantalon bleu. Je ne l'aime pas trop car ce n'est pas très confortable."
+    },
+    {
+        "id": "sch_16",
+        "topic_key": "school",
+        "text": "Qu'est-ce que tu as fait à l'école hier ?",
+        "hint": "Describe your school activities yesterday (past tense).",
+        "difficulty": 2,
+        "follow_ups": [
+            "C'était une bonne journée ?",
+            "Quel était ton cours préféré hier ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "hier",
+                "en": "yesterday"
+            },
+            {
+                "fr": "appris",
+                "en": "learnt"
+            }
+        ],
+        "model_answer": "Hier, j'ai eu un contrôle de maths qui était très difficile, mais l'après-midi j'ai fait du sport."
+    },
+    {
+        "id": "sch_17",
+        "topic_key": "school",
+        "text": "Si tu étais le directeur, que changerais-tu dans ton école ?",
+        "hint": "Hypothetical changes to your school.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Y aurait-il plus de vacances ?",
+            "Quels équipements achèterais-tu ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "directeur",
+                "en": "headmaster"
+            },
+            {
+                "fr": "améliorer",
+                "en": "to improve"
+            }
+        ],
+        "model_answer": "Si j'étais le directeur, je supprimerais les devoirs le week-end et j'améliorerais la cantine."
+    },
+    {
+        "id": "sch_18",
+        "topic_key": "school",
+        "text": "Comment sont les professeurs dans ton école ?",
+        "hint": "Describe your teachers.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Qui est ton prof préféré ?",
+            "Est-ce qu'ils donnent trop de devoirs ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "professeur",
+                "en": "teacher"
+            },
+            {
+                "fr": "exigeant",
+                "en": "demanding"
+            }
+        ],
+        "model_answer": "En général, les professeurs sont sympas et m'aident beaucoup, bien que certains soient un peu trop exigeants."
+    },
+    {
+        "id": "sch_19",
+        "topic_key": "school",
+        "text": "Est-ce que les devoirs sont importants selon toi ?",
+        "hint": "Give your opinion on homework.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Combien de temps y passes-tu chaque soir ?",
+            "Est-ce utile pour apprendre ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "devoirs",
+                "en": "homework"
+            },
+            {
+                "fr": "utile",
+                "en": "useful"
+            }
+        ],
+        "model_answer": "À mon avis, les devoirs sont utiles pour réviser, mais on en a trop parfois, ce qui est stressant."
+    },
+    {
+        "id": "sch_20",
+        "topic_key": "school",
+        "text": "Parle-moi de ton école primaire.",
+        "hint": "Describe your primary school (past tense).",
+        "difficulty": 2,
+        "follow_ups": [
+            "C'était plus facile que maintenant ?",
+            "Quels étaient tes jeux préférés ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "école primaire",
+                "en": "primary school"
+            },
+            {
+                "fr": "souvenirs",
+                "en": "memories"
+            }
+        ],
+        "model_answer": "Mon école primaire était plus petite et j'avais beaucoup plus de temps pour jouer avec mes amis."
+    },
+    {
+        "id": "sch_21",
+        "topic_key": "school",
+        "text": "Que vas-tu étudier l'année prochaine ?",
+        "hint": "Describe your future study plans.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Vas-tu continuer le français ?",
+            "Pourquoi as-tu choisi ces matières ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "l'année prochaine",
+                "en": "next year"
+            },
+            {
+                "fr": "choisir",
+                "en": "to choose"
+            }
+        ],
+        "model_answer": "L'année prochaine, j'ai l'intention d'étudier les sciences et l'histoire parce que je les trouve fascinantes."
+    },
+    {
+        "id": "sch_22",
+        "topic_key": "school",
+        "text": "Décris ton collège.",
+        "hint": "Describe your secondary school building and atmosphere.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Il y a combien d'élèves ?",
+            "Quels sont les bâtiments modernes ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "collège",
+                "en": "middle/secondary school"
+            },
+            {
+                "fr": "bâtiment",
+                "en": "building"
+            }
+        ],
+        "model_answer": "Mon collège est assez grand et moderne, avec un grand gymnase et plusieurs laboratoires de sciences."
+    },
+    {
+        "id": "sch_23",
+        "topic_key": "school",
+        "text": "Qu'est-ce que tu fais pendant l'heure du déjeuner ?",
+        "hint": "Describe your lunch break activities.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Manges-tu à la cantine ?",
+            "Avec qui passes-tu ton temps ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "déjeuner",
+                "en": "lunch"
+            },
+            {
+                "fr": "bavarder",
+                "en": "to chat"
+            }
+        ],
+        "model_answer": "D'habitude, je mange avec mes copains à la cantine, puis nous bavardons dans la cour de récréation."
+    },
+    {
+        "id": "sch_24",
+        "topic_key": "school",
+        "text": "Es-tu membre d'un club à l'école ?",
+        "hint": "Talk about school clubs or extra-curricular activities.",
+        "difficulty": 2,
+        "follow_ups": [
+            "À quelle fréquence te réunis-tu ?",
+            "Quels sont les avantages des clubs ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "club",
+                "en": "club"
+            },
+            {
+                "fr": "s'entraîner",
+                "en": "to train/practice"
+            }
+        ],
+        "model_answer": "Oui, je fais partie de l'équipe de football et nous nous entraînons tous les mardis après les cours."
+    },
+    {
+        "id": "sch_25",
+        "topic_key": "school",
+        "text": "Quels sont les avantages d'étudier une langue étrangère ?",
+        "hint": "Discuss the benefits of learning languages.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Est-ce utile pour voyager ?",
+            "Aimerais-tu en apprendre une autre ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "langue étrangère",
+                "en": "foreign language"
+            },
+            {
+                "fr": "atout",
+                "en": "asset"
+            }
+        ],
+        "model_answer": "Apprendre une langue est un grand atout car cela permet de mieux comprendre d'autres cultures et de voyager facilement."
+    },
+    {
+        "id": "hob_10",
+        "topic_key": "hobbies",
+        "text": "Qu'est-ce que tu aimes faire pendant ton temps libre ?",
+        "hint": "Describe your general hobbies.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Quand fais-tu ça ?",
+            "Avec qui ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "temps libre",
+                "en": "free time"
+            },
+            {
+                "fr": "loisirs",
+                "en": "hobbies/leisure"
+            }
+        ],
+        "model_answer": "Pendant mon temps libre, j'aime lire des romans et écouter de la musique dans ma chambre."
+    },
+    {
+        "id": "hob_11",
+        "topic_key": "hobbies",
+        "text": "Est-ce que tu es sportif/sportive ? Quel sport préfères-tu ?",
+        "hint": "Discuss sports you enjoy.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Depuis combien de temps fais-tu ce sport ?",
+            "Est-ce que tu joues dans une équipe ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "sportif",
+                "en": "sporty"
+            },
+            {
+                "fr": "préférer",
+                "en": "to prefer"
+            }
+        ],
+        "model_answer": "Oui, je suis assez sportif. Je préfère le tennis car c'est un sport dynamique et amusant."
+    },
+    {
+        "id": "hob_12",
+        "topic_key": "hobbies",
+        "text": "Qu'est-ce que tu as fait le week-end dernier ?",
+        "hint": "Describe your activities last weekend (past tense).",
+        "difficulty": 2,
+        "follow_ups": [
+            "Es-tu sorti avec des amis ?",
+            "C'était comment ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "week-end dernier",
+                "en": "last weekend"
+            },
+            {
+                "fr": "sortir",
+                "en": "to go out"
+            }
+        ],
+        "model_answer": "Le week-end dernier, je suis allé au cinéma avec mes amis pour voir un film d'action. C'était génial !"
+    },
+    {
+        "id": "hob_13",
+        "topic_key": "hobbies",
+        "text": "Quel genre de musique préfères-tu et pourquoi ?",
+        "hint": "Discuss your musical tastes.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Joues-tu d'un instrument ?",
+            "Es-tu déjà allé à un concert ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "genre de musique",
+                "en": "music genre"
+            },
+            {
+                "fr": "paroles",
+                "en": "lyrics"
+            }
+        ],
+        "model_answer": "Je préfère le rock parce que j'aime le rythme et les paroles des chansons sont souvent intéressantes."
+    },
+    {
+        "id": "hob_14",
+        "topic_key": "hobbies",
+        "text": "Est-ce que tu aimes lire ? Quel est ton livre préféré ?",
+        "hint": "Talk about reading and books.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Quel était le dernier livre que tu as lu ?",
+            "Préfères-tu les livres papier ou les e-books ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "lire",
+                "en": "to read"
+            },
+            {
+                "fr": "roman",
+                "en": "novel"
+            }
+        ],
+        "model_answer": "J'adore lire. Mon livre préféré est 'Harry Potter' car l'univers de magie est incroyable."
+    },
+    {
+        "id": "hob_15",
+        "topic_key": "hobbies",
+        "text": "Que vas-tu faire ce week-end ?",
+        "hint": "Describe your plans for the upcoming weekend (future tense).",
+        "difficulty": 2,
+        "follow_ups": [
+            "Où vas-tu aller ?",
+            "Avec qui seras-tu ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "ce week-end",
+                "en": "this weekend"
+            },
+            {
+                "fr": "avoir l'intention de",
+                "en": "to intend to"
+            }
+        ],
+        "model_answer": "Ce week-end, j'ai l'intention de faire une randonnée à la montagne avec ma famille si il fait beau."
+    },
+    {
+        "id": "hob_16",
+        "topic_key": "hobbies",
+        "text": "Pourquoi est-il important d'avoir des passe-temps ?",
+        "hint": "Discuss the importance of hobbies.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Est-ce que ça aide contre le stress ?",
+            "Peut-on apprendre de nouvelles choses ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "passe-temps",
+                "en": "hobbies"
+            },
+            {
+                "fr": "se détendre",
+                "en": "to relax"
+            }
+        ],
+        "model_answer": "C'est important d'avoir des passe-temps pour se détendre après le travail et pour rencontrer de nouvelles personnes."
+    },
+    {
+        "id": "hob_17",
+        "topic_key": "hobbies",
+        "text": "Quel sport aimerais-tu essayer à l'avenir ?",
+        "hint": "Talk about a new sport you'd like to try (conditional/future).",
+        "difficulty": 3,
+        "follow_ups": [
+            "Pourquoi ce sport en particulier ?",
+            "Est-ce que c'est dangereux ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "essayer",
+                "en": "to try"
+            },
+            {
+                "fr": "l'avenir",
+                "en": "the future"
+            }
+        ],
+        "model_answer": "À l'avenir, j'aimerais essayer le parachutisme car j'adore les sensations fortes et l'aventure."
+    },
+    {
+        "id": "hob_18",
+        "topic_key": "hobbies",
+        "text": "Est-ce que tu passes trop de temps sur ton téléphone ?",
+        "hint": "Discuss screen time and phone usage.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Quelles applications utilises-tu le plus ?",
+            "Pourrais-tu vivre sans ton portable ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "trop de temps",
+                "en": "too much time"
+            },
+            {
+                "fr": "réseaux sociaux",
+                "en": "social media"
+            }
+        ],
+        "model_answer": "Je pense que je passe un peu trop de temps sur les réseaux sociaux, surtout le soir avant de dormir."
+    },
+    {
+        "id": "hob_19",
+        "topic_key": "hobbies",
+        "text": "Préfères-tu les sports d'équipe ou les sports individuels ?",
+        "hint": "Compare team and individual sports.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Quels sont les avantages de travailler en équipe ?",
+            "Lequel est le plus difficile ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "équipe",
+                "en": "team"
+            },
+            {
+                "fr": "individuel",
+                "en": "individual"
+            }
+        ],
+        "model_answer": "Je préfère les sports d'équipe comme le basket car j'aime l'esprit de groupe et la coopération."
+    },
+    {
+        "id": "hob_20",
+        "topic_key": "hobbies",
+        "text": "Que penses-tu des jeux vidéo ?",
+        "hint": "Give your opinion on video games.",
+        "difficulty": 2,
+        "follow_ups": [
+            "À quelle fréquence joues-tu ?",
+            "Est-ce que c'est une perte de temps ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "jeux vidéo",
+                "en": "video games"
+            },
+            {
+                "fr": "divertissant",
+                "en": "entertaining"
+            }
+        ],
+        "model_answer": "Je trouve que les jeux vidéo sont très divertissants, mais il ne faut pas y passer toute la journée."
+    },
+    {
+        "id": "hob_21",
+        "topic_key": "hobbies",
+        "text": "Qu'est-ce que tu aimais faire quand tu étais plus jeune ?",
+        "hint": "Describe childhood hobbies (imperfect tense).",
+        "difficulty": 3,
+        "follow_ups": [
+            "Jouais-tu avec des poupées ou des voitures ?",
+            "Quel était ton jouet préféré ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "quand j'étais plus jeune",
+                "en": "when I was younger"
+            },
+            {
+                "fr": "jouer à cache-cache",
+                "en": "to play hide and seek"
+            }
+        ],
+        "model_answer": "Quand j'étais plus jeune, j'aimais beaucoup jouer à cache-cache dans le jardin avec mes cousins."
+    },
+    {
+        "id": "hob_22",
+        "topic_key": "hobbies",
+        "text": "As-tu déjà assisté à un événement sportif important ?",
+        "hint": "Describe a sports event you attended (past tense).",
+        "difficulty": 3,
+        "follow_ups": [
+            "C'était quel sport ?",
+            "Quelle était l'ambiance ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "assister à",
+                "en": "to attend"
+            },
+            {
+                "fr": "ambiance",
+                "en": "atmosphere"
+            }
+        ],
+        "model_answer": "Oui, je suis allé voir un match de foot au stade l'année dernière. L'ambiance était incroyable et très bruyante !"
+    },
+    {
+        "id": "hob_23",
+        "topic_key": "hobbies",
+        "text": "Si tu avais beaucoup d'argent, quel passe-temps choisirais-tu ?",
+        "hint": "Hypothetical hobby with unlimited money.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Voyagerais-tu autour du monde ?",
+            "Achèterais-tu un équipement spécial ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "si j'avais",
+                "en": "if I had"
+            },
+            {
+                "fr": "piloter",
+                "en": "to pilot/fly"
+            }
+        ],
+        "model_answer": "Si j'avais beaucoup d'argent, j'apprendrais à piloter des avions parce que j'ai toujours voulu voler."
+    },
+    {
+        "id": "fam_09",
+        "topic_key": "family",
+        "text": "Décris ta famille.",
+        "hint": "Provide a general description of your family.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Combien de personnes y a-t-il ?",
+            "As-tu des frères ou des sœurs ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "famille",
+                "en": "family"
+            },
+            {
+                "fr": "membre",
+                "en": "member"
+            }
+        ],
+        "model_answer": "Ma famille est assez grande. Il y a mes parents, mes deux frères et moi. Nous sommes cinq au total."
+    },
+    {
+        "id": "fam_10",
+        "topic_key": "family",
+        "text": "Est-ce que tu t'entends bien avec tes parents ?",
+        "hint": "Discuss your relationship with your parents.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Pourquoi ou pourquoi pas ?",
+            "À quel sujet vous disputez-vous ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "s'entendre bien",
+                "en": "to get on well"
+            },
+            {
+                "fr": "disputer",
+                "en": "to argue"
+            }
+        ],
+        "model_answer": "Oui, je m'entends très bien avec mes parents car ils sont compréhensifs et ils m'aident toujours."
+    },
+    {
+        "id": "fam_11",
+        "topic_key": "family",
+        "text": "Décris ton/ta meilleur(e) ami(e).",
+        "hint": "Describe your best friend.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Depuis combien de temps vous connaissez-vous ?",
+            "Qu'est-ce que vous faites ensemble ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "meilleur ami",
+                "en": "best friend"
+            },
+            {
+                "fr": "drôle",
+                "en": "funny"
+            }
+        ],
+        "model_answer": "Mon meilleur ami s'appelle Marc. Il est très drôle et nous aimons jouer au basket ensemble le week-end."
+    },
+    {
+        "id": "fam_12",
+        "topic_key": "family",
+        "text": "Qu'est-ce que tu as fait avec ta famille le week-end dernier ?",
+        "hint": "Activities with family last weekend (past tense).",
+        "difficulty": 2,
+        "follow_ups": [
+            "Où êtes-vous allés ?",
+            "C'était amusant ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "week-end dernier",
+                "en": "last weekend"
+            },
+            {
+                "fr": "ensemble",
+                "en": "together"
+            }
+        ],
+        "model_answer": "Le week-end dernier, nous sommes allés au restaurant pour fêter l'anniversaire de ma mère. C'était très sympa."
+    },
+    {
+        "id": "fam_13",
+        "topic_key": "family",
+        "text": "Préfères-tu passer du temps avec ta famille ou tes amis ?",
+        "hint": "Compare family vs friends time.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Pourquoi ?",
+            "Que fais-tu différemment avec chacun ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "préférer",
+                "en": "to prefer"
+            },
+            {
+                "fr": "passer du temps",
+                "en": "to spend time"
+            }
+        ],
+        "model_answer": "J'aime les deux, mais je préfère passer du temps avec mes amis car nous avons les mêmes centres d'intérêt."
+    },
+    {
+        "id": "fam_14",
+        "topic_key": "family",
+        "text": "Quelles sont les qualités d'un bon ami ?",
+        "hint": "Discuss qualities of a good friend.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Est-ce important d'être honnête ?",
+            "Doit-il avoir le même sens de l'humour ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "qualités",
+                "en": "qualities"
+            },
+            {
+                "fr": "honnête",
+                "en": "honest"
+            }
+        ],
+        "model_answer": "À mon avis, un bon ami doit être honnête, fidèle et toujours là pour t'écouter quand tu as des problèmes."
+    },
+    {
+        "id": "fam_15",
+        "topic_key": "family",
+        "text": "Est-ce que tu aimerais avoir des enfants à l'avenir ?",
+        "hint": "Discuss future plans for a family.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Combien ?",
+            "Pourquoi penses-tu que c'est une grande responsabilité ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "enfants",
+                "en": "children"
+            },
+            {
+                "fr": "responsabilité",
+                "en": "responsibility"
+            }
+        ],
+        "model_answer": "Oui, plus tard, j'aimerais avoir deux enfants car j'aime beaucoup la vie de famille."
+    },
+    {
+        "id": "fam_16",
+        "topic_key": "family",
+        "text": "Parle-moi d'une dispute que tu as eue récemment.",
+        "hint": "Describe a recent argument (past tense).",
+        "difficulty": 3,
+        "follow_ups": [
+            "C'était avec qui ?",
+            "Comment avez-vous résolu le problème ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "dispute",
+                "en": "argument"
+            },
+            {
+                "fr": "récemment",
+                "en": "recently"
+            }
+        ],
+        "model_answer": "Récemment, je me suis disputé avec mon frère parce qu'il a pris mes écouteurs sans me demander."
+    },
+    {
+        "id": "fam_17",
+        "topic_key": "family",
+        "text": "Que penses-tu des familles nombreuses ?",
+        "hint": "Opinions on large families.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Est-ce bruyant ?",
+            "Quels sont les avantages ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "famille nombreuse",
+                "en": "large family"
+            },
+            {
+                "fr": "bruyant",
+                "en": "noisy"
+            }
+        ],
+        "model_answer": "Je pense que les familles nombreuses sont géniales car on ne s'ennuie jamais, même si c'est parfois un peu bruyant."
+    },
+    {
+        "id": "fam_18",
+        "topic_key": "family",
+        "text": "Comment as-tu fêté ton dernier anniversaire ?",
+        "hint": "Describe your last birthday celebration.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Quels cadeaux as-tu reçus ?",
+            "Qui était invité ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "anniversaire",
+                "en": "birthday"
+            },
+            {
+                "fr": "fêter",
+                "en": "to celebrate"
+            }
+        ],
+        "model_answer": "Pour mon dernier anniversaire, j'ai organisé une petite fête chez moi avec mes meilleurs amis et nous avons mangé un gros gâteau."
+    },
+    {
+        "id": "fam_19",
+        "topic_key": "family",
+        "text": "Est-ce important de manger ensemble en famille ?",
+        "hint": "Importance of family meals.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Le faites-vous tous les jours ?",
+            "De quoi parlez-vous ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "manger ensemble",
+                "en": "to eat together"
+            },
+            {
+                "fr": "discuter",
+                "en": "to discuss"
+            }
+        ],
+        "model_answer": "Oui, c'est très important car c'est le moment où on peut discuter de notre journée et rester soudés."
+    },
+    {
+        "id": "fam_20",
+        "topic_key": "family",
+        "text": "As-tu un animal domestique ?",
+        "hint": "Talk about pets.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Comment s'appelle-t-il ?",
+            "Qui s'en occupe ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "animal domestique",
+                "en": "pet"
+            },
+            {
+                "fr": "s'occuper de",
+                "en": "to look after"
+            }
+        ],
+        "model_answer": "Oui, j'ai un chat qui s'appelle Minou. C'est moi qui m'en occupe et qui lui donne à manger."
+    },
+    {
+        "id": "fam_21",
+        "topic_key": "family",
+        "text": "Que ferais-tu si ton ami avait un problème ?",
+        "hint": "Hypothetical situation helping a friend.",
+        "difficulty": 3,
+        "follow_ups": [
+            "L'écouterais-tu ?",
+            "Lui donnerais-tu des conseils ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "conseil",
+                "en": "advice"
+            },
+            {
+                "fr": "aider",
+                "en": "to help"
+            }
+        ],
+        "model_answer": "Si mon ami avait un problème, je l'écouterais attentivement et j'essaierais de lui donner les meilleurs conseils possibles."
+    },
+    {
+        "id": "fam_22",
+        "topic_key": "family",
+        "text": "Décris une personne que tu admires dans ta famille.",
+        "hint": "Describe a family member you admire.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Pourquoi l'admires-tu ?",
+            "Que fait-elle dans la vie ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "admirer",
+                "en": "to admire"
+            },
+            {
+                "fr": "travailleur",
+                "en": "hard-working"
+            }
+        ],
+        "model_answer": "J'admire beaucoup mon grand-père parce qu'il est très sage et il a travaillé dur toute sa vie."
+    },
+    {
+        "id": "hol_09",
+        "topic_key": "holidays",
+        "text": "Où aimes-tu passer tes vacances ?",
+        "hint": "Discuss your favorite holiday destinations.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Préfères-tu la mer ou la montagne ?",
+            "Pourquoi ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "vacances",
+                "en": "holidays"
+            },
+            {
+                "fr": "destination",
+                "en": "destination"
+            }
+        ],
+        "model_answer": "J'aime passer mes vacances au bord de la mer car j'adore nager et me bronzer sur la plage."
+    },
+    {
+        "id": "hol_10",
+        "topic_key": "holidays",
+        "text": "Où es-tu allé en vacances l'année dernière ?",
+        "hint": "Describe your last holiday (past tense).",
+        "difficulty": 2,
+        "follow_ups": [
+            "Comment as-tu voyagé ?",
+            "Qu'est-ce que tu as visité ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "l'année dernière",
+                "en": "last year"
+            },
+            {
+                "fr": "visiter",
+                "en": "to visit"
+            }
+        ],
+        "model_answer": "L'année dernière, je suis allé en Espagne avec ma famille. Nous avons voyagé en avion et nous avons visité Barcelone."
+    },
+    {
+        "id": "hol_11",
+        "topic_key": "holidays",
+        "text": "Parle-moi d'un incident qui s'est produit en vacances.",
+        "hint": "Describe a holiday problem/incident.",
+        "difficulty": 3,
+        "follow_ups": [
+            "As-tu perdu quelque chose ?",
+            "Comment as-tu résolu le problème ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "perdre",
+                "en": "to lose"
+            },
+            {
+                "fr": "incident",
+                "en": "incident"
+            }
+        ],
+        "model_answer": "Une fois, j'ai perdu mon sac à dos dans le train. C'était stressant mais heureusement le contrôleur l'a retrouvé."
+    },
+    {
+        "id": "hol_12",
+        "topic_key": "holidays",
+        "text": "Comment seraient tes vacances idéales ?",
+        "hint": "Describe your ideal holiday (conditional).",
+        "difficulty": 3,
+        "follow_ups": [
+            "Avec qui partirais-tu ?",
+            "Où logerais-tu ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "idéal",
+                "en": "ideal"
+            },
+            {
+                "fr": "loger",
+                "en": "to stay/lodge"
+            }
+        ],
+        "model_answer": "Mes vacances idéales seraient un voyage autour du monde avec mes amis, où nous logerions dans des hôtels de luxe."
+    },
+    {
+        "id": "hol_13",
+        "topic_key": "holidays",
+        "text": "Préfères-tu les vacances actives ou relaxantes ?",
+        "hint": "Compare active vs relaxing holidays.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Aimes-tu faire du sport ?",
+            "Ou préfères-tu lire au bord de la piscine ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "relaxant",
+                "en": "relaxing"
+            },
+            {
+                "fr": "actif",
+                "en": "active"
+            }
+        ],
+        "model_answer": "Je préfère les vacances actives car j'aime découvrir de nouveaux endroits et faire de la randonnée."
+    },
+    {
+        "id": "hol_14",
+        "topic_key": "holidays",
+        "text": "Qu'est-ce que tu vas faire pendant les prochaines vacances ?",
+        "hint": "Describe upcoming holiday plans (future).",
+        "difficulty": 2,
+        "follow_ups": [
+            "Où vas-tu aller ?",
+            "Combien de temps vas-tu rester ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "prochaines vacances",
+                "en": "next holidays"
+            },
+            {
+                "fr": "séjour",
+                "en": "stay"
+            }
+        ],
+        "model_answer": "Pendant les prochaines vacances, je vais aller en France pour améliorer mon français et voir la Tour Eiffel."
+    },
+    {
+        "id": "hol_15",
+        "topic_key": "holidays",
+        "text": "Pourquoi les vacances sont-elles importantes ?",
+        "hint": "Discuss the importance of holidays.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Est-ce pour se reposer ?",
+            "Pour découvrir de nouvelles cultures ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "important",
+                "en": "important"
+            },
+            {
+                "fr": "se reposer",
+                "en": "to rest"
+            }
+        ],
+        "model_answer": "Les vacances sont importantes pour se reposer du stress de l'école et pour passer du temps de qualité avec ses proches."
+    },
+    {
+        "id": "hol_16",
+        "topic_key": "holidays",
+        "text": "Préfères-tu partir avec ta famille ou tes amis ?",
+        "hint": "Holiday companions preference.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Est-ce plus amusant avec des amis ?",
+            "Qui paie pour les vacances ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "compagnon",
+                "en": "companion"
+            },
+            {
+                "fr": "s'amuser",
+                "en": "to have fun"
+            }
+        ],
+        "model_answer": "Je préfère partir avec mes amis car nous avons plus de liberté pour sortir le soir et nous amuser."
+    },
+    {
+        "id": "hol_17",
+        "topic_key": "holidays",
+        "text": "Qu'est-ce que tu aimes faire quand il pleut en vacances ?",
+        "hint": "Activities during bad weather on holiday.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Vas-tu au musée ?",
+            "Restes-tu à l'hôtel ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "pleuvoir",
+                "en": "to rain"
+            },
+            {
+                "fr": "musée",
+                "en": "museum"
+            }
+        ],
+        "model_answer": "S'il pleut, j'aime aller au cinéma ou visiter des musées pour découvrir l'histoire locale."
+    },
+    {
+        "id": "hol_18",
+        "topic_key": "holidays",
+        "text": "Quel est le pays que tu aimerais le plus visiter et pourquoi ?",
+        "hint": "Country you'd most like to visit.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Qu'est-ce qu'il y a à voir là-bas ?",
+            "Connais-tu la cuisine locale ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "pays",
+                "en": "country"
+            },
+            {
+                "fr": "visiter",
+                "en": "to visit"
+            }
+        ],
+        "model_answer": "J'aimerais beaucoup visiter le Japon car je suis fasciné par leur culture et j'adore les sushis."
+    },
+    {
+        "id": "hol_19",
+        "topic_key": "holidays",
+        "text": "Décris ton logement de vacances préféré.",
+        "hint": "Describe preferred holiday accommodation.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Un hôtel, un camping ou un appartement ?",
+            "Quels services sont importants ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "logement",
+                "en": "accommodation"
+            },
+            {
+                "fr": "camping",
+                "en": "camping"
+            }
+        ],
+        "model_answer": "Je préfère loger dans un hôtel avec une piscine car c'est plus confortable et il y a souvent un bon petit-déjeuner."
+    },
+    {
+        "id": "hol_20",
+        "topic_key": "holidays",
+        "text": "As-tu déjà fait du camping ? C'était comment ?",
+        "hint": "Discuss camping experience.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Est-ce que tu aimes dormir sous une tente ?",
+            "Quels sont les inconvénients ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "tente",
+                "en": "tent"
+            },
+            {
+                "fr": "aventure",
+                "en": "adventure"
+            }
+        ],
+        "model_answer": "Oui, j'ai fait du camping l'été dernier. C'était une belle aventure, même si les lits n'étaient pas très confortables."
+    },
+    {
+        "id": "hol_21",
+        "topic_key": "holidays",
+        "text": "Quel est le meilleur souvenir de vacances que tu as ?",
+        "hint": "Share a favorite holiday memory.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Où étais-tu ?",
+            "Pourquoi était-ce si spécial ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "souvenir",
+                "en": "memory"
+            },
+            {
+                "fr": "inoubliable",
+                "en": "unforgettable"
+            }
+        ],
+        "model_answer": "Mon meilleur souvenir est quand j'ai vu des dauphins en mer lors d'un voyage en Grèce. C'était inoubliable !"
+    },
+    {
+        "id": "hol_22",
+        "topic_key": "holidays",
+        "text": "Préfères-tu les vacances en hiver ou en été ?",
+        "hint": "Winter vs Summer holidays.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Aimes-tu le ski ?",
+            "Aimes-tu la chaleur ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "hiver",
+                "en": "winter"
+            },
+            {
+                "fr": "été",
+                "en": "summer"
+            }
+        ],
+        "model_answer": "Je préfère les vacances en été car j'aime la chaleur et j'adore passer mes journées dehors."
+    },
+    {
+        "id": "hom_08",
+        "topic_key": "home",
+        "text": "Où habites-tu exactement ?",
+        "hint": "Describe your location.",
+        "difficulty": 1,
+        "follow_ups": [
+            "C'est une ville ou un village ?",
+            "Est-ce que c'est calme ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "habiter",
+                "en": "to live"
+            },
+            {
+                "fr": "banlieue",
+                "en": "suburbs"
+            }
+        ],
+        "model_answer": "J'habite dans une maison individuelle en banlieue de Londres. C'est un quartier assez calme et vert."
+    },
+    {
+        "id": "hom_09",
+        "topic_key": "home",
+        "text": "Décris ta maison ou ton appartement.",
+        "hint": "Provide a description of your home.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Combien de pièces y a-t-il ?",
+            "As-tu un jardin ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "pièce",
+                "en": "room"
+            },
+            {
+                "fr": "étage",
+                "en": "floor/story"
+            }
+        ],
+        "model_answer": "Ma maison a deux étages et six pièces. Il y a un grand salon, une cuisine moderne et trois chambres."
+    },
+    {
+        "id": "hom_10",
+        "topic_key": "home",
+        "text": "Quelle est ta pièce préférée et pourquoi ?",
+        "hint": "Discuss your favorite room.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Qu'est-ce qu'il y a dans cette pièce ?",
+            "Que fais-tu là-bas ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "préféré",
+                "en": "favorite"
+            },
+            {
+                "fr": "se détendre",
+                "en": "to relax"
+            }
+        ],
+        "model_answer": "Ma pièce préférée est ma chambre parce que c'est là que je peux me détendre et écouter de la musique tranquillement."
+    },
+    {
+        "id": "hom_11",
+        "topic_key": "home",
+        "text": "Comment est ta chambre ?",
+        "hint": "Describe your bedroom.",
+        "difficulty": 1,
+        "follow_ups": [
+            "De quelle couleur sont les murs ?",
+            "Est-ce que tu la partages ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "lit",
+                "en": "bed"
+            },
+            {
+                "fr": "étagère",
+                "en": "shelf"
+            }
+        ],
+        "model_answer": "Ma chambre est assez petite mais très confortable. Les murs sont bleus et j'ai un grand bureau sous la fenêtre."
+    },
+    {
+        "id": "hom_12",
+        "topic_key": "home",
+        "text": "Où aimerais-tu habiter plus tard ?",
+        "hint": "Discuss future housing plans (conditional).",
+        "difficulty": 2,
+        "follow_ups": [
+            "À la campagne ou en ville ?",
+            "Dans quel pays ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "plus tard",
+                "en": "later/in the future"
+            },
+            {
+                "fr": "appartement",
+                "en": "apartment"
+            }
+        ],
+        "model_answer": "Plus tard, j'aimerais habiter dans un appartement moderne à Paris pour être proche des musées et des cafés."
+    },
+    {
+        "id": "hom_13",
+        "topic_key": "home",
+        "text": "Qu'est-ce qu'il y a à faire dans ta ville ?",
+        "hint": "Describe activities in your town.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Y a-t-il un cinéma ?",
+            "Où les jeunes sortent-ils ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "centre-ville",
+                "en": "town centre"
+            },
+            {
+                "fr": "quartier",
+                "en": "neighborhood"
+            }
+        ],
+        "model_answer": "Dans ma ville, il y a beaucoup de choses à faire. On peut aller au centre commercial, au parc ou à la piscine municipale."
+    },
+    {
+        "id": "hom_14",
+        "topic_key": "home",
+        "text": "Quels sont les avantages de vivre à la campagne ?",
+        "hint": "Pros of living in the countryside.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Est-ce moins pollué ?",
+            "Y a-t-il plus de calme ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "campagne",
+                "en": "countryside"
+            },
+            {
+                "fr": "nature",
+                "en": "nature"
+            }
+        ],
+        "model_answer": "Vivre à la campagne est génial car l'air est pur, c'est très calme et on est entouré par la nature."
+    },
+    {
+        "id": "hom_15",
+        "topic_key": "home",
+        "text": "Quels sont les inconvénients de vivre en ville ?",
+        "hint": "Cons of living in a city.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Y a-t-il trop de bruit ?",
+            "La vie est-elle plus chère ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "bruit",
+                "en": "noise"
+            },
+            {
+                "fr": "embouteillage",
+                "en": "traffic jam"
+            }
+        ],
+        "model_answer": "En ville, il y a souvent trop de bruit et de pollution à cause des voitures et des embouteillages constants."
+    },
+    {
+        "id": "hom_16",
+        "topic_key": "home",
+        "text": "Si tu pouvais changer quelque chose dans ta maison, que ferais-tu ?",
+        "hint": "Hypothetical changes to your home.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Ajouterais-tu une piscine ?",
+            "Agrandirais-tu ta chambre ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "changer",
+                "en": "to change"
+            },
+            {
+                "fr": "agrandir",
+                "en": "to enlarge/make bigger"
+            }
+        ],
+        "model_answer": "Si je pouvais, j'agrandirais ma chambre et j'ajouterais une salle de jeux avec une grande télévision."
+    },
+    {
+        "id": "hom_17",
+        "topic_key": "home",
+        "text": "Comment est ta ville pour les touristes ?",
+        "hint": "Town's appeal for tourists.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Quels monuments faut-il visiter ?",
+            "Y a-t-il de bons restaurants ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "touriste",
+                "en": "tourist"
+            },
+            {
+                "fr": "monument",
+                "en": "monument/landmark"
+            }
+        ],
+        "model_answer": "Ma ville est très accueillante pour les touristes grâce à sa vieille église historique et ses nombreux petits cafés."
+    },
+    {
+        "id": "hom_18",
+        "topic_key": "home",
+        "text": "Que fais-tu pour aider à la maison ?",
+        "hint": "Household chores you do.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Est-ce que tu fais ton lit ?",
+            "Qui fait la cuisine ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "tâches ménagères",
+                "en": "household chores"
+            },
+            {
+                "fr": "débarrasser la table",
+                "en": "to clear the table"
+            }
+        ],
+        "model_answer": "Pour aider, je débarrasse la table après le dîner et je range ma chambre tous les samedis matin."
+    },
+    {
+        "id": "hom_19",
+        "topic_key": "home",
+        "text": "Décris ton quartier.",
+        "hint": "Describe your neighborhood.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Est-ce qu'il y a des magasins ?",
+            "Est-ce sécurisé ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "quartier",
+                "en": "neighborhood"
+            },
+            {
+                "fr": "voisin",
+                "en": "neighbor"
+            }
+        ],
+        "model_answer": "Mon quartier est très agréable et fleuri. Mes voisins sont sympathiques et il y a une boulangerie juste à côté."
+    },
+    {
+        "id": "hom_20",
+        "topic_key": "home",
+        "text": "Comment est le transport public dans ta ville ?",
+        "hint": "Discuss public transport.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Prends-tu le bus ou le métro ?",
+            "Est-ce que c'est cher ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "transport en commun",
+                "en": "public transport"
+            },
+            {
+                "fr": "efficace",
+                "en": "efficient"
+            }
+        ],
+        "model_answer": "Le transport en commun est assez efficace. Les bus passent toutes les dix minutes, ce qui est très pratique."
+    },
+    {
+        "id": "hom_21",
+        "topic_key": "home",
+        "text": "Où habitais-tu quand tu étais petit ?",
+        "hint": "Describe where you lived as a child (imperfect).",
+        "difficulty": 2,
+        "follow_ups": [
+            "C'était différent de maintenant ?",
+            "Avais-tu un grand jardin ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "quand j'étais petit",
+                "en": "when I was little"
+            },
+            {
+                "fr": "souvenir",
+                "en": "memory"
+            }
+        ],
+        "model_answer": "Quand j'étais petit, j'habitais dans une petite ferme à la campagne. C'était très différent de ma vie actuelle en ville."
+    },
+    {
+        "id": "fut_08",
+        "topic_key": "future",
+        "text": "Qu'est-ce que tu voudrais faire comme métier ?",
+        "hint": "Future career plans.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Pourquoi ?",
+            "Quelles études dois-tu faire ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "métier",
+                "en": "job/profession"
+            },
+            {
+                "fr": "rêve",
+                "en": "dream"
+            }
+        ],
+        "model_answer": "Je voudrais devenir médecin car j'aime aider les gens et je trouve le corps humain fascinant."
+    },
+    {
+        "id": "fut_09",
+        "topic_key": "future",
+        "text": "Est-ce que tu vas aller à l'université ?",
+        "hint": "University plans.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Quelle matière vas-tu étudier ?",
+            "Où aimerais-tu aller ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "université",
+                "en": "university"
+            },
+            {
+                "fr": "diplôme",
+                "en": "degree/diploma"
+            }
+        ],
+        "model_answer": "Oui, je compte aller à l'université l'année prochaine pour obtenir un diplôme en ingénierie."
+    },
+    {
+        "id": "fut_10",
+        "topic_key": "future",
+        "text": "Est-ce que tu aimerais travailler à l'étranger ?",
+        "hint": "Working abroad preference.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Dans quel pays ?",
+            "Quels seraient les avantages ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "à l'étranger",
+                "en": "abroad"
+            },
+            {
+                "fr": "expérience",
+                "en": "experience"
+            }
+        ],
+        "model_answer": "J'aimerais beaucoup travailler au Canada pour découvrir une nouvelle culture et améliorer mon anglais."
+    },
+    {
+        "id": "fut_11",
+        "topic_key": "future",
+        "text": "Comment sera ta vie dans dix ans ?",
+        "hint": "Describe your life in 10 years (future tense).",
+        "difficulty": 3,
+        "follow_ups": [
+            "Seras-tu marié(e) ?",
+            "Où habiteras-tu ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "dans dix ans",
+                "en": "in ten years"
+            },
+            {
+                "fr": "réussir",
+                "en": "to succeed"
+            }
+        ],
+        "model_answer": "Dans dix ans, j'espère que j'aurai un bon travail, que je serai marié et que j'habiterai dans une grande maison."
+    },
+    {
+        "id": "fut_12",
+        "topic_key": "future",
+        "text": "Est-il plus important de gagner beaucoup d'argent ou d'être heureux dans son travail ?",
+        "hint": "Money vs happiness in work.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Pourquoi ?",
+            "Peut-on avoir les deux ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "gagner de l'argent",
+                "en": "to earn money"
+            },
+            {
+                "fr": "épanoui",
+                "en": "fulfilled"
+            }
+        ],
+        "model_answer": "À mon avis, il est plus important d'être heureux et épanoui dans son travail que de simplement gagner beaucoup d'argent."
+    },
+    {
+        "id": "fut_13",
+        "topic_key": "future",
+        "text": "Quel serait ton emploi de rêve ?",
+        "hint": "Describe your dream job (conditional).",
+        "difficulty": 3,
+        "follow_ups": [
+            "Travaillerais-tu seul ou en équipe ?",
+            "Quels seraient tes horaires ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "emploi de rêve",
+                "en": "dream job"
+            },
+            {
+                "fr": "créatif",
+                "en": "creative"
+            }
+        ],
+        "model_answer": "Mon emploi de rêve serait d'être photographe pour un magazine de voyage, car ce serait très créatif et passionnant."
+    },
+    {
+        "id": "fut_14",
+        "topic_key": "future",
+        "text": "Aimerais-tu prendre une année sabbatique ?",
+        "hint": "Gap year plans.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Que ferais-tu pendant cette année ?",
+            "Où voyagerais-tu ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "année sabbatique",
+                "en": "gap year"
+            },
+            {
+                "fr": "découvrir",
+                "en": "to discover"
+            }
+        ],
+        "model_answer": "Oui, j'aimerais prendre une année sabbatique pour voyager en Asie et découvrir de nouvelles façons de vivre."
+    },
+    {
+        "id": "fut_15",
+        "topic_key": "future",
+        "text": "Préférerais-tu travailler dans un bureau ou en plein air ?",
+        "hint": "Office work vs outdoor work.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Pourquoi ?",
+            "Quels sont les inconvénients du bureau ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "en plein air",
+                "en": "outdoors"
+            },
+            {
+                "fr": "bureau",
+                "en": "office"
+            }
+        ],
+        "model_answer": "Je préférerais travailler en plein air car je déteste rester assis toute la journée devant un ordinateur."
+    },
+    {
+        "id": "fut_16",
+        "topic_key": "future",
+        "text": "Est-ce que tu veux te marier plus tard ?",
+        "hint": "Marriage plans.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Pourquoi ou pourquoi pas ?",
+            "À quel âge penses-tu que c'est l'idéal ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "se marier",
+                "en": "to get married"
+            },
+            {
+                "fr": "engagement",
+                "en": "commitment"
+            }
+        ],
+        "model_answer": "Oui, j'aimerais me marier plus tard car je pense que c'est un bel engagement envers la personne qu'on aime."
+    },
+    {
+        "id": "fut_17",
+        "topic_key": "future",
+        "text": "Quelles sont les compétences importantes pour le futur ?",
+        "hint": "Important skills for the future.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Les langues sont-elles essentielles ?",
+            "Et l'informatique ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "compétences",
+                "en": "skills"
+            },
+            {
+                "fr": "essentiel",
+                "en": "essential"
+            }
+        ],
+        "model_answer": "Je pense que parler plusieurs langues et maîtriser l'informatique sont des compétences essentielles pour réussir à l'avenir."
+    },
+    {
+        "id": "fut_18",
+        "topic_key": "future",
+        "text": "As-tu déjà fait un stage en entreprise ?",
+        "hint": "Work experience/internship (past tense).",
+        "difficulty": 2,
+        "follow_ups": [
+            "Où était-ce ?",
+            "Qu'est-ce que tu as appris ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "stage",
+                "en": "work experience/internship"
+            },
+            {
+                "fr": "entreprise",
+                "en": "company"
+            }
+        ],
+        "model_answer": "L'été dernier, j'ai fait un stage dans une banque. J'ai appris comment fonctionne le monde des finances."
+    },
+    {
+        "id": "fut_19",
+        "topic_key": "future",
+        "text": "Quel est l'avantage de faire des études supérieures ?",
+        "hint": "Benefits of higher education.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Est-ce pour avoir un meilleur salaire ?",
+            "Ou pour se spécialiser ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "études supérieures",
+                "en": "higher education"
+            },
+            {
+                "fr": "spécialiser",
+                "en": "to specialize"
+            }
+        ],
+        "model_answer": "L'avantage principal est de pouvoir se spécialiser dans un domaine qu'on aime et d'avoir de meilleures perspectives de carrière."
+    },
+    {
+        "id": "fut_20",
+        "topic_key": "future",
+        "text": "Est-ce que tu penses que les robots vont remplacer les humains au travail ?",
+        "hint": "Robots replacing humans in jobs.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Dans quels métiers ?",
+            "Est-ce inquiétant ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "remplacer",
+                "en": "to replace"
+            },
+            {
+                "fr": "intelligence artificielle",
+                "en": "artificial intelligence"
+            }
+        ],
+        "model_answer": "Je pense que les robots vont remplacer certains travaux manuels, mais l'intelligence humaine restera toujours nécessaire pour la créativité."
+    },
+    {
+        "id": "fut_21",
+        "topic_key": "future",
+        "text": "Que feras-tu juste après avoir fini tes examens ?",
+        "hint": "Post-exam plans (future).",
+        "difficulty": 2,
+        "follow_ups": [
+            "Vas-tu faire la fête ?",
+            "Vas-tu dormir beaucoup ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "finir",
+                "en": "to finish"
+            },
+            {
+                "fr": "faire la fête",
+                "en": "to party"
+            }
+        ],
+        "model_answer": "Juste après mes examens, je vais partir en vacances avec mes amis pour fêter la fin de l'année scolaire."
+    },
+    {
+        "id": "foo_08",
+        "topic_key": "food",
+        "text": "Qu'est-ce que tu aimes manger au petit-déjeuner ?",
+        "hint": "Discuss breakfast preferences.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Est-ce que tu bois du café ou du thé ?",
+            "Manges-tu des céréales ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "petit-déjeuner",
+                "en": "breakfast"
+            },
+            {
+                "fr": "croissant",
+                "en": "croissant"
+            }
+        ],
+        "model_answer": "Pour le petit-déjeuner, j'aime manger des tartines avec du beurre et boire un grand verre de jus d'orange."
+    },
+    {
+        "id": "foo_09",
+        "topic_key": "food",
+        "text": "Quel est ton plat préféré et pourquoi ?",
+        "hint": "Describe your favorite dish.",
+        "difficulty": 1,
+        "follow_ups": [
+            "Quels sont les ingrédients ?",
+            "C'est un plat de quel pays ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "plat préféré",
+                "en": "favorite dish"
+            },
+            {
+                "fr": "savoureux",
+                "en": "tasty"
+            }
+        ],
+        "model_answer": "Mon plat préféré est les lasagnes parce que j'adore les pâtes et la sauce tomate savoureuse de ma grand-mère."
+    },
+    {
+        "id": "foo_10",
+        "topic_key": "food",
+        "text": "Est-ce que tu penses que tu manges équilibré ?",
+        "hint": "Discuss healthy eating habits.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Manges-tu assez de fruits et légumes ?",
+            "Évites-tu les fast-foods ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "équilibré",
+                "en": "balanced"
+            },
+            {
+                "fr": "santé",
+                "en": "health"
+            }
+        ],
+        "model_answer": "J'essaie de manger équilibré en incluant des légumes à chaque repas, mais j'aime aussi manger une pizza de temps en temps."
+    },
+    {
+        "id": "foo_11",
+        "topic_key": "food",
+        "text": "Qu'est-ce que tu as mangé hier soir ?",
+        "hint": "Describe yesterday's dinner (past tense).",
+        "difficulty": 2,
+        "follow_ups": [
+            "C'était bon ?",
+            "Qui a préparé le repas ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "hier soir",
+                "en": "last night"
+            },
+            {
+                "fr": "délicieux",
+                "en": "delicious"
+            }
+        ],
+        "model_answer": "Hier soir, nous avons mangé du poulet rôti avec des pommes de terre au four. C'était délicieux !"
+    },
+    {
+        "id": "foo_12",
+        "topic_key": "food",
+        "text": "Préfères-tu manger au restaurant ou à la maison ?",
+        "hint": "Eating out vs eating at home.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Pourquoi ?",
+            "Quel genre de restaurant aimes-tu ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "restaurant",
+                "en": "restaurant"
+            },
+            {
+                "fr": "ambiance",
+                "en": "atmosphere"
+            }
+        ],
+        "model_answer": "Je préfère manger au restaurant car j'aime l'ambiance et découvrir des plats que je ne sais pas cuisiner moi-même."
+    },
+    {
+        "id": "foo_13",
+        "topic_key": "food",
+        "text": "Est-ce que tu sais cuisiner ?",
+        "hint": "Discuss your cooking skills.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Quelle est ta spécialité ?",
+            "Qui t'a appris à cuisiner ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "cuisiner",
+                "en": "to cook"
+            },
+            {
+                "fr": "recette",
+                "en": "recipe"
+            }
+        ],
+        "model_answer": "Oui, je sais cuisiner quelques plats simples comme des pâtes ou des omelettes. C'est mon père qui m'a appris."
+    },
+    {
+        "id": "foo_14",
+        "topic_key": "food",
+        "text": "Que penses-tu du fast-food ?",
+        "hint": "Opinions on fast food.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Est-ce mauvais pour la santé ?",
+            "En manges-tu souvent ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "restauration rapide",
+                "en": "fast food"
+            },
+            {
+                "fr": "gras",
+                "en": "fatty/greasy"
+            }
+        ],
+        "model_answer": "Je pense que le fast-food est bon mais trop gras. Il ne faut pas en manger trop souvent pour rester en bonne santé."
+    },
+    {
+        "id": "foo_15",
+        "topic_key": "food",
+        "text": "As-tu déjà goûté à la cuisine française ? Qu'en penses-tu ?",
+        "hint": "Discuss French cuisine experience.",
+        "difficulty": 2,
+        "follow_ups": [
+            "As-tu mangé des escargots ?",
+            "Qu'est-ce que tu as préféré ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "goûter",
+                "en": "to taste"
+            },
+            {
+                "fr": "gastronomie",
+                "en": "gastronomy"
+            }
+        ],
+        "model_answer": "Oui, j'ai goûté aux crêpes et aux quiches. La gastronomie française est très raffinée et variée."
+    },
+    {
+        "id": "foo_16",
+        "topic_key": "food",
+        "text": "Qu'est-ce que tu vas manger pour fêter ton prochain anniversaire ?",
+        "hint": "Birthday meal plans (future).",
+        "difficulty": 2,
+        "follow_ups": [
+            "Vas-tu commander un gâteau ?",
+            "Où vas-tu manger ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "anniversaire",
+                "en": "birthday"
+            },
+            {
+                "fr": "commander",
+                "en": "to order"
+            }
+        ],
+        "model_answer": "Pour mon anniversaire, je vais inviter mes amis dans une pizzeria et nous allons commander un énorme gâteau au chocolat."
+    },
+    {
+        "id": "foo_17",
+        "topic_key": "food",
+        "text": "Est-il important de manger des produits locaux ?",
+        "hint": "Importance of local produce.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Est-ce meilleur pour l'environnement ?",
+            "Est-ce plus frais ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "produits locaux",
+                "en": "local products"
+            },
+            {
+                "fr": "frais",
+                "en": "fresh"
+            }
+        ],
+        "model_answer": "Oui, c'est important car les produits locaux sont plus frais et cela réduit le transport, ce qui protège l'environnement."
+    },
+    {
+        "id": "foo_18",
+        "topic_key": "food",
+        "text": "Que penses-tu du végétarisme ?",
+        "hint": "Opinions on vegetarianism.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Est-ce une bonne idée pour la planète ?",
+            "Pourrais-tu devenir végétarien ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "végétarien",
+                "en": "vegetarian"
+            },
+            {
+                "fr": "viande",
+                "en": "meat"
+            }
+        ],
+        "model_answer": "Je respecte les végétariens et je pense que c'est bien pour la planète de manger moins de viande, même si j'aime beaucoup le poulet."
+    },
+    {
+        "id": "foo_19",
+        "topic_key": "food",
+        "text": "Quelle boisson préfères-tu quand il fait chaud ?",
+        "hint": "Drink preference in hot weather.",
+        "difficulty": 1,
+        "follow_ups": [
+            "De la limonade ou de l'eau ?",
+            "Ajoutes-tu des glaçons ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "boisson",
+                "en": "drink"
+            },
+            {
+                "fr": "glaçon",
+                "en": "ice cube"
+            }
+        ],
+        "model_answer": "Quand il fait chaud, je préfère boire de la limonade bien fraîche avec beaucoup de glaçons."
+    },
+    {
+        "id": "foo_20",
+        "topic_key": "food",
+        "text": "Décris un repas mémorable que tu as eu.",
+        "hint": "Describe a memorable meal (past tense).",
+        "difficulty": 3,
+        "follow_ups": [
+            "Pourquoi était-ce spécial ?",
+            "Avec qui étais-tu ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "mémorable",
+                "en": "memorable"
+            },
+            {
+                "fr": "ambiance",
+                "en": "atmosphere"
+            }
+        ],
+        "model_answer": "Je me souviens d'un dîner au bord de la plage l'été dernier. Le poisson était excellent et le coucher de soleil était magnifique."
+    },
+    {
+        "id": "foo_21",
+        "topic_key": "food",
+        "text": "Si tu pouvais manger n'importe quoi ce soir, que choisirais-tu ?",
+        "hint": "Hypothetical choice of any food tonight.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Un plat exotique ?",
+            "Un dessert gourmand ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "n'importe quoi",
+                "en": "anything"
+            },
+            {
+                "fr": "gourmand",
+                "en": "greedy/gourmet"
+            }
+        ],
+        "model_answer": "Si je pouvais, je choisirais un plateau de sushis variés suivi d'un fondant au chocolat avec de la glace à la vanille."
+    },
+    {
+        "id": "env_09",
+        "topic_key": "environment",
+        "text": "Que fais-tu pour protéger l'environnement chez toi ?",
+        "hint": "Actions for environmental protection at home.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Est-ce que tu recycles ?",
+            "Éteins-tu les lumières ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "protéger",
+                "en": "to protect"
+            },
+            {
+                "fr": "recycler",
+                "en": "to recycle"
+            }
+        ],
+        "model_answer": "Chez moi, je recycle le plastique et le papier, et j'éteins toujours les lumières quand je quitte une pièce."
+    },
+    {
+        "id": "env_10",
+        "topic_key": "environment",
+        "text": "Quels sont les plus grands problèmes environnementaux aujourd'hui ?",
+        "hint": "Discuss major environmental problems.",
+        "difficulty": 2,
+        "follow_ups": [
+            "La pollution ? Le réchauffement climatique ?",
+            "Lequel est le plus grave ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "problème",
+                "en": "problem"
+            },
+            {
+                "fr": "réchauffement climatique",
+                "en": "global warming"
+            }
+        ],
+        "model_answer": "À mon avis, le réchauffement climatique et la pollution des océans sont les problèmes les plus graves de notre époque."
+    },
+    {
+        "id": "env_11",
+        "topic_key": "environment",
+        "text": "Est-ce que tu utilises les transports en commun pour aider la planète ?",
+        "hint": "Public transport use for environmental reasons.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Prends-tu le bus ou le vélo ?",
+            "Est-ce que tes parents utilisent moins la voiture ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "transport en commun",
+                "en": "public transport"
+            },
+            {
+                "fr": "réduire",
+                "en": "to reduce"
+            }
+        ],
+        "model_answer": "Oui, je prends souvent le bus pour aller à l'école afin de réduire mon empreinte carbone."
+    },
+    {
+        "id": "env_12",
+        "topic_key": "environment",
+        "text": "Qu'est-ce que ton école fait pour l'environnement ?",
+        "hint": "School's environmental actions.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Y a-t-il des poubelles de recyclage ?",
+            "Avez-vous un club écologie ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "écologie",
+                "en": "ecology"
+            },
+            {
+                "fr": "sensibiliser",
+                "en": "to raise awareness"
+            }
+        ],
+        "model_answer": "Mon école a installé des poubelles de tri et nous avons un club écologie qui organise des journées de nettoyage."
+    },
+    {
+        "id": "env_13",
+        "topic_key": "environment",
+        "text": "Que penses-tu des sacs en plastique ?",
+        "hint": "Opinions on plastic bags.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Sont-ils dangereux pour les animaux ?",
+            "Utilises-tu des sacs réutilisables ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "sac en plastique",
+                "en": "plastic bag"
+            },
+            {
+                "fr": "réutilisable",
+                "en": "reusable"
+            }
+        ],
+        "model_answer": "Je pense que les sacs en plastique sont une catastrophe pour les animaux marins. J'utilise toujours des sacs en tissu réutilisables."
+    },
+    {
+        "id": "env_14",
+        "topic_key": "environment",
+        "text": "Comment pourrait-on encourager les gens à recycler davantage ?",
+        "hint": "Ways to encourage recycling.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Faut-il plus d'informations ?",
+            "Faut-il des amendes ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "encourager",
+                "en": "to encourage"
+            },
+            {
+                "fr": "davantage",
+                "en": "more"
+            }
+        ],
+        "model_answer": "On pourrait encourager les gens en simplifiant le système de tri et en faisant plus de campagnes d'information à la télévision."
+    },
+    {
+        "id": "env_15",
+        "topic_key": "environment",
+        "text": "Est-il important d'économiser l'eau ?",
+        "hint": "Importance of saving water.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Comment fais-tu ?",
+            "Prends-tu des douches courtes ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "économiser",
+                "en": "to save"
+            },
+            {
+                "fr": "ressource",
+                "en": "resource"
+            }
+        ],
+        "model_answer": "C'est vital d'économiser l'eau car c'est une ressource limitée. Je ferme toujours le robinet quand je me brosse les dents."
+    },
+    {
+        "id": "env_16",
+        "topic_key": "environment",
+        "text": "Que vas-tu faire à l'avenir pour être plus écologique ?",
+        "hint": "Future ecological plans.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Vas-tu acheter une voiture électrique ?",
+            "Vas-tu consommer moins de plastique ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "écologique",
+                "en": "ecological"
+            },
+            {
+                "fr": "consommer",
+                "en": "to consume"
+            }
+        ],
+        "model_answer": "À l'avenir, j'aimerais acheter une voiture électrique et consommer plus de produits bio et sans emballage."
+    },
+    {
+        "id": "env_17",
+        "topic_key": "environment",
+        "text": "As-tu déjà participé à un projet écologique ?",
+        "hint": "Participation in an ecological project (past tense).",
+        "difficulty": 3,
+        "follow_ups": [
+            "Qu'as-tu fait ?",
+            "Avec qui ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "participer",
+                "en": "to participate"
+            },
+            {
+                "fr": "nettoyage",
+                "en": "cleaning"
+            }
+        ],
+        "model_answer": "Oui, l'année dernière j'ai participé au nettoyage de la plage de ma ville avec un groupe de bénévoles."
+    },
+    {
+        "id": "env_18",
+        "topic_key": "environment",
+        "text": "Quel est l'impact du tourisme sur l'environnement ?",
+        "hint": "Impact of tourism on the environment.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Est-ce négatif pour la nature ?",
+            "Y a-t-il trop de déchets ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "impact",
+                "en": "impact"
+            },
+            {
+                "fr": "déchet",
+                "en": "waste"
+            }
+        ],
+        "model_answer": "Le tourisme peut être négatif car il génère beaucoup de déchets et augmente la pollution due aux voyages en avion."
+    },
+    {
+        "id": "env_19",
+        "topic_key": "environment",
+        "text": "Que penses-tu de l'énergie solaire ou éolienne ?",
+        "hint": "Opinions on solar or wind energy.",
+        "difficulty": 2,
+        "follow_ups": [
+            "Est-ce la solution pour le futur ?",
+            "Est-ce cher ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "énergie renouvelable",
+                "en": "renewable energy"
+            },
+            {
+                "fr": "éolienne",
+                "en": "wind turbine"
+            }
+        ],
+        "model_answer": "Je pense que les énergies renouvelables sont l'avenir car elles sont propres et ne s'épuisent jamais."
+    },
+    {
+        "id": "env_20",
+        "topic_key": "environment",
+        "text": "Si tu étais ministre de l'Environnement, quelle loi créerais-tu ?",
+        "hint": "Hypothetical law as Environment Minister.",
+        "difficulty": 3,
+        "follow_ups": [
+            "Interdirais-tu les voitures à essence ?",
+            "Protégerais-tu plus de forêts ?"
+        ],
+        "key_vocab": [
+            {
+                "fr": "ministre",
+                "en": "minister"
+            },
+            {
+                "fr": "loi",
+                "en": "law"
+            }
+        ],
+        "model_answer": "Si j'étais ministre, je créerais une loi pour interdire les plastiques à usage unique dans tous les magasins."
+    }
+]

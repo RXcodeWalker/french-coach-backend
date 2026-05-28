@@ -1,0 +1,527 @@
+[
+  {
+    "id": "tc-v24-mj-1-t1",
+    "paper_id": "paper-v24-mj-1",
+    "type": "Topic 1",
+    "name": "Area A: Daily Routine",
+    "question_ids": [
+      "v_24_mj_c1_t1_1",
+      "v_24_mj_c1_t1_2",
+      "v_24_mj_c1_t1_3",
+      "v_24_mj_c1_t1_4",
+      "v_24_mj_c1_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v24-mj-1-t2",
+    "paper_id": "paper-v24-mj-1",
+    "type": "Topic 2",
+    "name": "Area D: Education",
+    "question_ids": [
+      "v_24_mj_c1_t2_1",
+      "v_24_mj_c1_t2_2",
+      "v_24_mj_c1_t2_3",
+      "v_24_mj_c1_t2_4",
+      "v_24_mj_c1_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v24-mj-2-t1",
+    "paper_id": "paper-v24-mj-2",
+    "type": "Topic 1",
+    "name": "Area B: Holidays",
+    "question_ids": [
+      "v_24_mj_c4_t1_1",
+      "v_24_mj_c4_t1_2",
+      "v_24_mj_c4_t1_3",
+      "v_24_mj_c4_t1_4",
+      "v_24_mj_c4_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v24-mj-2-t2",
+    "paper_id": "paper-v24-mj-2",
+    "type": "Topic 2",
+    "name": "Area D: Careers",
+    "question_ids": [
+      "v_24_mj_c4_t2_1",
+      "v_24_mj_c4_t2_2",
+      "v_24_mj_c4_t2_3",
+      "v_24_mj_c4_t2_4",
+      "v_24_mj_c4_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v24-mj-3-t1",
+    "paper_id": "paper-v24-mj-3",
+    "type": "Topic 1",
+    "name": "Area B: Family/Friends",
+    "question_ids": [
+      "v_24_mj_c9_t1_1",
+      "v_24_mj_c9_t1_2",
+      "v_24_mj_c9_t1_3",
+      "v_24_mj_c9_t1_4",
+      "v_24_mj_c9_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v24-mj-3-t2",
+    "paper_id": "paper-v24-mj-3",
+    "type": "Topic 2",
+    "name": "Area C: Environment",
+    "question_ids": [
+      "v_24_mj_c9_t2_1",
+      "v_24_mj_c9_t2_2",
+      "v_24_mj_c9_t2_3",
+      "v_24_mj_c9_t2_4",
+      "v_24_mj_c9_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v23-mj-1-t1",
+    "paper_id": "paper-v23-mj-1",
+    "type": "Topic 1",
+    "name": "Area A: Food/Health",
+    "question_ids": [
+      "v_23_mj_c1_t1_1",
+      "v_23_mj_c1_t1_2",
+      "v_23_mj_c1_t1_3",
+      "v_23_mj_c1_t1_4",
+      "v_23_mj_c1_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v23-mj-1-t2",
+    "paper_id": "paper-v23-mj-1",
+    "type": "Topic 2",
+    "name": "Area C: Town/Region",
+    "question_ids": [
+      "v_23_mj_c1_t2_1",
+      "v_23_mj_c1_t2_2",
+      "v_23_mj_c1_t2_3",
+      "v_23_mj_c1_t2_4",
+      "v_23_mj_c1_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v23-on-1-t1",
+    "paper_id": "paper-v23-on-1",
+    "type": "Topic 1",
+    "name": "Area B: Festivals",
+    "question_ids": [
+      "v_23_on_c1_t1_1",
+      "v_23_on_c1_t1_2",
+      "v_23_on_c1_t1_3",
+      "v_23_on_c1_t1_4",
+      "v_23_on_c1_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v23-on-1-t2",
+    "paper_id": "paper-v23-on-1",
+    "type": "Topic 2",
+    "name": "Area E: Technology",
+    "question_ids": [
+      "v_23_on_c1_t2_1",
+      "v_23_on_c1_t2_2",
+      "v_23_on_c1_t2_3",
+      "v_23_on_c1_t2_4",
+      "v_23_on_c1_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v22-mj-1-t1",
+    "paper_id": "paper-v22-mj-1",
+    "type": "Topic 1",
+    "name": "Area A: Shopping",
+    "question_ids": [
+      "v_22_mj_c1_t1_1",
+      "v_22_mj_c1_t1_2",
+      "v_22_mj_c1_t1_3",
+      "v_22_mj_c1_t1_4",
+      "v_22_mj_c1_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v22-mj-1-t2",
+    "paper_id": "paper-v22-mj-1",
+    "type": "Topic 2",
+    "name": "Area E: World Issues",
+    "question_ids": [
+      "v_22_mj_c1_t2_1",
+      "v_22_mj_c1_t2_2",
+      "v_22_mj_c1_t2_3",
+      "v_22_mj_c1_t2_4",
+      "v_22_mj_c1_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v22-mj-2-t1",
+    "paper_id": "paper-v22-mj-2",
+    "type": "Topic 1",
+    "name": "Area B: Personal Life",
+    "question_ids": [
+      "v_22_mj_c3_t1_1",
+      "v_22_mj_c3_t1_2",
+      "v_22_mj_c3_t1_3",
+      "v_22_mj_c3_t1_4",
+      "v_22_mj_c3_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v22-mj-2-t2",
+    "paper_id": "paper-v22-mj-2",
+    "type": "Topic 2",
+    "name": "Area D: Future Plans",
+    "question_ids": [
+      "v_22_mj_c3_t2_1",
+      "v_22_mj_c3_t2_2",
+      "v_22_mj_c3_t2_3",
+      "v_22_mj_c3_t2_4",
+      "v_22_mj_c3_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v21-on-1-t1",
+    "paper_id": "paper-v21-on-1",
+    "type": "Topic 1",
+    "name": "Area A: Daily Activities",
+    "question_ids": [
+      "v_21_on_c1_t1_1",
+      "v_21_on_c1_t1_2",
+      "v_21_on_c1_t1_3",
+      "v_21_on_c1_t1_4",
+      "v_21_on_c1_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v21-on-1-t2",
+    "paper_id": "paper-v21-on-1",
+    "type": "Topic 2",
+    "name": "Area E: Travel",
+    "question_ids": [
+      "v_21_on_c1_t2_1",
+      "v_21_on_c1_t2_2",
+      "v_21_on_c1_t2_3",
+      "v_21_on_c1_t2_4",
+      "v_21_on_c1_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v24-fm-1-t1",
+    "paper_id": "paper-v24-fm-1",
+    "type": "Topic 1",
+    "name": "Area B: Hobbies",
+    "question_ids": [
+      "v_24_fm_c4_t1_1",
+      "v_24_fm_c4_t1_2",
+      "v_24_fm_c4_t1_3",
+      "v_24_fm_c4_t1_4",
+      "v_24_fm_c4_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v24-fm-1-t2",
+    "paper_id": "paper-v24-fm-1",
+    "type": "Topic 2",
+    "name": "Area C: Local Customs",
+    "question_ids": [
+      "v_24_fm_c4_t2_1",
+      "v_24_fm_c4_t2_2",
+      "v_24_fm_c4_t2_3",
+      "v_24_fm_c4_t2_4",
+      "v_24_fm_c4_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v24-mj-1-alt-t1",
+    "paper_id": "paper-v24-mj-1-alt",
+    "type": "Topic 1",
+    "name": "Area A: Health",
+    "question_ids": [
+      "v_24_mj_c2_t1_1",
+      "v_24_mj_c2_t1_2",
+      "v_24_mj_c2_t1_3",
+      "v_24_mj_c2_t1_4",
+      "v_24_mj_c2_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v24-mj-1-alt-t2",
+    "paper_id": "paper-v24-mj-1-alt",
+    "type": "Topic 2",
+    "name": "Area D: School Life",
+    "question_ids": [
+      "v_24_mj_c2_t2_1",
+      "v_24_mj_c2_t2_2",
+      "v_24_mj_c2_t2_3",
+      "v_24_mj_c2_t2_4",
+      "v_24_mj_c2_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v24-mj-8-alt-t1",
+    "paper_id": "paper-v24-mj-8-alt",
+    "type": "Topic 1",
+    "name": "Area C: Environment",
+    "question_ids": [
+      "v_24_mj_c8_t1_1",
+      "v_24_mj_c8_t1_2",
+      "v_24_mj_c8_t1_3",
+      "v_24_mj_c8_t1_4",
+      "v_24_mj_c8_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v24-mj-8-alt-t2",
+    "paper_id": "paper-v24-mj-8-alt",
+    "type": "Topic 2",
+    "name": "Area E: Global Events",
+    "question_ids": [
+      "v_24_mj_c8_t2_1",
+      "v_24_mj_c8_t2_2",
+      "v_24_mj_c8_t2_3",
+      "v_24_mj_c8_t2_4",
+      "v_24_mj_c8_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v23-mj-5-alt-t1",
+    "paper_id": "paper-v23-mj-5-alt",
+    "type": "Topic 1",
+    "name": "Area B: Occasions",
+    "question_ids": [
+      "v_23_mj_c5_t1_1",
+      "v_23_mj_c5_t1_2",
+      "v_23_mj_c5_t1_3",
+      "v_23_mj_c5_t1_4",
+      "v_23_mj_c5_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v23-mj-5-alt-t2",
+    "paper_id": "paper-v23-mj-5-alt",
+    "type": "Topic 2",
+    "name": "Area D: Careers",
+    "question_ids": [
+      "v_23_mj_c5_t2_1",
+      "v_23_mj_c5_t2_2",
+      "v_23_mj_c5_t2_3",
+      "v_23_mj_c5_t2_4",
+      "v_23_mj_c5_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v23-on-3-alt-t1",
+    "paper_id": "paper-v23-on-3-alt",
+    "type": "Topic 1",
+    "name": "Area A: Daily Routine",
+    "question_ids": [
+      "v_23_on_c3_t1_1",
+      "v_23_on_c3_t1_2",
+      "v_23_on_c3_t1_3",
+      "v_23_on_c3_t1_4",
+      "v_23_on_c3_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v23-on-3-alt-t2",
+    "paper_id": "paper-v23-on-3-alt",
+    "type": "Topic 2",
+    "name": "Area C: Town",
+    "question_ids": [
+      "v_23_on_c3_t2_1",
+      "v_23_on_c3_t2_2",
+      "v_23_on_c3_t2_3",
+      "v_23_on_c3_t2_4",
+      "v_23_on_c3_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v22-mj-2-alt-t1",
+    "paper_id": "paper-v22-mj-2-alt",
+    "type": "Topic 1",
+    "name": "Area B: Holidays",
+    "question_ids": [
+      "v_22_mj_c2_t1_1",
+      "v_22_mj_c2_t1_2",
+      "v_22_mj_c2_t1_3",
+      "v_22_mj_c2_t1_4",
+      "v_22_mj_c2_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v22-mj-2-alt-t2",
+    "paper_id": "paper-v22-mj-2-alt",
+    "type": "Topic 2",
+    "name": "Area D: School",
+    "question_ids": [
+      "v_22_mj_c2_t2_1",
+      "v_22_mj_c2_t2_2",
+      "v_22_mj_c2_t2_3",
+      "v_22_mj_c2_t2_4",
+      "v_22_mj_c2_t2_5"
+    ]
+  },
+  {
+    "id": "tc-v21-sp-1-t1",
+    "paper_id": "paper-v21-sp-1",
+    "type": "Topic 1",
+    "name": "Area B: Family",
+    "question_ids": [
+      "v_21_sp_c1_t1_1",
+      "v_21_sp_c1_t1_2",
+      "v_21_sp_c1_t1_3",
+      "v_21_sp_c1_t1_4",
+      "v_21_sp_c1_t1_5"
+    ]
+  },
+  {
+    "id": "tc-v21-sp-1-t2",
+    "paper_id": "paper-v21-sp-1",
+    "type": "Topic 2",
+    "name": "Area C: Customs",
+    "question_ids": [
+      "v_21_sp_c1_t2_1",
+      "v_21_sp_c1_t2_2",
+      "v_21_sp_c1_t2_3",
+      "v_21_sp_c1_t2_4",
+      "v_21_sp_c1_t2_5"
+    ]
+  },
+  {
+    "id": "topic-24-1-full",
+    "paper_id": "topic-24-1",
+    "type": "Topic 1",
+    "group": "A",
+    "theme": "Vie personnelle et relations familiales",
+    "scenario": "Conversation sur votre famille et vos relations avec les membres de votre famille.",
+    "question_ids": [
+      "q_topic_24_1_1",
+      "q_topic_24_1_2",
+      "q_topic_24_1_3",
+      "q_topic_24_1_4",
+      "q_topic_24_1_5"
+    ]
+  },
+  {
+    "id": "topic-24-2-full",
+    "paper_id": "topic-24-2",
+    "type": "Topic 1",
+    "group": "A",
+    "theme": "Vie sociale et amitié",
+    "scenario": "Conversation sur vos amis, vos sorties et l'importance de l'amitié.",
+    "question_ids": [
+      "q_topic_24_2_1",
+      "q_topic_24_2_2",
+      "q_topic_24_2_3",
+      "q_topic_24_2_4",
+      "q_topic_24_2_5"
+    ]
+  },
+  {
+    "id": "topic-24-3-full",
+    "paper_id": "topic-24-3",
+    "type": "Topic 1",
+    "group": "A",
+    "theme": "École et éducation",
+    "scenario": "Conversation sur votre vie scolaire, vos matières et votre avis sur l'école.",
+    "question_ids": [
+      "q_topic_24_3_1",
+      "q_topic_24_3_2",
+      "q_topic_24_3_3",
+      "q_topic_24_3_4",
+      "q_topic_24_3_5"
+    ]
+  },
+  {
+    "id": "topic-24-4-full",
+    "paper_id": "topic-24-4",
+    "type": "Topic 1",
+    "group": "A",
+    "theme": "Voyages et vacances",
+    "scenario": "Conversation sur vos habitudes de vacances, vos destinations préférées et vos expériences de voyage.",
+    "question_ids": [
+      "q_topic_24_4_1",
+      "q_topic_24_4_2",
+      "q_topic_24_4_3",
+      "q_topic_24_4_4",
+      "q_topic_24_4_5"
+    ]
+  },
+  {
+    "id": "topic-24-5-full",
+    "paper_id": "topic-24-5",
+    "type": "Topic 1",
+    "group": "A",
+    "theme": "Vie quotidienne et routine",
+    "scenario": "Conversation sur votre journée typique, vos habitudes and votre vie quotidienne.",
+    "question_ids": [
+      "q_topic_24_5_1",
+      "q_topic_24_5_2",
+      "q_topic_24_5_3",
+      "q_topic_24_5_4",
+      "q_topic_24_5_5"
+    ]
+  },
+  {
+    "id": "topic-24-6-full",
+    "paper_id": "topic-24-6",
+    "type": "Topic 2",
+    "group": "B",
+    "theme": "Travail, carrière et projets d'avenir",
+    "scenario": "Conversation sur vos projets professionnels, vos ambitions et votre vision du monde du travail.",
+    "question_ids": [
+      "q_topic_24_6_1",
+      "q_topic_24_6_2",
+      "q_topic_24_6_3",
+      "q_topic_24_6_4",
+      "q_topic_24_6_5"
+    ]
+  },
+  {
+    "id": "topic-24-7-full",
+    "paper_id": "topic-24-7",
+    "type": "Topic 2",
+    "group": "B",
+    "theme": "Environnement et développement durable",
+    "scenario": "Conversation sur les problèmes écologiques, vos actions pour la planète et l'avenir de l'environnement.",
+    "question_ids": [
+      "q_topic_24_7_1",
+      "q_topic_24_7_2",
+      "q_topic_24_7_3",
+      "q_topic_24_7_4",
+      "q_topic_24_7_5"
+    ]
+  },
+  {
+    "id": "topic-24-8-full",
+    "paper_id": "topic-24-8",
+    "type": "Topic 2",
+    "group": "B",
+    "theme": "Loisirs, sport et temps libre",
+    "scenario": "Conversation sur vos passe-temps, votre façon de vous détendre et vos opinions sur les loisirs.",
+    "question_ids": [
+      "q_topic_24_8_1",
+      "q_topic_24_8_2",
+      "q_topic_24_8_3",
+      "q_topic_24_8_4",
+      "q_topic_24_8_5"
+    ]
+  },
+  {
+    "id": "topic-24-9-full",
+    "paper_id": "topic-24-9",
+    "type": "Topic 2",
+    "group": "B",
+    "theme": "Alimentation, santé et culture culinaire",
+    "scenario": "Conversation sur vos habitudes alimentaires, vos plats préférés et votre opinion sur la nourriture saine.",
+    "question_ids": [
+      "q_topic_24_9_1",
+      "q_topic_24_9_2",
+      "q_topic_24_9_3",
+      "q_topic_24_9_4",
+      "q_topic_24_9_5"
+    ]
+  }
+]

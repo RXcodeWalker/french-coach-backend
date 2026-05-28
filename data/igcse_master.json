@@ -1,0 +1,240 @@
+{
+  "papers": [
+    {
+      "id": "paper_2024_mj",
+      "year": 2024,
+      "session": "May/June",
+      "variant": "1"
+    },
+    {
+      "id": "paper_2023_mj",
+      "year": 2023,
+      "session": "May/June",
+      "variant": "1"
+    }
+  ],
+  "role_play_cards": [
+    {
+      "id": "rpc_24_01",
+      "paper_id": "paper_2024_mj",
+      "scenario": "Vous travaillez à l'office de tourisme. Un touriste (l'examinateur) vient vous demander des informations sur la ville.",
+      "prompts": [
+        "Bonjour. Je cherche des informations sur la ville. Vous pouvez m'aider ?",
+        "À quelle heure est-ce que vous fermez ce soir ?",
+        "[Le touriste répond à votre question sur la durée de son séjour]",
+        "Est-ce qu'il y a un marché local cette semaine ? Je voudrais acheter des produits régionaux.",
+        "Merci. Est-ce que vous avez un plan de la ville ?"
+      ]
+    },
+    {
+      "id": "rpc_24_02",
+      "paper_id": "paper_2024_mj",
+      "scenario": "Vous avez perdu votre portable au camping. Vous allez parler au réceptionniste (l'examinateur) pour signaler la perte.",
+      "prompts": [
+        "Bonjour. Je peux vous aider ?",
+        "C'est quel modèle de portable ? Quelle couleur ?",
+        "Où est-ce que vous l'aviez la dernière fois ?",
+        "Il y a votre numéro de chambre dans le téléphone ? Vous pouvez me donner votre nom complet ?",
+        "[Le réceptionniste répond à votre question sur la façon d'être contacté]"
+      ]
+    },
+    {
+      "id": "rpc_24_03",
+      "paper_id": "paper_2024_mj",
+      "scenario": "Vous êtes en Martinique et vous voulez louer un bateau pour la journée. L'examinateur joue le rôle du loueur.",
+      "prompts": [
+        "Bonjour. Vous désirez ?",
+        "Vous voulez le bateau pour combien d'heures ? Et vous serez combien ?",
+        "[Le loueur répond à votre question sur les gilets de sauvetage]",
+        "Est-ce que vous avez déjà conduit un bateau ? Vous avez un permis bateau ?",
+        "[Le loueur vous donne le prix total de la location]"
+      ]
+    },
+    {
+      "id": "rpc_24_04",
+      "paper_id": "paper_2024_mj",
+      "scenario": "Vous voulez acheter des billets pour un concert de rock. L'examinateur joue le rôle du vendeur au guichet.",
+      "prompts": [
+        "Bonjour. C'est pour quel concert et pour quelle date ?",
+        "Il vous en faut combien, et vous préférez quelle catégorie ?",
+        "[Le vendeur répond à votre question sur les horaires]",
+        "Vous connaissez bien ce groupe ? Vous les avez déjà vus en concert ?",
+        "[Le vendeur répond sur le parking et les modes de paiement]"
+      ]
+    },
+    {
+      "id": "rpc_24_05",
+      "paper_id": "paper_2024_mj",
+      "scenario": "Il y a un problème avec votre réservation de train. Vous parlez à un employé de la gare (l'examinateur).",
+      "prompts": [
+        "Bonjour. Quel est le souci ?",
+        "C'est quel numéro de place sur votre billet ? Et vous allez vers quelle ville ?",
+        "[L'employé répond à votre question sur les prochains trains]",
+        "Vous avez une carte d'identité ou un passeport sur vous ? Je dois vérifier votre identité.",
+        "Voici votre nouveau billet, place 14, voiture 3. Ça vous convient ?"
+      ]
+    },
+    {
+      "id": "rpc_24_06",
+      "paper_id": "paper_2024_mj",
+      "scenario": "Vous cherchez un cadeau pour un(e) ami(e). Vous parlez à un(e) vendeur(euse) dans un magasin (l'examinateur).",
+      "prompts": [
+        "Bonjour. Je peux vous conseiller ?",
+        "Qu'est-ce qu'il ou elle aime en général ?",
+        "[Le vendeur vous répond sur les prix et les options disponibles]",
+        "Vous avez un budget particulier en tête ? C'est pour quelle occasion exactement ?",
+        "[Le vendeur répond sur l'emballage et la livraison]"
+      ]
+    },
+    {
+      "id": "rpc_24_07",
+      "paper_id": "paper_2024_mj",
+      "scenario": "Vous planifiez d'aller voir un match de football avec un(e) ami(e) (l'examinateur).",
+      "prompts": [
+        "Salut ! Tu fais quoi ce soir ? Tu veux qu'on fasse quelque chose ensemble ?",
+        "Moi j'adore le PSG ! Et toi, tu supportes quelle équipe ?",
+        "[L'ami répond à votre suggestion pour l'heure du rendez-vous]",
+        "Tu avez déjà assisté à un match en direct ? C'était comment ?",
+        "J'aurai vraiment faim après le match. On va où pour manger ?"
+      ]
+    },
+    {
+      "id": "rpc_24_08",
+      "paper_id": "paper_2024_mj",
+      "scenario": "Vous visitez un château historique. L'examinateur joue le rôle du guide touristique.",
+      "prompts": [
+        "Bonjour, bienvenue au château. Je peux vous renseigner ?",
+        "Vous aimez les châteaux historiques ? Qu'est-ce qui vous attire dans ce genre d'endroit ?",
+        "[Le guide répond à votre question sur les photos]",
+        "Vous connaissez quelque chose sur l'histoire de cette région ? D'où venez-vous ?",
+        "[Le guide répond à votre question sur la boutique de souvenirs]"
+      ]
+    },
+    {
+      "id": "rpc_24_09",
+      "paper_id": "paper_2024_mj",
+      "scenario": "Vous passez un entretien d'embauche pour un job d'été comme serveur/serveuse. L'examinateur joue le rôle du patron.",
+      "prompts": [
+        "Bonjour. Alors, pourquoi est-ce que vous voulez travailler ici ?",
+        "Est-ce que vous avez déjà travaillé dans un café ou un restaurant ?",
+        "[Le patron répond à votre question sur les horaires]",
+        "Est-ce que vous parlez d'autres langues ? Nous avons beaucoup de clients étrangers.",
+        "Vous seriez disponible à partir de quand ?"
+      ]
+    },
+    {
+      "id": "rpc_23_01",
+      "paper_id": "paper_2023_mj",
+      "scenario": "Vous organisez des vacances au camping en France avec un(e) ami(e) français(e).",
+      "prompts": [
+        "Salut ! Où est-ce qu'on va faire du camping exactement ?",
+        "On part quand ?",
+        "Tu préfères dormir dans une tente ou dans une caravane ?",
+        "Qu'est-ce que tu as acheté pour le voyage ?",
+        "Pourquoi aimes-tu faire du camping ?"
+      ]
+    },
+    {
+      "id": "rpc_23_02",
+      "paper_id": "paper_2023_mj",
+      "scenario": "Vous êtes à la patinoire avec un(e) ami(e) français(e).",
+      "prompts": [
+        "C'est super d'être ici ! Tu sais bien patiner ?",
+        "On reste combien de temps ?",
+        "Tu veux un chocolat chaud ou un jus d'orange après ?",
+        "Qu'est-ce que tu as fait comme sport le week-end dernier ?",
+        "Quel nouveau sport voudrais-tu essayer ?"
+      ]
+    },
+    {
+      "id": "rpc_23_03",
+      "paper_id": "paper_2023_mj",
+      "scenario": "Vous voulez louer un bateau en vacances en Martinique.",
+      "prompts": [
+        "Bonjour. Quel type de bateau voulez-vous ?",
+        "C'est pour combien de temps ?",
+        "Vous savez conduire un bateau ?",
+        "Où êtes-vous allé hier en vacances ?",
+        "Qu'est-ce que vous allez faire demain ?"
+      ]
+    },
+    {
+      "id": "rpc_23_04",
+      "paper_id": "paper_2023_mj",
+      "scenario": "Vous vous inscrivez à un nouveau club de sport.",
+      "prompts": [
+        "Bonjour. Quel sport voulez-vous faire ?",
+        "Vous préférez jouer le matin ou le soir ?",
+        "Vous avez déjà fait ce sport ?",
+        "Pourquoi voulez-vous rejoindre notre club ?",
+        "Quand voulez-vous commencer ?"
+      ]
+    },
+    {
+      "id": "rpc_23_05",
+      "paper_id": "paper_2023_mj",
+      "scenario": "Vous êtes au buffet de la gare. Vous voulez acheter quelque chose à manger.",
+      "prompts": [
+        "Bonjour. Qu'est-ce que vous voulez commander ?",
+        "Et comme boisson ?",
+        "C'est pour manger ici ou pour emporter ?",
+        "Pourquoi voyagez-vous en train aujourd'hui ?",
+        "Où allez-vous passer la nuit ?"
+      ]
+    },
+    {
+      "id": "rpc_23_06",
+      "paper_id": "paper_2023_mj",
+      "scenario": "Vous êtes à la gare à Paris. Vous voulez acheter des billets de train pour aller à Lyon.",
+      "prompts": [
+        "Bonjour. Je peux vous aider ?",
+        "C'est pour quel jour ?",
+        "Vous préférez voyager le matin ou l'après-midi ?",
+        "Pourquoi allez-vous à Lyon ?",
+        "Qu'est-ce que vous allez faire à Lyon pendant votre séjour ?"
+      ]
+    }
+  ],
+  "topics": [
+    { "id": "t_24_01", "paper_id": "paper_2024_mj", "name": "La Famille" },
+    { "id": "t_24_02", "paper_id": "paper_2024_mj", "name": "Les Amis" },
+    { "id": "t_24_03", "paper_id": "paper_2024_mj", "name": "Mon École" },
+    { "id": "t_24_04", "paper_id": "paper_2024_mj", "name": "Les Vacances" },
+    { "id": "t_24_05", "paper_id": "paper_2024_mj", "name": "Ma Routine" },
+    { "id": "t_24_06", "paper_id": "paper_2024_mj", "name": "Le Monde du Travail" },
+    { "id": "t_24_07", "paper_id": "paper_2024_mj", "name": "L'Environnement" },
+    { "id": "t_24_08", "paper_id": "paper_2024_mj", "name": "Les Loisirs" },
+    { "id": "t_24_09", "paper_id": "paper_2024_mj", "name": "La Nourriture" },
+    { "id": "t_23_01", "paper_id": "paper_2023_mj", "name": "Home Life" },
+    { "id": "t_23_02", "paper_id": "paper_2023_mj", "name": "Food and Drink" },
+    { "id": "t_23_03", "paper_id": "paper_2023_mj", "name": "Festivals" },
+    { "id": "t_23_04", "paper_id": "paper_2023_mj", "name": "Digital World" },
+    { "id": "t_23_05", "paper_id": "paper_2023_mj", "name": "Careers" },
+    { "id": "t_23_06", "paper_id": "paper_2023_mj", "name": "Global Travel" },
+    { "id": "t_23_07", "paper_id": "paper_2023_mj", "name": "Town and Region" },
+    { "id": "t_23_08", "paper_id": "paper_2023_mj", "name": "Shopping" },
+    { "id": "t_23_09", "paper_id": "paper_2023_mj", "name": "World Issues" }
+  ],
+  "questions": [
+    { "id": "q_24_01_1", "topic_id": "t_24_01", "question_number": 1, "text": "Parle-moi un peu de ta famille — vous êtes combien chez toi ?" },
+    { "id": "q_24_01_2", "topic_id": "t_24_01", "question_number": 2, "text": "Comment est-ce que tu t'entends avec tes parents ?" },
+    { "id": "q_24_01_3", "topic_id": "t_24_01", "question_number": 3, "text": "Qu'est-ce que vous avez fait ensemble le week-end dernier ?" },
+    { "id": "q_24_01_4", "topic_id": "t_24_01", "question_number": 4, "text": "Qu'est-ce que vous avez prévu de faire pour les prochaines vacances ?" },
+    { "id": "q_24_01_5", "topic_id": "t_24_01", "question_number": 5, "text": "À ton avis, est-ce que c'est important d'avoir une grande famille ?" },
+    { "id": "q_24_06_1", "topic_id": "t_24_06", "question_number": 1, "text": "Quel travail est-ce que tu voudrais faire à l'avenir ?" },
+    { "id": "q_24_06_2", "topic_id": "t_24_06", "question_number": 2, "text": "Quelles études ou qualifications faut-il pour faire ce métier ?" },
+    { "id": "q_24_06_3", "topic_id": "t_24_06", "question_number": 3, "text": "Est-ce que tu as déjà fait un stage ou un petit job ?" },
+    { "id": "q_24_06_4", "topic_id": "t_24_06", "question_number": 4, "text": "Est-ce que tu aimerais travailler dans un autre pays ? Pourquoi ?" },
+    { "id": "q_24_06_5", "topic_id": "t_24_06", "question_number": 5, "text": "À ton avis, est-ce que le salaire est le plus important dans un job ?" },
+    { "id": "q_23_01_1", "topic_id": "t_23_01", "question_number": 1, "text": "Où habites-tu exactement ?" },
+    { "id": "q_23_01_2", "topic_id": "t_23_01", "question_number": 2, "text": "Qu’est-ce que tu fais pour aider à la maison ?" },
+    { "id": "q_23_01_3", "topic_id": "t_23_01", "question_number": 3, "text": "Parle-moi de ce que tu as fait hier soir chez toi." },
+    { "id": "q_23_01_4", "topic_id": "t_23_01", "question_number": 4, "text": "Préfères-tu passer du temps avec ta famille ou avec tes amis ? Pourquoi ?" },
+    { "id": "q_23_01_5", "topic_id": "t_23_01", "question_number": 5, "text": "Comment serait ta maison idéale ?" },
+    { "id": "q_23_02_1", "topic_id": "t_23_02", "question_number": 1, "text": "Qu’est-ce que tu aimes manger et boire ?" },
+    { "id": "q_23_02_2", "topic_id": "t_23_02", "question_number": 2, "text": "Qu’est-ce que tu as mangé pour le petit-déjeuner ce matin ?" },
+    { "id": "q_23_02_3", "topic_id": "t_23_02", "question_number": 3, "text": "Préfères-tu manger au restaurant ou à la maison ? Pourquoi ?" },
+    { "id": "q_23_02_4", "topic_id": "t_23_02", "question_number": 4, "text": "Parle-moi de la dernière fois que tu es allé au restaurant." },
+    { "id": "q_23_02_5", "topic_id": "t_23_02", "question_number": 5, "text": "Que penses-tu de la restauration rapide (fast-food) ?" }
+  ]
+}

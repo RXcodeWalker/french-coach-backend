@@ -1,0 +1,308 @@
+[
+  {
+    "id": "rp-v24-mj-1",
+    "paper_id": "paper-v24-mj-1",
+    "scenario": "Pendant les vacances, vous trouvez un job à l’office de tourisme de votre ville. Vous parlez de votre job avec un(e) ami(e) français(e).",
+    "question_ids": [
+      "v_24_mj_c1_rp_1",
+      "v_24_mj_c1_rp_2",
+      "v_24_mj_c1_rp_3",
+      "v_24_mj_c1_rp_4",
+      "v_24_mj_c1_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v24-mj-4",
+    "paper_id": "paper-v24-mj-2",
+    "scenario": "Vous êtes à la gare à Paris. Vous voulez acheter des billets de train pour aller à Lyon.",
+    "question_ids": [
+      "v_24_mj_c4_rp_1",
+      "v_24_mj_c4_rp_2",
+      "v_24_mj_c4_rp_3",
+      "v_24_mj_c4_rp_4",
+      "v_24_mj_c4_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v24-mj-9",
+    "paper_id": "paper-v24-mj-3",
+    "scenario": "Vous êtes au marché en France. Vous voulez acheter des fruits.",
+    "question_ids": [
+      "v_24_mj_c9_rp_1",
+      "v_24_mj_c9_rp_2",
+      "v_24_mj_c9_rp_3",
+      "v_24_mj_c9_rp_4",
+      "v_24_mj_c9_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v23-mj-1",
+    "paper_id": "paper-v23-mj-1",
+    "scenario": "Vous organisez des vacances au camping en France avec un(e) ami(e) français(e).",
+    "question_ids": [
+      "v_23_mj_c1_rp_1",
+      "v_23_mj_c1_rp_2",
+      "v_23_mj_c1_rp_3",
+      "v_23_mj_c1_rp_4",
+      "v_23_mj_c1_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v23-on-1",
+    "paper_id": "paper-v23-on-1",
+    "scenario": "Vous êtes à la patinoire avec un(e) ami(e) français(e).",
+    "question_ids": [
+      "v_23_on_c1_rp_1",
+      "v_23_on_c1_rp_2",
+      "v_23_on_c1_rp_3",
+      "v_23_on_c1_rp_4",
+      "v_23_on_c1_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v22-mj-1",
+    "paper_id": "paper-v22-mj-1",
+    "scenario": "Vous êtes au buffet de la gare. Vous voulez acheter quelque chose à manger.",
+    "question_ids": [
+      "v_22_mj_c1_rp_1",
+      "v_22_mj_c1_rp_2",
+      "v_22_mj_c1_rp_3",
+      "v_22_mj_c1_rp_4",
+      "v_22_mj_c1_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v22-mj-3",
+    "paper_id": "paper-v22-mj-2",
+    "scenario": "Vous téléphonez à un hôtel en Suisse pour demander un job d'été.",
+    "question_ids": [
+      "v_22_mj_c3_rp_1",
+      "v_22_mj_c3_rp_2",
+      "v_22_mj_c3_rp_3",
+      "v_22_mj_c3_rp_4",
+      "v_22_mj_c3_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v21-on-1",
+    "paper_id": "paper-v21-on-1",
+    "scenario": "Vous êtes au cinéma avec un(e) ami(e) belge. Vous choisissez un film.",
+    "question_ids": [
+      "v_21_on_c1_rp_1",
+      "v_21_on_c1_rp_2",
+      "v_21_on_c1_rp_3",
+      "v_21_on_c1_rp_4",
+      "v_21_on_c1_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v24-fm-4",
+    "paper_id": "paper-v24-fm-1",
+    "scenario": "Vous êtes à la gare routière. Vous achetez des billets de bus.",
+    "question_ids": [
+      "v_24_fm_c4_rp_1",
+      "v_24_fm_c4_rp_2",
+      "v_24_fm_c4_rp_3",
+      "v_24_fm_c4_rp_4",
+      "v_24_fm_c4_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v24-mj-2",
+    "paper_id": "paper-v24-mj-1-alt",
+    "scenario": "Vous allez à un concert de rock avec un(e) ami(e) suisse.",
+    "question_ids": [
+      "v_24_mj_c2_rp_1",
+      "v_24_mj_c2_rp_2",
+      "v_24_mj_c2_rp_3",
+      "v_24_mj_c2_rp_4",
+      "v_24_mj_c2_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v24-mj-8",
+    "paper_id": "paper-v24-mj-8-alt",
+    "scenario": "Vous avez perdu votre portable au camping. Vous parlez au/à la réceptionniste.",
+    "question_ids": [
+      "v_24_mj_c8_rp_1",
+      "v_24_mj_c8_rp_2",
+      "v_24_mj_c8_rp_3",
+      "v_24_mj_c8_rp_4",
+      "v_24_mj_c8_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v23-mj-5",
+    "paper_id": "paper-v23-mj-5-alt",
+    "scenario": "Vous voulez louer un bateau en vacances en Martinique.",
+    "question_ids": [
+      "v_23_mj_c5_rp_1",
+      "v_23_mj_c5_rp_2",
+      "v_23_mj_c5_rp_3",
+      "v_23_mj_c5_rp_4",
+      "v_23_mj_c5_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v23-on-3",
+    "paper_id": "paper-v23-on-3-alt",
+    "scenario": "Vous vous inscrivez à un nouveau club de sport.",
+    "question_ids": [
+      "v_23_on_c3_rp_1",
+      "v_23_on_c3_rp_2",
+      "v_23_on_c3_rp_3",
+      "v_23_on_c3_rp_4",
+      "v_23_on_c3_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v22-mj-2-alt",
+    "paper_id": "paper-v22-mj-2-alt",
+    "scenario": "Vous retrouvez un(e) ami(e) à la gare. Vous discutez de vos projets.",
+    "question_ids": [
+      "v_22_mj_c2_rp_1",
+      "v_22_mj_c2_rp_2",
+      "v_22_mj_c2_rp_3",
+      "v_22_mj_c2_rp_4",
+      "v_22_mj_c2_rp_5"
+    ]
+  },
+  {
+    "id": "rp-v21-sp-1",
+    "paper_id": "paper-v21-sp-1",
+    "scenario": "Vous êtes au zoo avec un(e) ami(e) français(e).",
+    "question_ids": [
+      "v_21_sp_c1_rp_1",
+      "v_21_sp_c1_rp_2",
+      "v_21_sp_c1_rp_3",
+      "v_21_sp_c1_rp_4",
+      "v_21_sp_c1_rp_5"
+    ]
+  },
+  {
+    "id": "rp-24-c1-full",
+    "paper_id": "rp-24-c1",
+    "scenario": "Vous travaillez à l'office de tourisme. Un touriste (l'examinateur) vient vous demander des informations sur la ville.",
+    "candidate_role": "employé(e) de l'office de tourisme",
+    "examiner_role": "touriste",
+    "question_ids": [
+      "q_rp_24_c1_1",
+      "q_rp_24_c1_2",
+      "q_rp_24_c1_3",
+      "q_rp_24_c1_4",
+      "q_rp_24_c1_5"
+    ]
+  },
+  {
+    "id": "rp-24-c2-full",
+    "paper_id": "rp-24-c2",
+    "scenario": "Vous avez perdu votre portable au camping. Vous allez parler au réceptionniste (l'examinateur) pour signaler la perte.",
+    "candidate_role": "campeur / campeuse",
+    "examiner_role": "réceptionniste du camping",
+    "question_ids": [
+      "q_rp_24_c2_1",
+      "q_rp_24_c2_2",
+      "q_rp_24_c2_3",
+      "q_rp_24_c2_4",
+      "q_rp_24_c2_5"
+    ]
+  },
+  {
+    "id": "rp-24-c3-full",
+    "paper_id": "rp-24-c3",
+    "scenario": "Vous êtes en Martinique et vous voulez louer un bateau pour la journée. L'examinateur joue le rôle du loueur.",
+    "candidate_role": "client(e) souhaitant louer un bateau",
+    "examiner_role": "loueur de bateaux",
+    "question_ids": [
+      "q_rp_24_c3_1",
+      "q_rp_24_c3_2",
+      "q_rp_24_c3_3",
+      "q_rp_24_c3_4",
+      "q_rp_24_c3_5"
+    ]
+  },
+  {
+    "id": "rp-24-c4-full",
+    "paper_id": "rp-24-c4",
+    "scenario": "Vous voulez acheter des billets pour un concert de rock. L'examinateur joue le rôle du vendeur au guichet.",
+    "candidate_role": "client(e) achetant des billets",
+    "examiner_role": "vendeur(euse) au guichet",
+    "question_ids": [
+      "q_rp_24_c4_1",
+      "q_rp_24_c4_2",
+      "q_rp_24_c4_3",
+      "q_rp_24_c4_4",
+      "q_rp_24_c4_5"
+    ]
+  },
+  {
+    "id": "rp-24-c5-full",
+    "paper_id": "rp-24-c5",
+    "scenario": "Il y a un problème avec votre réservation de train. Vous parlez à un employé de la gare (l'examinateur).",
+    "candidate_role": "voyageur(euse) avec un problème de billet",
+    "examiner_role": "employé(e) de la gare",
+    "question_ids": [
+      "q_rp_24_c5_1",
+      "q_rp_24_c5_2",
+      "q_rp_24_c5_3",
+      "q_rp_24_c5_4",
+      "q_rp_24_c5_5"
+    ]
+  },
+  {
+    "id": "rp-24-c6-full",
+    "paper_id": "rp-24-c6",
+    "scenario": "Vous cherchez un cadeau pour un(e) ami(e). Vous parlez à un(e) vendeur(euse) dans un magasin (l'examinateur).",
+    "candidate_role": "client(e) cherchant un cadeau",
+    "examiner_role": "vendeur(euse)",
+    "question_ids": [
+      "q_rp_24_c6_1",
+      "q_rp_24_c6_2",
+      "q_rp_24_c6_3",
+      "q_rp_24_c6_4",
+      "q_rp_24_c6_5"
+    ]
+  },
+  {
+    "id": "rp-24-c7-full",
+    "paper_id": "rp-24-c7",
+    "scenario": "Vous planifiez d'aller voir un match de football avec un(e) ami(e) (l'examinateur).",
+    "candidate_role": "ami(e) qui organise la sortie",
+    "examiner_role": "ami(e) français(e)",
+    "question_ids": [
+      "q_rp_24_c7_1",
+      "q_rp_24_c7_2",
+      "q_rp_24_c7_3",
+      "q_rp_24_c7_4",
+      "q_rp_24_c7_5"
+    ]
+  },
+  {
+    "id": "rp-24-c8-full",
+    "paper_id": "rp-24-c8",
+    "scenario": "Vous visitez un château historique. L'examinateur joue le rôle du guide touristique.",
+    "candidate_role": "touriste visitant le château",
+    "examiner_role": "guide touristique",
+    "question_ids": [
+      "q_rp_24_c8_1",
+      "q_rp_24_c8_2",
+      "q_rp_24_c8_3",
+      "q_rp_24_c8_4",
+      "q_rp_24_c8_5"
+    ]
+  },
+  {
+    "id": "rp-24-c9-full",
+    "paper_id": "rp-24-c9",
+    "scenario": "Vous passez un entretien d'embauche pour un job d'été comme serveur/serveuse. L'examinateur joue le rôle du patron.",
+    "candidate_role": "candidat(e) à un poste de serveur/serveuse",
+    "examiner_role": "patron(ne) du restaurant",
+    "question_ids": [
+      "q_rp_24_c9_1",
+      "q_rp_24_c9_2",
+      "q_rp_24_c9_3",
+      "q_rp_24_c9_4",
+      "q_rp_24_c9_5"
+    ]
+  }
+]

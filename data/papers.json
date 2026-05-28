@@ -1,0 +1,215 @@
+[
+  {
+    "id": "paper-v24-mj-1",
+    "year": 2024,
+    "session": "May/June",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v24-mj-2",
+    "year": 2024,
+    "session": "May/June",
+    "variant": "2",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v24-mj-3",
+    "year": 2024,
+    "session": "May/June",
+    "variant": "3",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v23-mj-1",
+    "year": 2023,
+    "session": "May/June",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v23-on-1",
+    "year": 2023,
+    "session": "Oct/Nov",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v22-mj-1",
+    "year": 2022,
+    "session": "May/June",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v22-mj-2",
+    "year": 2022,
+    "session": "May/June",
+    "variant": "2",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v21-on-1",
+    "year": 2021,
+    "session": "Oct/Nov",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v24-fm-1",
+    "year": 2024,
+    "session": "Feb/March",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v24-mj-1-alt",
+    "year": 2024,
+    "session": "May/June",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v24-mj-8-alt",
+    "year": 2024,
+    "session": "May/June",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v23-mj-5-alt",
+    "year": 2023,
+    "session": "May/June",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v23-on-3-alt",
+    "year": 2023,
+    "session": "Oct/Nov",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v22-mj-2-alt",
+    "year": 2022,
+    "session": "May/June",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "paper-v21-sp-1",
+    "year": 2021,
+    "session": "Specimen",
+    "variant": "1",
+    "source": "seed_speaking_vault.py"
+  },
+  {
+    "id": "rp-24-c1",
+    "year": 2024,
+    "paper_code": "0520/S24/RP1",
+    "source": "main.py"
+  },
+  {
+    "id": "rp-24-c2",
+    "year": 2024,
+    "paper_code": "0520/S24/RP2",
+    "source": "main.py"
+  },
+  {
+    "id": "rp-24-c3",
+    "year": 2024,
+    "paper_code": "0520/S24/RP3",
+    "source": "main.py"
+  },
+  {
+    "id": "rp-24-c4",
+    "year": 2024,
+    "paper_code": "0520/S24/RP4",
+    "source": "main.py"
+  },
+  {
+    "id": "rp-24-c5",
+    "year": 2024,
+    "paper_code": "0520/S24/RP5",
+    "source": "main.py"
+  },
+  {
+    "id": "rp-24-c6",
+    "year": 2024,
+    "paper_code": "0520/S24/RP6",
+    "source": "main.py"
+  },
+  {
+    "id": "rp-24-c7",
+    "year": 2024,
+    "paper_code": "0520/S24/RP7",
+    "source": "main.py"
+  },
+  {
+    "id": "rp-24-c8",
+    "year": 2024,
+    "paper_code": "0520/S24/RP8",
+    "source": "main.py"
+  },
+  {
+    "id": "rp-24-c9",
+    "year": 2024,
+    "paper_code": "0520/S24/RP9",
+    "source": "main.py"
+  },
+  {
+    "id": "topic-24-1",
+    "year": 2024,
+    "paper_code": "0520/S24/T1",
+    "source": "main.py"
+  },
+  {
+    "id": "topic-24-2",
+    "year": 2024,
+    "paper_code": "0520/S24/T2",
+    "source": "main.py"
+  },
+  {
+    "id": "topic-24-3",
+    "year": 2024,
+    "paper_code": "0520/S24/T3",
+    "source": "main.py"
+  },
+  {
+    "id": "topic-24-4",
+    "year": 2024,
+    "paper_code": "0520/S24/T4",
+    "source": "main.py"
+  },
+  {
+    "id": "topic-24-5",
+    "year": 2024,
+    "paper_code": "0520/S24/T5",
+    "source": "main.py"
+  },
+  {
+    "id": "topic-24-6",
+    "year": 2024,
+    "paper_code": "0520/S24/T6",
+    "source": "main.py"
+  },
+  {
+    "id": "topic-24-7",
+    "year": 2024,
+    "paper_code": "0520/S24/T7",
+    "source": "main.py"
+  },
+  {
+    "id": "topic-24-8",
+    "year": 2024,
+    "paper_code": "0520/S24/T8",
+    "source": "main.py"
+  },
+  {
+    "id": "topic-24-9",
+    "year": 2024,
+    "paper_code": "0520/S24/T9",
+    "source": "main.py"
+  }
+]

@@ -36,7 +36,7 @@ from typing import Any
 import httpx
 import jwt as pyjwt
 from dotenv import load_dotenv
-from fastapi import FastAPI, Header, HTTPException, Request, UploadFile
+from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse

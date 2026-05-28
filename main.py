@@ -22,7 +22,6 @@ Run locally:
 """
 
 from __future__ import annotations
-from fastapi.middleware.cors import CORSMiddleware
 
 import asyncio
 import json
@@ -37,7 +36,7 @@ from typing import Any
 import httpx
 import jwt as pyjwt
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, Form, Header, HTTPException, UploadFile
+from fastapi import FastAPI, Header, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -1444,14 +1443,13 @@ def enrich_feedback(fb: dict[str, Any], req: FeedbackRequest) -> dict[str, Any]:
     return fb
 
 
-@app.post("/api/feedback")
-async def feedback(
-    question: str = Form(...),
-    transcript: str = Form(""),       # pre-computed transcript (used when no audio)
-    model: str = Form("gemini"),
-    detailed: str = Form("false"),
-    metrics_json: str = Form("{}"),   # JSON-encoded FeedbackMetrics from frontend
-    audio: UploadFile | None = File(None),
+async def _feedback_impl(
+    question: str,
+    transcript: str,
+    model: str,
+    detailed: bool,
+    metrics_json: str,
+    audio: UploadFile | None,
 ) -> dict[str, Any]:
     """
     Unified feedback endpoint. Two modes:
@@ -1510,7 +1508,7 @@ async def feedback(
             transcript=transcript,
             metrics=metrics_obj,
             model=model,
-            detailed=(detailed.lower() == "true"),
+            detailed=detailed,
         )
 
         # ── Step 3: AI feedback (multimodal if audio present) ─────────────────
@@ -1532,6 +1530,61 @@ async def feedback(
                 os.unlink(tmp_path)
             except OSError:
                 pass
+
+
+@app.post("/api/feedback")
+@app.post("/api/feedback/v2")
+@app.post("/api/feedback/v3")
+async def feedback(request: Request) -> dict[str, Any]:
+    """
+    Backward-compatible feedback endpoint that accepts:
+      - multipart/form-data (with optional audio file), or
+      - application/json (transcript-only flow)
+    """
+    content_type = (request.headers.get("content-type") or "").lower()
+
+    question = ""
+    transcript = ""
+    model = "gemini"
+    detailed = False
+    metrics_json = "{}"
+    audio: UploadFile | None = None
+
+    if "multipart/form-data" in content_type or "application/x-www-form-urlencoded" in content_type:
+        form = await request.form()
+        question = str(form.get("question") or "")
+        transcript = str(form.get("transcript") or "")
+        model = str(form.get("model") or "gemini")
+        detailed = str(form.get("detailed") or "false").lower() == "true"
+        metrics_json = str(form.get("metrics_json") or "{}")
+        maybe_audio = form.get("audio")
+        if isinstance(maybe_audio, UploadFile) or (
+            hasattr(maybe_audio, "read") and hasattr(maybe_audio, "filename")
+        ):
+            audio = maybe_audio
+    else:
+        try:
+            payload = await request.json()
+        except Exception as e:
+            raise HTTPException(status_code=400, detail="Invalid JSON body") from e
+        question = str(payload.get("question") or payload.get("prompt") or "")
+        transcript = str(payload.get("transcript") or payload.get("text") or "")
+        model = str(payload.get("model") or "gemini")
+        detailed = bool(payload.get("detailed", False))
+        metrics = payload.get("metrics")
+        if isinstance(metrics, dict):
+            metrics_json = json.dumps(metrics)
+        elif isinstance(payload.get("metrics_json"), str):
+            metrics_json = payload.get("metrics_json") or "{}"
+
+    return await _feedback_impl(
+        question=question,
+        transcript=transcript,
+        model=model,
+        detailed=detailed,
+        metrics_json=metrics_json,
+        audio=audio,
+    )
 
 
 # ── /api/repair — micro-repair loop ──────────────────────────────────────────

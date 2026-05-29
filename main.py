@@ -1640,6 +1640,19 @@ def enrich_feedback(fb: dict[str, Any], req: FeedbackRequest) -> dict[str, Any]:
     return fb
 
 
+def _feedback_provider_name(payload: dict[str, Any]) -> str:
+    model_used = str(payload.get("modelUsed") or "").lower()
+    source = str(payload.get("source") or "").lower()
+
+    if model_used.startswith("gemini/") or "gemini" in source:
+        return "gemini"
+    if model_used.startswith("groq/") or "groq" in source:
+        return "groq"
+    if model_used.startswith("offline/") or "offline" in source or payload.get("providerStatus") == "offline_fallback":
+        return "offline"
+    return "offline"
+
+
 async def _feedback_impl(
     question: str,
     transcript: str,
@@ -1718,6 +1731,7 @@ async def _feedback_impl(
         result["audio_analyzed"]   = tmp_path is not None
         # Ensure words[] is present (phoneme-level data from multimodal Gemini)
         result.setdefault("words", [])
+        result["provider"] = _feedback_provider_name(result)
 
         return result
 
@@ -1794,13 +1808,15 @@ async def feedback(request: Request) -> dict[str, Any]:
             model=model,
             detailed=detailed,
         )
-        return enrich_feedback(
+        fallback_result = enrich_feedback(
             _offline_feedback(
                 fallback_req,
                 [{"provider": "feedback_endpoint", "type": exc.__class__.__name__, "message": str(exc)}],
             ),
             fallback_req,
         )
+        fallback_result["provider"] = _feedback_provider_name(fallback_result)
+        return fallback_result
 
 
 # ── /api/repair — micro-repair loop ──────────────────────────────────────────

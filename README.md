@@ -1,41 +1,41 @@
-# French AI Coach — Backend (phase 1)
+# French AI Coach Backend API
 
-FastAPI service that provides:
+FastAPI API service for the separate frontend application. This backend does not serve `index.html` or any frontend static assets.
 
-- **`POST /api/feedback`** — grades a French transcript via a free OpenRouter LLM and returns JSON in the shape `coach.js` expects.
-- **`POST /api/transcribe`** — transcribes an uploaded audio blob using `faster-whisper` (French, with word timestamps). *Ready to use; frontend wiring lands in phase 2.*
-- **`GET /health`** — liveness + config probe.
+## Endpoints
 
-## Prerequisites
+- `GET /` - API status JSON.
+- `GET /health` - liveness and configuration probe.
+- `POST /api/feedback`, `/api/feedback/v2`, `/api/feedback/v3` - speaking feedback with AI fallback.
+- `POST /api/transcribe` - French speech-to-text via Groq Whisper or local faster-whisper.
+- `GET /docs` and `GET /openapi.json` - FastAPI documentation.
 
-- Python 3.10+
-- `ffmpeg` on PATH (required by faster-whisper for decoding webm/ogg/mp3)
-  - Windows: `winget install Gyan.FFmpeg` or download from https://www.gyan.dev/ffmpeg/builds/
-- A free OpenRouter API key: https://openrouter.ai/keys
-
-## Setup
+## Local Setup
 
 ```bash
 cd backend
 python -m venv .venv
-.venv\Scripts\activate          # Windows
-# source .venv/bin/activate     # macOS/Linux
+.venv\Scripts\activate
 pip install -r requirements.txt
-cp .env.example .env            # then edit .env, paste your OPENROUTER_API_KEY
-```
-
-## Run
-
-```bash
+cp .env.example .env
 uvicorn main:app --reload --port 8000
 ```
 
-Open http://localhost:8000/health — you should see `"openrouter_configured": true`.
+## Render
 
-First request to `/api/transcribe` downloads the whisper model (`small` ~ 470 MB). Subsequent runs use the cached copy.
+Use this startup command:
 
-## Notes
+```bash
+uvicorn main:app --host 0.0.0.0 --port $PORT
+```
 
-- Free OpenRouter models are rate-limited. The backend tries a primary model, then a fallback; if both fail the frontend falls back to the local rule engine in `coach.js`.
-- `CORS_ORIGINS=*` is fine for local dev. Lock it down before deploying.
-- To swap whisper size, set `WHISPER_MODEL=base` (faster) or `medium` (more accurate) in `.env`.
+`.python-version` pins Render to Python 3.11.11 for compatibility with AI/audio dependencies.
+
+## Environment
+
+- `GROQ_API_KEY` and `GEMINI_API_KEY` are optional but recommended.
+- `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, and `SUPABASE_JWT_SECRET` are required for database-backed endpoints.
+- `CORS_ORIGINS` should be your frontend domains, comma-separated, with no trailing slash.
+- `IGCSE_DB_PATH` defaults to `data/igcse_speaking.db`.
+
+Hosted AI providers are rate-limited. The backend logs failures, tries provider fallbacks, and returns structured offline JSON when providers are unavailable.

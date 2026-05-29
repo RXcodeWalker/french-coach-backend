@@ -29,8 +29,11 @@ import logging
 import os
 import random
 import re
+import sqlite3
 import tempfile
+import traceback
 from datetime import date, datetime, timezone
+from pathlib import Path
 from typing import Any
 
 import httpx
@@ -38,9 +41,14 @@ import jwt as pyjwt
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
+
+try:
+    from google.api_core.exceptions import ResourceExhausted
+except Exception:  # pragma: no cover - google libs may be absent in local dev
+    class ResourceExhausted(Exception):
+        pass
 
 load_dotenv()
 
@@ -58,7 +66,18 @@ WHISPER_MODEL        = os.getenv("WHISPER_MODEL", "small")
 WHISPER_DEVICE       = os.getenv("WHISPER_DEVICE", "cpu")
 WHISPER_COMPUTE_TYPE = os.getenv("WHISPER_COMPUTE_TYPE", "int8")
 
-CORS_ORIGINS = [o.strip() for o in os.getenv("CORS_ORIGINS", "*").split(",") if o.strip()]
+APP_DIR = Path(__file__).resolve().parent
+DEFAULT_CORS_ORIGINS = (
+    "http://localhost:5173,"
+    "http://localhost:3000,"
+    "https://frenchcoach.vercel.app,"
+    "https://french.beyondthebasics.me"
+)
+CORS_ORIGINS = [
+    o.strip().rstrip("/")
+    for o in os.getenv("CORS_ORIGINS", DEFAULT_CORS_ORIGINS).split(",")
+    if o.strip()
+]
 
 # ── Groq lazy init ────────────────────────────────────────────────────────────
 _groq_client = None
@@ -138,15 +157,30 @@ def get_whisper():
 app = FastAPI(title="French AI Speaking Coach")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "https://frenchcoach.vercel.app/",
-        "https://french.beyondthebasics.me/",
-    ],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    log.error(
+        "Unhandled error on %s %s: %s\n%s",
+        request.method,
+        request.url.path,
+        repr(exc),
+        traceback.format_exc(),
+    )
+    return JSONResponse(
+        status_code=500,
+        content={
+            "ok": False,
+            "error": "internal_server_error",
+            "detail": "An unexpected backend error occurred.",
+        },
+    )
 
 # ── JWT verification ──────────────────────────────────────────────────────────
 def verify_jwt(authorization: str | None) -> str:
@@ -172,12 +206,15 @@ def verify_jwt(authorization: str | None) -> str:
 # ── /health ───────────────────────────────────────────────────────────────────
 @app.get("/health")
 def health() -> dict[str, Any]:
+    db_path = Path(os.getenv("IGCSE_DB_PATH", str(APP_DIR / "data" / "igcse_speaking.db")))
     return {
         "ok": True,
+        "service": "french-ai-backend",
         "groq_configured": bool(GROQ_API_KEY),
         "gemini_configured": bool(GEMINI_API_KEY),
         "supabase_configured": bool(SUPABASE_URL and SUPABASE_KEY),
         "whisper_model": WHISPER_MODEL,
+        "igcse_db_configured": db_path.exists(),
     }
 
 # ── AI Feedback models + logic ────────────────────────────────────────────────
@@ -247,83 +284,90 @@ IGCSE_THEMES = {
 #
 # TOPIC GROUP KEY:
 #   "A"  Personal / school life  → used for Topic Conversation 1
-import sqlite3
-from typing import List, Dict, Any
+DB_PATH = Path(os.getenv("IGCSE_DB_PATH", str(APP_DIR / "data" / "igcse_speaking.db")))
 
-DB_PATH = "backend/data/igcse_speaking.db"
 
 def get_db_connection():
+    if not DB_PATH.exists():
+        raise RuntimeError(f"SQLite database not found at {DB_PATH}")
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
-def fetch_igcse_papers_from_db() -> List[Dict[str, Any]]:
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    # Fetch all papers with their associated role play cards
-    cursor.execute("""
-        SELECT p.id, p.year, p.session, p.variant, r.id as rpc_id, r.scenario
-        FROM Paper p
-        LEFT JOIN RolePlayCard r ON p.id = r.paper_id
-    """)
-    rows = cursor.fetchall()
-    
+
+def fetch_igcse_papers_from_db() -> list[dict[str, Any]]:
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT p.id, p.year, p.session, p.variant, r.id as rpc_id, r.scenario
+                FROM Paper p
+                LEFT JOIN RolePlayCard r ON p.id = r.paper_id
+            """)
+            rows = cursor.fetchall()
+    except Exception as exc:
+        log.warning("SQLite IGCSE paper list unavailable, using static fallback: %s", exc)
+        return [
+            {
+                "id": p["id"],
+                "year": p.get("year"),
+                "session": p.get("paper_code"),
+                "variant": p.get("type"),
+                "role_play_cards": [p] if p.get("type") == "role_play" else [],
+            }
+            for p in globals().get("IGCSE_PAPERS", [])
+        ]
+
     papers = {}
     for row in rows:
-        pid = row['id']
+        pid = row["id"]
         if pid not in papers:
             papers[pid] = {
                 "id": pid,
-                "year": row['year'],
-                "session": row['session'],
-                "variant": row['variant'],
-                "role_play_cards": []
+                "year": row["year"],
+                "session": row["session"],
+                "variant": row["variant"],
+                "role_play_cards": [],
             }
-        if row['rpc_id']:
+        if row["rpc_id"]:
             papers[pid]["role_play_cards"].append({
-                "id": row['rpc_id'],
-                "scenario": row['scenario']
+                "id": row["rpc_id"],
+                "scenario": row["scenario"],
             })
-    
-    conn.close()
     return list(papers.values())
 
-def fetch_igcse_paper_details(paper_id: str) -> Dict[str, Any]:
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    # 1. Fetch Paper + Role Play
-    cursor.execute("SELECT * FROM Paper WHERE id = ?", (paper_id,))
-    paper_row = cursor.fetchone()
-    if not paper_row:
-        conn.close()
-        return None
-        
-    paper = dict(paper_row)
-    
-    # 2. Fetch Role Play Cards
-    cursor.execute("SELECT * FROM RolePlayCard WHERE paper_id = ?", (paper_id,))
-    rpc_rows = cursor.fetchall()
-    paper["role_play_cards"] = []
-    for r_row in rpc_rows:
-        rpc = dict(r_row)
-        cursor.execute("SELECT text FROM RolePlayPrompt WHERE roleplay_id = ? ORDER BY id", (rpc['id'],))
-        rpc["prompts"] = [p['text'] for p in cursor.fetchall()]
-        paper["role_play_cards"].append(rpc)
-        
-    # 3. Fetch Topics
-    cursor.execute("SELECT * FROM Topic WHERE paper_id = ?", (paper_id,))
-    topic_rows = cursor.fetchall()
-    paper["topics"] = []
-    for t_row in topic_rows:
-        topic = dict(t_row)
-        cursor.execute("SELECT text FROM Question WHERE topic_id = ? ORDER BY question_number", (topic['id'],))
-        topic["questions"] = [q['text'] for q in cursor.fetchall()]
-        paper["topics"].append(topic)
-        
-    conn.close()
-    return paper
+
+def fetch_igcse_paper_details(paper_id: str) -> dict[str, Any] | None:
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Paper WHERE id = ?", (paper_id,))
+            paper_row = cursor.fetchone()
+            if not paper_row:
+                return None
+
+            paper = dict(paper_row)
+            cursor.execute("SELECT * FROM RolePlayCard WHERE paper_id = ?", (paper_id,))
+            rpc_rows = cursor.fetchall()
+            paper["role_play_cards"] = []
+            for r_row in rpc_rows:
+                rpc = dict(r_row)
+                cursor.execute("SELECT text FROM RolePlayPrompt WHERE roleplay_id = ? ORDER BY id", (rpc["id"],))
+                rpc["prompts"] = [p["text"] for p in cursor.fetchall()]
+                paper["role_play_cards"].append(rpc)
+
+            cursor.execute("SELECT * FROM Topic WHERE paper_id = ?", (paper_id,))
+            topic_rows = cursor.fetchall()
+            paper["topics"] = []
+            for t_row in topic_rows:
+                topic = dict(t_row)
+                cursor.execute("SELECT text FROM Question WHERE topic_id = ? ORDER BY question_number", (topic["id"],))
+                topic["questions"] = [q["text"] for q in cursor.fetchall()]
+                paper["topics"].append(topic)
+            return paper
+    except Exception as exc:
+        log.warning("SQLite IGCSE paper detail unavailable, using static fallback: %s", exc)
+        return next((p for p in globals().get("IGCSE_PAPERS", []) if p.get("id") == paper_id), None)
 
 # IGCSE_PAPERS = [ ... ]  <-- We will remove the static list and update the endpoints below
 # Temporary static fallback (used by legacy endpoints while DB migration completes)
@@ -1292,23 +1336,76 @@ def extract_json(text: str) -> dict[str, Any]:
     return json.loads(text[start:end + 1])
 
 
+AI_PROVIDER_TIMEOUT_SEC = float(os.getenv("AI_PROVIDER_TIMEOUT_SEC", "25"))
+AI_PROVIDER_RETRIES = int(os.getenv("AI_PROVIDER_RETRIES", "2"))
+
+
+def _log_provider_failure(provider: str, exc: Exception, attempt: int | None = None) -> None:
+    attempt_part = f" attempt={attempt}" if attempt is not None else ""
+    log.error(
+        "%s failed%s: %s\n%s",
+        provider,
+        attempt_part,
+        repr(exc),
+        traceback.format_exc(),
+    )
+
+
+async def _run_with_retries(
+    provider: str,
+    operation,
+    *,
+    attempts: int = AI_PROVIDER_RETRIES,
+    timeout_sec: float = AI_PROVIDER_TIMEOUT_SEC,
+) -> dict[str, Any]:
+    last_exc: Exception | None = None
+    for attempt in range(1, max(1, attempts) + 1):
+        try:
+            return await asyncio.wait_for(operation(), timeout=timeout_sec)
+        except ResourceExhausted:
+            raise
+        except Exception as exc:
+            last_exc = exc
+            _log_provider_failure(provider, exc, attempt)
+            if attempt >= attempts:
+                break
+            await asyncio.sleep(min(0.75 * attempt, 2.0))
+
+    if last_exc:
+        raise last_exc
+    raise RuntimeError(f"{provider} failed without an exception")
+
+
+def _metric_float(value: Any, default: float | None = None) -> float | None:
+    try:
+        if value is None:
+            return default
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
 async def _call_groq(prompt: str, detailed: bool = False) -> dict[str, Any]:
     groq = get_groq()
     if not groq:
         raise RuntimeError("Groq not configured")
-    resp = await groq.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        response_format={"type": "json_object"},
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": prompt},
-        ],
-        temperature=0.4,
-        max_tokens=2048 if detailed else 1024,
-    )
-    result = extract_json(resp.choices[0].message.content)
-    result["modelUsed"] = "groq/llama-3.3-70b-versatile"
-    return result
+
+    async def operation() -> dict[str, Any]:
+        resp = await groq.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": prompt},
+            ],
+            temperature=0.4,
+            max_tokens=2048 if detailed else 1024,
+        )
+        result = extract_json(resp.choices[0].message.content)
+        result["modelUsed"] = "groq/llama-3.3-70b-versatile"
+        return result
+
+    return await _run_with_retries("groq/llama-3.3-70b-versatile", operation)
 
 
 async def _call_gemini(prompt: str) -> dict[str, Any]:
@@ -1316,10 +1413,18 @@ async def _call_gemini(prompt: str) -> dict[str, Any]:
     gemini = get_gemini()
     if not gemini:
         raise RuntimeError("Gemini not configured")
-    response = await asyncio.to_thread(gemini.generate_content, prompt)
-    result = extract_json(response.text)
-    result["modelUsed"] = "gemini/gemini-2.0-flash"
-    return result
+
+    async def operation() -> dict[str, Any]:
+        response = await asyncio.to_thread(gemini.generate_content, prompt)
+        result = extract_json(getattr(response, "text", "") or "")
+        result["modelUsed"] = "gemini/gemini-2.0-flash"
+        return result
+
+    try:
+        return await _run_with_retries("gemini/gemini-2.0-flash", operation)
+    except ResourceExhausted as exc:
+        _log_provider_failure("gemini/gemini-2.0-flash quota exhausted", exc)
+        raise
 
 
 async def _call_gemini_multimodal(
@@ -1327,12 +1432,7 @@ async def _call_gemini_multimodal(
     audio_path: str,
     mime_type: str = "audio/webm",
 ) -> dict[str, Any]:
-    """
-    Multimodal Gemini call: sends audio + transcript for real pronunciation analysis.
-    Uses inline_data (works for files < ~20 MB, i.e. any normal spoken answer).
-    Falls back gracefully if Gemini rejects the audio.
-    """
-    import google.generativeai as genai
+    """Gemini audio + transcript feedback with timeout, retries, and quota-aware errors."""
     from google.generativeai import types as gtypes
 
     gemini = get_gemini_multimodal()
@@ -1342,28 +1442,128 @@ async def _call_gemini_multimodal(
     with open(audio_path, "rb") as f:
         audio_bytes = f.read()
 
-    # google-generativeai SDK: inline audio via types.Part + types.Blob
     audio_part = gtypes.Part(
         inline_data=gtypes.Blob(mime_type=mime_type, data=audio_bytes)
     )
 
-    try:
+    async def operation() -> dict[str, Any]:
         response = await asyncio.to_thread(
             gemini.generate_content,
             [audio_part, prompt],
         )
-    except Exception as exc:
-        # Gemini may refuse audio if it thinks it contains harmful content or
-        # if the mime type isn't accepted — fall back to text-only
-        log.warning("Gemini multimodal rejected audio (%s), retrying text-only", exc)
-        text_model = get_gemini()
-        if not text_model:
-            raise
-        response = await asyncio.to_thread(text_model.generate_content, prompt)
+        result = extract_json(getattr(response, "text", "") or "")
+        result["modelUsed"] = "gemini/gemini-2.0-flash-multimodal"
+        return result
 
-    result = extract_json(response.text)
-    result["modelUsed"] = "gemini/gemini-2.0-flash-multimodal"
-    return result
+    try:
+        return await _run_with_retries("gemini/gemini-2.0-flash-multimodal", operation)
+    except ResourceExhausted as exc:
+        _log_provider_failure("gemini/gemini-2.0-flash-multimodal quota exhausted", exc)
+        raise
+
+
+def _offline_feedback(req: FeedbackRequest, provider_errors: list[dict[str, str]] | None = None) -> dict[str, Any]:
+    transcript = (req.transcript or "").strip()
+    words = re.findall(r"\b[\w'-]+\b", transcript, flags=re.UNICODE)
+    word_count = len(words)
+    metrics = req.metrics.model_dump(exclude_none=True) if req.metrics else {}
+    words_per_minute = _metric_float(metrics.get("wordsPerMinute"))
+
+    length_score = min(10.0, max(2.0, word_count / 8.0))
+    fluency_score = _metric_float(metrics.get("fluencyScore"), length_score) or length_score
+    if words_per_minute:
+        if 80 <= words_per_minute <= 150:
+            fluency_score = max(fluency_score, 7.0)
+        elif words_per_minute < 45:
+            fluency_score = min(fluency_score, 5.0)
+
+    has_past = bool(re.search(r"\b(ai|as|a|avons|avez|ont|suis|es|est|sommes|etes|sont)\b", transcript, re.I))
+    has_connective = bool(re.search(r"\b(parce que|mais|aussi|donc|cependant|puis|ensuite)\b", transcript, re.I))
+    has_opinion = bool(re.search(r"\b(je pense|j aime|j'aime|je n aime pas|je n'aime pas|a mon avis|selon moi)\b", transcript, re.I))
+
+    grammar = []
+    if word_count < 12:
+        grammar.append("The answer is understandable but quite short; add one or two extra details to show control of sentence structure.")
+    if not has_past:
+        grammar.append("Try to include a past-tense detail when the question allows it, for example something you did recently.")
+    if not has_connective:
+        grammar.append("Use a connective such as 'parce que', 'mais' or 'ensuite' to link ideas more naturally.")
+    if not grammar:
+        grammar.append("The response has a clear basic structure. Keep checking verb endings and agreement as you expand your answer.")
+
+    structure = []
+    if not has_opinion:
+        structure.append("Add a clear opinion and a reason so the answer feels more developed.")
+    structure.append("Aim for a simple pattern: answer the question, add a detail, then give a reason or example.")
+
+    low_conf_words = []
+    if req.metrics and req.metrics.wordProbabilities:
+        low_conf_words = [
+            wp.word for wp in req.metrics.wordProbabilities
+            if wp.probability is not None and wp.probability < 0.7
+        ][:5]
+
+    pronunciation_tips = (
+        [f"Practise the pronunciation of '{word}' slowly, then repeat it inside the full sentence." for word in low_conf_words[:3]]
+        if low_conf_words
+        else ["Pronunciation detail is limited because the AI audio provider is unavailable; record again later for word-level analysis."]
+    )
+
+    return {
+        "fluency": round(max(0.0, min(10.0, fluency_score)), 1),
+        "grammar": grammar,
+        "vocabulary": [
+            {
+                "basic": "tres bien",
+                "upgrade": "vraiment interessant",
+                "example": "C'est vraiment interessant parce que cela me permet de progresser.",
+            }
+        ],
+        "structure": structure,
+        "pronunciationTips": pronunciation_tips,
+        "encouragement": "Your answer has enough information to build from. Keep extending it with reasons, examples and time phrases.",
+        "followUpQuestion": "Peux-tu me donner un exemple ?",
+        "igcseLevel": "Core - Secure" if word_count >= 25 else "Foundation - Developing",
+        "pronunciation": {
+            "score": None,
+            "issues": [
+                {
+                    "word": word,
+                    "problem": "Speech recognition confidence was low for this word.",
+                    "expected": "Repeat slowly, then blend it back into the sentence.",
+                    "severity": "medium",
+                    "timestamp": None,
+                }
+                for word in low_conf_words
+            ],
+        },
+        "words": [],
+        "providerStatus": "offline_fallback",
+        "providerErrors": provider_errors or [],
+        "modelUsed": "offline/local-evaluator",
+    }
+
+
+async def _try_feedback_provider(
+    provider_name: str,
+    operation,
+    errors: list[dict[str, str]],
+) -> dict[str, Any] | None:
+    try:
+        return await operation()
+    except ResourceExhausted as exc:
+        _log_provider_failure(f"{provider_name} quota exhausted", exc)
+        errors.append({"provider": provider_name, "type": "quota_exhausted", "message": str(exc)})
+    except (asyncio.TimeoutError, TimeoutError) as exc:
+        _log_provider_failure(f"{provider_name} timeout", exc)
+        errors.append({"provider": provider_name, "type": "timeout", "message": str(exc)})
+    except (ValueError, json.JSONDecodeError) as exc:
+        _log_provider_failure(f"{provider_name} malformed_response", exc)
+        errors.append({"provider": provider_name, "type": "malformed_response", "message": str(exc)})
+    except Exception as exc:
+        _log_provider_failure(provider_name, exc)
+        errors.append({"provider": provider_name, "type": exc.__class__.__name__, "message": str(exc)})
+    return None
 
 
 async def call_ai_feedback(
@@ -1372,41 +1572,38 @@ async def call_ai_feedback(
     audio_mime: str = "audio/webm",
 ) -> dict[str, Any]:
     prompt = build_user_prompt(req)
-    requested = (req.model or "").lower()
     detailed = req.detailed
     has_audio = bool(audio_path)
+    provider_errors: list[dict[str, str]] = []
 
-    # Gemini with audio → multimodal analysis (pronunciation-aware)
-    if requested == "gemini" and has_audio:
-        try:
-            return await _call_gemini_multimodal(prompt, audio_path, mime_type=audio_mime)
-        except Exception as e:
-            log.warning("Gemini multimodal failed, falling back to text-only: %s", e)
-            return await _call_gemini(prompt)
+    if has_audio:
+        result = await _try_feedback_provider(
+            "gemini/gemini-2.0-flash-multimodal",
+            lambda: _call_gemini_multimodal(prompt, audio_path, mime_type=audio_mime),
+            provider_errors,
+        )
+    else:
+        result = await _try_feedback_provider(
+            "gemini/gemini-2.0-flash",
+            lambda: _call_gemini(prompt),
+            provider_errors,
+        )
+    if result:
+        result.setdefault("providerStatus", "primary")
+        return result
 
-    if requested == "gemini":
-        return await _call_gemini(prompt)
-
-    if requested == "groq":
-        return await _call_groq(prompt, detailed)
-
-    # Auto: try Groq first, then Gemini (multimodal if audio available)
-    try:
-        return await _call_groq(prompt, detailed)
-    except Exception as e:
-        log.warning("Groq failed, falling back to Gemini: %s", e)
-
-    try:
-        if has_audio:
-            return await _call_gemini_multimodal(prompt, audio_path, mime_type=audio_mime)
-        return await _call_gemini(prompt)
-    except Exception as e:
-        log.warning("Gemini also failed: %s", e)
-
-    raise HTTPException(
-        status_code=503,
-        detail="No AI backend available. Set GROQ_API_KEY or GEMINI_API_KEY in .env"
+    result = await _try_feedback_provider(
+        "groq/llama-3.3-70b-versatile",
+        lambda: _call_groq(prompt, detailed),
+        provider_errors,
     )
+    if result:
+        result.setdefault("providerStatus", "fallback")
+        result["fallbackReason"] = provider_errors[0]["type"] if provider_errors else "primary_unavailable"
+        result["providerErrors"] = provider_errors
+        return result
+
+    return _offline_feedback(req, provider_errors)
 
 
 def enrich_feedback(fb: dict[str, Any], req: FeedbackRequest) -> dict[str, Any]:
@@ -1577,14 +1774,33 @@ async def feedback(request: Request) -> dict[str, Any]:
         elif isinstance(payload.get("metrics_json"), str):
             metrics_json = payload.get("metrics_json") or "{}"
 
-    return await _feedback_impl(
-        question=question,
-        transcript=transcript,
-        model=model,
-        detailed=detailed,
-        metrics_json=metrics_json,
-        audio=audio,
-    )
+    try:
+        return await _feedback_impl(
+            question=question,
+            transcript=transcript,
+            model=model,
+            detailed=detailed,
+            metrics_json=metrics_json,
+            audio=audio,
+        )
+    except HTTPException:
+        raise
+    except Exception as exc:
+        _log_provider_failure("feedback_endpoint_unhandled", exc)
+        fallback_req = FeedbackRequest(
+            question=question or "General French speaking practice",
+            transcript=transcript or "",
+            metrics=None,
+            model=model,
+            detailed=detailed,
+        )
+        return enrich_feedback(
+            _offline_feedback(
+                fallback_req,
+                [{"provider": "feedback_endpoint", "type": exc.__class__.__name__, "message": str(exc)}],
+            ),
+            fallback_req,
+        )
 
 
 # ── /api/repair — micro-repair loop ──────────────────────────────────────────
@@ -1704,8 +1920,17 @@ async def repair_pronunciation(
     except HTTPException:
         raise
     except Exception as e:
-        log.error("Repair failed: %s", e)
-        raise HTTPException(status_code=500, detail=f"Repair analysis failed: {e}")
+        _log_provider_failure("repair-endpoint", e)
+        return {
+            "word": word,
+            "heard": word,
+            "score": None,
+            "improved": None,
+            "feedback": "Pronunciation analysis is temporarily unavailable. Please try again shortly.",
+            "phonetics_guide": "Break the word into syllables, practise each sound slowly, then rebuild the full word.",
+            "tip": f"Repeat {word} three times slowly, then once in the full sentence.",
+            "source": "offline_fallback",
+        }
     finally:
         try:
             os.unlink(tmp_path)
@@ -1726,9 +1951,6 @@ async def generate_drill(
     Generate a targeted pronunciation drill for a single French word.
     Returns {ipa, hint, sentences: [{fr, en}], tip}.
     """
-    if not GEMINI_API_KEY:
-        raise HTTPException(status_code=503, detail="Gemini not configured")
-
     prompt = (
         f"A student is drilling the French word «{word}».\n"
         f"Pronunciation issue: {issue or '(not specified)'}\n"
@@ -1751,13 +1973,27 @@ async def generate_drill(
         gemini = get_gemini()
         if not gemini:
             raise RuntimeError("Gemini not configured")
-        response = await asyncio.to_thread(gemini.generate_content, prompt)
+        response = await asyncio.wait_for(
+            asyncio.to_thread(gemini.generate_content, prompt),
+            timeout=AI_PROVIDER_TIMEOUT_SEC,
+        )
         result = extract_json(response.text)
         result["word"] = word
         return result
     except Exception as e:
-        log.error("Drill generation failed: %s", e)
-        raise HTTPException(status_code=500, detail=f"Drill generation failed: {e}")
+        _log_provider_failure("drill-gemini", e)
+        return {
+            "word": word,
+            "ipa": ipa or "",
+            "hint": f"Say '{word}' slowly, break it into syllables, then repeat it in the original sentence.",
+            "sentences": [
+                {"fr": context or f"Je repete {word}.", "en": "Practice sentence"},
+                {"fr": f"Je peux dire {word} clairement.", "en": "I can say the word clearly."},
+                {"fr": f"Je pratique {word} avec confiance.", "en": "I practise the word with confidence."},
+            ],
+            "tip": issue or "Focus on one sound at a time, then rebuild the full word.",
+            "source": "offline_fallback",
+        }
 
 
 # ── IGCSE feedback ────────────────────────────────────────────────────────────
@@ -1779,51 +2015,90 @@ async def _call_groq_igcse(prompt: str) -> dict[str, Any]:
     groq = get_groq()
     if not groq:
         raise RuntimeError("Groq not configured")
-    resp = await groq.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        response_format={"type": "json_object"},
-        messages=[
-            {"role": "system", "content": IGCSE_SYSTEM_PROMPT},
-            {"role": "user", "content": prompt},
-        ],
-        temperature=0.3,
-        max_tokens=1500,
-    )
-    result = extract_json(resp.choices[0].message.content)
-    result["modelUsed"] = "groq/llama-3.3-70b-versatile"
-    return result
+
+    async def operation() -> dict[str, Any]:
+        resp = await groq.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": IGCSE_SYSTEM_PROMPT},
+                {"role": "user", "content": prompt},
+            ],
+            temperature=0.3,
+            max_tokens=1500,
+        )
+        result = extract_json(resp.choices[0].message.content)
+        result["modelUsed"] = "groq/llama-3.3-70b-versatile"
+        return result
+
+    return await _run_with_retries("groq-igcse", operation)
 
 
 async def _call_gemini_igcse(prompt: str) -> dict[str, Any]:
     gemini = get_gemini_igcse()
     if not gemini:
         raise RuntimeError("Gemini not configured")
-    response = await asyncio.to_thread(gemini.generate_content, prompt)
-    result = extract_json(response.text)
-    result["modelUsed"] = "gemini/gemini-2.0-flash"
-    return result
+
+    async def operation() -> dict[str, Any]:
+        response = await asyncio.to_thread(gemini.generate_content, prompt)
+        result = extract_json(getattr(response, "text", "") or "")
+        result["modelUsed"] = "gemini/gemini-2.0-flash"
+        return result
+
+    return await _run_with_retries("gemini-igcse", operation)
+
+
+def _offline_igcse_feedback(req: IGCSEFeedbackRequest, provider_errors: list[dict[str, str]] | None = None) -> dict[str, Any]:
+    words = re.findall(r"\b[\w'-]+\b", req.transcript or "", flags=re.UNICODE)
+    word_count = len(words)
+    base = 2 if word_count < 20 else 3 if word_count < 60 else 4
+    scores = {
+        "coverage": min(5, base + (1 if req.bullet_points and word_count >= 40 else 0)),
+        "communication": min(5, base),
+        "range": min(5, base),
+        "accuracy": min(5, max(1, base - 1)),
+    }
+    total = sum(scores.values())
+    return {
+        "scores": scores,
+        "total": total,
+        "grade_band": "A" if total >= 15 else "B" if total >= 12 else "C" if total >= 9 else "D" if total >= 6 else "E",
+        "per_criterion_feedback": {
+            "coverage": "Offline estimate: coverage was inferred from transcript length and available bullet points.",
+            "communication": "Offline estimate: the response appears usable, but AI grading is temporarily unavailable.",
+            "range": "Offline estimate: add varied tenses, opinions, and connectives to improve range.",
+            "accuracy": "Offline estimate: detailed grammar checking is unavailable while providers are down.",
+        },
+        "strengths": ["You produced a response that can be reviewed and improved."],
+        "next_steps": ["Try again later for full AI marking.", "Add reasons, examples, and time phrases."],
+        "modelUsed": "offline/local-igcse-evaluator",
+        "providerStatus": "offline_fallback",
+        "providerErrors": provider_errors or [],
+    }
 
 
 async def call_igcse_feedback(req: IGCSEFeedbackRequest) -> dict[str, Any]:
     prompt = build_igcse_prompt(req)
-    requested = (req.model or "").lower()
+    provider_errors: list[dict[str, str]] = []
 
-    if requested == "gemini":
-        return await _call_gemini_igcse(prompt)
+    result = await _try_feedback_provider(
+        "gemini-igcse",
+        lambda: _call_gemini_igcse(prompt),
+        provider_errors,
+    )
+    if result:
+        return result
 
-    if requested == "groq":
-        return await _call_groq_igcse(prompt)
+    result = await _try_feedback_provider(
+        "groq-igcse",
+        lambda: _call_groq_igcse(prompt),
+        provider_errors,
+    )
+    if result:
+        result["providerErrors"] = provider_errors
+        return result
 
-    try:
-        return await _call_groq_igcse(prompt)
-    except Exception as e:
-        log.warning("Groq IGCSE failed, falling back to Gemini: %s", e)
-    try:
-        return await _call_gemini_igcse(prompt)
-    except Exception as e:
-        log.warning("Gemini IGCSE also failed: %s", e)
-
-    raise HTTPException(status_code=503, detail="No AI backend available")
+    return _offline_igcse_feedback(req, provider_errors)
 
 
 @app.post("/api/feedback/igcse")
@@ -1956,8 +2231,19 @@ async def transcribe(
             try:
                 return await _groq_whisper(tmp_path, language)
             except Exception as e:
-                log.warning("Groq Whisper failed, falling back to faster-whisper: %s", e)
-        return await _faster_whisper(tmp_path, language)
+                _log_provider_failure("groq-whisper", e)
+        try:
+            return await _faster_whisper(tmp_path, language)
+        except Exception as e:
+            _log_provider_failure("faster-whisper", e)
+            return {
+                "text": "",
+                "language": language,
+                "segments": [],
+                "words": [],
+                "source": "transcription-unavailable",
+                "error": "Transcription is temporarily unavailable.",
+            }
     finally:
         try:
             os.unlink(tmp_path)
@@ -1967,7 +2253,11 @@ async def transcribe(
 
 # ── /api/questions ────────────────────────────────────────────────────────────
 def _require_supabase():
-    db = get_supabase()
+    try:
+        db = get_supabase()
+    except Exception as exc:
+        _log_provider_failure("supabase-init", exc)
+        raise HTTPException(status_code=503, detail="Database initialization failed") from exc
     if db is None:
         raise HTTPException(status_code=503, detail="Database not configured")
     return db
@@ -2287,7 +2577,18 @@ async def get_grammar_lesson(topic: str) -> dict:
             log.warning("Grammar lesson Gemini-1.5 failed: %s", e)
 
     if not raw:
-        raise HTTPException(status_code=503, detail="AI not available — check API keys and quota")
+        return {
+            "rule": "AI grammar lessons are temporarily unavailable. Review the correction note and identify the verb, agreement, or word-order pattern it refers to.",
+            "examples": [
+                {"wrong": topic, "right": "Rewrite the sentence with the corrected grammar pattern."},
+                {"wrong": "Je aller au cinema.", "right": "Je vais au cinema."},
+            ],
+            "practice": [
+                "Write one new sentence using the corrected structure.",
+                "Say the sentence aloud twice, slowly then naturally.",
+            ],
+            "source": "offline_fallback",
+        }
 
     # Strip markdown fences first
     raw = re.sub(r"^```(?:json)?\s*", "", raw, flags=re.MULTILINE)
@@ -2302,7 +2603,13 @@ async def get_grammar_lesson(topic: str) -> dict:
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
-        raise HTTPException(status_code=502, detail="Could not parse AI response")
+        log.warning("Grammar lesson AI returned malformed JSON")
+        return {
+            "rule": "The AI response could not be parsed, but the correction is still useful practice.",
+            "examples": [{"wrong": topic, "right": "Apply the corrected version from your feedback."}],
+            "practice": ["Create a new sentence with the same grammar point."],
+            "source": "offline_fallback",
+        }
 
 
 # ── /api/roleplay ─────────────────────────────────────────────────────────────
@@ -2355,8 +2662,28 @@ async def api_generate_scenario(req: ScenarioGenerateRequest) -> dict:
         scenario = await generate_scenario(req.description)
         return scenario
     except Exception as e:
-        log.error(f"Scenario generation failed: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        _log_provider_failure("scenario-generator", e)
+        title = (req.description or "Custom scenario").strip()[:80] or "Custom scenario"
+        return {
+            "title": title,
+            "scenario": req.description or "A custom French speaking practice scenario.",
+            "npc_name": "Camille",
+            "npc_personality": "Patient, friendly, and helpful.",
+            "objectives": [
+                "Greet the person politely",
+                "Explain what you need",
+                "Ask one clear question",
+                "Thank the person at the end",
+            ],
+            "key_vocab": [
+                {"fr": "bonjour", "en": "hello"},
+                {"fr": "s'il vous plait", "en": "please"},
+                {"fr": "merci", "en": "thank you"},
+                {"fr": "je voudrais", "en": "I would like"},
+            ],
+            "opening_line": "Bonjour, je peux vous aider ?",
+            "source": "offline_fallback",
+        }
 
 @app.get("/api/roleplay/scenarios")
 async def get_roleplay_scenarios() -> list[dict]:
@@ -2420,7 +2747,12 @@ async def roleplay_turn(req: RoleplayTurnRequest) -> dict:
             log.warning("Roleplay Gemini failed: %s", e)
 
     if not raw:
-        raise HTTPException(status_code=503, detail="AI not available")
+        return {
+            "reply": "D'accord. Pouvez-vous m'en dire un peu plus, s'il vous plait ?",
+            "is_done": req.is_final_turn,
+            "hint": "Try giving one extra detail in French.",
+            "source": "offline_fallback",
+        }
 
     raw = re.sub(r"^```(?:json)?\s*", "", raw, flags=re.MULTILINE)
     raw = re.sub(r"\s*```$", "", raw, flags=re.MULTILINE)
@@ -2435,11 +2767,8 @@ async def roleplay_turn(req: RoleplayTurnRequest) -> dict:
 @app.get("/api/vocab-prep")
 async def vocab_prep(topic: str) -> dict[str, Any]:
     """Generate vocabulary and phrases for a given topic."""
-    if not GEMINI_API_KEY:
-        raise HTTPException(status_code=503, detail="Gemini not configured")
+    prompt = f"Generez du vocabulaire et des phrases pour le sujet suivant : {topic}."
 
-    prompt = f"Générez du vocabulaire et des phrases pour le sujet suivant : {topic}."
-    
     try:
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_API_KEY)
@@ -2447,26 +2776,39 @@ async def vocab_prep(topic: str) -> dict[str, Any]:
             "gemini-2.0-flash",
             system_instruction=VOCAB_SYSTEM_PROMPT,
         )
-        
-        response = await asyncio.to_thread(model.generate_content, prompt)
-        return extract_json(response.text)
+        response = await asyncio.wait_for(
+            asyncio.to_thread(model.generate_content, prompt),
+            timeout=AI_PROVIDER_TIMEOUT_SEC,
+        )
+        return extract_json(getattr(response, "text", "") or "")
     except Exception as e:
-        log.error("Failed to generate vocab prep: %s", e)
-        raise HTTPException(status_code=500, detail=f"Failed to generate vocab: {e}")
-
+        _log_provider_failure("vocab-prep-gemini", e)
+        return {
+            "vocab": [
+                {"fr": "important", "en": "important", "type": "adjective"},
+                {"fr": "interessant", "en": "interesting", "type": "adjective"},
+                {"fr": "je pense que", "en": "I think that", "type": "phrase"},
+                {"fr": "parce que", "en": "because", "type": "connective"},
+            ],
+            "phrases": [
+                {"fr": f"Je pense que {topic} est interessant.", "en": f"I think {topic} is interesting.", "type": "opinion"},
+                {"fr": f"J'aime parler de {topic} parce que c'est important.", "en": f"I like talking about {topic} because it is important.", "type": "sentence"},
+            ],
+            "source": "offline_fallback",
+        }
 
 # ── Exam mode pipeline ────────────────────────────────────────────────────────
 # New parallel pipeline — does NOT touch any existing endpoint.
 from exam_controller import router as _exam_router
 app.include_router(_exam_router)
 
-# ── Serve frontend static files ───────────────────────────────────────────────
-# Mount last so API routes always take priority.
-import pathlib
-_FRONTEND_DIR = pathlib.Path(__file__).parent.parent
+
 
 @app.get("/")
-async def _serve_index():
-    return FileResponse(_FRONTEND_DIR / "index.html")
-
-app.mount("/", StaticFiles(directory=_FRONTEND_DIR, html=True), name="frontend")
+async def root() -> dict[str, Any]:
+    return {
+        "ok": True,
+        "service": "french-ai-backend",
+        "docs": "/docs",
+        "health": "/health",
+    }

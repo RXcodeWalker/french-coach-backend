@@ -155,6 +155,43 @@ def _grade_from_total(total: int) -> str:
     return "U"
 
 
+def _offline_exam_evaluation(transcript: dict[str, Any]) -> dict[str, Any]:
+    roleplay = transcript.get("roleplay", [])
+    topic1 = transcript.get("topic1", [])
+    topic2 = transcript.get("topic2", [])
+    all_responses = [
+        (item.get("response") or "")
+        for section in (roleplay, topic1, topic2)
+        for item in section
+    ]
+    word_count = sum(len(re.findall(r"\b[\w'-]+\b", response, flags=re.UNICODE)) for response in all_responses)
+    answered_roleplay = sum(1 for item in roleplay if (item.get("response") or "").strip())
+    roleplay_score = min(10, answered_roleplay * 2)
+    communication = 3 if word_count < 30 else 7 if word_count < 100 else 11
+    quality = 3 if word_count < 30 else 7 if word_count < 100 else 10
+    total = roleplay_score + communication + quality
+    return {
+        "roleplay_score": roleplay_score,
+        "communication": communication,
+        "quality": quality,
+        "total": total,
+        "grade": _grade_from_total(total),
+        "breakdown": {
+            "roleplay_tasks": [
+                {
+                    "task_id": item.get("task_id", idx + 1),
+                    "score": 2 if (item.get("response") or "").strip() else 0,
+                    "reasoning": "Offline estimate because AI evaluators were unavailable.",
+                }
+                for idx, item in enumerate(roleplay[:5])
+            ],
+            "communication_reason": "Offline estimate based on response length and completion.",
+            "language_reason": "Offline estimate; detailed language analysis requires an AI provider.",
+        },
+        "providerStatus": "offline_fallback",
+    }
+
+
 def _strip_fences(raw: str) -> str:
     raw = re.sub(r"^```(?:json)?\s*", "", raw, flags=re.MULTILINE)
     raw = re.sub(r"\s*```\s*$", "", raw, flags=re.MULTILINE)
@@ -204,9 +241,14 @@ async def evaluate_full_exam(
             log.warning("Evaluator Gemini failed: %s", exc)
 
     if not raw:
-        raise RuntimeError("No AI evaluator available (both Groq and Gemini failed)")
+        log.warning("No AI evaluator available; returning offline exam estimate")
+        return _offline_exam_evaluation(transcript)
 
-    result = json.loads(_strip_fences(raw))
+    try:
+        result = json.loads(_strip_fences(raw))
+    except Exception as exc:
+        log.warning("AI evaluator returned malformed JSON; using offline estimate: %s", exc)
+        return _offline_exam_evaluation(transcript)
 
     # Recalculate total and grade from component scores for consistency
     rp = int(result.get("roleplay_score", 0))

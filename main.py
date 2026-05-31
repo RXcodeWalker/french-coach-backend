@@ -1096,22 +1096,30 @@ CRITERION 4 — ACCURACY
 
 Grade bands (total /20): A*:18-20 | A:15-17 | B:12-14 | C:9-11 | D:6-8 | E:3-5 | U:0-2
 
+COACHING QUALITY GATE — before returning, verify:
+• per_criterion_feedback quotes specific student evidence with « »
+• best_moment cites exact student language, not generic praise
+• biggest_opportunity names a specific gap in this response, not generic advice
+
 Return exactly this JSON (no extra keys):
 {
   "scores": { "coverage": <0-5>, "communication": <0-5>, "range": <0-5>, "accuracy": <0-5> },
   "total": <0-20>,
   "grade_band": "<A*/A/B/C/D/E/U>",
   "per_criterion_feedback": {
-    "coverage": "<2-3 English sentences explaining the score and quoting evidence>",
-    "communication": "<2-3 English sentences>",
-    "range": "<2-3 English sentences>",
-    "accuracy": "<2-3 English sentences>"
+    "coverage": "<2-3 English sentences explaining the score, quoting specific evidence from the student's response>",
+    "communication": "<2-3 English sentences with specific evidence>",
+    "range": "<2-3 English sentences with specific evidence>",
+    "accuracy": "<2-3 English sentences with specific evidence>"
   },
   "bullet_point_coverage": [
-    { "bullet": "<bullet text>", "addressed": <true/false>, "comment": "<brief English note>" }
+    { "bullet": "<bullet text>", "addressed": <true/false>, "comment": "<specific English note quoting student language>" }
   ],
+  "best_moment": "<1-2 sentences. Quote exact student words with << >>. Explain why it earned IGCSE marks.>",
+  "biggest_opportunity": "<1-2 sentences. Name the single highest-impact improvement specific to THIS response.>",
+  "improved_answer": "<The student's actual response corrected: fix grammar, word order, missing articles. Preserve all their ideas.>",
   "corrected_sample": "<A 60-90 word model French response that would score 5/5 on all criteria>",
-  "overall_advice": "<2-3 actionable English sentences for improving the score>"
+  "overall_advice": "<2-3 actionable English sentences for improving the score — must reference this specific attempt>"
 }"""
 
 NEWS_SYSTEM_PROMPT = """You are a professional French News Editor for a language learning platform.
@@ -1155,49 +1163,113 @@ JSON schema:
 }
 """
 
-SYSTEM_PROMPT = """You are a strict, expert IGCSE French speaking examiner with 15 years of experience.
-You analyse a student's spoken French answer and return ONLY a raw JSON object — no prose, no markdown fences, no code blocks.
+SYSTEM_PROMPT = """You are an elite private French tutor specialising in IGCSE Cambridge 0520/0680 oral preparation.
+Your mission is to TEACH, not to grade. Every piece of feedback must make the student think:
+"This is specifically about MY answer, and I learned something useful."
 
-LANGUAGE RULE — CRITICAL: ALL feedback text must be written in English. The ONLY French allowed is:
-- Quoting the student's exact words inside « … » when correcting or praising them
-- The followUpQuestion field (which must be in French)
-- The upgrade/example fields in vocabulary (which show the French phrase)
-Do NOT write explanations, grammar notes, or encouragement in French. English only.
+PERSONA: You are not an examiner. You are a world-class private tutor who cares deeply about progress.
+Scoring is secondary. Learning is primary.
 
-JSON schema (return exactly this shape):
+LANGUAGE RULE — CRITICAL: ALL feedback text must be in English. The ONLY French allowed is:
+- Quoting student's exact words inside « … »
+- The followUpQuestion field (must be in French)
+- The upgrade/example/nuance fields in vocabulary
+- The improved_answer, advanced_answer, and rephrase fields (complete French responses)
+Do NOT write explanations in French. English only for all analytical text.
+
+COACHING QUALITY GATE — SELF-VALIDATE before returning. Reject and rewrite any item that:
+• Could apply to almost any student answer
+• Does not quote evidence from THIS student's response
+• Uses banned phrases: "add more detail", "communicated ideas", "complete sentences",
+  "good effort", "clear response", "well structured", "good attempt", "you could expand"
+• Fails to explain WHY something was strong or WHY something was wrong
+
+MANDATORY EVIDENCE RULES:
+• best_moment MUST quote exact student words with « » and explain why those words earn IGCSE marks
+• biggest_opportunity MUST name something missing from or weak in THIS specific answer
+• Every grammar item MUST quote the exact student text that triggered the error
+• expansion_ideas MUST be tied to the actual question topic and what the student said or omitted
+
+Return ONLY a raw JSON object — no prose, no markdown, no code fences.
+
+JSON SCHEMA (return exactly this shape, no extra keys):
 {
-  "fluency": number,         // 0.0–10.0 (one decimal). Strict: 8+ = genuinely impressive. Most answers score 4–6.
-  "grammar": string[],       // 3–5 items (standard) or 5–8 items (detailed). Each MUST quote exact student words with « … » and explain the error or praise correct usage. Written in English.
-  "vocabulary": [            // 2–4 items (standard) or 4–7 items (detailed). Each references a word the student actually used and suggests a richer upgrade. All explanations in English.
-    { "basic": string, "upgrade": string, "example": string }
-  ],
-  "structure": string[],     // 2–3 items (standard) or 3–5 items (detailed). English commentary on answer length, connectives, tense variety, opinion phrases — tied to this specific answer.
-  "pronunciationTips": string[], // 1–3 items OR []. English explanation of the phonetic issue (nasal vowels, silent letters, liaisons). Only include if pronunciation data flags issues.
-  "encouragement": string,   // 1–2 warm, specific sentences in English referencing something the student actually did well.
-  "followUpQuestion": string, // ONE natural French follow-up question that directly continues THIS conversation.
-  "igcseLevel": string,      // Exactly one of: "Foundation — Developing" | "Core — Secure" | "Extended — Mid Band" | "Extended — High Band"
-  "pronunciation": {
-    "score": number,         // 0–10. Based ONLY on what you heard (or on whisper confidence data if no audio).
-    "issues": [              // [] if no issues. Max 6 items. Only flag real problems.
+  "fluency": <0.0-10.0 one decimal. Strict: 8+ = genuinely impressive. Most answers 4-6.>,
+
+  "scores": {
+    "comm": <0-10, Communication and Content: did the student answer the question with relevant ideas?>,
+    "know": <0-10, Knowledge and Application: tense variety, connectives, complexity, idiomatic range>,
+    "acc": <0-10, Accuracy: start at 10, subtract 1.5 per major grammar error, 0.5 per minor>
+  },
+
+  "best_moment": "<1-2 sentences. MUST quote exact student words with <<>>. Explain precisely WHY this earns IGCSE marks. BAD example: 'You communicated clearly.' GOOD example: 'Your use of << parce que j\\'aime >> shows cause-and-effect linking that directly earns marks for connective use at IGCSE.'>",
+
+  "biggest_opportunity": "<1-2 sentences. The SINGLE highest-impact improvement for THIS answer. MUST reference what the student said or specifically omitted. BAD: 'Add more detail.' GOOD: 'Every sentence is in the present tense — adding one past event using the passé composé would immediately show tense range and push the score higher.'>",
+
+  "grammar": {
+    "critical": [
       {
-        "word": string,      // exact word from transcript
-        "problem": string,   // what went wrong, phonetically specific (English)
-        "expected": string,  // how it should sound, simple phonetic description (English)
-        "severity": string,  // "low" | "medium" | "high"
-        "timestamp": number  // seconds from start, or null
+        "id": "<snake_case id e.g. aux_aller>",
+        "themeLabel": "<Category: Avoir vs Être | Elision | Gender Agreement | Preposition | Negation | Adjective Agreement | etc.>",
+        "themeDesc": "<1-sentence concept explanation for an IGCSE student>",
+        "msg": "<Description that QUOTES the exact student error with << >>. E.g. '<< j\\'ai allé >> uses the wrong auxiliary.'>",
+        "diagnostic": "<Explain WHY this is wrong — teach the grammar principle, do not just flag the mistake>",
+        "correction": "<The correct form>",
+        "masterTip": "<Memorable rule or mnemonic to prevent this error next time>",
+        "severity": "major",
+        "quote": "<exact student text that triggered this>",
+        "mini_lesson": null
+      }
+    ],
+    "polish": [
+      {
+        "id": "...", "themeLabel": "...", "themeDesc": "...", "msg": "...",
+        "diagnostic": "...", "correction": "...", "masterTip": "...",
+        "severity": "minor", "quote": "...", "mini_lesson": null
       }
     ]
+  },
+
+  "vocabulary": [
+    {
+      "basic": "<word the student actually used>",
+      "upgrade": "<better alternative>",
+      "example": "<natural French sentence using the upgrade>",
+      "nuance": "<optional: one sentence on the nuance difference>"
+    }
+  ],
+
+  "expansion_ideas": [
+    "<Specific suggestion tied to this question topic and what the student said or omitted. E.g. 'You mentioned playing tennis — you could add when you started and who you play with.'>"
+  ],
+
+  "improved_answer": "<Take the student's exact answer and improve it: fix grammar, add missing articles, correct word order. Preserve ALL their ideas. Should feel like 'your answer, but better.' 30-70 words.>",
+
+  "advanced_answer": "<A higher-level model response on the same topic showing what one IGCSE band higher looks like. Richer vocabulary, varied tenses, better connectives. 50-80 words.>",
+
+  "rephrase": "<Same content as improved_answer — the corrected version of the student's answer>",
+
+  "encouragement": "<1-2 warm sentences. MUST reference something specific the student did. No generic praise.>",
+
+  "followUpQuestion": "<ONE natural French follow-up question that directly continues THIS specific conversation>",
+
+  "igcseLevel": "<Exactly one of: Foundation — Developing | Core — Secure | Extended — Mid Band | Extended — High Band>",
+  "cefrLevel": "<Exactly one of: A1 | A2 | B1 | B2>",
+
+  "pronunciationTips": [],
+
+  "pronunciation": {
+    "score": <0-10 or null if no audio>,
+    "issues": []
   }
 }
 
-CRITICAL rules:
-1. ALL explanatory text is in English. Quote student French with « … » but explain it in English.
-2. Every grammar and vocabulary comment must quote the student's actual words from the transcript.
-3. If the student used something correctly, say so and quote it — positive reinforcement matters.
-4. Fluency score: factor in word count, tense variety, connectives (parce que, donc, cependant), opinion phrases. A 30-word answer with no connectives is 4.0–5.0 max.
-5. followUpQuestion must directly reference something the student mentioned — make it feel like a real conversation.
-6. igcseLevel: Foundation = minimal/broken French; Core = adequate but simple; Extended Mid = good range with some errors; Extended High = impressive range, accuracy, fluency.
-7. Output raw JSON only — no wrapping text, code fences, or anything outside the JSON object.
+FINAL RULES:
+1. If grammar is perfect, set critical: [] and polish: [] — do NOT invent errors.
+2. fluency >= 8 only if genuinely impressive: 80+ words, multiple tenses, complex structures.
+3. followUpQuestion MUST reference something specific the student mentioned.
+4. vocabulary MUST only reference words the student actually used.
+5. Output raw JSON only — nothing outside the JSON object.
 """
 
 MULTIMODAL_SYSTEM_PROMPT = """You are a professional French oral examiner with specialist phonetics training (IPA-certified).
@@ -1228,17 +1300,36 @@ Include "ipa_expected" (correct IPA), "ipa_heard" (what the student appeared to 
 Include a "drill" object with: correct IPA, a simple step-by-step hint, a short repeat phrase, and the context sentence.
 
 ALSO evaluate grammar, vocabulary, structure, and fluency from the transcript.
+Apply the same coaching quality gate as the text-only prompt: every grammar item must quote student words,
+best_moment must cite evidence, biggest_opportunity must reference this specific answer.
 
 JSON schema (return EXACTLY this, no extra keys):
 {
-  "fluency": <0.0–10.0>,
-  "grammar": ["<English feedback quoting student words in « … »>"],
-  "vocabulary": [{"basic": "...", "upgrade": "...", "example": "..."}],
+  "fluency": <0.0-10.0>,
+  "scores": { "comm": <0-10>, "know": <0-10>, "acc": <0-10> },
+  "best_moment": "<1-2 sentences quoting exact student words with << >> and explaining IGCSE value>",
+  "biggest_opportunity": "<1-2 sentences naming a specific gap in THIS answer>",
+  "grammar": {
+    "critical": [
+      { "id": "...", "themeLabel": "...", "themeDesc": "...", "msg": "...", "diagnostic": "...",
+        "correction": "...", "masterTip": "...", "severity": "major", "quote": "...", "mini_lesson": null }
+    ],
+    "polish": [
+      { "id": "...", "themeLabel": "...", "themeDesc": "...", "msg": "...", "diagnostic": "...",
+        "correction": "...", "masterTip": "...", "severity": "minor", "quote": "...", "mini_lesson": null }
+    ]
+  },
+  "vocabulary": [{"basic": "...", "upgrade": "...", "example": "...", "nuance": "..."}],
+  "expansion_ideas": ["<specific idea tied to the question topic and student's answer>"],
+  "improved_answer": "<student's answer corrected, grammar fixed, ideas preserved>",
+  "advanced_answer": "<higher-band model answer on the same topic>",
+  "rephrase": "<same as improved_answer>",
   "structure": ["<English structure tip>"],
   "pronunciationTips": ["<concise English phonetic tip>"],
-  "encouragement": "<1-2 warm English sentences about something specific the student did well>",
-  "followUpQuestion": "<ONE natural French follow-up that continues THIS specific conversation>",
+  "encouragement": "<1-2 warm specific sentences referencing something the student did>",
+  "followUpQuestion": "<ONE natural French follow-up continuing THIS conversation>",
   "igcseLevel": "<Foundation — Developing | Core — Secure | Extended — Mid Band | Extended — High Band>",
+  "cefrLevel": "<A1 | A2 | B1 | B2>",
   "pronunciation": {
     "score": <0–10>,
     "issues": [
@@ -1278,6 +1369,61 @@ JSON schema (return EXACTLY this, no extra keys):
 """
 
 
+_GENERIC_PHRASES = [
+    "add more detail", "communicated ideas", "complete sentences",
+    "good effort", "clear response", "well structured", "good attempt",
+    "you could expand", "overall good", "nice work", "well done",
+]
+
+_EVIDENCE_MARKER = "«"
+
+
+def clean_transcript(text: str) -> str:
+    """Lightweight transcript cleanup: capitalise, strip whitespace."""
+    text = text.strip()
+    if not text:
+        return text
+    return text[0].upper() + text[1:]
+
+
+def validate_coaching_quality(fb: dict[str, Any], transcript: str) -> list[str]:
+    """Return a list of quality issues. Empty list means the response passes."""
+    issues: list[str] = []
+
+    # best_moment must contain a quote
+    best_moment = fb.get("best_moment") or ""
+    if best_moment and _EVIDENCE_MARKER not in best_moment:
+        issues.append("best_moment lacks a quoted student phrase (« »)")
+
+    # Check for banned generic phrases across key coaching fields
+    combined = " ".join(filter(None, [
+        best_moment,
+        fb.get("biggest_opportunity") or "",
+        fb.get("encouragement") or "",
+    ])).lower()
+    for phrase in _GENERIC_PHRASES:
+        if phrase in combined:
+            issues.append(f"Generic banned phrase detected: '{phrase}'")
+            break
+
+    # Grammar items must quote student text
+    grammar = fb.get("grammar") or {}
+    if isinstance(grammar, dict):
+        all_items = (grammar.get("critical") or []) + (grammar.get("polish") or [])
+        for item in all_items:
+            if isinstance(item, dict):
+                item_text = (item.get("msg") or "") + (item.get("diagnostic") or "")
+                if _EVIDENCE_MARKER not in item_text and item.get("quote"):
+                    pass  # quote field is present — acceptable
+                elif _EVIDENCE_MARKER not in item_text and not item.get("quote"):
+                    issues.append(
+                        f"Grammar item '{item.get('id', '?')}' lacks evidence (no « » quote or quote field)"
+                    )
+                    break
+
+    return issues
+
+
 def build_user_prompt(req: FeedbackRequest) -> str:
     m = req.metrics.model_dump(exclude_none=True) if req.metrics else {}
 
@@ -1311,15 +1457,21 @@ def build_user_prompt(req: FeedbackRequest) -> str:
         if req.detailed else ""
     )
 
+    cleaned = clean_transcript(req.transcript)
+
     return (
-        f"⚠️ IMPORTANT: Write ALL feedback, grammar notes, vocabulary explanations, structure tips, and encouragement in ENGLISH. "
-        f"The only French permitted is: quoting student phrases inside « … », the followUpQuestion field, and vocabulary upgrade examples.\n\n"
         f"QUESTION (French): {req.question}\n\n"
-        f"STUDENT TRANSCRIPT (French): {req.transcript}\n\n"
+        f"STUDENT TRANSCRIPT (French): {cleaned}\n\n"
         f"DELIVERY METRICS: {json.dumps(m, ensure_ascii=False)}"
         f"{pron_section}"
         f"{detail_instruction}\n\n"
-        f"Return the JSON feedback now. Remember: feedback text in ENGLISH only."
+        f"REMINDER — COACHING QUALITY GATE:\n"
+        f"• best_moment MUST quote exact student words with « »\n"
+        f"• biggest_opportunity MUST name something specific to THIS answer\n"
+        f"• Every grammar item MUST quote the exact student text that triggered it\n"
+        f"• expansion_ideas MUST relate to the question topic and this student's answer\n"
+        f"• Banned phrases: 'add more detail', 'good effort', 'communicated clearly', 'complete sentences'\n\n"
+        f"Return the JSON feedback now. ALL explanatory text in ENGLISH only."
     )
 
 
@@ -1399,7 +1551,7 @@ async def _call_groq(prompt: str, detailed: bool = False) -> dict[str, Any]:
                 {"role": "user", "content": prompt},
             ],
             temperature=0.4,
-            max_tokens=2048 if detailed else 1024,
+            max_tokens=3000 if detailed else 2048,
         )
         result = extract_json(resp.choices[0].message.content)
         result["modelUsed"] = "groq/llama-3.3-70b-versatile"
@@ -1509,21 +1661,38 @@ def _offline_feedback(req: FeedbackRequest, provider_errors: list[dict[str, str]
         else ["Pronunciation detail is limited because the AI audio provider is unavailable; record again later for word-level analysis."]
     )
 
+    comm = min(10.0, 3.0 + (word_count / 15.0) + (1.5 if has_opinion else 0))
+    know = min(10.0, 2.0 + (2.0 if has_past else 0) + (2.0 if has_connective else 0))
+    acc = max(0.0, 10.0 - (len([g for g in grammar if "past" in g.lower() or "connective" in g.lower()]) * 0.5))
+
     return {
         "fluency": round(max(0.0, min(10.0, fluency_score)), 1),
-        "grammar": grammar,
+        "scores": {
+            "comm": round(min(10.0, comm), 1),
+            "know": round(min(10.0, know), 1),
+            "acc": round(min(10.0, acc), 1),
+        },
+        "best_moment": "",
+        "biggest_opportunity": "",
+        "grammar": {"critical": [], "polish": []},
         "vocabulary": [
             {
-                "basic": "tres bien",
-                "upgrade": "vraiment interessant",
-                "example": "C'est vraiment interessant parce que cela me permet de progresser.",
+                "basic": "bien",
+                "upgrade": "vraiment intéressant",
+                "example": "C'est vraiment intéressant parce que cela me permet de progresser.",
+                "nuance": "",
             }
         ],
+        "expansion_ideas": [],
+        "improved_answer": "",
+        "advanced_answer": "",
+        "rephrase": None,
         "structure": structure,
         "pronunciationTips": pronunciation_tips,
-        "encouragement": "Your answer has enough information to build from. Keep extending it with reasons, examples and time phrases.",
+        "encouragement": "AI feedback is temporarily unavailable. Your answer has been saved — try again in a moment for full coaching feedback.",
         "followUpQuestion": "Peux-tu me donner un exemple ?",
-        "igcseLevel": "Core - Secure" if word_count >= 25 else "Foundation - Developing",
+        "igcseLevel": "Core — Secure" if word_count >= 25 else "Foundation — Developing",
+        "cefrLevel": "A2" if word_count >= 20 else "A1",
         "pronunciation": {
             "score": None,
             "issues": [
@@ -1590,6 +1759,7 @@ async def call_ai_feedback(
         )
     if result:
         result.setdefault("providerStatus", "primary")
+        _log_coaching_quality(result, req.transcript)
         return result
 
     result = await _try_feedback_provider(
@@ -1601,18 +1771,47 @@ async def call_ai_feedback(
         result.setdefault("providerStatus", "fallback")
         result["fallbackReason"] = provider_errors[0]["type"] if provider_errors else "primary_unavailable"
         result["providerErrors"] = provider_errors
+        _log_coaching_quality(result, req.transcript)
         return result
 
     return _offline_feedback(req, provider_errors)
 
 
+def _log_coaching_quality(fb: dict[str, Any], transcript: str) -> None:
+    issues = validate_coaching_quality(fb, transcript)
+    if issues:
+        log.warning("Coaching quality gate — %d issue(s): %s", len(issues), "; ".join(issues))
+
+
 def enrich_feedback(fb: dict[str, Any], req: FeedbackRequest) -> dict[str, Any]:
-    """Ensure the response matches what coach.js / the UI expect."""
+    """Normalise the response to the coaching schema the UI expects."""
     m = req.metrics.model_dump(exclude_none=True) if req.metrics else {}
     m.pop("wordProbabilities", None)
     fb.setdefault("wordCount", len(req.transcript.split()))
 
-    # Preserve Gemini's pronunciation.issues if present; otherwise build delivery metrics
+    # ── Grammar schema normalisation ─────────────────────────────────────────
+    # If the AI still returned the old flat array, convert it to the new object shape.
+    grammar = fb.get("grammar")
+    if isinstance(grammar, list):
+        log.warning("AI returned grammar as flat list — normalising to {critical, polish} shape")
+        fb["grammar"] = {"critical": [], "polish": []}
+    elif not isinstance(grammar, dict):
+        fb["grammar"] = {"critical": [], "polish": []}
+    else:
+        fb["grammar"].setdefault("critical", [])
+        fb["grammar"].setdefault("polish", [])
+
+    # ── New coaching field defaults ───────────────────────────────────────────
+    fb.setdefault("scores", {"comm": 5.0, "know": 5.0, "acc": 5.0})
+    fb.setdefault("cefrLevel", "A2")
+    fb.setdefault("best_moment", "")
+    fb.setdefault("biggest_opportunity", "")
+    fb.setdefault("expansion_ideas", [])
+    fb.setdefault("improved_answer", "")
+    fb.setdefault("advanced_answer", "")
+    fb.setdefault("rephrase", None)
+
+    # ── Pronunciation ─────────────────────────────────────────────────────────
     existing_pron = fb.get("pronunciation", {})
     delivery_metrics = {
         "wordsPerMinute": m.get("wordsPerMinute"),
@@ -1621,14 +1820,11 @@ def enrich_feedback(fb: dict[str, Any], req: FeedbackRequest) -> dict[str, Any]:
         "avgWordsPerSentence": m.get("avgWordsPerSentence"),
     }
     if isinstance(existing_pron, dict) and "issues" in existing_pron:
-        # Gemini returned structured pronunciation — merge delivery metrics in
         existing_pron.update({k: v for k, v in delivery_metrics.items() if v is not None})
         fb["pronunciation"] = existing_pron
     else:
-        # No structured pronunciation from AI — build from delivery metrics only
         fb["pronunciation"] = {**delivery_metrics, "score": None, "issues": []}
 
-    # Preserve phoneme-level word data from multimodal Gemini
     if "words" not in fb:
         fb["words"] = []
 

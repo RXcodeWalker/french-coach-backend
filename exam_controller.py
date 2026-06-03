@@ -16,6 +16,7 @@ import logging
 import os
 import pathlib
 import random
+from datetime import datetime, timezone
 from typing import Any
 
 from dotenv import load_dotenv
@@ -25,6 +26,18 @@ from pydantic import BaseModel
 from exam_sessions import create_session, delete_session, get_session, update_session
 from evaluator_service import evaluate_full_exam
 from state_manager import advance_state, state_name
+
+_SUPABASE_URL = os.getenv("SUPABASE_URL", "").strip()
+_SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_KEY", "").strip()
+_supabase_client: Any = None
+
+
+def _get_supabase() -> Any:
+    global _supabase_client
+    if _supabase_client is None and _SUPABASE_URL and _SUPABASE_KEY:
+        from supabase import create_client
+        _supabase_client = create_client(_SUPABASE_URL, _SUPABASE_KEY)
+    return _supabase_client
 
 load_dotenv()
 
@@ -672,6 +685,27 @@ async def exam_finish(req: FinishRequest) -> dict[str, Any]:
     transcript_snapshot = dict(session["transcript"])
 
     await delete_session(req.session_id)
+
+    # Persist result to Supabase (fire-and-forget — don't block the response)
+    db = _get_supabase()
+    if db:
+        try:
+            scores = evaluation.get("scores", {})
+            await asyncio.to_thread(
+                db.table("exam_results").insert({
+                    "session_id": req.session_id,
+                    "user_id": session.get("user_id"),
+                    "total_score": evaluation.get("total_score"),
+                    "grade_band": evaluation.get("grade_band"),
+                    "role_play_score": scores.get("role_play"),
+                    "topic1_score": scores.get("topic1"),
+                    "topic2_score": scores.get("topic2"),
+                    "feedback_json": json.dumps(evaluation),
+                    "created_at": datetime.now(timezone.utc).isoformat(),
+                }).execute
+            )
+        except Exception as exc:
+            log.warning("Failed to persist exam result for session %s: %s", req.session_id, exc)
 
     return {
         "session_id": req.session_id,

@@ -9,3 +9,4 @@ google-api-core>=2.15.0
 supabase>=2.0.0
 PyJWT>=2.8.0
 faster-whisper>=1.0.0
+slowapi>=0.1.9

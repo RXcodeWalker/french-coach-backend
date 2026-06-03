@@ -31,6 +31,7 @@ import random
 import re
 import sqlite3
 import tempfile
+import time
 import traceback
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -43,6 +44,22 @@ from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadF
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
+
+try:
+    from slowapi import Limiter, _rate_limit_exceeded_handler
+    from slowapi.errors import RateLimitExceeded
+    from slowapi.util import get_remote_address as _get_remote_address
+    _limiter = Limiter(key_func=_get_remote_address)
+    def rate_limit(rate: str):
+        return _limiter.limit(rate)
+    _RATE_LIMIT_AVAILABLE = True
+except ImportError:
+    _limiter = None  # type: ignore[assignment]
+    def rate_limit(rate: str):  # type: ignore[misc]
+        def _noop(func):
+            return func
+        return _noop
+    _RATE_LIMIT_AVAILABLE = False
 
 try:
     from google.api_core.exceptions import ResourceExhausted
@@ -153,6 +170,20 @@ def get_whisper():
         _whisper = WhisperModel(WHISPER_MODEL, device=WHISPER_DEVICE, compute_type=WHISPER_COMPUTE_TYPE)
     return _whisper
 
+# ── In-memory TTL cache ───────────────────────────────────────────────────────
+_CACHE: dict[str, tuple[Any, float]] = {}
+_CACHE_LOCK = asyncio.Lock()
+
+async def _cache_get(key: str) -> Any | None:
+    entry = _CACHE.get(key)
+    if entry and time.monotonic() < entry[1]:
+        return entry[0]
+    return None
+
+async def _cache_set(key: str, value: Any, ttl_sec: float) -> None:
+    async with _CACHE_LOCK:
+        _CACHE[key] = (value, time.monotonic() + ttl_sec)
+
 # ── App setup ─────────────────────────────────────────────────────────────────
 app = FastAPI(title="French AI Speaking Coach")
 app.add_middleware(
@@ -162,6 +193,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+if _RATE_LIMIT_AVAILABLE:
+    app.state.limiter = _limiter
+    app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 
 @app.exception_handler(Exception)
@@ -244,6 +279,7 @@ class FeedbackRequest(BaseModel):
     metrics: FeedbackMetrics | None = None
     model: str | None = None      # "groq" | "gemini" | None (auto)
     detailed: bool = False         # True = expanded feedback with more items
+    skill_context: dict[str, Any] | None = None  # weak/strong skill profile from client
 
 
 class IGCSEFeedbackRequest(BaseModel):
@@ -1459,10 +1495,43 @@ def build_user_prompt(req: FeedbackRequest) -> str:
 
     cleaned = clean_transcript(req.transcript)
 
+    skill_section = ""
+    if req.skill_context:
+        weaknesses = req.skill_context.get("weaknesses") or []
+        strengths  = req.skill_context.get("strengths")  or []
+        if weaknesses:
+            top = weaknesses[0] if isinstance(weaknesses[0], dict) else {}
+            top_name  = top.get("name") or top.get("skillId") or ""
+            top_count = top.get("recurrenceCount") or 0
+            top_miss  = top.get("recentMistake") or ""
+            skill_section += (
+                f"\n\nPRIORITY FOCUS: This student has made {top_count} errors with '{top_name}'."
+            )
+            if top_miss:
+                skill_section += (
+                    f" Their most recent mistake was: {top_miss}. "
+                    "Check specifically for this pattern in the current response and give a concrete fix with an example sentence."
+                )
+            other_weak = ", ".join(
+                w.get("name") or w.get("skillId") or ""
+                for w in weaknesses[1:4] if isinstance(w, dict)
+            )
+            if other_weak:
+                skill_section += f" Other recurring weaknesses: {other_weak}."
+        if strengths:
+            strong_labels = ", ".join(
+                s.get("name") or s.get("skillId") or ""
+                for s in strengths[:3] if isinstance(s, dict)
+            )
+            skill_section += f" Known strengths to acknowledge: {strong_labels}."
+        if skill_section:
+            skill_section += " Prioritise feedback on the weakness areas."
+
     return (
         f"QUESTION (French): {req.question}\n\n"
         f"STUDENT TRANSCRIPT (French): {cleaned}\n\n"
         f"DELIVERY METRICS: {json.dumps(m, ensure_ascii=False)}"
+        f"{skill_section}"
         f"{pron_section}"
         f"{detail_instruction}\n\n"
         f"REMINDER — COACHING QUALITY GATE:\n"
@@ -1744,21 +1813,23 @@ async def call_ai_feedback(
     detailed = req.detailed
     has_audio = bool(audio_path)
     provider_errors: list[dict[str, str]] = []
+    t_start = time.monotonic()
 
-    if has_audio:
-        result = await _try_feedback_provider(
-            "gemini/gemini-2.0-flash-multimodal",
-            lambda: _call_gemini_multimodal(prompt, audio_path, mime_type=audio_mime),
-            provider_errors,
-        )
-    else:
-        result = await _try_feedback_provider(
-            "gemini/gemini-2.0-flash",
-            lambda: _call_gemini(prompt),
-            provider_errors,
-        )
+    primary_name = "gemini/gemini-2.0-flash-multimodal" if has_audio else "gemini/gemini-2.0-flash"
+    result = await _try_feedback_provider(
+        primary_name,
+        lambda: _call_gemini_multimodal(prompt, audio_path, mime_type=audio_mime) if has_audio else _call_gemini(prompt),
+        provider_errors,
+    )
     if result:
         result.setdefault("providerStatus", "primary")
+        result["engineMeta"] = {
+            "requestedEngine": req.model or "gemini",
+            "actualEngine": "gemini",
+            "fallbackUsed": False,
+            "latencyMs": int((time.monotonic() - t_start) * 1000),
+            "evaluatedAt": datetime.now(timezone.utc).isoformat(),
+        }
         _log_coaching_quality(result, req.transcript)
         return result
 
@@ -1768,13 +1839,38 @@ async def call_ai_feedback(
         provider_errors,
     )
     if result:
+        failover_reason = "; ".join(
+            f"{e['provider']} {e['type']}: {e.get('message', '')[:80]}"
+            for e in provider_errors
+        )
         result.setdefault("providerStatus", "fallback")
         result["fallbackReason"] = provider_errors[0]["type"] if provider_errors else "primary_unavailable"
         result["providerErrors"] = provider_errors
+        result["engineMeta"] = {
+            "requestedEngine": req.model or "gemini",
+            "actualEngine": "groq",
+            "fallbackUsed": True,
+            "failoverReason": failover_reason,
+            "latencyMs": int((time.monotonic() - t_start) * 1000),
+            "evaluatedAt": datetime.now(timezone.utc).isoformat(),
+        }
         _log_coaching_quality(result, req.transcript)
         return result
 
-    return _offline_feedback(req, provider_errors)
+    failover_reason = "; ".join(
+        f"{e['provider']} {e['type']}: {e.get('message', '')[:80]}"
+        for e in provider_errors
+    )
+    offline = _offline_feedback(req, provider_errors)
+    offline["engineMeta"] = {
+        "requestedEngine": req.model or "gemini",
+        "actualEngine": "offline",
+        "fallbackUsed": True,
+        "failoverReason": failover_reason,
+        "latencyMs": int((time.monotonic() - t_start) * 1000),
+        "evaluatedAt": datetime.now(timezone.utc).isoformat(),
+    }
+    return offline
 
 
 def _log_coaching_quality(fb: dict[str, Any], transcript: str) -> None:
@@ -1856,6 +1952,7 @@ async def _feedback_impl(
     detailed: bool,
     metrics_json: str,
     audio: UploadFile | None,
+    skill_context: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """
     Unified feedback endpoint. Two modes:
@@ -1915,6 +2012,7 @@ async def _feedback_impl(
             metrics=metrics_obj,
             model=model,
             detailed=detailed,
+            skill_context=skill_context,
         )
 
         # ── Step 3: AI feedback (multimodal if audio present) ─────────────────
@@ -1942,6 +2040,7 @@ async def _feedback_impl(
 @app.post("/api/feedback")
 @app.post("/api/feedback/v2")
 @app.post("/api/feedback/v3")
+@rate_limit("20/minute")
 async def feedback(request: Request) -> dict[str, Any]:
     """
     Backward-compatible feedback endpoint that accepts:
@@ -1955,7 +2054,14 @@ async def feedback(request: Request) -> dict[str, Any]:
     model = "gemini"
     detailed = False
     metrics_json = "{}"
+    skill_context: dict[str, Any] | None = None
     audio: UploadFile | None = None
+
+    def _extract_question_text(raw: Any) -> str:
+        """Return question text from a string or a question-object dict."""
+        if isinstance(raw, dict):
+            return str(raw.get("text") or "")
+        return str(raw or "")
 
     if "multipart/form-data" in content_type or "application/x-www-form-urlencoded" in content_type:
         form = await request.form()
@@ -1969,15 +2075,34 @@ async def feedback(request: Request) -> dict[str, Any]:
             hasattr(maybe_audio, "read") and hasattr(maybe_audio, "filename")
         ):
             audio = maybe_audio
+        # Client may bundle question/transcript/skillContext inside a 'data' JSON field
+        if not question:
+            try:
+                data_payload = json.loads(str(form.get("data") or "{}"))
+                question = _extract_question_text(
+                    data_payload.get("question") or data_payload.get("prompt") or ""
+                )
+                if not transcript:
+                    transcript = str(data_payload.get("transcript") or "")
+                skill_context = data_payload.get("skillContext") or None
+                if not metrics_json or metrics_json == "{}":
+                    m = data_payload.get("metrics")
+                    if isinstance(m, dict):
+                        metrics_json = json.dumps(m)
+            except (json.JSONDecodeError, TypeError):
+                pass
     else:
         try:
             payload = await request.json()
         except Exception as e:
             raise HTTPException(status_code=400, detail="Invalid JSON body") from e
-        question = str(payload.get("question") or payload.get("prompt") or "")
+        question = _extract_question_text(
+            payload.get("question") or payload.get("prompt") or ""
+        )
         transcript = str(payload.get("transcript") or payload.get("text") or "")
         model = str(payload.get("model") or "gemini")
         detailed = bool(payload.get("detailed", False))
+        skill_context = payload.get("skillContext") or None
         metrics = payload.get("metrics")
         if isinstance(metrics, dict):
             metrics_json = json.dumps(metrics)
@@ -1992,6 +2117,7 @@ async def feedback(request: Request) -> dict[str, Any]:
             detailed=detailed,
             metrics_json=metrics_json,
             audio=audio,
+            skill_context=skill_context,
         )
     except HTTPException:
         raise
@@ -2003,6 +2129,7 @@ async def feedback(request: Request) -> dict[str, Any]:
             metrics=None,
             model=model,
             detailed=detailed,
+            skill_context=skill_context,
         )
         fallback_result = enrich_feedback(
             _offline_feedback(
@@ -2428,7 +2555,9 @@ async def _faster_whisper(tmp_path: str, language: str) -> dict[str, Any]:
 
 
 @app.post("/api/transcribe")
+@rate_limit("10/minute")
 async def transcribe(
+    request: Request,
     audio: UploadFile = File(...),
     language: str = Form("fr"),
 ) -> dict[str, Any]:
@@ -2539,39 +2668,39 @@ async def get_daily_question() -> dict:
 
 @app.get("/api/news/daily")
 async def generate_daily_news() -> dict:
-    """Generate today's news snippet using Gemini."""
+    """Generate today's news snippet using Gemini (cached 24 h)."""
     today = date.today().isoformat()
-    
+    cache_key = f"news:{today}"
+    cached = await _cache_get(cache_key)
+    if cached:
+        return cached
+
     # Randomly pick a topic to ensure variety
     topics = ["Sports", "Technologie", "Culture", "Météo", "Environnement", "Société"]
     chosen_topic = random.choice(topics)
-    
+
     prompt = f"Générez un bulletin d'actualités sur le thème : {chosen_topic}. Date : {today}."
-    
+
     try:
-        # Get Gemini with News Prompt
         import google.generativeai as genai
         if not GEMINI_API_KEY:
-             raise HTTPException(status_code=503, detail="Gemini not configured")
-        
+            raise HTTPException(status_code=503, detail="Gemini not configured")
+
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel(
             "gemini-2.0-flash",
             system_instruction=NEWS_SYSTEM_PROMPT,
         )
-        
+
         response = await asyncio.to_thread(model.generate_content, prompt)
         news = extract_json(response.text)
-        
-        # Ensure ID and Date are correct
         news["id"] = f"news-{today}"
         news["date"] = today
-        
+        await _cache_set(cache_key, news, 86400)
         return news
     except Exception as e:
         log.error("Failed to generate news: %s", e)
-        # Fallback to a safe mock if AI fails
-        return {
+        fallback = {
             "id": f"news-{today}",
             "date": today,
             "headline": "Bulletin d'Information Quotidien",
@@ -2581,8 +2710,10 @@ async def generate_daily_news() -> dict:
                 "Daily news update",
                 "General improvement in social climate in France",
                 "Citizens preparing for national festivities next week"
-            ]
+            ],
         }
+        await _cache_set(cache_key, fallback, 3600)
+        return fallback
 
 
 # ── /api/exam-sets ─────────────────────────────────────────────────────────────
@@ -2751,6 +2882,11 @@ async def get_grammar_lesson(topic: str) -> dict:
     if not topic or len(topic) > 300:
         raise HTTPException(status_code=400, detail="Invalid topic")
 
+    cache_key = f"grammar:{topic.strip().lower()[:100]}"
+    cached = await _cache_get(cache_key)
+    if cached:
+        return cached
+
     prompt = GRAMMAR_LESSON_PROMPT.replace("{topic}", topic)
     raw = None
 
@@ -2813,7 +2949,9 @@ async def get_grammar_lesson(topic: str) -> dict:
         raw = match.group()
 
     try:
-        return json.loads(raw)
+        result = json.loads(raw)
+        await _cache_set(cache_key, result, 3600)
+        return result
     except json.JSONDecodeError:
         log.warning("Grammar lesson AI returned malformed JSON")
         return {
@@ -2903,7 +3041,8 @@ async def get_roleplay_scenarios() -> list[dict]:
 
 
 @app.post("/api/roleplay/turn")
-async def roleplay_turn(req: RoleplayTurnRequest) -> dict:
+@rate_limit("30/minute")
+async def roleplay_turn(request: Request, req: RoleplayTurnRequest) -> dict:
     scenario = None
     if req.scenario_id == "custom" and req.custom_scenario:
         scenario = {
@@ -2978,7 +3117,12 @@ async def roleplay_turn(req: RoleplayTurnRequest) -> dict:
 
 @app.get("/api/vocab-prep")
 async def vocab_prep(topic: str) -> dict[str, Any]:
-    """Generate vocabulary and phrases for a given topic."""
+    """Generate vocabulary and phrases for a given topic (cached 1 h)."""
+    cache_key = f"vocab:{topic.strip().lower()[:100]}"
+    cached = await _cache_get(cache_key)
+    if cached:
+        return cached
+
     prompt = f"Generez du vocabulaire et des phrases pour le sujet suivant : {topic}."
 
     try:
@@ -2992,7 +3136,9 @@ async def vocab_prep(topic: str) -> dict[str, Any]:
             asyncio.to_thread(model.generate_content, prompt),
             timeout=AI_PROVIDER_TIMEOUT_SEC,
         )
-        return extract_json(getattr(response, "text", "") or "")
+        result = extract_json(getattr(response, "text", "") or "")
+        await _cache_set(cache_key, result, 3600)
+        return result
     except Exception as e:
         _log_provider_failure("vocab-prep-gemini", e)
         return {
@@ -3008,6 +3154,126 @@ async def vocab_prep(topic: str) -> dict[str, Any]:
             ],
             "source": "offline_fallback",
         }
+
+# ── /api/srs — Spaced Repetition System for vocabulary ───────────────────────
+
+class SRSCardCreate(BaseModel):
+    user_id: str
+    front_fr: str           # French word/phrase to review
+    back_en: str            # English meaning
+    source_topic: str = ""  # topic the vocab came from
+
+
+class SRSReview(BaseModel):
+    card_id: str
+    user_id: str
+    quality: int            # 0–5 SM-2 quality rating (0=blackout, 5=perfect)
+
+
+def _sm2_update(ease: float, interval: int, repetitions: int, quality: int) -> tuple[float, int, int]:
+    """SM-2 algorithm: returns (new_ease, new_interval, new_repetitions)."""
+    if quality < 3:
+        repetitions = 0
+        interval = 1
+    else:
+        if repetitions == 0:
+            interval = 1
+        elif repetitions == 1:
+            interval = 6
+        else:
+            interval = round(interval * ease)
+        repetitions += 1
+    ease = max(1.3, ease + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
+    return ease, interval, repetitions
+
+
+@app.post("/api/srs/card")
+async def srs_create_card(req: SRSCardCreate) -> dict[str, Any]:
+    """Save a new vocabulary card for spaced repetition."""
+    db = get_supabase()
+    if not db:
+        raise HTTPException(status_code=503, detail="Database not configured")
+    try:
+        result = await asyncio.to_thread(
+            db.table("srs_cards").insert({
+                "user_id": req.user_id,
+                "front_fr": req.front_fr,
+                "back_en": req.back_en,
+                "source_topic": req.source_topic,
+                "ease_factor": 2.5,
+                "interval_days": 1,
+                "repetitions": 0,
+                "next_review_at": datetime.now(timezone.utc).isoformat(),
+            }).execute
+        )
+        return {"ok": True, "card": result.data[0] if result.data else {}}
+    except Exception as e:
+        log.error("SRS card create failed: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to save card")
+
+
+@app.get("/api/srs/next")
+async def srs_next_cards(user_id: str, limit: int = 5) -> dict[str, Any]:
+    """Return up to `limit` vocabulary cards due for review."""
+    db = get_supabase()
+    if not db:
+        raise HTTPException(status_code=503, detail="Database not configured")
+    try:
+        now = datetime.now(timezone.utc).isoformat()
+        result = await asyncio.to_thread(
+            db.table("srs_cards")
+              .select("*")
+              .eq("user_id", user_id)
+              .lte("next_review_at", now)
+              .order("next_review_at")
+              .limit(limit)
+              .execute
+        )
+        return {"cards": result.data or [], "count": len(result.data or [])}
+    except Exception as e:
+        log.error("SRS next cards failed: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to fetch cards")
+
+
+@app.post("/api/srs/review")
+async def srs_review_card(req: SRSReview) -> dict[str, Any]:
+    """Record a review result and update the SM-2 schedule for a card."""
+    if not (0 <= req.quality <= 5):
+        raise HTTPException(status_code=400, detail="quality must be 0–5")
+    db = get_supabase()
+    if not db:
+        raise HTTPException(status_code=503, detail="Database not configured")
+    try:
+        card_result = await asyncio.to_thread(
+            db.table("srs_cards").select("*").eq("id", req.card_id).eq("user_id", req.user_id).execute
+        )
+        if not card_result.data:
+            raise HTTPException(status_code=404, detail="Card not found")
+        card = card_result.data[0]
+        new_ease, new_interval, new_reps = _sm2_update(
+            card.get("ease_factor", 2.5),
+            card.get("interval_days", 1),
+            card.get("repetitions", 0),
+            req.quality,
+        )
+        from datetime import timedelta
+        next_review = (datetime.now(timezone.utc) + timedelta(days=new_interval)).isoformat()
+        await asyncio.to_thread(
+            db.table("srs_cards").update({
+                "ease_factor": new_ease,
+                "interval_days": new_interval,
+                "repetitions": new_reps,
+                "next_review_at": next_review,
+                "last_reviewed_at": datetime.now(timezone.utc).isoformat(),
+            }).eq("id", req.card_id).execute
+        )
+        return {"ok": True, "next_review_at": next_review, "interval_days": new_interval}
+    except HTTPException:
+        raise
+    except Exception as e:
+        log.error("SRS review failed: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to update card")
+
 
 # ── Exam mode pipeline ────────────────────────────────────────────────────────
 # New parallel pipeline — does NOT touch any existing endpoint.

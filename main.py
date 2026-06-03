@@ -2555,9 +2555,7 @@ async def _faster_whisper(tmp_path: str, language: str) -> dict[str, Any]:
 
 
 @app.post("/api/transcribe")
-@rate_limit("10/minute")
 async def transcribe(
-    request: Request,
     audio: UploadFile = File(...),
     language: str = Form("fr"),
 ) -> dict[str, Any]:
@@ -3041,7 +3039,6 @@ async def get_roleplay_scenarios() -> list[dict]:
 
 
 @app.post("/api/roleplay/turn")
-@rate_limit("30/minute")
 async def roleplay_turn(request: Request, req: RoleplayTurnRequest) -> dict:
     scenario = None
     if req.scenario_id == "custom" and req.custom_scenario:

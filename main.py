@@ -24,6 +24,7 @@ Run locally:
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import json
 import logging
 import os
@@ -171,6 +172,8 @@ def get_whisper():
     return _whisper
 
 # ── In-memory TTL cache ───────────────────────────────────────────────────────
+from collections import OrderedDict
+
 _CACHE: dict[str, tuple[Any, float]] = {}
 _CACHE_LOCK = asyncio.Lock()
 
@@ -183,6 +186,43 @@ async def _cache_get(key: str) -> Any | None:
 async def _cache_set(key: str, value: Any, ttl_sec: float) -> None:
     async with _CACHE_LOCK:
         _CACHE[key] = (value, time.monotonic() + ttl_sec)
+
+# ── LRU feedback cache ────────────────────────────────────────────────────────
+_FEEDBACK_CACHE_MAX = 50
+_FEEDBACK_CACHE_TTL = 300.0  # 5 minutes
+_feedback_cache: OrderedDict[str, tuple[dict, float]] = OrderedDict()
+_feedback_cache_lock = asyncio.Lock()
+
+
+def _feedback_cache_key(transcript: str, question_id: str) -> str:
+    return hashlib.sha256(f"{transcript}::{question_id}".encode()).hexdigest()
+
+
+async def _feedback_cache_get(key: str) -> dict | None:
+    async with _feedback_cache_lock:
+        entry = _feedback_cache.get(key)
+        if entry is None:
+            return None
+        value, expires_at = entry
+        if time.monotonic() > expires_at:
+            del _feedback_cache[key]
+            return None
+        _feedback_cache.move_to_end(key)
+        return value
+
+
+async def _feedback_cache_set(key: str, value: dict) -> None:
+    async with _feedback_cache_lock:
+        if key in _feedback_cache:
+            _feedback_cache.move_to_end(key)
+        _feedback_cache[key] = (value, time.monotonic() + _FEEDBACK_CACHE_TTL)
+        while len(_feedback_cache) > _FEEDBACK_CACHE_MAX:
+            _feedback_cache.popitem(last=False)
+
+
+def _is_cacheable_result(result: dict) -> bool:
+    """Only cache real AI responses — not offline fallbacks or error payloads."""
+    return isinstance(result, dict) and result.get("providerStatus") in ("primary", "fallback")
 
 # ── App setup ─────────────────────────────────────────────────────────────────
 app = FastAPI(title="French AI Speaking Coach")
@@ -1559,6 +1599,7 @@ def extract_json(text: str) -> dict[str, Any]:
 
 AI_PROVIDER_TIMEOUT_SEC = float(os.getenv("AI_PROVIDER_TIMEOUT_SEC", "25"))
 AI_PROVIDER_RETRIES = int(os.getenv("AI_PROVIDER_RETRIES", "2"))
+_RETRY_DELAYS = (1.0, 2.0)  # seconds for retry 1 and retry 2
 
 
 def _log_provider_failure(provider: str, exc: Exception, attempt: int | None = None) -> None:
@@ -1569,6 +1610,35 @@ def _log_provider_failure(provider: str, exc: Exception, attempt: int | None = N
         attempt_part,
         repr(exc),
         traceback.format_exc(),
+    )
+
+
+def _is_retryable(exc: Exception) -> bool:
+    """True for transient 429/503 errors that merit a retry."""
+    try:
+        from google.api_core.exceptions import ResourceExhausted, ServiceUnavailable
+        if isinstance(exc, (ResourceExhausted, ServiceUnavailable)):
+            return True
+    except ImportError:
+        pass
+    try:
+        import groq as _groq
+        if isinstance(exc, _groq.RateLimitError):
+            return True
+        if isinstance(exc, _groq.APIStatusError) and getattr(exc, "status_code", None) == 503:
+            return True
+    except ImportError:
+        pass
+    status = getattr(exc, "status_code", None) or getattr(exc, "code", None)
+    return status in (429, 503)
+
+
+def _log_feedback_latency(
+    provider: str, latency_ms: float, *, cached: bool, tier: str
+) -> None:
+    log.info(
+        "feedback_response provider=%s latency_ms=%d cached=%s tier=%s",
+        provider, round(latency_ms), cached, tier,
     )
 
 
@@ -1583,14 +1653,12 @@ async def _run_with_retries(
     for attempt in range(1, max(1, attempts) + 1):
         try:
             return await asyncio.wait_for(operation(), timeout=timeout_sec)
-        except ResourceExhausted:
-            raise
         except Exception as exc:
             last_exc = exc
             _log_provider_failure(provider, exc, attempt)
-            if attempt >= attempts:
+            if attempt >= attempts or not _is_retryable(exc):
                 break
-            await asyncio.sleep(min(0.75 * attempt, 2.0))
+            await asyncio.sleep(_RETRY_DELAYS[min(attempt - 1, len(_RETRY_DELAYS) - 1)])
 
     if last_exc:
         raise last_exc
@@ -2016,7 +2084,32 @@ async def _feedback_impl(
         )
 
         # ── Step 3: AI feedback (multimodal if audio present) ─────────────────
+        _cache_id = question or transcript[:64]
+        cache_key: str | None = None
+
+        if not tmp_path and transcript and _cache_id:
+            cache_key = _feedback_cache_key(transcript, _cache_id)
+            hit = await _feedback_cache_get(cache_key)
+            if hit is not None:
+                _log_feedback_latency(
+                    hit.get("modelUsed", "unknown"), 0, cached=True,
+                    tier=hit.get("providerStatus", "primary"),
+                )
+                return hit
+
+        t_start = time.monotonic()
         fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
+        latency_ms = (time.monotonic() - t_start) * 1000
+        _log_feedback_latency(
+            fb.get("modelUsed", "unknown"),
+            latency_ms,
+            cached=False,
+            tier=fb.get("providerStatus", "primary"),
+        )
+
+        if cache_key and _is_cacheable_result(fb):
+            await _feedback_cache_set(cache_key, fb)
+
         result = enrich_feedback(fb, req)
 
         result["transcript"]       = transcript
@@ -2026,6 +2119,21 @@ async def _feedback_impl(
         # Ensure words[] is present (phoneme-level data from multimodal Gemini)
         result.setdefault("words", [])
         result["provider"] = _feedback_provider_name(result)
+
+        # If audio was present but the AI couldn't score pronunciation (Groq text fallback),
+        # inject a real score via Whisper alignment.
+        if tmp_path is not None and whisper_words is not None:
+            pron = result.get("pronunciation", {})
+            if isinstance(pron, dict) and pron.get("score") is None:
+                alignment = _align_pronunciation(
+                    question,
+                    transcript,
+                    whisper_words,
+                )
+                pron["score"] = alignment["score"]
+                if not pron.get("issues"):
+                    pron["issues"] = alignment["issues"]
+                result["pronunciation"] = pron
 
         return result
 
@@ -2462,6 +2570,150 @@ async def get_igcse_paper(paper_id: str) -> dict:
         return paper
     raise HTTPException(status_code=404, detail="IGCSE paper not found")
 
+
+
+# ── /api/pronunciation ────────────────────────────────────────────────────────
+
+def _align_pronunciation(
+    target_text: str,
+    heard_text: str,
+    whisper_words: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """
+    Align target vs. heard text using difflib and Whisper word confidences.
+    Returns score (0-10), transcript, and word-level issues.
+    """
+    import difflib
+
+    def _normalise(text: str) -> list[str]:
+        return re.findall(r"[a-zA-ZÀ-ÿ'-]+", text.lower())
+
+    target_words = _normalise(target_text)
+    heard_words  = _normalise(heard_text)
+
+    # Build word → confidence lookup from Whisper output (default 0.8 when absent)
+    conf_lookup: dict[str, float] = {}
+    for w in whisper_words:
+        word_key = re.sub(r"[^a-zA-ZÀ-ÿ'-]", "", (w.get("word") or "")).lower()
+        prob = w.get("probability")
+        if word_key and prob is not None:
+            conf_lookup[word_key] = float(prob)
+
+    def _conf(word: str) -> float:
+        return conf_lookup.get(word, 0.8)
+
+    matcher = difflib.SequenceMatcher(None, target_words, heard_words, autojunk=False)
+    opcodes = matcher.get_opcodes()
+
+    issues: list[dict[str, Any]] = []
+    credit = 0.0
+
+    for tag, i1, i2, j1, j2 in opcodes:
+        if tag == "equal":
+            for word in target_words[i1:i2]:
+                credit += _conf(word)
+        elif tag == "replace":
+            for t_word, h_word in zip(target_words[i1:i2], heard_words[j1:j2]):
+                issues.append({
+                    "word": t_word,
+                    "expected": t_word,
+                    "heard": h_word,
+                    "ipaExpected": "",
+                    "ipaHeard": "",
+                    "problem": f"Said '{h_word}' instead of '{t_word}'",
+                    "severity": "medium",
+                    "drill": {
+                        "hint": f"Practise '{t_word}' slowly, then say it in the full phrase.",
+                        "repeatPhrase": target_text,
+                    },
+                })
+            # Pad unmatched target words (more targets than heard)
+            for t_word in target_words[i1 + len(heard_words[j1:j2]):i2]:
+                issues.append({
+                    "word": t_word,
+                    "expected": t_word,
+                    "heard": "",
+                    "ipaExpected": "",
+                    "ipaHeard": "",
+                    "problem": f"Word '{t_word}' was not heard",
+                    "severity": "high",
+                    "drill": {
+                        "hint": f"Pronounce '{t_word}' clearly — it was missed entirely.",
+                        "repeatPhrase": target_text,
+                    },
+                })
+        elif tag == "delete":
+            for t_word in target_words[i1:i2]:
+                issues.append({
+                    "word": t_word,
+                    "expected": t_word,
+                    "heard": "",
+                    "ipaExpected": "",
+                    "ipaHeard": "",
+                    "problem": f"Word '{t_word}' was missing from your response",
+                    "severity": "high",
+                    "drill": {
+                        "hint": f"Make sure to say '{t_word}' clearly.",
+                        "repeatPhrase": target_text,
+                    },
+                })
+        # "insert" = said something not in target; no credit, no issue logged
+
+    denom = max(len(target_words), 1)
+    raw_score = round((credit / denom) * 10)
+    score = max(0, min(10, raw_score))
+
+    return {
+        "score": score,
+        "issues": issues,
+    }
+
+
+@app.post("/api/pronunciation")
+@rate_limit("20/minute")
+async def pronunciation_evaluate(
+    request: Request,
+    audio: UploadFile = File(...),
+    target_text: str = Form(...),
+) -> dict[str, Any]:
+    """
+    Score pronunciation by aligning Whisper transcription against the target text.
+    Returns: score (0-10), transcript, issues (word-level), words (Whisper data).
+    """
+    suffix = os.path.splitext(audio.filename or "")[1] or ".webm"
+    raw = await audio.read()
+
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+        tmp.write(raw)
+        tmp_path = tmp.name
+
+    try:
+        whisper_data: dict[str, Any] = {}
+        if GROQ_API_KEY:
+            try:
+                whisper_data = await _groq_whisper(tmp_path, "fr")
+            except Exception as e:
+                log.warning("Groq Whisper failed in /api/pronunciation, trying faster-whisper: %s", e)
+
+        if not whisper_data:
+            whisper_data = await _faster_whisper(tmp_path, "fr")
+
+        heard_text   = (whisper_data.get("text") or "").strip()
+        whisper_words = whisper_data.get("words", [])
+
+        alignment = _align_pronunciation(target_text, heard_text, whisper_words)
+
+        return {
+            "score":      alignment["score"],
+            "transcript": heard_text,
+            "issues":     alignment["issues"],
+            "words":      whisper_words,
+        }
+    finally:
+        try:
+            os.unlink(tmp_path)
+        except OSError:
+            pass
 
 
 # ── /api/transcribe ───────────────────────────────────────────────────────────

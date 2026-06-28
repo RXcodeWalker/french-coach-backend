@@ -10,3 +10,6 @@ dist/
 build/
 .pytest_cache/
 models/
+
+# editor / agent
+.claude/

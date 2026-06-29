@@ -30,8 +30,10 @@ import logging
 import os
 import random
 import re
+import secrets
 import sqlite3
 import tempfile
+import threading
 import time
 import traceback
 from datetime import date, datetime, timezone
@@ -208,6 +210,8 @@ async def _feedback_cache_get(key: str) -> dict | None:
             del _feedback_cache[key]
             return None
         _feedback_cache.move_to_end(key)
+        with _METRICS_LOCK:
+            _METRICS["cache_hits"] += 1
         return value
 
 
@@ -223,6 +227,17 @@ async def _feedback_cache_set(key: str, value: dict) -> None:
 def _is_cacheable_result(result: dict) -> bool:
     """Only cache real AI responses — not offline fallbacks or error payloads."""
     return isinstance(result, dict) and result.get("providerStatus") in ("primary", "fallback")
+
+# ── In-memory metrics ─────────────────────────────────────────────────────────
+_METRICS: dict[str, Any] = {
+    "requests_total": 0,
+    "errors_total": 0,
+    "cache_hits": 0,
+    "latency_sum_ms": 0.0,
+    "latency_count": 0,
+    "by_endpoint": {},
+}
+_METRICS_LOCK = threading.Lock()
 
 # ── App setup ─────────────────────────────────────────────────────────────────
 app = FastAPI(title="French AI Speaking Coach")
@@ -257,6 +272,47 @@ async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONR
         },
     )
 
+# ── Observability middleware ──────────────────────────────────────────────────
+@app.middleware("http")
+async def _observability_middleware(request: Request, call_next):
+    req_id = secrets.token_hex(8)
+    request.state.request_id = req_id
+    request.state.obs_provider = None
+    request.state.obs_cached = False
+    t0 = time.monotonic()
+    response = None
+    status = 500
+    try:
+        response = await call_next(request)
+        status = response.status_code
+    except Exception:
+        raise
+    finally:
+        latency_ms = round((time.monotonic() - t0) * 1000, 1)
+        provider = getattr(request.state, "obs_provider", None)
+        cached = getattr(request.state, "obs_cached", False)
+        path = request.url.path
+        with _METRICS_LOCK:
+            _METRICS["requests_total"] += 1
+            _METRICS["latency_sum_ms"] += latency_ms
+            _METRICS["latency_count"] += 1
+            if status >= 500:
+                _METRICS["errors_total"] += 1
+            _METRICS["by_endpoint"][path] = _METRICS["by_endpoint"].get(path, 0) + 1
+        log.info(json.dumps({
+            "ts": datetime.now(timezone.utc).isoformat(),
+            "request_id": req_id,
+            "endpoint": path,
+            "method": request.method,
+            "latency_ms": latency_ms,
+            "status_code": status,
+            "provider_used": provider,
+            "cached": cached,
+        }, ensure_ascii=False))
+    if response is not None:
+        response.headers["X-Request-ID"] = req_id
+    return response
+
 # ── JWT verification ──────────────────────────────────────────────────────────
 def verify_jwt(authorization: str | None) -> str:
     """Verify Supabase JWT. Returns user_id (UUID string) or raises HTTP 401."""
@@ -280,17 +336,49 @@ def verify_jwt(authorization: str | None) -> str:
 
 # ── /health ───────────────────────────────────────────────────────────────────
 @app.get("/health")
-def health() -> dict[str, Any]:
+async def health() -> dict[str, Any]:
+    cached_probe = await _cache_get("health:probes")
+    if cached_probe:
+        groq_status, gemini_status = cached_probe["groq"], cached_probe["gemini"]
+    else:
+        groq_status = await _probe_groq()
+        gemini_status = await _probe_gemini()
+        await _cache_set("health:probes", {"groq": groq_status, "gemini": gemini_status}, 60)
+
     db_path = Path(os.getenv("IGCSE_DB_PATH", str(APP_DIR / "data" / "igcse_speaking.db")))
+    db_ok = False
+    try:
+        with get_db_connection() as conn:
+            conn.execute("SELECT 1")
+        db_ok = True
+    except Exception:
+        pass
+
     return {
         "ok": True,
         "service": "french-ai-backend",
+        "groq": groq_status,
+        "gemini": gemini_status,
+        "whisper_loaded": _whisper is not None,
+        "db_connected": db_ok,
         "groq_configured": bool(GROQ_API_KEY),
         "gemini_configured": bool(GEMINI_API_KEY),
-        "supabase_configured": bool(SUPABASE_URL and SUPABASE_KEY),
-        "whisper_model": WHISPER_MODEL,
-        "igcse_db_configured": db_path.exists(),
     }
+
+
+# ── /metrics ──────────────────────────────────────────────────────────────────
+@app.get("/metrics")
+def metrics() -> dict[str, Any]:
+    with _METRICS_LOCK:
+        count = _METRICS["latency_count"]
+        avg = _METRICS["latency_sum_ms"] / count if count else 0.0
+        return {
+            "requests_total": int(_METRICS["requests_total"]),
+            "errors_total": int(_METRICS["errors_total"]),
+            "cache_hits": int(_METRICS["cache_hits"]),
+            "avg_latency_ms": round(avg, 1),
+            "by_endpoint": dict(_METRICS["by_endpoint"]),
+        }
 
 # ── AI Feedback models + logic ────────────────────────────────────────────────
 class WordProbability(BaseModel):
@@ -1602,12 +1690,19 @@ AI_PROVIDER_RETRIES = int(os.getenv("AI_PROVIDER_RETRIES", "2"))
 _RETRY_DELAYS = (1.0, 2.0)  # seconds for retry 1 and retry 2
 
 
-def _log_provider_failure(provider: str, exc: Exception, attempt: int | None = None) -> None:
+def _log_provider_failure(
+    provider: str,
+    exc: Exception,
+    attempt: int | None = None,
+    request_id: str | None = None,
+) -> None:
     attempt_part = f" attempt={attempt}" if attempt is not None else ""
+    rid_part = f" request_id={request_id}" if request_id else ""
     log.error(
-        "%s failed%s: %s\n%s",
+        "%s failed%s%s: %s\n%s",
         provider,
         attempt_part,
+        rid_part,
         repr(exc),
         traceback.format_exc(),
     )
@@ -1672,6 +1767,45 @@ def _metric_float(value: Any, default: float | None = None) -> float | None:
         return float(value)
     except (TypeError, ValueError):
         return default
+
+
+# ── Provider health probes ────────────────────────────────────────────────────
+async def _probe_groq() -> str:
+    """Returns 'ok' | 'degraded' | 'not_configured'. Never raises."""
+    if not GROQ_API_KEY:
+        return "not_configured"
+    try:
+        groq = get_groq()
+        await asyncio.wait_for(
+            groq.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=[{"role": "user", "content": "Hi"}],
+                max_tokens=1,
+            ),
+            timeout=3.0,
+        )
+        return "ok"
+    except Exception as exc:
+        log.warning("health probe groq failed: %s", repr(exc))
+        return "degraded"
+
+
+async def _probe_gemini() -> str:
+    """Returns 'ok' | 'degraded' | 'not_configured'. Never raises."""
+    if not GEMINI_API_KEY:
+        return "not_configured"
+    try:
+        gemini = get_gemini()
+        if not gemini:
+            return "not_configured"
+        await asyncio.wait_for(
+            asyncio.to_thread(gemini.generate_content, "Hi"),
+            timeout=3.0,
+        )
+        return "ok"
+    except Exception as exc:
+        log.warning("health probe gemini failed: %s", repr(exc))
+        return "degraded"
 
 
 async def _call_groq(prompt: str, detailed: bool = False) -> dict[str, Any]:
@@ -2322,7 +2456,7 @@ async def _feedback_impl(
                     hit.get("modelUsed", "unknown"), 0, cached=True,
                     tier=hit.get("providerStatus", "primary"),
                 )
-                return hit
+                return {**hit, "_was_cached": True}
 
         t_start = time.monotonic()
         fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
@@ -2445,7 +2579,7 @@ async def feedback(request: Request) -> dict[str, Any]:
             metrics_json = payload.get("metrics_json") or "{}"
 
     try:
-        return await _feedback_impl(
+        result = await _feedback_impl(
             question=question,
             transcript=transcript,
             model=model,
@@ -2454,10 +2588,16 @@ async def feedback(request: Request) -> dict[str, Any]:
             audio=audio,
             skill_context=skill_context,
         )
+        try:
+            request.state.obs_provider = result.get("provider")
+            request.state.obs_cached = result.pop("_was_cached", False)
+        except Exception:
+            pass
+        return result
     except HTTPException:
         raise
     except Exception as exc:
-        _log_provider_failure("feedback_endpoint_unhandled", exc)
+        _log_provider_failure("feedback_endpoint_unhandled", exc, request_id=getattr(request.state, "request_id", None))
         fallback_req = FeedbackRequest(
             question=question or "General French speaking practice",
             transcript=transcript or "",

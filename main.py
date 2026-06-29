@@ -43,7 +43,7 @@ import jwt as pyjwt
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
 try:
@@ -1697,6 +1697,233 @@ async def _call_groq(prompt: str, detailed: bool = False) -> dict[str, Any]:
     return await _run_with_retries("groq/llama-3.3-70b-versatile", operation)
 
 
+# ── Streaming Groq + section detector ────────────────────────────────────────
+
+# Schema key order emitted by the prompt — drives section detection ordering.
+_SECTION_ORDER = [
+    "fluency", "scores", "cefrLevel", "wordCount",  # → snapshot
+    "best_moment",           # → strongest_moment
+    "biggest_opportunity",   # → opportunity
+    "grammar",               # → grammar
+    "vocabulary",            # → vocabulary
+    "pronunciation",         # → pronunciation
+]
+
+_SECTION_MAP: dict[str, str] = {
+    "scores": "snapshot",
+    "fluency": None,      # absorbed into snapshot — wait for scores
+    "cefrLevel": None,
+    "wordCount": None,
+    "best_moment": "strongest_moment",
+    "biggest_opportunity": "opportunity",
+    "grammar": "grammar",
+    "vocabulary": "vocabulary",
+    "pronunciation": "pronunciation",
+}
+
+
+def _emit_ready_sections(
+    buffer: str,
+    already_emitted: set[str],
+) -> list[tuple[str, dict[str, Any]]]:
+    """
+    Tolerant incremental parser: return (section_type, data) tuples for every
+    top-level key that is *fully closed* in `buffer` but not yet emitted.
+
+    A key's value is considered safe once *any later* top-level key has started,
+    guaranteeing the prior value is fully terminated in the JSON stream.
+    """
+    events: list[tuple[str, dict[str, Any]]] = []
+    # Find all top-level key start positions in order
+    top_level_starts: list[tuple[str, int]] = []
+    i = 0
+    depth = 0
+    in_str = False
+    escape = False
+    key_buf: list[str] = []
+    collecting_key = False
+
+    text = buffer.strip()
+    if not text.startswith("{"):
+        return events
+
+    n = len(text)
+    idx = 0
+    while idx < n:
+        ch = text[idx]
+        if escape:
+            escape = False
+            idx += 1
+            continue
+        if ch == "\\" and in_str:
+            escape = True
+            idx += 1
+            continue
+        if ch == '"':
+            if not in_str:
+                in_str = True
+                if depth == 1:  # start of a top-level key/value string
+                    key_buf = []
+                    collecting_key = True
+            else:
+                in_str = False
+                if depth == 1 and collecting_key:
+                    collecting_key = False
+                    # next non-space char should be ':' at depth==1
+            idx += 1
+            continue
+        if in_str:
+            if collecting_key:
+                key_buf.append(ch)
+            idx += 1
+            continue
+        if ch == "{":
+            depth += 1
+            if depth == 2 and key_buf:
+                top_level_starts.append(("".join(key_buf), idx))
+                key_buf = []
+            idx += 1
+            continue
+        if ch == "}":
+            depth -= 1
+            idx += 1
+            continue
+        if ch == "[":
+            if depth == 1 and key_buf:
+                top_level_starts.append(("".join(key_buf), idx))
+                key_buf = []
+            depth += 1
+            idx += 1
+            continue
+        if ch == "]":
+            depth -= 1
+            idx += 1
+            continue
+        if ch == ":" and depth == 1 and not in_str and key_buf:
+            # scalar value at top level
+            rest = text[idx + 1:].lstrip()
+            if rest and rest[0] not in ('"', '{', '['):
+                top_level_starts.append(("".join(key_buf), idx + 1))
+            key_buf = []
+            idx += 1
+            continue
+        idx += 1
+
+    # We need at least 2 top-level keys; the second proves the first is closed
+    for pos, (key, _start_pos) in enumerate(top_level_starts):
+        if pos + 1 >= len(top_level_starts):
+            break  # can't confirm this key is closed yet
+        if key in already_emitted:
+            continue
+        # Parse the whole buffer so far to extract the value (safe — the key is closed)
+        try:
+            # Repair the partial JSON: close all unclosed braces/brackets
+            partial = _repair_partial_json(buffer)
+            parsed = json.loads(partial)
+        except (json.JSONDecodeError, ValueError):
+            continue
+
+        if key not in parsed:
+            continue
+
+        event_type = _SECTION_MAP.get(key)
+
+        # snapshot: emit once we have both fluency and scores
+        if key == "scores" and "snapshot" not in already_emitted:
+            snapshot_data = {
+                "scores": parsed.get("scores", {}),
+                "fluency": parsed.get("fluency"),
+                "cefrLevel": parsed.get("cefrLevel"),
+                "wordCount": parsed.get("wordCount"),
+            }
+            already_emitted.update({"fluency", "scores", "cefrLevel", "wordCount", "snapshot"})
+            events.append(("snapshot", snapshot_data))
+            continue
+
+        if event_type is None or event_type in already_emitted:
+            already_emitted.add(key)
+            continue
+
+        already_emitted.add(key)
+        already_emitted.add(event_type)
+        events.append((event_type, {key: parsed[key]}))
+
+    return events
+
+
+def _repair_partial_json(text: str) -> str:
+    """Close unclosed braces/brackets so json.loads can parse a partial stream."""
+    text = text.strip()
+    if not text:
+        return "{}"
+    # Remove trailing incomplete string or token
+    # Trim to last safe closing char
+    stack: list[str] = []
+    in_str = False
+    escape = False
+    last_safe = 0
+    for i, ch in enumerate(text):
+        if escape:
+            escape = False
+            continue
+        if ch == "\\" and in_str:
+            escape = True
+            continue
+        if ch == '"':
+            in_str = not in_str
+            if not in_str:
+                last_safe = i + 1
+            continue
+        if not in_str:
+            if ch in ("{", "["):
+                stack.append("}" if ch == "{" else "]")
+            elif ch in ("}", "]"):
+                if stack and stack[-1] == ch:
+                    stack.pop()
+                    last_safe = i + 1
+    result = text[:last_safe]
+    for closer in reversed(stack):
+        result += closer
+    return result if result else "{}"
+
+
+async def _stream_groq(
+    prompt: str,
+    detailed: bool,
+    on_section,  # async callable(type: str, data: dict)
+) -> dict[str, Any]:
+    """Stream a Groq completion, calling on_section for each detected section."""
+    groq = get_groq()
+    if not groq:
+        raise RuntimeError("Groq not configured")
+
+    buffer = ""
+    already_emitted: set[str] = set()
+
+    stream = await groq.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        response_format={"type": "json_object"},
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0.4,
+        max_tokens=3000 if detailed else 2048,
+        stream=True,
+    )
+
+    async for chunk in stream:
+        delta = chunk.choices[0].delta.content if chunk.choices else None
+        if delta:
+            buffer += delta
+            for event_type, data in _emit_ready_sections(buffer, already_emitted):
+                await on_section(event_type, data)
+
+    result = extract_json(buffer)
+    result["modelUsed"] = "groq/llama-3.3-70b-versatile"
+    return result
+
+
 async def _call_gemini(prompt: str) -> dict[str, Any]:
     """Text-only Gemini call (standard feedback prompt)."""
     gemini = get_gemini()
@@ -2248,6 +2475,245 @@ async def feedback(request: Request) -> dict[str, Any]:
         )
         fallback_result["provider"] = _feedback_provider_name(fallback_result)
         return fallback_result
+
+
+# ── /api/feedback/stream — NDJSON streaming endpoint ─────────────────────────
+
+def _extract_question_text_util(raw: Any) -> str:
+    if isinstance(raw, dict):
+        return str(raw.get("text") or "")
+    return str(raw or "")
+
+
+async def _parse_feedback_request(request: Request) -> tuple[
+    str, str, str, bool, str, dict[str, Any] | None, bytes | None, str
+]:
+    """Parse multipart or JSON feedback request. Returns (question, transcript,
+    model, detailed, metrics_json, skill_context, audio_bytes, audio_mime)."""
+    content_type = (request.headers.get("content-type") or "").lower()
+    question = ""
+    transcript = ""
+    model = "groq"
+    detailed = False
+    metrics_json = "{}"
+    skill_context: dict[str, Any] | None = None
+    audio_bytes: bytes | None = None
+    audio_mime = "audio/webm"
+
+    if "multipart/form-data" in content_type or "application/x-www-form-urlencoded" in content_type:
+        form = await request.form()
+        question = str(form.get("question") or "")
+        transcript = str(form.get("transcript") or "")
+        model = str(form.get("model") or "groq")
+        detailed = str(form.get("detailed") or "false").lower() == "true"
+        metrics_json = str(form.get("metrics_json") or "{}")
+        maybe_audio = form.get("audio")
+        if isinstance(maybe_audio, UploadFile) or (
+            hasattr(maybe_audio, "read") and hasattr(maybe_audio, "filename")
+        ):
+            audio_mime = maybe_audio.content_type or "audio/webm"
+            audio_bytes = await maybe_audio.read()
+        if not question:
+            try:
+                data_payload = json.loads(str(form.get("data") or "{}"))
+                question = _extract_question_text_util(
+                    data_payload.get("question") or data_payload.get("prompt") or ""
+                )
+                if not transcript:
+                    transcript = str(data_payload.get("transcript") or "")
+                skill_context = data_payload.get("skillContext") or None
+                if not metrics_json or metrics_json == "{}":
+                    m = data_payload.get("metrics")
+                    if isinstance(m, dict):
+                        metrics_json = json.dumps(m)
+            except (json.JSONDecodeError, TypeError):
+                pass
+    else:
+        try:
+            payload = await request.json()
+        except Exception as e:
+            raise HTTPException(status_code=400, detail="Invalid JSON body") from e
+        question = _extract_question_text_util(
+            payload.get("question") or payload.get("prompt") or ""
+        )
+        transcript = str(payload.get("transcript") or payload.get("text") or "")
+        model = str(payload.get("model") or "groq")
+        detailed = bool(payload.get("detailed", False))
+        skill_context = payload.get("skillContext") or None
+        metrics = payload.get("metrics")
+        if isinstance(metrics, dict):
+            metrics_json = json.dumps(metrics)
+
+    return question, transcript, model, detailed, metrics_json, skill_context, audio_bytes, audio_mime
+
+
+@app.post("/api/feedback/stream")
+@rate_limit("20/minute")
+async def feedback_stream(request: Request) -> StreamingResponse:
+    """
+    NDJSON streaming feedback endpoint. Emits section events progressively
+    as the Groq model generates them, then a final `complete` chunk.
+    Degrades gracefully to a single buffered `complete` for Gemini/offline.
+    """
+    try:
+        (question, transcript, model, detailed,
+         metrics_json, skill_context, audio_bytes, audio_mime) = await _parse_feedback_request(request)
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    async def generate():
+        tmp_path: str | None = None
+        try:
+            # ── status: transcribing ──────────────────────────────────────────
+            yield json.dumps({"type": "status", "data": {"phase": "transcribing"}}) + "\n"
+
+            whisper_data: dict[str, Any] = {}
+            actual_transcript = transcript
+
+            if audio_bytes:
+                suffix = ".webm"
+                with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+                    tmp.write(audio_bytes)
+                    tmp_path = tmp.name
+
+                if GROQ_API_KEY:
+                    try:
+                        whisper_data = await _groq_whisper(tmp_path, "fr")
+                    except Exception as e:
+                        log.warning("Stream: Groq Whisper failed: %s", e)
+                if not whisper_data:
+                    whisper_data = await _faster_whisper(tmp_path, "fr")
+
+                actual_transcript = (whisper_data.get("text") or transcript or "").strip()
+
+            if not actual_transcript.strip():
+                yield json.dumps({"type": "error", "data": {"message": "No transcript available"}}) + "\n"
+                return
+
+            yield json.dumps({"type": "transcript", "data": {"text": actual_transcript}}) + "\n"
+
+            # ── parse metrics ────────────────────────────────────────────────
+            try:
+                metrics_dict = json.loads(metrics_json) if metrics_json and metrics_json != "{}" else {}
+            except json.JSONDecodeError:
+                metrics_dict = {}
+
+            whisper_words = whisper_data.get("words", [])
+            if whisper_words:
+                metrics_dict["wordProbabilities"] = whisper_words
+
+            try:
+                metrics_obj = FeedbackMetrics(**metrics_dict)
+            except Exception:
+                metrics_obj = FeedbackMetrics(wordProbabilities=whisper_words or None)
+
+            req = FeedbackRequest(
+                question=question,
+                transcript=actual_transcript,
+                metrics=metrics_obj,
+                model=model,
+                detailed=detailed,
+                skill_context=skill_context,
+            )
+
+            # ── cache check ──────────────────────────────────────────────────
+            cache_key: str | None = None
+            if not tmp_path and actual_transcript and question:
+                cache_key = _feedback_cache_key(actual_transcript, question)
+                hit = await _feedback_cache_get(cache_key)
+                if hit is not None:
+                    yield json.dumps({"type": "complete", "data": hit}) + "\n"
+                    return
+
+            yield json.dumps({"type": "status", "data": {"phase": "generating"}}) + "\n"
+
+            # ── determine if we can stream (Groq only) ───────────────────────
+            use_groq_stream = bool(GROQ_API_KEY and get_groq())
+            fb: dict[str, Any] | None = None
+
+            if use_groq_stream:
+                section_queue: asyncio.Queue = asyncio.Queue()
+
+                async def on_section(event_type: str, data: dict[str, Any]) -> None:
+                    await section_queue.put((event_type, data))
+
+                groq_task = asyncio.create_task(_stream_groq(
+                    build_user_prompt(req),
+                    detailed,
+                    on_section,
+                ))
+
+                # Drain section events as they arrive
+                while not groq_task.done():
+                    try:
+                        event_type, data = section_queue.get_nowait()
+                        yield json.dumps({"type": event_type, "data": data}) + "\n"
+                    except asyncio.QueueEmpty:
+                        await asyncio.sleep(0.05)
+
+                # Drain any remaining events after task completes
+                while not section_queue.empty():
+                    event_type, data = section_queue.get_nowait()
+                    yield json.dumps({"type": event_type, "data": data}) + "\n"
+
+                fb = await groq_task
+            else:
+                fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
+
+            # ── tail processing (same as _feedback_impl) ─────────────────────
+            if cache_key and _is_cacheable_result(fb):
+                await _feedback_cache_set(cache_key, fb)
+
+            result = enrich_feedback(fb, req)
+            result["transcript"] = actual_transcript
+            result["whisper_segments"] = whisper_data.get("segments", [])
+            result["whisper_words"] = whisper_words
+            result["audio_analyzed"] = tmp_path is not None
+            result.setdefault("words", [])
+            result["provider"] = _feedback_provider_name(result)
+
+            if tmp_path is not None and whisper_words:
+                pron = result.get("pronunciation", {})
+                if isinstance(pron, dict) and pron.get("score") is None:
+                    alignment = _align_pronunciation(question, actual_transcript, whisper_words)
+                    pron["score"] = alignment["score"]
+                    if not pron.get("issues"):
+                        pron["issues"] = alignment["issues"]
+                    result["pronunciation"] = pron
+
+            _log_coaching_quality(result, actual_transcript)
+            yield json.dumps({"type": "complete", "data": result}) + "\n"
+
+        except Exception as exc:
+            log.error("feedback/stream error: %s\n%s", repr(exc), traceback.format_exc())
+            fallback_req = FeedbackRequest(
+                question=question or "General French speaking practice",
+                transcript=transcript or "",
+                metrics=None,
+                model=model,
+                detailed=detailed,
+                skill_context=skill_context,
+            )
+            fallback = enrich_feedback(
+                _offline_feedback(
+                    fallback_req,
+                    [{"provider": "stream_endpoint", "type": exc.__class__.__name__, "message": str(exc)}],
+                ),
+                fallback_req,
+            )
+            fallback["provider"] = _feedback_provider_name(fallback)
+            yield json.dumps({"type": "error", "data": {"message": str(exc)}}) + "\n"
+            yield json.dumps({"type": "complete", "data": fallback}) + "\n"
+        finally:
+            if tmp_path:
+                try:
+                    os.unlink(tmp_path)
+                except OSError:
+                    pass
+
+    return StreamingResponse(generate(), media_type="application/x-ndjson")
 
 
 # ── /api/repair — micro-repair loop ──────────────────────────────────────────

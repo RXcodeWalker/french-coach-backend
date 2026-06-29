@@ -4136,6 +4136,56 @@ from exam_controller import router as _exam_router
 app.include_router(_exam_router)
 
 
+# ── Content management (CMS) routers ──────────────────────────────────────────
+# Admin CRUD + public published-content reads. Additive; existing /api/questions
+# and /api/exam-sets handlers above are untouched.
+from routers.admin import router as _admin_router, set_cache_invalidator
+from routers.content import router as _content_router, set_cache as _content_set_cache
+
+
+def _invalidate_content_cache(kind: str) -> None:
+    """Purge cached published-content responses after an admin write.
+
+    `kind` is "questions"/"scenarios" (cache hooks) or a table content_type.
+    """
+    prefix = "content:scenarios" if "scenario" in kind else "content:questions"
+    for key in [k for k in _CACHE if k.startswith(prefix)]:
+        _CACHE.pop(key, None)
+
+
+set_cache_invalidator(_invalidate_content_cache)
+_content_set_cache(_cache_get, _cache_set)
+app.include_router(_admin_router)
+app.include_router(_content_router)
+
+
+# ── One-time admin bootstrap ──────────────────────────────────────────────────
+# Grants the admin role via service-role app_metadata. Protected by a setup
+# secret; disable (unset ADMIN_SETUP_SECRET) once the first admin is seeded.
+ADMIN_SETUP_SECRET = os.getenv("ADMIN_SETUP_SECRET", "").strip()
+
+
+class _GrantAdminRequest(BaseModel):
+    user_id: str
+    secret: str
+
+
+@app.post("/api/admin/roles")
+async def grant_admin_role(req: _GrantAdminRequest) -> dict:
+    if not ADMIN_SETUP_SECRET:
+        raise HTTPException(status_code=403, detail="Admin setup is disabled")
+    if not secrets.compare_digest(req.secret, ADMIN_SETUP_SECRET):
+        raise HTTPException(status_code=403, detail="Invalid setup secret")
+    db = _require_supabase()
+    from lib.auth import grant_admin
+    try:
+        await asyncio.to_thread(grant_admin, db, req.user_id)
+    except Exception as exc:
+        log.error("grant_admin failed: %s", exc)
+        raise HTTPException(status_code=500, detail="Failed to grant admin role")
+    return {"ok": True, "user_id": req.user_id, "role": "admin"}
+
+
 
 @app.get("/")
 async def root() -> dict[str, Any]:

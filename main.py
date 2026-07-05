@@ -38,7 +38,7 @@ import time
 import traceback
 from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Annotated, Any
 
 import httpx
 import jwt as pyjwt
@@ -2858,9 +2858,9 @@ async def feedback_stream(request: Request) -> StreamingResponse:
 
 # ── /api/repair — micro-repair loop ──────────────────────────────────────────
 
-@app.post("/api/repair")
+@app.post("/api/repair", response_model=None)
 async def repair_pronunciation(
-    audio: UploadFile = File(...),
+    audio: Annotated[UploadFile, File(...)],
     word: str = Form(...),
     context: str = Form(""),        # surrounding phrase for context
     original_problem: str = Form(""), # the issue description shown to user
@@ -3275,11 +3275,11 @@ def _align_pronunciation(
     }
 
 
-@app.post("/api/pronunciation")
+@app.post("/api/pronunciation", response_model=None)
 @rate_limit("20/minute")
 async def pronunciation_evaluate(
     request: Request,
-    audio: UploadFile = File(...),
+    audio: Annotated[UploadFile, File(...)],
     target_text: str = Form(...),
 ) -> dict[str, Any]:
     """
@@ -3412,9 +3412,9 @@ async def _faster_whisper(tmp_path: str, language: str) -> dict[str, Any]:
     }
 
 
-@app.post("/api/transcribe")
+@app.post("/api/transcribe", response_model=None)
 async def transcribe(
-    audio: UploadFile = File(...),
+    audio: Annotated[UploadFile, File(...)],
     language: str = Form("fr"),
 ) -> dict[str, Any]:
     """Transcribe uploaded audio. Tries Groq Whisper first, falls back to faster-whisper."""

@@ -1,0 +1,232 @@
+{
+  "questionSetId": "original-practice-001",
+  "schemaVersion": "question-bank-v1",
+  "provenance": "original-practice",
+  "review": {
+    "status": "approved",
+    "reviewedBy": "architecture-proof-set",
+    "reviewedAt": "2026-07-16T00:00:00.000Z",
+    "notes": "S11 Step 3 round-trip proof set; content ported unchanged from S10 ORIGINAL_QUESTION_SET_1."
+  },
+  "content": {
+    "rolePlay": {
+      "scenarioId": "rp-original-practice-001",
+      "topicArea": "A",
+      "title": "Acheter un billet de train",
+      "tasks": [
+        {
+          "questionId": "rp1",
+          "part": "rolePlay",
+          "mainText": "Saluez le vendeur et demandez un billet pour Paris.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp2",
+          "part": "rolePlay",
+          "mainText": "Dites à quelle heure vous voulez partir.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp3",
+          "part": "rolePlay",
+          "mainText": "Demandez le prix du billet.",
+          "alternativeTexts": [],
+          "partsExpected": 2,
+          "secondPartText": "Demandez aussi s'il y a une réduction pour les étudiants."
+        },
+        {
+          "questionId": "rp4",
+          "part": "rolePlay",
+          "mainText": "Dites que vous voulez payer par carte.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp5",
+          "part": "rolePlay",
+          "mainText": "Remerciez le vendeur et dites au revoir.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        }
+      ]
+    },
+    "topic1": {
+      "topicArea": "A",
+      "subTopic": "Everyday Life",
+      "furtherQuestions": [
+        "Est-ce que tu aides souvent tes parents à la maison ?",
+        "Quel est ton repas préféré en famille ?"
+      ],
+      "questions": [
+        {
+          "questionId": "t1q1",
+          "part": "topic1",
+          "mainText": "Que fais-tu pour aider à la maison ?",
+          "alternativeTexts": [],
+          "topicArea": "A",
+          "subTopic": "Everyday Life",
+          "difficulty": "core",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q2",
+          "part": "topic1",
+          "mainText": "Décris ta maison ou ton appartement.",
+          "alternativeTexts": [],
+          "topicArea": "A",
+          "subTopic": "Everyday Life",
+          "difficulty": "core",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q3",
+          "part": "topic1",
+          "mainText": "Qu'est-ce que tu as fait le week-end dernier ?",
+          "alternativeTexts": [
+            "Raconte ta dernière sortie en famille."
+          ],
+          "topicArea": "A",
+          "subTopic": "Everyday Life",
+          "difficulty": "core",
+          "targetStructures": [
+            "perfect"
+          ],
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q4",
+          "part": "topic1",
+          "mainText": "Préfères-tu manger à la maison ou au restaurant ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": [
+            "Quel est ton repas préféré ?"
+          ],
+          "topicArea": "A",
+          "subTopic": "Everyday Life",
+          "difficulty": "core",
+          "targetStructures": [
+            "opinion",
+            "justification"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
+        },
+        {
+          "questionId": "t1q5",
+          "part": "topic1",
+          "mainText": "Qu'est-ce que tu vas faire ce soir ?",
+          "alternativeTexts": [
+            "Quels sont tes projets pour la semaine prochaine ?"
+          ],
+          "topicArea": "A",
+          "subTopic": "Everyday Life",
+          "difficulty": "core",
+          "targetStructures": [
+            "near-future"
+          ],
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        }
+      ]
+    },
+    "topic2": {
+      "topicArea": "C",
+      "subTopic": "The World Around Us",
+      "furtherQuestions": [
+        "Qu'est-ce que ta ville pourrait faire pour être plus écologique ?",
+        "Aimerais-tu vivre dans une autre ville un jour ?"
+      ],
+      "questions": [
+        {
+          "questionId": "t2q1",
+          "part": "topic2",
+          "mainText": "Qu'est-ce que tu fais pour protéger l'environnement ?",
+          "alternativeTexts": [],
+          "topicArea": "C",
+          "subTopic": "The World Around Us",
+          "difficulty": "core",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q2",
+          "part": "topic2",
+          "mainText": "Décris ta ville ou ton village.",
+          "alternativeTexts": [],
+          "topicArea": "C",
+          "subTopic": "The World Around Us",
+          "difficulty": "core",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q3",
+          "part": "topic2",
+          "mainText": "As-tu déjà voyagé à l’étranger ? Raconte ce voyage.",
+          "alternativeTexts": [
+            "Parle-moi de tes dernières vacances."
+          ],
+          "topicArea": "C",
+          "subTopic": "The World Around Us",
+          "difficulty": "core",
+          "targetStructures": [
+            "perfect"
+          ],
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q4",
+          "part": "topic2",
+          "mainText": "Penses-tu que le changement climatique est un problème grave ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": [
+            "Que penses-tu de la pollution dans les grandes villes ?"
+          ],
+          "topicArea": "C",
+          "subTopic": "The World Around Us",
+          "difficulty": "higher",
+          "targetStructures": [
+            "opinion",
+            "justification"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
+        },
+        {
+          "questionId": "t2q5",
+          "part": "topic2",
+          "mainText": "Où voudrais-tu voyager à l'avenir ?",
+          "alternativeTexts": [
+            "Comment imagines-tu ta vie dans dix ans ?"
+          ],
+          "topicArea": "C",
+          "subTopic": "The World Around Us",
+          "difficulty": "core",
+          "targetStructures": [
+            "conditional"
+          ],
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        }
+      ]
+    }
+  }
+}

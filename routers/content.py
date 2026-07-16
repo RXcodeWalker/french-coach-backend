@@ -78,3 +78,24 @@ async def list_published_scenarios():
         )).data
 
     return await _cached("content:scenarios:all", build)
+
+
+@router.get("/igcse-sets/{question_set_id}")
+async def get_published_igcse_set(question_set_id: str):
+    """S11: one published AuthoredQuestionSet payload, by id. The frontend
+    loader (data/exam/bank/loader.ts) validates the payload again on receipt
+    (parseAuthoredQuestionSet) -- this endpoint returns the raw stored payload,
+    not a re-derived shape."""
+    async def build():
+        db = _db()
+        res = await _run(
+            db.table("igcse_question_sets")
+            .select("payload")
+            .eq("id", question_set_id)
+            .eq("status", "published")
+        )
+        if not res.data:
+            raise HTTPException(status_code=404, detail="Question set not found or not published")
+        return res.data[0]["payload"]
+
+    return await _cached(f"content:igcse-sets:{question_set_id}", build)

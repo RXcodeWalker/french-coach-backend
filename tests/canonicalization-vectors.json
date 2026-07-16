@@ -1,0 +1,376 @@
+[
+  {
+    "name": "bare-ascii",
+    "input": {
+      "questionSetId": "ascii-set-1",
+      "questions": [
+        {
+          "questionId": "q1",
+          "part": "topic1",
+          "mainText": "Hello world",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        }
+      ],
+      "furtherQuestions": {
+        "topic1": [
+          "a",
+          "b"
+        ],
+        "topic2": [
+          "c",
+          "d"
+        ]
+      }
+    },
+    "sha256": "b713ff3992c14f03d74723e093ae12bfa82ae670e835d330fe9a3d8629f67035"
+  },
+  {
+    "name": "accented-french",
+    "input": {
+      "questionSetId": "accent-set-1",
+      "questions": [
+        {
+          "questionId": "q1",
+          "part": "topic1",
+          "mainText": "Décris ta ville où tu habites",
+          "alternativeTexts": [
+            "Ça été très amusant"
+          ],
+          "partsExpected": 1,
+          "topicArea": "A",
+          "expectedTimeFrame": "present"
+        }
+      ],
+      "furtherQuestions": {
+        "topic1": [
+          "être",
+          "être"
+        ],
+        "topic2": [
+          "ça",
+          "ça"
+        ]
+      }
+    },
+    "sha256": "a72bfd320953ee35a6daed20e9e010d5ca256fbaa98c0a177e98379cb51fd841"
+  },
+  {
+    "name": "nfc-fold-combining",
+    "input": {
+      "questionSetId": "combining-set-1",
+      "questions": [
+        {
+          "questionId": "q1",
+          "part": "topic1",
+          "mainText": "école",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        }
+      ],
+      "furtherQuestions": {
+        "topic1": [
+          "a",
+          "b"
+        ],
+        "topic2": [
+          "c",
+          "d"
+        ]
+      }
+    },
+    "sha256": "245c682c1b98269c4e49129e16b0c044234dc85b5a42e3127ddd92418d83a04d"
+  },
+  {
+    "name": "nfc-fold-precomposed",
+    "input": {
+      "questionSetId": "combining-set-1",
+      "questions": [
+        {
+          "questionId": "q1",
+          "part": "topic1",
+          "mainText": "école",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        }
+      ],
+      "furtherQuestions": {
+        "topic1": [
+          "a",
+          "b"
+        ],
+        "topic2": [
+          "c",
+          "d"
+        ]
+      }
+    },
+    "sha256": "245c682c1b98269c4e49129e16b0c044234dc85b5a42e3127ddd92418d83a04d"
+  },
+  {
+    "name": "apostrophe-curly",
+    "input": {
+      "questionSetId": "apostrophe-set-1",
+      "questions": [
+        {
+          "questionId": "q1",
+          "part": "topic1",
+          "mainText": "Qu’est-ce que tu fais",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        }
+      ],
+      "furtherQuestions": {
+        "topic1": [
+          "a",
+          "b"
+        ],
+        "topic2": [
+          "c",
+          "d"
+        ]
+      }
+    },
+    "sha256": "afbaa76847a02e47059242cb365026bf3e46a938e12d47c9721cdd3d5f211c06"
+  },
+  {
+    "name": "apostrophe-straight",
+    "input": {
+      "questionSetId": "apostrophe-set-1",
+      "questions": [
+        {
+          "questionId": "q1",
+          "part": "topic1",
+          "mainText": "Qu'est-ce que tu fais",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        }
+      ],
+      "furtherQuestions": {
+        "topic1": [
+          "a",
+          "b"
+        ],
+        "topic2": [
+          "c",
+          "d"
+        ]
+      }
+    },
+    "sha256": "4c61e8f82b69d4a93744994967446cf78fdd9e27864a78cbf6588711f63461fa"
+  },
+  {
+    "name": "two-part-question",
+    "input": {
+      "questionSetId": "two-part-set-1",
+      "questions": [
+        {
+          "questionId": "q1",
+          "part": "topic1",
+          "mainText": "Main text",
+          "alternativeTexts": [],
+          "partsExpected": 2,
+          "secondPartText": "Pourquoi ?",
+          "topicArea": "B",
+          "expectedTimeFrame": "past"
+        }
+      ],
+      "furtherQuestions": {
+        "topic1": [
+          "a",
+          "b"
+        ],
+        "topic2": [
+          "c",
+          "d"
+        ]
+      }
+    },
+    "sha256": "fde0a83decefaf7aaf1f8733cd96c5bffd1d30338f9245f8fc00d0d4a5cf7f2d"
+  },
+  {
+    "name": "empty-alternative-texts",
+    "input": {
+      "questionSetId": "empty-alt-set-1",
+      "questions": [
+        {
+          "questionId": "q1",
+          "part": "rolePlay",
+          "mainText": "Role play task",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        }
+      ],
+      "furtherQuestions": {
+        "topic1": [
+          "a",
+          "b"
+        ],
+        "topic2": [
+          "c",
+          "d"
+        ]
+      }
+    },
+    "sha256": "c8704af2967312da4210d0c275b236554eecf65fbeef3115bbe87799a5701ffd"
+  },
+  {
+    "name": "full-fifteen-question-set",
+    "input": {
+      "questionSetId": "original-practice-001",
+      "questions": [
+        {
+          "questionId": "rp1",
+          "part": "rolePlay",
+          "mainText": "Saluez le vendeur et demandez un billet pour Paris.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp2",
+          "part": "rolePlay",
+          "mainText": "Dites à quelle heure vous voulez partir.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp3",
+          "part": "rolePlay",
+          "mainText": "Demandez le prix du billet.",
+          "alternativeTexts": [],
+          "partsExpected": 2,
+          "secondPartText": "Demandez aussi s’il y a une réduction pour les étudiants."
+        },
+        {
+          "questionId": "rp4",
+          "part": "rolePlay",
+          "mainText": "Dites que vous voulez payer par carte.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp5",
+          "part": "rolePlay",
+          "mainText": "Remerciez le vendeur et dites au revoir.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q1",
+          "part": "topic1",
+          "mainText": "Que fais-tu pour aider à la maison ?",
+          "alternativeTexts": [],
+          "topicArea": "A",
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q2",
+          "part": "topic1",
+          "mainText": "Décris ta maison ou ton appartement.",
+          "alternativeTexts": [],
+          "topicArea": "A",
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q3",
+          "part": "topic1",
+          "mainText": "Qu’est-ce que tu as fait le week-end dernier ?",
+          "alternativeTexts": [
+            "Raconte ta dernière sortie en famille."
+          ],
+          "topicArea": "A",
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q4",
+          "part": "topic1",
+          "mainText": "Préfères-tu manger à la maison ou au restaurant ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": [
+            "Quel est ton repas préféré ?"
+          ],
+          "topicArea": "A",
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
+        },
+        {
+          "questionId": "t1q5",
+          "part": "topic1",
+          "mainText": "Qu’est-ce que tu vas faire ce soir ?",
+          "alternativeTexts": [
+            "Quels sont tes projets pour la semaine prochaine ?"
+          ],
+          "topicArea": "A",
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q1",
+          "part": "topic2",
+          "mainText": "Qu’est-ce que tu fais pour protéger l’environnement ?",
+          "alternativeTexts": [],
+          "topicArea": "C",
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q2",
+          "part": "topic2",
+          "mainText": "Décris ta ville ou ton village.",
+          "alternativeTexts": [],
+          "topicArea": "C",
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q3",
+          "part": "topic2",
+          "mainText": "As-tu déjà voyagé à l’étranger ? Raconte ce voyage.",
+          "alternativeTexts": [
+            "Parle-moi de tes dernières vacances."
+          ],
+          "topicArea": "C",
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q4",
+          "part": "topic2",
+          "mainText": "Penses-tu que le changement climatique est un problème grave ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": [
+            "Que penses-tu de la pollution dans les grandes villes ?"
+          ],
+          "topicArea": "C",
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
+        },
+        {
+          "questionId": "t2q5",
+          "part": "topic2",
+          "mainText": "Où voudrais-tu voyager à l’avenir ?",
+          "alternativeTexts": [
+            "Comment imagines-tu ta vie dans dix ans ?"
+          ],
+          "topicArea": "C",
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        }
+      ],
+      "furtherQuestions": {
+        "topic1": [
+          "Est-ce que tu aides souvent tes parents à la maison ?",
+          "Quel est ton repas préféré en famille ?"
+        ],
+        "topic2": [
+          "Qu’est-ce que ta ville pourrait faire pour être plus écologique ?",
+          "Aimerais-tu vivre dans une autre ville un jour ?"
+        ]
+      }
+    },
+    "sha256": "6483dc95560254335a4cf1a13b3ccdaf1d0e3a91065df315c0674a3c1aae8955"
+  }
+]

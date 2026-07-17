@@ -80,6 +80,21 @@ async def list_published_scenarios():
     return await _cached("content:scenarios:all", build)
 
 
+@router.get("/igcse-sets")
+async def list_published_igcse_sets():
+    """S11 §8: usability-only listing of published question-set ids, so the
+    frontend can pick a set without a hardcoded id. No adaptive/weighted/
+    history-aware selection -- that's explicitly out of scope."""
+    async def build():
+        db = _db()
+        res = await _run(
+            db.table("igcse_question_sets").select("id").eq("status", "published")
+        )
+        return [row["id"] for row in res.data]
+
+    return await _cached("content:igcse-sets:all", build)
+
+
 @router.get("/igcse-sets/{question_set_id}")
 async def get_published_igcse_set(question_set_id: str):
     """S11: one published AuthoredQuestionSet payload, by id. The frontend

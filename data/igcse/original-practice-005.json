@@ -1,0 +1,197 @@
+{
+  "questionSetId": "original-practice-005",
+  "schemaVersion": "question-bank-v1",
+  "provenance": "original-practice",
+  "review": {
+    "status": "approved",
+    "reviewedBy": "internal:s11-author",
+    "reviewedAt": "2026-07-17T00:00:00.000Z",
+    "notes": "Clean-room authored from the public 0520 syllabus and 04-frontend-pipeline.md §6.4 only; no Teacher's Notes booklet consulted. Archetype: appointment booking (pair B+C, role-play area B). Self-review + linguistic pass complete; independent originality review complete. G3 exam-realism review pending a 0520-familiar teacher (S11 M2)."
+  },
+  "content": {
+    "rolePlay": {
+      "scenarioId": "rp-original-practice-005",
+      "topicArea": "B",
+      "title": "Prendre rendez-vous chez le dentiste",
+      "tasks": [
+        {
+          "questionId": "rp1",
+          "part": "rolePlay",
+          "mainText": "Saluez la réceptionniste et dites que vous avez mal aux dents.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp2",
+          "part": "rolePlay",
+          "mainText": "Donnez votre nom complet.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp3",
+          "part": "rolePlay",
+          "mainText": "Choisissez entre un rendez-vous mardi ou jeudi.",
+          "alternativeTexts": [],
+          "partsExpected": 2,
+          "secondPartText": "Demandez aussi si le cabinet est ouvert le samedi."
+        },
+        {
+          "questionId": "rp4",
+          "part": "rolePlay",
+          "mainText": "Demandez combien de temps durera la consultation.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp5",
+          "part": "rolePlay",
+          "mainText": "Remerciez la réceptionniste et confirmez le rendez-vous.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        }
+      ]
+    },
+    "topic1": {
+      "topicArea": "B",
+      "subTopic": "Health and Fitness",
+      "furtherQuestions": [
+        "Fais-tu du sport régulièrement pour rester en forme ?",
+        "As-tu déjà dû rester au lit à cause d'une maladie ?"
+      ],
+      "questions": [
+        {
+          "questionId": "t1q1",
+          "part": "topic1",
+          "mainText": "Comment gardes-tu la forme ?",
+          "alternativeTexts": [],
+          "topicArea": "B",
+          "subTopic": "Health and Fitness",
+          "difficulty": "foundation",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q2",
+          "part": "topic1",
+          "mainText": "Que fais-tu quand tu te sens stressé(e) ?",
+          "alternativeTexts": [],
+          "topicArea": "B",
+          "subTopic": "Health and Fitness",
+          "difficulty": "core",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q3",
+          "part": "topic1",
+          "mainText": "As-tu été malade récemment ?",
+          "alternativeTexts": ["Raconte la dernière fois où tu es allé(e) chez le médecin."],
+          "topicArea": "B",
+          "subTopic": "Health and Fitness",
+          "difficulty": "core",
+          "targetStructures": ["perfect"],
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q4",
+          "part": "topic1",
+          "mainText": "Vas-tu changer quelque chose dans ton mode de vie bientôt ?",
+          "alternativeTexts": ["Quel sport voudrais-tu commencer l'année prochaine ?"],
+          "topicArea": "B",
+          "subTopic": "Health and Fitness",
+          "difficulty": "core",
+          "targetStructures": ["near-future"],
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q5",
+          "part": "topic1",
+          "mainText": "Est-il important de bien manger pour rester en bonne santé ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": ["Le sommeil est-il aussi important que l'exercice selon toi ?"],
+          "topicArea": "B",
+          "subTopic": "Health and Fitness",
+          "difficulty": "higher",
+          "targetStructures": ["opinion", "justification", "comparison"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
+        }
+      ]
+    },
+    "topic2": {
+      "topicArea": "C",
+      "subTopic": "Weather and Climate",
+      "furtherQuestions": [
+        "Ta ville a-t-elle connu des tempêtes ou des inondations récemment ?",
+        "Quel type de climat préférerais-tu si tu pouvais choisir ?"
+      ],
+      "questions": [
+        {
+          "questionId": "t2q1",
+          "part": "topic2",
+          "mainText": "Quel temps fait-il aujourd'hui dans ta région ?",
+          "alternativeTexts": [],
+          "topicArea": "C",
+          "subTopic": "Weather and Climate",
+          "difficulty": "foundation",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q2",
+          "part": "topic2",
+          "mainText": "Quelle saison préfères-tu ?",
+          "alternativeTexts": [],
+          "topicArea": "C",
+          "subTopic": "Weather and Climate",
+          "difficulty": "core",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q3",
+          "part": "topic2",
+          "mainText": "Le temps sera-t-il différent le mois prochain ?",
+          "alternativeTexts": ["Quel temps fera-t-il pendant les vacances d'été ?"],
+          "topicArea": "C",
+          "subTopic": "Weather and Climate",
+          "difficulty": "core",
+          "targetStructures": ["simple-future"],
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q4",
+          "part": "topic2",
+          "mainText": "S'il faisait très chaud demain, que ferais-tu ?",
+          "alternativeTexts": ["Que ferais-tu s'il neigeait pendant une semaine entière ?"],
+          "topicArea": "C",
+          "subTopic": "Weather and Climate",
+          "difficulty": "higher",
+          "targetStructures": ["conditional"],
+          "expectedTimeFrame": "conditional",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q5",
+          "part": "topic2",
+          "mainText": "Te souviens-tu d'un jour où le temps a changé tes projets ?",
+          "alternativeTexts": ["Le climat de ta région a-t-il changé ces dernières années ?"],
+          "topicArea": "C",
+          "subTopic": "Weather and Climate",
+          "difficulty": "core",
+          "targetStructures": ["perfect"],
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        }
+      ]
+    }
+  }
+}

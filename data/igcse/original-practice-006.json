@@ -1,0 +1,198 @@
+{
+  "questionSetId": "original-practice-006",
+  "schemaVersion": "question-bank-v1",
+  "provenance": "original-practice",
+  "review": {
+    "status": "approved",
+    "reviewedBy": "internal:s11-author",
+    "reviewedAt": "2026-07-17T00:00:00.000Z",
+    "notes": "Clean-room authored from the public 0520 syllabus and 04-frontend-pipeline.md §6.4 only; no Teacher's Notes booklet consulted. Archetype: problem / complaint (pair B+D, role-play area B). Self-review + linguistic pass complete; independent originality review complete. G3 exam-realism review pending a 0520-familiar teacher (S11 M2)."
+  },
+  "content": {
+    "rolePlay": {
+      "scenarioId": "rp-original-practice-006",
+      "topicArea": "B",
+      "title": "Se plaindre d'une chambre d'hôtel",
+      "tasks": [
+        {
+          "questionId": "rp1",
+          "part": "rolePlay",
+          "mainText": "Saluez le réceptionniste et expliquez qu'il y a un problème dans votre chambre.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp2",
+          "part": "rolePlay",
+          "mainText": "Donnez votre numéro de chambre.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp3",
+          "part": "rolePlay",
+          "mainText": "Dites que la douche ne fonctionne pas.",
+          "alternativeTexts": [],
+          "partsExpected": 2,
+          "secondPartText": "Demandez aussi si on peut vous donner des serviettes propres."
+        },
+        {
+          "questionId": "rp4",
+          "part": "rolePlay",
+          "mainText": "Demandez si vous pouvez changer de chambre.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp5",
+          "part": "rolePlay",
+          "mainText": "Remerciez le réceptionniste pour sa compréhension.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        }
+      ]
+    },
+    "topic1": {
+      "topicArea": "B",
+      "subTopic": "Home and Local Area",
+      "furtherQuestions": [
+        "Y a-t-il un problème que tu voudrais résoudre dans ton quartier ?",
+        "Que fais-tu quand un appareil chez toi tombe en panne ?"
+      ],
+      "questions": [
+        {
+          "questionId": "t1q1",
+          "part": "topic1",
+          "mainText": "Décris le quartier où tu habites.",
+          "alternativeTexts": [],
+          "topicArea": "B",
+          "subTopic": "Home and Local Area",
+          "difficulty": "foundation",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q2",
+          "part": "topic1",
+          "mainText": "Il y a longtemps, ta rue était-elle très différente ?",
+          "alternativeTexts": ["Comment était ton quartier quand tu étais petit(e) ?"],
+          "topicArea": "B",
+          "subTopic": "Home and Local Area",
+          "difficulty": "core",
+          "targetStructures": ["imperfect"],
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q3",
+          "part": "topic1",
+          "mainText": "Ne préfères-tu pas vivre en ville plutôt qu'à la campagne ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": ["La vie en ville te semble-t-elle meilleure que la vie à la campagne ?"],
+          "topicArea": "B",
+          "subTopic": "Home and Local Area",
+          "difficulty": "core",
+          "targetStructures": ["opinion", "justification", "negation", "comparison"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
+        },
+        {
+          "questionId": "t1q4",
+          "part": "topic1",
+          "mainText": "Est-ce que ton quartier va changer dans les prochaines années ?",
+          "alternativeTexts": ["Quels nouveaux commerces vont ouvrir près de chez toi bientôt ?"],
+          "topicArea": "B",
+          "subTopic": "Home and Local Area",
+          "difficulty": "core",
+          "targetStructures": ["near-future"],
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q5",
+          "part": "topic1",
+          "mainText": "Où voudrais-tu vivre si tu déménageais un jour ?",
+          "alternativeTexts": ["Dans quelle ville aimerais-tu t'installer plus tard ?"],
+          "topicArea": "B",
+          "subTopic": "Home and Local Area",
+          "difficulty": "higher",
+          "targetStructures": ["conditional"],
+          "expectedTimeFrame": "conditional",
+          "partsExpected": 1
+        }
+      ]
+    },
+    "topic2": {
+      "topicArea": "D",
+      "subTopic": "Part-time Jobs",
+      "furtherQuestions": [
+        "Un membre de ta famille a-t-il un métier qui t'intéresse ?",
+        "Que ferais-tu si ton patron te demandait de travailler un jour de congé ?"
+      ],
+      "questions": [
+        {
+          "questionId": "t2q1",
+          "part": "topic2",
+          "mainText": "As-tu un petit boulot en ce moment ?",
+          "alternativeTexts": [],
+          "topicArea": "D",
+          "subTopic": "Part-time Jobs",
+          "difficulty": "foundation",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q2",
+          "part": "topic2",
+          "mainText": "Le week-end prochain, travailleras-tu ?",
+          "alternativeTexts": ["Quelles heures feras-tu la semaine prochaine si tu travailles ?"],
+          "topicArea": "D",
+          "subTopic": "Part-time Jobs",
+          "difficulty": "core",
+          "targetStructures": ["simple-future"],
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q3",
+          "part": "topic2",
+          "mainText": "Raconte un désaccord que tu as eu avec un collègue ou un patron.",
+          "alternativeTexts": ["Raconte un moment difficile que tu as vécu au travail."],
+          "topicArea": "D",
+          "subTopic": "Part-time Jobs",
+          "difficulty": "core",
+          "targetStructures": ["perfect"],
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q4",
+          "part": "topic2",
+          "mainText": "Ne trouves-tu pas difficile de combiner le travail et les études ?",
+          "alternativeTexts": ["Qu'est-ce qui est le plus dur dans un petit boulot selon toi ?"],
+          "topicArea": "D",
+          "subTopic": "Part-time Jobs",
+          "difficulty": "higher",
+          "targetStructures": ["negation", "opinion"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q5",
+          "part": "topic2",
+          "mainText": "Si on te proposait un poste bien payé mais ennuyeux, l'accepterais-tu ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": ["Choisirais-tu un métier passionnant plutôt qu'un métier facile ?"],
+          "topicArea": "D",
+          "subTopic": "Part-time Jobs",
+          "difficulty": "core",
+          "targetStructures": ["conditional", "justification"],
+          "expectedTimeFrame": "conditional",
+          "partsExpected": 2
+        }
+      ]
+    }
+  }
+}

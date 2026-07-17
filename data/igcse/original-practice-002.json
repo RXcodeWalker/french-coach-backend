@@ -1,0 +1,198 @@
+{
+  "questionSetId": "original-practice-002",
+  "schemaVersion": "question-bank-v1",
+  "provenance": "original-practice",
+  "review": {
+    "status": "approved",
+    "reviewedBy": "internal:s11-author",
+    "reviewedAt": "2026-07-17T00:00:00.000Z",
+    "notes": "Clean-room authored from the public 0520 syllabus and 04-frontend-pipeline.md §6.4 only; no Teacher's Notes booklet consulted. Archetype: social arrangement (pair A+B, role-play area A). Self-review + linguistic pass complete; independent originality review complete. G3 exam-realism review pending a 0520-familiar teacher (S11 M2)."
+  },
+  "content": {
+    "rolePlay": {
+      "scenarioId": "rp-original-practice-002",
+      "topicArea": "A",
+      "title": "Organiser une sortie avec un ami",
+      "tasks": [
+        {
+          "questionId": "rp1",
+          "part": "rolePlay",
+          "mainText": "Saluez votre ami(e) et proposez de sortir ce week-end.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp2",
+          "part": "rolePlay",
+          "mainText": "Dites à quelle heure vous voulez vous retrouver.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp3",
+          "part": "rolePlay",
+          "mainText": "Proposez d'aller au cinéma ou au parc.",
+          "alternativeTexts": [],
+          "partsExpected": 2,
+          "secondPartText": "Demandez aussi ce que votre ami(e) préfère manger avant."
+        },
+        {
+          "questionId": "rp4",
+          "part": "rolePlay",
+          "mainText": "Demandez comment votre ami(e) va venir.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp5",
+          "part": "rolePlay",
+          "mainText": "Remerciez votre ami(e) et dites à bientôt.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        }
+      ]
+    },
+    "topic1": {
+      "topicArea": "A",
+      "subTopic": "Free Time and Leisure",
+      "furtherQuestions": [
+        "Préfères-tu sortir avec un grand groupe ou avec un seul ami ?",
+        "Quelle activité aimerais-tu essayer pour la première fois ?"
+      ],
+      "questions": [
+        {
+          "questionId": "t1q1",
+          "part": "topic1",
+          "mainText": "Comment aimes-tu passer tes soirées après les cours ?",
+          "alternativeTexts": [],
+          "topicArea": "A",
+          "subTopic": "Free Time and Leisure",
+          "difficulty": "foundation",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q2",
+          "part": "topic1",
+          "mainText": "Quand tu étais plus jeune, à quoi jouais-tu avec tes amis ?",
+          "alternativeTexts": ["Quels jeux aimais-tu quand tu avais dix ans ?"],
+          "topicArea": "A",
+          "subTopic": "Free Time and Leisure",
+          "difficulty": "core",
+          "targetStructures": ["imperfect"],
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q3",
+          "part": "topic1",
+          "mainText": "Trouves-tu les loisirs en plein air plus amusants que les jeux vidéo ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": ["Que penses-tu des jeux vidéo par rapport au sport ?"],
+          "topicArea": "A",
+          "subTopic": "Free Time and Leisure",
+          "difficulty": "core",
+          "targetStructures": ["opinion", "justification", "comparison"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
+        },
+        {
+          "questionId": "t1q4",
+          "part": "topic1",
+          "mainText": "Comment vas-tu passer le week-end prochain avec tes amis ?",
+          "alternativeTexts": ["Où voudrais-tu aller avec tes amis samedi prochain ?"],
+          "topicArea": "A",
+          "subTopic": "Free Time and Leisure",
+          "difficulty": "core",
+          "targetStructures": ["near-future"],
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q5",
+          "part": "topic1",
+          "mainText": "Avec plus de temps libre, que ferais-tu de différent ?",
+          "alternativeTexts": ["Quelle nouvelle activité aimerais-tu commencer un jour ?"],
+          "topicArea": "A",
+          "subTopic": "Free Time and Leisure",
+          "difficulty": "higher",
+          "targetStructures": ["conditional"],
+          "expectedTimeFrame": "conditional",
+          "partsExpected": 1
+        }
+      ]
+    },
+    "topic2": {
+      "topicArea": "B",
+      "subTopic": "Friends and Relationships",
+      "furtherQuestions": [
+        "Comment est-ce que tu gardes contact avec tes amis loin de chez toi ?",
+        "Qu'est-ce qu'un bon ami doit faire selon toi ?"
+      ],
+      "questions": [
+        {
+          "questionId": "t2q1",
+          "part": "topic2",
+          "mainText": "Quelles qualités apprécies-tu chez tes amis ?",
+          "alternativeTexts": [],
+          "topicArea": "B",
+          "subTopic": "Friends and Relationships",
+          "difficulty": "foundation",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q2",
+          "part": "topic2",
+          "mainText": "Comment est-ce que tu t'entends avec ta famille ?",
+          "alternativeTexts": [],
+          "topicArea": "B",
+          "subTopic": "Friends and Relationships",
+          "difficulty": "core",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q3",
+          "part": "topic2",
+          "mainText": "Raconte une dispute que tu as eue avec un ami.",
+          "alternativeTexts": ["Qu'est-ce qui s'est passé la dernière fois que tu t'es disputé(e) avec quelqu'un ?"],
+          "topicArea": "B",
+          "subTopic": "Friends and Relationships",
+          "difficulty": "core",
+          "targetStructures": ["perfect"],
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q4",
+          "part": "topic2",
+          "mainText": "Comment vas-tu garder le contact avec tes amis après le lycée ?",
+          "alternativeTexts": ["Comment imagines-tu ton amitié avec tes amis actuels dans le futur ?"],
+          "topicArea": "B",
+          "subTopic": "Friends and Relationships",
+          "difficulty": "core",
+          "targetStructures": ["near-future"],
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q5",
+          "part": "topic2",
+          "mainText": "Est-ce que tu préfères avoir beaucoup d'amis ou seulement quelques amis proches ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": ["Quelle qualité est la plus importante chez un ami ?"],
+          "topicArea": "B",
+          "subTopic": "Friends and Relationships",
+          "difficulty": "core",
+          "targetStructures": ["opinion", "justification"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
+        }
+      ]
+    }
+  }
+}

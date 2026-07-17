@@ -1,0 +1,198 @@
+{
+  "questionSetId": "original-practice-009",
+  "schemaVersion": "question-bank-v1",
+  "provenance": "original-practice",
+  "review": {
+    "status": "approved",
+    "reviewedBy": "internal:s11-author",
+    "reviewedAt": "2026-07-17T00:00:00.000Z",
+    "notes": "Clean-room authored from the public 0520 syllabus and 04-frontend-pipeline.md §6.4 only; no Teacher's Notes booklet consulted. Archetype: service encounter (pair C+E, role-play area C). Self-review + linguistic pass complete; independent originality review complete. G3 exam-realism review pending a 0520-familiar teacher (S11 M2)."
+  },
+  "content": {
+    "rolePlay": {
+      "scenarioId": "rp-original-practice-009",
+      "topicArea": "C",
+      "title": "Commander dans un café",
+      "tasks": [
+        {
+          "questionId": "rp1",
+          "part": "rolePlay",
+          "mainText": "Saluez le serveur et dites que vous voulez commander.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp2",
+          "part": "rolePlay",
+          "mainText": "Commandez une boisson chaude.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp3",
+          "part": "rolePlay",
+          "mainText": "Choisissez entre un sandwich ou un gâteau.",
+          "alternativeTexts": [],
+          "partsExpected": 2,
+          "secondPartText": "Précisez aussi si vous voulez manger sur place ou emporter."
+        },
+        {
+          "questionId": "rp4",
+          "part": "rolePlay",
+          "mainText": "Demandez où sont les toilettes.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        },
+        {
+          "questionId": "rp5",
+          "part": "rolePlay",
+          "mainText": "Remerciez le serveur et demandez l'addition.",
+          "alternativeTexts": [],
+          "partsExpected": 1
+        }
+      ]
+    },
+    "topic1": {
+      "topicArea": "C",
+      "subTopic": "Shops and Shopping",
+      "furtherQuestions": [
+        "Préfères-tu faire les courses seul(e) ou avec quelqu'un ?",
+        "Quel cadeau as-tu offert récemment à quelqu'un ?"
+      ],
+      "questions": [
+        {
+          "questionId": "t1q1",
+          "part": "topic1",
+          "mainText": "Où fais-tu généralement tes courses ?",
+          "alternativeTexts": [],
+          "topicArea": "C",
+          "subTopic": "Shops and Shopping",
+          "difficulty": "foundation",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q2",
+          "part": "topic1",
+          "mainText": "Raconte un achat que tu as fait récemment.",
+          "alternativeTexts": ["Décris la dernière fois où tu es allé(e) dans un centre commercial."],
+          "topicArea": "C",
+          "subTopic": "Shops and Shopping",
+          "difficulty": "core",
+          "targetStructures": ["perfect"],
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q3",
+          "part": "topic1",
+          "mainText": "Le week-end prochain, achèteras-tu quelque chose de spécial ?",
+          "alternativeTexts": ["Quel magasin visiteras-tu la prochaine fois que tu sortiras ?"],
+          "topicArea": "C",
+          "subTopic": "Shops and Shopping",
+          "difficulty": "core",
+          "targetStructures": ["simple-future"],
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t1q4",
+          "part": "topic1",
+          "mainText": "Les petits magasins sont-ils meilleurs que les grands centres commerciaux ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": ["Acheter en ligne te semble-t-il plus pratique qu'aller en magasin ?"],
+          "topicArea": "C",
+          "subTopic": "Shops and Shopping",
+          "difficulty": "higher",
+          "targetStructures": ["comparison", "opinion", "justification"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
+        },
+        {
+          "questionId": "t1q5",
+          "part": "topic1",
+          "mainText": "Qu'achèterais-tu en premier avec beaucoup d'argent ?",
+          "alternativeTexts": ["Quel objet cher aimerais-tu posséder un jour ?"],
+          "topicArea": "C",
+          "subTopic": "Shops and Shopping",
+          "difficulty": "core",
+          "targetStructures": ["conditional"],
+          "expectedTimeFrame": "conditional",
+          "partsExpected": 1
+        }
+      ]
+    },
+    "topic2": {
+      "topicArea": "E",
+      "subTopic": "Festivals and Celebrations",
+      "furtherQuestions": [
+        "Quelle fête française ou francophone connais-tu ?",
+        "Comment célèbres-tu ton anniversaire d'habitude ?"
+      ],
+      "questions": [
+        {
+          "questionId": "t2q1",
+          "part": "topic2",
+          "mainText": "Quelle est ta fête préférée de l'année ?",
+          "alternativeTexts": [],
+          "topicArea": "E",
+          "subTopic": "Festivals and Celebrations",
+          "difficulty": "foundation",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q2",
+          "part": "topic2",
+          "mainText": "Comment ta famille fête-t-elle les grandes occasions ?",
+          "alternativeTexts": [],
+          "topicArea": "E",
+          "subTopic": "Festivals and Celebrations",
+          "difficulty": "core",
+          "targetStructures": ["present"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q3",
+          "part": "topic2",
+          "mainText": "Décris une fête ou un festival auquel tu as assisté.",
+          "alternativeTexts": ["Raconte comment tu as célébré ton dernier anniversaire."],
+          "topicArea": "E",
+          "subTopic": "Festivals and Celebrations",
+          "difficulty": "core",
+          "targetStructures": ["perfect"],
+          "expectedTimeFrame": "past",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q4",
+          "part": "topic2",
+          "mainText": "Comment vas-tu célébrer la prochaine grande fête de l'année ?",
+          "alternativeTexts": ["Quels invités inviteras-tu à ta prochaine fête d'anniversaire ?"],
+          "topicArea": "E",
+          "subTopic": "Festivals and Celebrations",
+          "difficulty": "core",
+          "targetStructures": ["near-future"],
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
+        },
+        {
+          "questionId": "t2q5",
+          "part": "topic2",
+          "mainText": "Penses-tu que les traditions familiales sont encore importantes aujourd'hui ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": ["Une nouvelle tradition te semblerait-elle bienvenue dans ta famille ?"],
+          "topicArea": "E",
+          "subTopic": "Festivals and Celebrations",
+          "difficulty": "higher",
+          "targetStructures": ["opinion", "justification"],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
+        }
+      ]
+    }
+  }
+}

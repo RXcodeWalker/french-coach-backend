@@ -152,7 +152,7 @@
           "subTopic": "Life in Other Countries",
           "difficulty": "core",
           "targetStructures": ["opinion"],
-          "expectedTimeFrame": "present",
+          "expectedTimeFrame": "past",
           "partsExpected": 1
         },
         {

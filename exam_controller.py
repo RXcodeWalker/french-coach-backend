@@ -145,6 +145,112 @@ async def _generate_topic_question(
     return raw or f"Parlez-moi davantage de {area_desc.split('(')[0].strip()}."
 
 
+# ── Understanding-only utterance interpreter (facts only, no policy) ──────────
+#
+# Boosts live conduct-routing recall over messy STT. Returns FACTS ONLY — no
+# examiner text, no policy, no entities. The frontend treats this as a throwaway
+# routing hint that never reaches the scored transcript (blanking authority stays
+# the deterministic classifier). Any failure → the frontend falls back to its own
+# deterministic classifier, so this endpoint is strictly best-effort.
+
+_INTERPRET_SYSTEM_PROMPT = """\
+Tu es un classificateur d'actes de langage pour un examen oral de français (Cambridge IGCSE 0520).
+On te donne la transcription (parfois bruitée) d'un tour de parole d'un candidat.
+Ta SEULE tâche est de classifier l'acte de langage. Tu n'expliques rien, tu ne corriges rien, tu ne réponds pas au candidat.
+
+Réponds UNIQUEMENT avec un objet JSON valide, sans texte autour, de la forme:
+{"speechAct": "<label>", "hesitation": <true|false>, "confidence": <0..1>}
+
+Labels autorisés pour speechAct (choisis-en EXACTEMENT un):
+- "substantive_answer"      : une vraie réponse au fond de la question
+- "affirmation"            : une simple approbation sans contenu ("oui", "d'accord", "bien sûr")
+- "dont_know"              : le candidat dit qu'il ne sait pas / ne comprend pas la question
+- "repeat_request"         : le candidat demande de répéter la même question ("répétez", "pardon ?")
+- "clarification_request"  : le candidat demande le SENS d'un mot ("que veut dire...", "c'est quoi...")
+- "off_language"           : le tour est en anglais ou dans une autre langue que le français
+- "silence"                : rien d'exploitable / vide
+
+Règles:
+- "hesitation" = true si le tour contient des marques d'hésitation (euh, ben, silences remplis).
+- "confidence" = ta confiance dans le label, entre 0 et 1.
+- En cas de doute entre "substantive_answer" et un acte méta, préfère "substantive_answer".
+- Réponds SANS aucun mot en dehors du JSON.\
+"""
+
+_INTERPRET_VALID_ACTS = {
+    "substantive_answer",
+    "affirmation",
+    "dont_know",
+    "repeat_request",
+    "clarification_request",
+    "off_language",
+    "silence",
+}
+
+
+class InterpretRequest(BaseModel):
+    transcript: str = ""
+    part: str = ""  # 'rolePlay' | 'topic1' | 'topic2' — passed through for prompt context only
+
+
+@router.get("/interpret/health")
+async def exam_interpret_health() -> dict[str, Any]:
+    """Warm-up ping target (mirrors the scoring service /health). Cheap, no model call."""
+    return {"ok": True, "groq": bool(_get_groq())}
+
+
+@router.post("/interpret")
+async def exam_interpret(req: InterpretRequest) -> dict[str, Any]:
+    """
+    Understanding-only speech-act classification for live conduct routing.
+    Facts only: {speechAct, hesitation, confidence}. Never returns examiner text.
+    On any model failure, returns a low-confidence 'substantive_answer' so the
+    frontend's deterministic fallback takes over cleanly.
+    """
+    transcript = (req.transcript or "").strip()
+    if not transcript:
+        return {"speechAct": "silence", "hesitation": False, "confidence": 1.0}
+
+    groq = _get_groq()
+    if not groq:
+        # No model configured — hand control back to the deterministic classifier.
+        return {"speechAct": "substantive_answer", "hesitation": False, "confidence": 0.0}
+
+    part_hint = req.part if req.part in ("rolePlay", "topic1", "topic2") else "topic"
+    user_content = f"Partie de l'examen: {part_hint}\nTranscription du candidat: {transcript}"
+
+    try:
+        resp = await groq.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": _INTERPRET_SYSTEM_PROMPT},
+                {"role": "user", "content": user_content},
+            ],
+            max_tokens=60,
+            temperature=0.0,
+            response_format={"type": "json_object"},
+        )
+        raw = resp.choices[0].message.content.strip()
+        data = json.loads(raw)
+    except Exception as exc:
+        log.warning("Interpret Groq failed: %s", exc)
+        return {"speechAct": "substantive_answer", "hesitation": False, "confidence": 0.0}
+
+    speech_act = data.get("speechAct")
+    if speech_act not in _INTERPRET_VALID_ACTS:
+        # Unknown label — let the frontend fall back deterministically.
+        return {"speechAct": "substantive_answer", "hesitation": False, "confidence": 0.0}
+
+    hesitation = bool(data.get("hesitation", False))
+    try:
+        confidence = float(data.get("confidence", 0.0))
+    except (TypeError, ValueError):
+        confidence = 0.0
+    confidence = max(0.0, min(1.0, confidence))
+
+    return {"speechAct": speech_act, "hesitation": hesitation, "confidence": confidence}
+
+
 # ── Roleplay card loading ─────────────────────────────────────────────────────
 
 def _load_roleplay_cards() -> list[dict[str, Any]]:

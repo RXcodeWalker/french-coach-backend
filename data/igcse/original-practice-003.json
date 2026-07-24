@@ -13,40 +13,41 @@
       "scenarioId": "rp-original-practice-003",
       "topicArea": "D",
       "title": "Se renseigner sur un stage en entreprise",
+      "setup": "Tu veux faire un stage dans une entreprise française et tu téléphones pour te renseigner. Je suis le responsable / la responsable du recrutement.",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Saluez le responsable et dites que vous cherchez un stage.",
+          "mainText": "Bonjour, que puis-je faire pour vous ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Dites dans quel domaine vous voulez travailler.",
+          "mainText": "Dans quel domaine voulez-vous travailler ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Demandez la durée du stage.",
+          "mainText": "Préférez-vous un stage d'une semaine ou de deux semaines ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Demandez aussi si le stage est payé."
+          "secondPartText": "Voulez-vous savoir si le stage est payé ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Dites quand vous êtes disponible pour commencer.",
+          "mainText": "Quand êtes-vous disponible pour commencer ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Remerciez le responsable pour ces informations.",
+          "mainText": "Je vous enverrai les détails par courriel. Avez-vous des questions ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }

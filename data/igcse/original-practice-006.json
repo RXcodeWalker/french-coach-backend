@@ -13,40 +13,41 @@
       "scenarioId": "rp-original-practice-006",
       "topicArea": "B",
       "title": "Se plaindre d'une chambre d'hôtel",
+      "setup": "Il y a un problème dans ta chambre d'hôtel et tu descends à la réception. Je suis le/la réceptionniste.",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Saluez le réceptionniste et expliquez qu'il y a un problème dans votre chambre.",
+          "mainText": "Bonsoir, en quoi puis-je vous aider ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Donnez votre numéro de chambre.",
+          "mainText": "Quel est votre numéro de chambre ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Dites que la douche ne fonctionne pas.",
+          "mainText": "Est-ce que la douche ou la télévision ne fonctionne pas ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Demandez aussi si on peut vous donner des serviettes propres."
+          "secondPartText": "Voulez-vous des serviettes propres aussi ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Demandez si vous pouvez changer de chambre.",
+          "mainText": "Préférez-vous changer de chambre ou attendre la réparation ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Remerciez le réceptionniste pour sa compréhension.",
+          "mainText": "Je suis désolé(e) pour ce désagrément. Autre chose ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }

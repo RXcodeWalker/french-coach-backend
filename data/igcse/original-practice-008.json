@@ -13,40 +13,41 @@
       "scenarioId": "rp-original-practice-008",
       "topicArea": "C",
       "title": "Demander des renseignements à l'office de tourisme",
+      "setup": "Tu es en vacances et tu vas à l'office de tourisme pour demander des renseignements sur la ville. Je suis l'employé(e) de l'office de tourisme.",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Saluez l'employé et dites que vous cherchez des informations sur la ville.",
+          "mainText": "Bonjour, comment puis-je vous renseigner ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Demandez une carte de la région.",
+          "mainText": "Voulez-vous une carte de la région ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Demandez un endroit intéressant à visiter près d'ici.",
+          "mainText": "Préférez-vous visiter un musée ou un monument près d'ici ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Demandez aussi si c'est gratuit pour les étudiants."
+          "secondPartText": "Voulez-vous savoir si c'est gratuit pour les étudiants ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Demandez comment y aller à pied.",
+          "mainText": "Comment voulez-vous y aller, à pied ou en bus ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Remerciez l'employé et dites au revoir poliment.",
+          "mainText": "Voici une brochure. Avez-vous d'autres questions ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }

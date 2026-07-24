@@ -13,40 +13,41 @@
       "scenarioId": "rp-original-practice-005",
       "topicArea": "B",
       "title": "Prendre rendez-vous chez le dentiste",
+      "setup": "Tu as mal aux dents et tu téléphones au cabinet dentaire pour prendre rendez-vous. Je suis le/la réceptionniste.",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Saluez la réceptionniste et dites que vous avez mal aux dents.",
+          "mainText": "Cabinet dentaire, bonjour. Quel est le problème ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Donnez votre nom complet.",
+          "mainText": "Quel est votre nom complet ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Choisissez entre un rendez-vous mardi ou jeudi.",
+          "mainText": "Préférez-vous un rendez-vous mardi ou jeudi ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Demandez aussi si le cabinet est ouvert le samedi."
+          "secondPartText": "Voulez-vous savoir si le cabinet est ouvert le samedi ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Demandez combien de temps durera la consultation.",
+          "mainText": "Avez-vous déjà été patient(e) dans notre cabinet ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Remerciez la réceptionniste et confirmez le rendez-vous.",
+          "mainText": "Très bien, votre rendez-vous est confirmé. Autre chose ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }

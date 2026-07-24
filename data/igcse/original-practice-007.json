@@ -13,40 +13,41 @@
       "scenarioId": "rp-original-practice-007",
       "topicArea": "E",
       "title": "Signaler un objet perdu à l'étranger",
+      "setup": "Tu as perdu ton sac pendant un voyage à l'étranger et tu vas au bureau des objets trouvés. Je suis l'agent / l'agente.",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Saluez l'agent et dites que vous avez perdu votre sac.",
+          "mainText": "Bonjour, qu'avez-vous perdu exactement ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Décrivez la couleur de votre sac.",
+          "mainText": "De quelle couleur est votre sac ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Dites où vous pensez l'avoir perdu.",
+          "mainText": "Où pensez-vous l'avoir perdu ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Précisez aussi à quelle heure vous l'avez remarqué."
+          "secondPartText": "À quelle heure l'avez-vous remarqué ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Demandez ce qu'il faut faire maintenant.",
+          "mainText": "Qu'est-ce qu'il y avait de précieux dans le sac ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Remerciez l'agent et laissez votre numéro de téléphone.",
+          "mainText": "Je vais noter votre déclaration. Quel est votre numéro de téléphone ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }

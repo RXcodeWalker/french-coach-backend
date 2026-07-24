@@ -125,12 +125,14 @@ class RolePlayScenario(BaseModel):
     scenario_id: str = Field(alias="scenarioId")
     topic_area: TopicArea = Field(alias="topicArea")
     title: str = Field(min_length=1)
+    setup: str = Field(min_length=1)
     tasks: list[AuthoredQuestion]
 
     model_config = {"populate_by_name": True}
 
     @model_validator(mode="after")
     def _check_tasks(self) -> "RolePlayScenario":
+        _check_canonicalization_safety(self.setup, "rolePlay.setup")
         if len(self.tasks) != 5:
             raise ValueError(f"rolePlay.tasks must have exactly 5 tasks, got {len(self.tasks)}")
         for i, task in enumerate(self.tasks):

@@ -13,40 +13,41 @@
       "scenarioId": "rp-original-practice-002",
       "topicArea": "A",
       "title": "Organiser une sortie avec un ami",
+      "setup": "Ton ami(e) français(e) te téléphone pour organiser une sortie ce week-end. Je suis ton ami(e).",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Saluez votre ami(e) et proposez de sortir ce week-end.",
+          "mainText": "Salut ! Tu es libre ce week-end ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Dites à quelle heure vous voulez vous retrouver.",
+          "mainText": "À quelle heure veux-tu te retrouver ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Proposez d'aller au cinéma ou au parc.",
+          "mainText": "On va au cinéma ou au parc ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Demandez aussi ce que votre ami(e) préfère manger avant."
+          "secondPartText": "Qu'est-ce que tu préfères manger avant ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Demandez comment votre ami(e) va venir.",
+          "mainText": "Comment vas-tu venir ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Remerciez votre ami(e) et dites à bientôt.",
+          "mainText": "D'accord, à samedi alors ! Ça te va ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }

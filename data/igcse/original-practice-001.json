@@ -13,40 +13,41 @@
       "scenarioId": "rp-original-practice-001",
       "topicArea": "A",
       "title": "Acheter un billet de train",
+      "setup": "Tu es à la gare et tu veux acheter un billet de train pour Paris. Je suis le vendeur / la vendeuse au guichet.",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Saluez le vendeur et demandez un billet pour Paris.",
+          "mainText": "Bonjour ! Où voulez-vous aller ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Dites à quelle heure vous voulez partir.",
+          "mainText": "À quelle heure voulez-vous partir ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Demandez le prix du billet.",
+          "mainText": "Voulez-vous un aller simple ou un aller-retour ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Demandez aussi s'il y a une réduction pour les étudiants."
+          "secondPartText": "Y a-t-il une réduction pour les étudiants ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Dites que vous voulez payer par carte.",
+          "mainText": "Comment voulez-vous payer ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Remerciez le vendeur et dites au revoir.",
+          "mainText": "Voici votre billet. Autre chose ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }

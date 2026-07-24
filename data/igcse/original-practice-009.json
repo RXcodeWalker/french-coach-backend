@@ -13,40 +13,41 @@
       "scenarioId": "rp-original-practice-009",
       "topicArea": "C",
       "title": "Commander dans un café",
+      "setup": "Tu es dans un café en France et tu veux commander quelque chose. Je suis le serveur / la serveuse.",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Saluez le serveur et dites que vous voulez commander.",
+          "mainText": "Bonjour, vous avez choisi ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Commandez une boisson chaude.",
+          "mainText": "Que voulez-vous boire ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Choisissez entre un sandwich ou un gâteau.",
+          "mainText": "Voulez-vous un sandwich ou un gâteau avec ça ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Précisez aussi si vous voulez manger sur place ou emporter."
+          "secondPartText": "C'est pour manger sur place ou pour emporter ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Demandez où sont les toilettes.",
+          "mainText": "Voulez-vous autre chose ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Remerciez le serveur et demandez l'addition.",
+          "mainText": "Très bien. Voulez-vous l'addition maintenant ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }

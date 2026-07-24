@@ -13,40 +13,41 @@
       "scenarioId": "rp-original-practice-004",
       "topicArea": "E",
       "title": "Un train annulé à la gare",
+      "setup": "Ton train est annulé et tu vas au guichet pour demander de l'aide. Je suis l'employé(e) de la gare.",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Saluez l'employé et dites que votre train est annulé.",
+          "mainText": "Bonjour, comment puis-je vous aider ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Dites votre destination.",
+          "mainText": "Quelle est votre destination ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Demandez l'heure du prochain train.",
+          "mainText": "Voulez-vous prendre le prochain train ou attendre demain ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Demandez aussi si vous devez changer de quai."
+          "secondPartText": "Savez-vous à quel quai il faut aller ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Demandez si vous pouvez obtenir un remboursement.",
+          "mainText": "Voulez-vous un remboursement ou un autre billet ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Remerciez l'employé pour son aide.",
+          "mainText": "Je suis vraiment désolé(e) pour ce retard. Autre chose ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }

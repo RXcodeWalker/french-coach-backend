@@ -13,40 +13,41 @@
       "scenarioId": "rp-original-practice-010",
       "topicArea": "D",
       "title": "Réserver une table dans un restaurant",
+      "setup": "Tu téléphones à un restaurant pour réserver une table pour ce soir. Je suis le patron / la patronne du restaurant.",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Saluez le restaurant et dites que vous voulez réserver une table.",
+          "mainText": "Restaurant Le Provençal, bonjour. Que puis-je faire pour vous ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Dites pour combien de personnes.",
+          "mainText": "Pour combien de personnes, s'il vous plaît ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Choisissez entre 19h ou 20h30.",
+          "mainText": "Préférez-vous une table à 19h ou à 20h30 ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Précisez aussi si vous voulez une table près de la fenêtre."
+          "secondPartText": "Voulez-vous une table près de la fenêtre ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Demandez s'il y a un menu végétarien.",
+          "mainText": "Avez-vous des allergies ou des préférences alimentaires ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Remerciez la personne et confirmez la réservation.",
+          "mainText": "Parfait, votre table est réservée. Autre chose ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }

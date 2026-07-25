@@ -78,6 +78,10 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 # ── Config ────────────────────────────────────────────────────────────────────
 GROQ_API_KEY        = os.getenv("GROQ_API_KEY", "").strip()
 GEMINI_API_KEY      = os.getenv("GEMINI_API_KEY", "").strip()
+# The free tier returns 429 with `limit: 0` for gemini-2.0-flash / -flash-lite
+# (not available to new keys), and gemini-1.5-flash / gemini-2.5-flash-lite now
+# 404 for new keys. gemini-2.5-flash is the callable default; override via env.
+GEMINI_MODEL        = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
 SUPABASE_URL        = os.getenv("SUPABASE_URL", "").strip()
 SUPABASE_KEY        = os.getenv("SUPABASE_SERVICE_KEY", "").strip()
 SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "").strip()
@@ -118,7 +122,7 @@ def get_gemini():
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_API_KEY)
         _gemini_model = genai.GenerativeModel(
-            "gemini-2.0-flash",
+            GEMINI_MODEL,
             system_instruction=SYSTEM_PROMPT,
         )
     return _gemini_model
@@ -132,7 +136,7 @@ def get_gemini_multimodal():
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_API_KEY)
         _gemini_multimodal_model = genai.GenerativeModel(
-            "gemini-2.0-flash",
+            GEMINI_MODEL,
             system_instruction=MULTIMODAL_SYSTEM_PROMPT,
         )
     return _gemini_multimodal_model
@@ -146,7 +150,7 @@ def get_gemini_igcse():
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_API_KEY)
         _gemini_igcse_model = genai.GenerativeModel(
-            "gemini-2.0-flash",
+            GEMINI_MODEL,
             system_instruction=IGCSE_SYSTEM_PROMPT,
         )
     return _gemini_igcse_model
@@ -2067,13 +2071,13 @@ async def _call_gemini(prompt: str) -> dict[str, Any]:
     async def operation() -> dict[str, Any]:
         response = await asyncio.to_thread(gemini.generate_content, prompt)
         result = extract_json(getattr(response, "text", "") or "")
-        result["modelUsed"] = "gemini/gemini-2.0-flash"
+        result["modelUsed"] = f"gemini/{GEMINI_MODEL}"
         return result
 
     try:
-        return await _run_with_retries("gemini/gemini-2.0-flash", operation)
+        return await _run_with_retries(f"gemini/{GEMINI_MODEL}", operation)
     except ResourceExhausted as exc:
-        _log_provider_failure("gemini/gemini-2.0-flash quota exhausted", exc)
+        _log_provider_failure(f"gemini/{GEMINI_MODEL} quota exhausted", exc)
         raise
 
 
@@ -2102,13 +2106,13 @@ async def _call_gemini_multimodal(
             [audio_part, prompt],
         )
         result = extract_json(getattr(response, "text", "") or "")
-        result["modelUsed"] = "gemini/gemini-2.0-flash-multimodal"
+        result["modelUsed"] = f"gemini/{GEMINI_MODEL}-multimodal"
         return result
 
     try:
-        return await _run_with_retries("gemini/gemini-2.0-flash-multimodal", operation)
+        return await _run_with_retries(f"gemini/{GEMINI_MODEL}-multimodal", operation)
     except ResourceExhausted as exc:
-        _log_provider_failure("gemini/gemini-2.0-flash-multimodal quota exhausted", exc)
+        _log_provider_failure(f"gemini/{GEMINI_MODEL}-multimodal quota exhausted", exc)
         raise
 
 
@@ -2244,7 +2248,7 @@ async def call_ai_feedback(
     provider_errors: list[dict[str, str]] = []
     t_start = time.monotonic()
 
-    primary_name = "gemini/gemini-2.0-flash-multimodal" if has_audio else "gemini/gemini-2.0-flash"
+    primary_name = f"gemini/{GEMINI_MODEL}-multimodal" if has_audio else f"gemini/{GEMINI_MODEL}"
     result = await _try_feedback_provider(
         primary_name,
         lambda: _call_gemini_multimodal(prompt, audio_path, mime_type=audio_mime) if has_audio else _call_gemini(prompt),
@@ -3095,7 +3099,7 @@ async def _call_gemini_igcse(prompt: str) -> dict[str, Any]:
     async def operation() -> dict[str, Any]:
         response = await asyncio.to_thread(gemini.generate_content, prompt)
         result = extract_json(getattr(response, "text", "") or "")
-        result["modelUsed"] = "gemini/gemini-2.0-flash"
+        result["modelUsed"] = f"gemini/{GEMINI_MODEL}"
         return result
 
     return await _run_with_retries("gemini-igcse", operation)
@@ -3544,7 +3548,7 @@ async def generate_daily_news() -> dict:
 
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel(
-            "gemini-2.0-flash",
+            GEMINI_MODEL,
             system_instruction=NEWS_SYSTEM_PROMPT,
         )
 
@@ -3770,11 +3774,11 @@ async def get_grammar_lesson(topic: str) -> dict:
             except Exception as e:
                 log.warning("Grammar lesson Gemini-2.0 failed: %s", e)
 
-    # Last resort: Gemini 1.5 flash (separate quota pool)
+    # Last resort: retry the callable Gemini model directly
     if not raw and GEMINI_API_KEY:
         try:
             import google.generativeai as genai
-            m15 = genai.GenerativeModel("gemini-1.5-flash")
+            m15 = genai.GenerativeModel(GEMINI_MODEL)
             resp = await asyncio.to_thread(m15.generate_content, prompt)
             raw = resp.text.strip()
         except Exception as e:
@@ -3944,7 +3948,7 @@ async def roleplay_turn(request: Request, req: RoleplayTurnRequest) -> dict:
     if not raw:
         try:
             import google.generativeai as genai
-            model = genai.GenerativeModel("gemini-2.0-flash", system_instruction=system)
+            model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=system)
             full_prompt = "\n".join(f"{t['speaker'].upper()}: {t['text']}" for t in req.turn_history)
             full_prompt += f"\nSTUDENT: {req.student_transcript or '(silence)'}"
             resp = await asyncio.to_thread(model.generate_content, full_prompt)
@@ -3984,7 +3988,7 @@ async def vocab_prep(topic: str) -> dict[str, Any]:
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel(
-            "gemini-2.0-flash",
+            GEMINI_MODEL,
             system_instruction=VOCAB_SYSTEM_PROMPT,
         )
         response = await asyncio.wait_for(

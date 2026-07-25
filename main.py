@@ -3183,6 +3183,10 @@ async def get_igcse_paper(paper_id: str) -> dict:
 
 
 # ── /api/pronunciation ────────────────────────────────────────────────────────
+# S7-adjacent: real Azure-backed assessment lives in routers/pronunciation.py,
+# wired below via configure() to avoid importing this module's Whisper/retry
+# helpers circularly. _align_pronunciation itself stays here, unchanged, as
+# the whisper-heuristic fallback tier.
 
 def _align_pronunciation(
     target_text: str,
@@ -3277,53 +3281,6 @@ def _align_pronunciation(
         "score": score,
         "issues": issues,
     }
-
-
-@app.post("/api/pronunciation", response_model=None)
-@rate_limit("20/minute")
-async def pronunciation_evaluate(
-    request: Request,
-    audio: Annotated[UploadFile, File(...)],
-    target_text: str = Form(...),
-) -> dict[str, Any]:
-    """
-    Score pronunciation by aligning Whisper transcription against the target text.
-    Returns: score (0-10), transcript, issues (word-level), words (Whisper data).
-    """
-    suffix = os.path.splitext(audio.filename or "")[1] or ".webm"
-    raw = await audio.read()
-
-    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-        tmp.write(raw)
-        tmp_path = tmp.name
-
-    try:
-        whisper_data: dict[str, Any] = {}
-        if GROQ_API_KEY:
-            try:
-                whisper_data = await _groq_whisper(tmp_path, "fr")
-            except Exception as e:
-                log.warning("Groq Whisper failed in /api/pronunciation, trying faster-whisper: %s", e)
-
-        if not whisper_data:
-            whisper_data = await _faster_whisper(tmp_path, "fr")
-
-        heard_text   = (whisper_data.get("text") or "").strip()
-        whisper_words = whisper_data.get("words", [])
-
-        alignment = _align_pronunciation(target_text, heard_text, whisper_words)
-
-        return {
-            "score":      alignment["score"],
-            "transcript": heard_text,
-            "issues":     alignment["issues"],
-            "words":      whisper_words,
-        }
-    finally:
-        try:
-            os.unlink(tmp_path)
-        except OSError:
-            pass
 
 
 # ── /api/transcribe ───────────────────────────────────────────────────────────
@@ -4161,6 +4118,27 @@ set_cache_invalidator(_invalidate_content_cache)
 _content_set_cache(_cache_get, _cache_set)
 app.include_router(_admin_router)
 app.include_router(_content_router)
+
+# ── Pronunciation assessment router ─────────────────────────────────────────
+# Additive: replaces the old inline @app.post("/api/pronunciation") handler.
+# configure() injects this module's existing Whisper/align functions rather
+# than the router importing them, to avoid main.py <-> routers.pronunciation
+# circularity (see routers/pronunciation.py's module docstring).
+from routers.pronunciation import (
+    router as _pronunciation_router,
+    configure as _configure_pronunciation,
+    set_rate_limiter as _set_pronunciation_rate_limiter,
+)
+
+_configure_pronunciation(
+    _groq_whisper,
+    _faster_whisper,
+    _align_pronunciation,
+    lambda: bool(GROQ_API_KEY),
+    _run_with_retries,
+)
+_set_pronunciation_rate_limiter(rate_limit)
+app.include_router(_pronunciation_router)
 
 
 # ── One-time admin bootstrap ──────────────────────────────────────────────────

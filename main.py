@@ -2306,6 +2306,74 @@ async def call_ai_feedback(
     return offline
 
 
+_EXAMINER_MODE_SYSTEM_PROMPT = (
+    "You are a Cambridge IGCSE French 0520 examiner giving practice feedback. "
+    "Return ONLY a raw JSON object matching exactly the schema described in the "
+    "user message — no markdown, no code fences, no prose outside the JSON, "
+    "and never a mark, band number, or total of any kind."
+)
+
+
+async def _call_groq_examiner(prompt: str) -> dict[str, Any]:
+    groq = get_groq()
+    if not groq:
+        raise RuntimeError("Groq not configured")
+
+    async def operation() -> dict[str, Any]:
+        resp = await groq.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": _EXAMINER_MODE_SYSTEM_PROMPT},
+                {"role": "user", "content": prompt},
+            ],
+            temperature=0.3,
+            max_tokens=1500,
+        )
+        return extract_json(resp.choices[0].message.content)
+
+    return await _run_with_retries("groq/llama-3.3-70b-versatile-examiner", operation)
+
+
+async def _call_gemini_examiner(prompt: str) -> dict[str, Any]:
+    gemini = get_gemini()
+    if not gemini:
+        raise RuntimeError("Gemini not configured")
+
+    async def operation() -> dict[str, Any]:
+        response = await asyncio.to_thread(
+            gemini.generate_content, f"{_EXAMINER_MODE_SYSTEM_PROMPT}\n\n{prompt}"
+        )
+        return extract_json(getattr(response, "text", "") or "")
+
+    return await _run_with_retries(f"gemini/{GEMINI_MODEL}-examiner", operation)
+
+
+async def _examiner_feedback_impl(prompt: str) -> dict[str, Any]:
+    """
+    Examiner-mode practice feedback: Groq -> Gemini fallback, raw JSON relay.
+    Deliberately bypasses enrich_feedback/_offline_feedback (both fabricate a
+    `scores` default) — a network failure here must raise, not silently
+    substitute coach-voice output. Grounding + the one-retry rule live
+    client-side (examinerFeedback.ts), since only the client holds the exact
+    transcript every quote must be checked against.
+    """
+    provider_errors: list[dict[str, str]] = []
+
+    result = await _try_feedback_provider("groq/examiner", lambda: _call_groq_examiner(prompt), provider_errors)
+    if result is None:
+        result = await _try_feedback_provider("gemini/examiner", lambda: _call_gemini_examiner(prompt), provider_errors)
+
+    if result is None:
+        detail = "; ".join(f"{e['provider']}: {e['type']}" for e in provider_errors) or "no provider available"
+        raise HTTPException(status_code=502, detail=f"Examiner feedback unavailable — {detail}")
+
+    return {
+        "currentDescriptorCommentary": result.get("currentDescriptorCommentary") or [],
+        "improvementCommentary": result.get("improvementCommentary") or [],
+    }
+
+
 def _log_coaching_quality(fb: dict[str, Any], transcript: str) -> None:
     issues = validate_coaching_quality(fb, transcript)
     if issues:
@@ -2569,6 +2637,20 @@ async def feedback(request: Request) -> dict[str, Any]:
             payload = await request.json()
         except Exception as e:
             raise HTTPException(status_code=400, detail="Invalid JSON body") from e
+
+        # Examiner mode: the client already built the full rubric-sourced prompt
+        # (src/domain/igcse/rubric.ts is the only place that sourced text lives —
+        # this backend holds no Python copy of it). Bypass the coach envelope
+        # entirely: no enrich_feedback, no scores default, no offline fallback
+        # voice — a network failure here must surface as an honest error on the
+        # client, never silently substitute coach-voice output.
+        if payload.get("feedbackMode") == "examiner":
+            examiner_prompt = str(payload.get("prompt") or "")
+            if not examiner_prompt.strip():
+                raise HTTPException(status_code=400, detail="Missing prompt for examiner feedback")
+            result = await _examiner_feedback_impl(examiner_prompt)
+            return result
+
         question = _extract_question_text(
             payload.get("question") or payload.get("prompt") or ""
         )

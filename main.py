@@ -347,7 +347,16 @@ async def health() -> dict[str, Any]:
     else:
         groq_status = await _probe_groq()
         gemini_status = await _probe_gemini()
-        await _cache_set("health:probes", {"groq": groq_status, "gemini": gemini_status}, 60)
+        # "ok" is cached for a full minute to avoid hammering the providers on every
+        # poll. A failure (cold start, transient network blip) is cached for only a
+        # few seconds so the next client poll re-probes soon instead of being stuck
+        # showing "unavailable" for up to a minute after the provider recovers.
+        both_ok = groq_status == "ok" and gemini_status == "ok"
+        await _cache_set(
+            "health:probes",
+            {"groq": groq_status, "gemini": gemini_status},
+            60 if both_ok else 5,
+        )
 
     db_path = Path(os.getenv("IGCSE_DB_PATH", str(APP_DIR / "data" / "igcse_speaking.db")))
     db_ok = False

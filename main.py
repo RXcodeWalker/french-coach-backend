@@ -79,9 +79,11 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 GROQ_API_KEY        = os.getenv("GROQ_API_KEY", "").strip()
 GEMINI_API_KEY      = os.getenv("GEMINI_API_KEY", "").strip()
 # The free tier returns 429 with `limit: 0` for gemini-2.0-flash / -flash-lite
-# (not available to new keys), and gemini-1.5-flash / gemini-2.5-flash-lite now
-# 404 for new keys. gemini-2.5-flash is the callable default; override via env.
-GEMINI_MODEL        = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
+# (not available to new keys), and gemini-1.5-flash / gemini-2.5-flash-lite /
+# gemini-2.5-flash now 404 ("no longer available to new users") as Google
+# retires the 2.x line. gemini-3.5-flash is the current callable default;
+# override via env if Google moves the goalposts again.
+GEMINI_MODEL        = os.getenv("GEMINI_MODEL", "gemini-3.5-flash").strip()
 SUPABASE_URL        = os.getenv("SUPABASE_URL", "").strip()
 SUPABASE_KEY        = os.getenv("SUPABASE_SERVICE_KEY", "").strip()
 SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "").strip()

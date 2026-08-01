@@ -2410,7 +2410,14 @@ def enrich_feedback(fb: dict[str, Any], req: FeedbackRequest) -> dict[str, Any]:
         fb["grammar"].setdefault("polish", [])
 
     # ── New coaching field defaults ───────────────────────────────────────────
-    fb.setdefault("scores", {"comm": 5.0, "know": 5.0, "acc": 5.0})
+    # A live provider that returns no scores was never actually graded — do
+    # not fabricate a 5.0/5.0/5.0 placeholder. Stamp an explicit marker the
+    # frontend keys off instead (never inferred from scores/fluency being
+    # absent — see apiClient.ts's mapBackendFeedback). Reuse the existing
+    # offline_fallback marker if this response is already known to be one;
+    # otherwise this is a live provider that returned a malformed payload.
+    if "scores" not in fb and fb.get("providerStatus") != "offline_fallback":
+        fb["providerStatus"] = "malformed_response"
     fb.setdefault("cefrLevel", "A2")
     fb.setdefault("best_moment", "")
     fb.setdefault("biggest_opportunity", "")
@@ -2563,21 +2570,6 @@ async def _feedback_impl(
         # Ensure words[] is present (phoneme-level data from multimodal Gemini)
         result.setdefault("words", [])
         result["provider"] = _feedback_provider_name(result)
-
-        # If audio was present but the AI couldn't score pronunciation (Groq text fallback),
-        # inject a real score via Whisper alignment.
-        if tmp_path is not None and whisper_words is not None:
-            pron = result.get("pronunciation", {})
-            if isinstance(pron, dict) and pron.get("score") is None:
-                alignment = _align_pronunciation(
-                    question,
-                    transcript,
-                    whisper_words,
-                )
-                pron["score"] = alignment["score"]
-                if not pron.get("issues"):
-                    pron["issues"] = alignment["issues"]
-                result["pronunciation"] = pron
 
         return result
 
@@ -2910,15 +2902,6 @@ async def feedback_stream(request: Request) -> StreamingResponse:
             result["audio_analyzed"] = tmp_path is not None
             result.setdefault("words", [])
             result["provider"] = _feedback_provider_name(result)
-
-            if tmp_path is not None and whisper_words:
-                pron = result.get("pronunciation", {})
-                if isinstance(pron, dict) and pron.get("score") is None:
-                    alignment = _align_pronunciation(question, actual_transcript, whisper_words)
-                    pron["score"] = alignment["score"]
-                    if not pron.get("issues"):
-                        pron["issues"] = alignment["issues"]
-                    result["pronunciation"] = pron
 
             _log_coaching_quality(result, actual_transcript)
             yield json.dumps({"type": "complete", "data": result}) + "\n"

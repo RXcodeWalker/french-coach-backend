@@ -13,14 +13,13 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-os.environ.pop("AZURE_SPEECH_KEY", None)
-os.environ.pop("AZURE_SPEECH_REGION", None)
-
-from fastapi import FastAPI
+import pytest
+from fastapi import APIRouter, FastAPI
 from fastapi.testclient import TestClient
 
-from routers.pronunciation import router, configure
+from routers.pronunciation import configure, pronunciation_evaluate
 from models.pronunciation import PronunciationAssessmentResponse
+from services.pronunciation.azure_client import _is_configured
 
 
 def _fake_align(target_text: str, heard_text: str, whisper_words):
@@ -36,14 +35,28 @@ async def _fake_faster_whisper(tmp_path: str, language: str):
 
 
 def _build_app() -> FastAPI:
+    # Build the route on a fresh APIRouter rather than importing and reusing
+    # routers.pronunciation's module-level `router` singleton: when the test
+    # suite also imports main.py (which already ran app.include_router() on
+    # that same singleton at import time), a second include_router() call on
+    # the same route objects makes FastAPI mis-resolve
+    # `audio: Annotated[UploadFile, File(...)]` as a query param instead of
+    # a body/File param (reproduced directly against fastapi 0.115 — the
+    # route's rebuilt `dependant` moves `audio` into query_params on the
+    # second registration). Re-registering the same endpoint function on a
+    # brand-new router avoids the double-registration entirely.
     configure(_fake_groq_whisper, _fake_faster_whisper, _fake_align, lambda: False, None)
+    fresh_router = APIRouter(prefix="/api", tags=["pronunciation"])
+    fresh_router.post("/pronunciation", response_model=PronunciationAssessmentResponse)(pronunciation_evaluate)
     app = FastAPI()
-    app.include_router(router)
+    app.include_router(fresh_router)
     return app
 
 
-def test_pronunciation_degrades_to_whisper_heuristic_without_azure_key():
-    assert os.getenv("AZURE_SPEECH_KEY", "") == ""
+def test_pronunciation_degrades_to_whisper_heuristic_without_azure_key(monkeypatch):
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    assert _is_configured() is None
     client = TestClient(_build_app())
 
     response = client.post(
@@ -62,5 +75,6 @@ def test_pronunciation_degrades_to_whisper_heuristic_without_azure_key():
 
 
 if __name__ == "__main__":
-    test_pronunciation_degrades_to_whisper_heuristic_without_azure_key()
+    with pytest.MonkeyPatch.context() as mp:
+        test_pronunciation_degrades_to_whisper_heuristic_without_azure_key(mp)
     print("All test_pronunciation tests passed.")

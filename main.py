@@ -202,8 +202,14 @@ _feedback_cache: OrderedDict[str, tuple[dict, float]] = OrderedDict()
 _feedback_cache_lock = asyncio.Lock()
 
 
-def _feedback_cache_key(transcript: str, question_id: str) -> str:
-    return hashlib.sha256(f"{transcript}::{question_id}".encode()).hexdigest()
+def _feedback_cache_key(
+    transcript: str, question_id: str, difficulty_context: dict[str, Any] | None = None
+) -> str:
+    # Tier is part of the key so a Beginner-toned cached response can never be
+    # served back for an Expert request (and vice versa) once the tier reaches
+    # the prompt (see build_user_prompt's difficulty_section).
+    tier = (difficulty_context or {}).get("tier") or ""
+    return hashlib.sha256(f"{transcript}::{question_id}::{tier}".encode()).hexdigest()
 
 
 async def _feedback_cache_get(key: str) -> dict | None:
@@ -423,6 +429,7 @@ class FeedbackRequest(BaseModel):
     model: str | None = None      # "groq" | "gemini" | None (auto)
     detailed: bool = False         # True = expanded feedback with more items
     skill_context: dict[str, Any] | None = None  # weak/strong skill profile from client
+    difficulty_context: dict[str, Any] | None = None  # tier/label/cefrTarget/coachingTone/coachingRubric from client
 
 
 class IGCSEFeedbackRequest(BaseModel):
@@ -1565,41 +1572,107 @@ def clean_transcript(text: str) -> str:
     return text[0].upper() + text[1:]
 
 
-def validate_coaching_quality(fb: dict[str, Any], transcript: str) -> list[str]:
-    """Return a list of quality issues. Empty list means the response passes."""
-    issues: list[str] = []
+def _has_evidence(item_text: str, quote: Any) -> bool:
+    return _EVIDENCE_MARKER in item_text or bool(quote)
 
-    # best_moment must contain a quote
-    best_moment = fb.get("best_moment") or ""
+
+def _best_moment_issues(best_moment: str) -> list[str]:
     if best_moment and _EVIDENCE_MARKER not in best_moment:
-        issues.append("best_moment lacks a quoted student phrase (« »)")
+        return ["best_moment lacks a quoted student phrase (« »)"]
+    return []
 
-    # Check for banned generic phrases across key coaching fields
-    combined = " ".join(filter(None, [
-        best_moment,
-        fb.get("biggest_opportunity") or "",
-        fb.get("encouragement") or "",
-    ])).lower()
+
+def _generic_phrase_issues(*fields: str) -> list[str]:
+    """Check for banned generic phrases across the given coaching fields."""
+    combined = " ".join(filter(None, fields)).lower()
     for phrase in _GENERIC_PHRASES:
         if phrase in combined:
-            issues.append(f"Generic banned phrase detected: '{phrase}'")
-            break
+            return [f"Generic banned phrase detected: '{phrase}'"]
+    return []
 
-    # Grammar items must quote student text
-    grammar = fb.get("grammar") or {}
-    if isinstance(grammar, dict):
-        all_items = (grammar.get("critical") or []) + (grammar.get("polish") or [])
-        for item in all_items:
-            if isinstance(item, dict):
-                item_text = (item.get("msg") or "") + (item.get("diagnostic") or "")
-                if _EVIDENCE_MARKER not in item_text and item.get("quote"):
-                    pass  # quote field is present — acceptable
-                elif _EVIDENCE_MARKER not in item_text and not item.get("quote"):
-                    issues.append(
-                        f"Grammar item '{item.get('id', '?')}' lacks evidence (no « » quote or quote field)"
-                    )
-                    break
 
+def _grammar_item_issues(grammar: dict[str, Any] | Any) -> list[str]:
+    """Whole-object check: reports (does not drop) the first unevidenced item."""
+    if not isinstance(grammar, dict):
+        return []
+    all_items = (grammar.get("critical") or []) + (grammar.get("polish") or [])
+    for item in all_items:
+        if isinstance(item, dict):
+            item_text = (item.get("msg") or "") + (item.get("diagnostic") or "")
+            if not _has_evidence(item_text, item.get("quote")):
+                return [f"Grammar item '{item.get('id', '?')}' lacks evidence (no « » quote or quote field)"]
+    return []
+
+
+def _drop_unevidenced_grammar_items(grammar: dict[str, Any]) -> tuple[dict[str, Any], int]:
+    """Item-level drop: keep only critical/polish items with a « » quote in
+    msg/diagnostic or a non-empty quote field. Returns (filtered_grammar,
+    dropped_count)."""
+    dropped = 0
+    filtered: dict[str, Any] = {}
+    for bucket in ("critical", "polish"):
+        items = grammar.get(bucket) or []
+        kept = []
+        for item in items:
+            if not isinstance(item, dict):
+                kept.append(item)
+                continue
+            item_text = (item.get("msg") or "") + (item.get("diagnostic") or "")
+            if _has_evidence(item_text, item.get("quote")):
+                kept.append(item)
+            else:
+                dropped += 1
+        filtered[bucket] = kept
+    return filtered, dropped
+
+
+def _validate_and_filter_section(event_type: str, data: dict[str, Any]) -> dict[str, Any] | None:
+    """Applied to each streamed section event before it is queued/yielded.
+    Returns the (possibly filtered) data dict, or None if the whole section
+    must be dropped (R8: never emit an empty section — omit the event
+    entirely, since a missing card is not evidence of a bug but an empty/
+    wrong one would look like one). No retry is possible on a stream, so
+    unlike the non-streaming path this can only drop, never regenerate."""
+    if event_type == "strongest_moment":
+        best_moment = data.get("best_moment") or ""
+        if _best_moment_issues(best_moment) or _generic_phrase_issues(best_moment):
+            return None
+        return data
+
+    if event_type == "opportunity":
+        biggest_opportunity = data.get("biggest_opportunity") or ""
+        if _generic_phrase_issues(biggest_opportunity):
+            return None
+        return data
+
+    if event_type == "grammar":
+        grammar = data.get("grammar") or {}
+        if not isinstance(grammar, dict):
+            return data
+        filtered, dropped_count = _drop_unevidenced_grammar_items(grammar)
+        if dropped_count:
+            log.warning("Stream: dropped %d unevidenced grammar item(s)", dropped_count)
+        if not filtered.get("critical") and not filtered.get("polish"):
+            return None
+        return {**data, "grammar": filtered}
+
+    return data
+
+
+def validate_coaching_quality(fb: dict[str, Any], transcript: str) -> list[str]:
+    """Return a list of quality issues. Empty list means the response passes.
+
+    Whole-object composition of the per-field predicates below — kept for
+    _log_coaching_quality (observe-only) and existing callers/tests.
+    """
+    issues: list[str] = []
+    issues += _best_moment_issues(fb.get("best_moment") or "")
+    issues += _generic_phrase_issues(
+        fb.get("best_moment") or "",
+        fb.get("biggest_opportunity") or "",
+        fb.get("encouragement") or "",
+    )
+    issues += _grammar_item_issues(fb.get("grammar") or {})
     return issues
 
 
@@ -1670,11 +1743,24 @@ def build_user_prompt(req: FeedbackRequest) -> str:
         if skill_section:
             skill_section += " Prioritise feedback on the weakness areas."
 
+    difficulty_section = ""
+    if req.difficulty_context:
+        cefr_target     = req.difficulty_context.get("cefrTarget") or ""
+        coaching_tone    = req.difficulty_context.get("coachingTone") or ""
+        coaching_rubric  = req.difficulty_context.get("coachingRubric") or ""
+        if cefr_target:
+            difficulty_section += f"\n\nTARGET LEVEL: CEFR {cefr_target}."
+        if coaching_tone:
+            difficulty_section += f" Coaching tone: {coaching_tone}."
+        if coaching_rubric:
+            difficulty_section += f" {coaching_rubric}"
+
     return (
         f"QUESTION (French): {req.question}\n\n"
         f"STUDENT TRANSCRIPT (French): {cleaned}\n\n"
         f"DELIVERY METRICS: {json.dumps(m, ensure_ascii=False)}"
         f"{skill_section}"
+        f"{difficulty_section}"
         f"{pron_section}"
         f"{detail_instruction}\n\n"
         f"REMINDER — COACHING QUALITY GATE:\n"
@@ -1858,7 +1944,7 @@ _SECTION_ORDER = [
     "pronunciation",         # → pronunciation
 ]
 
-_SECTION_MAP: dict[str, str] = {
+_SECTION_MAP: dict[str, str | None] = {
     "scores": "snapshot",
     "fluency": None,      # absorbed into snapshot — wait for scores
     "cefrLevel": None,
@@ -1885,12 +1971,21 @@ def _emit_ready_sections(
     events: list[tuple[str, dict[str, Any]]] = []
     # Find all top-level key start positions in order
     top_level_starts: list[tuple[str, int]] = []
-    i = 0
     depth = 0
     in_str = False
     escape = False
     key_buf: list[str] = []
     collecting_key = False
+    # Explicit position tracking at depth 1, instead of inferring it from
+    # key_buf: a string encountered at depth 1 is a *key* only when expect_key
+    # is True (we're positioned right after '{' or ','). Any other depth-1
+    # string, '{', or '[' is that key's *value* and marks the key as closed.
+    # key_buf was cleared unconditionally before the '{'/'[' branches could
+    # consume it, so object/array-valued keys were never registered, and a
+    # depth-1 string VALUE was mistaken for a key (resetting collecting_key),
+    # meaning only scalar-valued top-level keys ever registered.
+    pending_key: str | None = None
+    expect_key = True
 
     text = buffer.strip()
     if not text.startswith("{"):
@@ -1911,14 +2006,22 @@ def _emit_ready_sections(
         if ch == '"':
             if not in_str:
                 in_str = True
-                if depth == 1:  # start of a top-level key/value string
-                    key_buf = []
-                    collecting_key = True
+                if depth == 1:
+                    if expect_key:
+                        key_buf = []
+                        collecting_key = True
+                    else:
+                        # A depth-1 string VALUE — register it as this key's
+                        # start; its closing quote (below) finalizes it.
+                        if pending_key is not None:
+                            top_level_starts.append((pending_key, idx))
+                            pending_key = None
             else:
                 in_str = False
                 if depth == 1 and collecting_key:
                     collecting_key = False
-                    # next non-space char should be ':' at depth==1
+                    pending_key = "".join(key_buf)
+                    key_buf = []
             idx += 1
             continue
         if in_str:
@@ -1927,10 +2030,10 @@ def _emit_ready_sections(
             idx += 1
             continue
         if ch == "{":
+            if depth == 1 and pending_key is not None:
+                top_level_starts.append((pending_key, idx))
+                pending_key = None
             depth += 1
-            if depth == 2 and key_buf:
-                top_level_starts.append(("".join(key_buf), idx))
-                key_buf = []
             idx += 1
             continue
         if ch == "}":
@@ -1938,9 +2041,9 @@ def _emit_ready_sections(
             idx += 1
             continue
         if ch == "[":
-            if depth == 1 and key_buf:
-                top_level_starts.append(("".join(key_buf), idx))
-                key_buf = []
+            if depth == 1 and pending_key is not None:
+                top_level_starts.append((pending_key, idx))
+                pending_key = None
             depth += 1
             idx += 1
             continue
@@ -1948,12 +2051,20 @@ def _emit_ready_sections(
             depth -= 1
             idx += 1
             continue
-        if ch == ":" and depth == 1 and not in_str and key_buf:
-            # scalar value at top level
-            rest = text[idx + 1:].lstrip()
-            if rest and rest[0] not in ('"', '{', '['):
-                top_level_starts.append(("".join(key_buf), idx + 1))
-            key_buf = []
+        if ch == ":" and depth == 1 and not in_str:
+            # ':' between a closed key and its value — only scalar values
+            # (not '"', '{', '[') are registered here; object/array/string
+            # values are registered at their own opening token above.
+            expect_key = False
+            if pending_key is not None:
+                rest = text[idx + 1:].lstrip()
+                if rest and rest[0] not in ('"', '{', '['):
+                    top_level_starts.append((pending_key, idx + 1))
+                    pending_key = None
+            idx += 1
+            continue
+        if ch == "," and depth == 1 and not in_str:
+            expect_key = True
             idx += 1
             continue
         idx += 1
@@ -2385,6 +2496,33 @@ async def _examiner_feedback_impl(prompt: str) -> dict[str, Any]:
     }
 
 
+def _apply_coaching_quality_gate(result: dict[str, Any]) -> dict[str, Any]:
+    """Non-streaming counterpart to _validate_and_filter_section (Slice 2b):
+    applies the same item-level drop to an assembled, final result dict, so a
+    section that would have been dropped mid-stream cannot reappear via the
+    non-streaming path (_feedback_impl) or the stream's own `complete` tail —
+    which, unlike per-section events, was never validated at all before this.
+    Clears (does not delete) best_moment/biggest_opportunity so downstream
+    code that expects the keys to exist doesn't need to change; grammar items
+    are filtered in place."""
+    best_moment = result.get("best_moment") or ""
+    if best_moment and (_best_moment_issues(best_moment) or _generic_phrase_issues(best_moment)):
+        result["best_moment"] = ""
+
+    biggest_opportunity = result.get("biggest_opportunity") or ""
+    if biggest_opportunity and _generic_phrase_issues(biggest_opportunity):
+        result["biggest_opportunity"] = ""
+
+    grammar = result.get("grammar")
+    if isinstance(grammar, dict):
+        filtered, dropped_count = _drop_unevidenced_grammar_items(grammar)
+        if dropped_count:
+            log.warning("Non-streaming: dropped %d unevidenced grammar item(s)", dropped_count)
+        result["grammar"] = filtered
+
+    return result
+
+
 def _log_coaching_quality(fb: dict[str, Any], transcript: str) -> None:
     issues = validate_coaching_quality(fb, transcript)
     if issues:
@@ -2472,6 +2610,7 @@ async def _feedback_impl(
     metrics_json: str,
     audio: UploadFile | None,
     skill_context: dict[str, Any] | None = None,
+    difficulty_context: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """
     Unified feedback endpoint. Two modes:
@@ -2532,6 +2671,7 @@ async def _feedback_impl(
             model=model,
             detailed=detailed,
             skill_context=skill_context,
+            difficulty_context=difficulty_context,
         )
 
         # ── Step 3: AI feedback (multimodal if audio present) ─────────────────
@@ -2539,7 +2679,7 @@ async def _feedback_impl(
         cache_key: str | None = None
 
         if not tmp_path and transcript and _cache_id:
-            cache_key = _feedback_cache_key(transcript, _cache_id)
+            cache_key = _feedback_cache_key(transcript, _cache_id, difficulty_context)
             hit = await _feedback_cache_get(cache_key)
             if hit is not None:
                 _log_feedback_latency(
@@ -2562,6 +2702,7 @@ async def _feedback_impl(
             await _feedback_cache_set(cache_key, fb)
 
         result = enrich_feedback(fb, req)
+        result = _apply_coaching_quality_gate(result)
 
         result["transcript"]       = transcript
         result["whisper_segments"] = whisper_data.get("segments", [])
@@ -2599,6 +2740,7 @@ async def feedback(request: Request) -> dict[str, Any]:
     detailed = False
     metrics_json = "{}"
     skill_context: dict[str, Any] | None = None
+    difficulty_context: dict[str, Any] | None = None
     audio: UploadFile | None = None
 
     def _extract_question_text(raw: Any) -> str:
@@ -2619,22 +2761,27 @@ async def feedback(request: Request) -> dict[str, Any]:
             hasattr(maybe_audio, "read") and hasattr(maybe_audio, "filename")
         ):
             audio = maybe_audio
-        # Client may bundle question/transcript/skillContext inside a 'data' JSON field
-        if not question:
-            try:
-                data_payload = json.loads(str(form.get("data") or "{}"))
+        # Client may bundle question/transcript/skillContext/difficultyContext
+        # inside a 'data' JSON field. Runs unconditionally (not gated behind
+        # `if not question:`) — the client always sets the top-level `question`
+        # form field too, so gating this dropped skillContext/difficultyContext/
+        # metrics on every multipart request that included audio.
+        try:
+            data_payload = json.loads(str(form.get("data") or "{}"))
+            if not question:
                 question = _extract_question_text(
                     data_payload.get("question") or data_payload.get("prompt") or ""
                 )
-                if not transcript:
-                    transcript = str(data_payload.get("transcript") or "")
-                skill_context = data_payload.get("skillContext") or None
-                if not metrics_json or metrics_json == "{}":
-                    m = data_payload.get("metrics")
-                    if isinstance(m, dict):
-                        metrics_json = json.dumps(m)
-            except (json.JSONDecodeError, TypeError):
-                pass
+            if not transcript:
+                transcript = str(data_payload.get("transcript") or "")
+            skill_context = data_payload.get("skillContext") or None
+            difficulty_context = data_payload.get("difficultyContext") or None
+            if not metrics_json or metrics_json == "{}":
+                m = data_payload.get("metrics")
+                if isinstance(m, dict):
+                    metrics_json = json.dumps(m)
+        except (json.JSONDecodeError, TypeError):
+            pass
     else:
         try:
             payload = await request.json()
@@ -2661,6 +2808,7 @@ async def feedback(request: Request) -> dict[str, Any]:
         model = str(payload.get("model") or "gemini")
         detailed = bool(payload.get("detailed", False))
         skill_context = payload.get("skillContext") or None
+        difficulty_context = payload.get("difficultyContext") or None
         metrics = payload.get("metrics")
         if isinstance(metrics, dict):
             metrics_json = json.dumps(metrics)
@@ -2676,6 +2824,7 @@ async def feedback(request: Request) -> dict[str, Any]:
             metrics_json=metrics_json,
             audio=audio,
             skill_context=skill_context,
+            difficulty_context=difficulty_context,
         )
         try:
             request.state.obs_provider = result.get("provider")
@@ -2694,6 +2843,7 @@ async def feedback(request: Request) -> dict[str, Any]:
             model=model,
             detailed=detailed,
             skill_context=skill_context,
+            difficulty_context=difficulty_context,
         )
         fallback_result = enrich_feedback(
             _offline_feedback(
@@ -2715,10 +2865,11 @@ def _extract_question_text_util(raw: Any) -> str:
 
 
 async def _parse_feedback_request(request: Request) -> tuple[
-    str, str, str, bool, str, dict[str, Any] | None, bytes | None, str
+    str, str, str, bool, str, dict[str, Any] | None, dict[str, Any] | None, bytes | None, str
 ]:
     """Parse multipart or JSON feedback request. Returns (question, transcript,
-    model, detailed, metrics_json, skill_context, audio_bytes, audio_mime)."""
+    model, detailed, metrics_json, skill_context, difficulty_context, audio_bytes,
+    audio_mime)."""
     content_type = (request.headers.get("content-type") or "").lower()
     question = ""
     transcript = ""
@@ -2726,6 +2877,7 @@ async def _parse_feedback_request(request: Request) -> tuple[
     detailed = False
     metrics_json = "{}"
     skill_context: dict[str, Any] | None = None
+    difficulty_context: dict[str, Any] | None = None
     audio_bytes: bytes | None = None
     audio_mime = "audio/webm"
 
@@ -2742,21 +2894,27 @@ async def _parse_feedback_request(request: Request) -> tuple[
         ):
             audio_mime = maybe_audio.content_type or "audio/webm"
             audio_bytes = await maybe_audio.read()
-        if not question:
-            try:
-                data_payload = json.loads(str(form.get("data") or "{}"))
+        # The client always sets the top-level `question` form field (even
+        # when `data` also carries a fuller payload alongside audio), so this
+        # must run unconditionally — gating it behind `if not question:` meant
+        # skillContext/difficultyContext/metrics were silently dropped on
+        # every multipart request that included the `question` field.
+        try:
+            data_payload = json.loads(str(form.get("data") or "{}"))
+            if not question:
                 question = _extract_question_text_util(
                     data_payload.get("question") or data_payload.get("prompt") or ""
                 )
-                if not transcript:
-                    transcript = str(data_payload.get("transcript") or "")
-                skill_context = data_payload.get("skillContext") or None
-                if not metrics_json or metrics_json == "{}":
-                    m = data_payload.get("metrics")
-                    if isinstance(m, dict):
-                        metrics_json = json.dumps(m)
-            except (json.JSONDecodeError, TypeError):
-                pass
+            if not transcript:
+                transcript = str(data_payload.get("transcript") or "")
+            skill_context = data_payload.get("skillContext") or None
+            difficulty_context = data_payload.get("difficultyContext") or None
+            if not metrics_json or metrics_json == "{}":
+                m = data_payload.get("metrics")
+                if isinstance(m, dict):
+                    metrics_json = json.dumps(m)
+        except (json.JSONDecodeError, TypeError):
+            pass
     else:
         try:
             payload = await request.json()
@@ -2769,11 +2927,15 @@ async def _parse_feedback_request(request: Request) -> tuple[
         model = str(payload.get("model") or "groq")
         detailed = bool(payload.get("detailed", False))
         skill_context = payload.get("skillContext") or None
+        difficulty_context = payload.get("difficultyContext") or None
         metrics = payload.get("metrics")
         if isinstance(metrics, dict):
             metrics_json = json.dumps(metrics)
 
-    return question, transcript, model, detailed, metrics_json, skill_context, audio_bytes, audio_mime
+    return (
+        question, transcript, model, detailed, metrics_json,
+        skill_context, difficulty_context, audio_bytes, audio_mime,
+    )
 
 
 @app.post("/api/feedback/stream")
@@ -2785,8 +2947,8 @@ async def feedback_stream(request: Request) -> StreamingResponse:
     Degrades gracefully to a single buffered `complete` for Gemini/offline.
     """
     try:
-        (question, transcript, model, detailed,
-         metrics_json, skill_context, audio_bytes, audio_mime) = await _parse_feedback_request(request)
+        (question, transcript, model, detailed, metrics_json,
+         skill_context, difficulty_context, audio_bytes, audio_mime) = await _parse_feedback_request(request)
     except HTTPException:
         raise
     except Exception as exc:
@@ -2845,12 +3007,13 @@ async def feedback_stream(request: Request) -> StreamingResponse:
                 model=model,
                 detailed=detailed,
                 skill_context=skill_context,
+                difficulty_context=difficulty_context,
             )
 
             # ── cache check ──────────────────────────────────────────────────
             cache_key: str | None = None
             if not tmp_path and actual_transcript and question:
-                cache_key = _feedback_cache_key(actual_transcript, question)
+                cache_key = _feedback_cache_key(actual_transcript, question, difficulty_context)
                 hit = await _feedback_cache_get(cache_key)
                 if hit is not None:
                     yield json.dumps({"type": "complete", "data": hit}) + "\n"
@@ -2866,7 +3029,15 @@ async def feedback_stream(request: Request) -> StreamingResponse:
                 section_queue: asyncio.Queue = asyncio.Queue()
 
                 async def on_section(event_type: str, data: dict[str, Any]) -> None:
-                    await section_queue.put((event_type, data))
+                    # No unvalidated coaching text reaches the screen — validated
+                    # before queueing (i.e. before yield). See
+                    # _validate_and_filter_section's docstring for why a failed
+                    # section is dropped, never emitted with a warning.
+                    filtered_data = _validate_and_filter_section(event_type, data)
+                    if filtered_data is None:
+                        log.warning("Stream: dropping %s section — quality gate failed", event_type)
+                        return
+                    await section_queue.put((event_type, filtered_data))
 
                 groq_task = asyncio.create_task(_stream_groq(
                     build_user_prompt(req),
@@ -2896,6 +3067,7 @@ async def feedback_stream(request: Request) -> StreamingResponse:
                 await _feedback_cache_set(cache_key, fb)
 
             result = enrich_feedback(fb, req)
+            result = _apply_coaching_quality_gate(result)
             result["transcript"] = actual_transcript
             result["whisper_segments"] = whisper_data.get("segments", [])
             result["whisper_words"] = whisper_words
@@ -2915,6 +3087,7 @@ async def feedback_stream(request: Request) -> StreamingResponse:
                 model=model,
                 detailed=detailed,
                 skill_context=skill_context,
+                difficulty_context=difficulty_context,
             )
             fallback = enrich_feedback(
                 _offline_feedback(

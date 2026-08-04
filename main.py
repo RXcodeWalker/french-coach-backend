@@ -1631,8 +1631,11 @@ def _validate_and_filter_section(event_type: str, data: dict[str, Any]) -> dict[
     Returns the (possibly filtered) data dict, or None if the whole section
     must be dropped (R8: never emit an empty section — omit the event
     entirely, since a missing card is not evidence of a bug but an empty/
-    wrong one would look like one). No retry is possible on a stream, so
-    unlike the non-streaming path this can only drop, never regenerate."""
+    wrong one would look like one). The non-streaming path
+    (_apply_coaching_quality_gate) applies the same drop-only policy to the
+    assembled result — neither path regenerates a dropped section; a
+    slightly generic card beats no feedback, and drop-only is cheaper and
+    already tested."""
     if event_type == "strongest_moment":
         best_moment = data.get("best_moment") or ""
         if _best_moment_issues(best_moment) or _generic_phrase_issues(best_moment):

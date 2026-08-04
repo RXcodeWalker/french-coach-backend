@@ -97,7 +97,11 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
         phonemes_out = [
             {
                 "phoneme": p.get("Phoneme"),
-                "accuracyScore": p.get("PronunciationAssessment", {}).get("AccuracyScore"),
+                "accuracyScore": (
+                    float(raw_phoneme_score)
+                    if (raw_phoneme_score := p.get("PronunciationAssessment", {}).get("AccuracyScore")) is not None
+                    else None
+                ),
             }
             for p in phonemes_raw
         ]

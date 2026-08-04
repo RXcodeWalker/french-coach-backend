@@ -98,9 +98,53 @@ def test_normalize_leaves_ipa_fields_empty():
         assert issue["ipaHeard"] == ""
 
 
+SAMPLE_WITH_SKIPPED_PHONEME_SCORE = {
+    "RecognitionStatus": "Success",
+    "DisplayText": "Un bon vin blanc.",
+    "NBest": [
+        {
+            "Confidence": 0.87,
+            "Display": "Un bon vin blanc.",
+            "PronunciationAssessment": {
+                "AccuracyScore": 82.0,
+                "FluencyScore": 90.0,
+                "CompletenessScore": 100.0,
+                "PronScore": 85.0,
+            },
+            "Words": [
+                {
+                    "Word": "vin",
+                    "PronunciationAssessment": {
+                        "AccuracyScore": None,
+                        "ErrorType": "Omission",
+                    },
+                    # A skipped word can still carry Phonemes[] with no
+                    # per-phoneme AccuracyScore (Azure omits the key entirely
+                    # rather than sending 0) — the coercion must not choke on
+                    # a bare .get() returning None.
+                    "Phonemes": [
+                        {"Phoneme": "v", "PronunciationAssessment": {}},
+                        {"Phoneme": "e", "PronunciationAssessment": {"AccuracyScore": None}},
+                    ],
+                },
+            ],
+        }
+    ],
+}
+
+
+def test_normalize_coerces_missing_phoneme_score_to_none_not_error():
+    result = _normalize_azure_response(SAMPLE_WITH_SKIPPED_PHONEME_SCORE, "Un bon vin blanc.")
+    vin = next(w for w in result["words"] if w["word"] == "vin")
+    assert vin["accuracyScore"] is None
+    for phoneme in vin["phonemes"]:
+        assert phoneme["accuracyScore"] is None
+
+
 if __name__ == "__main__":
     test_normalize_maps_scores_without_rescale()
     test_normalize_maps_error_types_to_own_vocabulary()
     test_normalize_synthesizes_issues_for_non_correct_words()
     test_normalize_leaves_ipa_fields_empty()
+    test_normalize_coerces_missing_phoneme_score_to_none_not_error()
     print("All test_azure_client tests passed.")

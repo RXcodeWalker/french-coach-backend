@@ -17,11 +17,17 @@ PronunciationSeverity = Literal["low", "medium", "high"]
 PronunciationProvider = Literal["azure", "whisper-heuristic"]
 
 
+class PronunciationPhoneme(BaseModel):
+    phoneme: str
+    accuracyScore: float | None = None  # 0-100
+
+
 class PronunciationWordResult(BaseModel):
     word: str
     accuracyScore: float | None = None  # 0-100
     errorType: PronunciationErrorType | None = None
     confidence: float | None = None  # 0-1, ASR transcription confidence
+    phonemes: list[PronunciationPhoneme] | None = None
 
 
 class PronunciationIssueOut(BaseModel):
@@ -39,6 +45,7 @@ class PronunciationSubScores(BaseModel):
     accuracy: float  # 0-100
     fluency: float  # 0-100
     completeness: float  # 0-100
+    prosody: float | None = None  # 0-100, absent even when requested per Azure docs
 
 
 class PronunciationAssessmentResponse(BaseModel):

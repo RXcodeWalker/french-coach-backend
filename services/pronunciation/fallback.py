@@ -56,6 +56,7 @@ async def assess_with_fallback(
                 "accuracyScore": None,
                 "errorType": None,
                 "confidence": w.get("probability"),
+                "phonemes": None,
             }
             for w in whisper_words
         ],

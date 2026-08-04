@@ -61,11 +61,12 @@ def _problem_text(word: str, error_type: str) -> str:
 def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dict[str, Any]:
     """Pure mapping: Azure's NBest[0] shape -> this module's own vocabulary.
 
-    Maps AccuracyScore/FluencyScore/CompletenessScore/PronScore -> subScores +
-    score (already 0-100, no rescale), and Words[].ErrorType
+    Maps AccuracyScore/FluencyScore/CompletenessScore/PronScore/ProsodyScore ->
+    subScores + score (already 0-100, no rescale), and Words[].ErrorType
     (None/Mispronunciation/Omission/Insertion) -> correct/mispronounced/
-    skipped/extra. If Azure doesn't return IPA strings for fr-FR, ipaExpected/
-    ipaHeard are left empty rather than invented.
+    skipped/extra. ipaExpected/ipaHeard are derived from Words[].Phonemes[]
+    (expected) and each phoneme's NBestPhonemes[0] (heard) rather than
+    invented.
     """
     n_best = raw_json.get("NBest") or []
     best = n_best[0] if n_best else {}
@@ -76,6 +77,7 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
         "accuracy": float(assessment.get("AccuracyScore", 0.0)),
         "fluency": float(assessment.get("FluencyScore", 0.0)),
         "completeness": float(assessment.get("CompletenessScore", 0.0)),
+        "prosody": assessment.get("ProsodyScore"),
     }
     score = round(float(assessment.get("PronScore", 0.0)))
 
@@ -91,11 +93,21 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
         accuracy_score = w_assessment.get("AccuracyScore")
         accuracy_score = float(accuracy_score) if accuracy_score is not None else None
 
+        phonemes_raw = w.get("Phonemes") or []
+        phonemes_out = [
+            {
+                "phoneme": p.get("Phoneme"),
+                "accuracyScore": p.get("PronunciationAssessment", {}).get("AccuracyScore"),
+            }
+            for p in phonemes_raw
+        ]
+
         words_out.append({
             "word": word,
             "accuracyScore": accuracy_score,
             "errorType": error_type,
             "confidence": None,
+            "phonemes": phonemes_out,
         })
 
         needs_issue = error_type != "correct" or (
@@ -103,10 +115,17 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
         )
         if needs_issue:
             severity = _severity_for(error_type, accuracy_score)
+            ipa_expected = " ".join(p.get("Phoneme", "") for p in phonemes_raw)
+            ipa_heard = " ".join(
+                ((p.get("PronunciationAssessment", {}).get("NBestPhonemes") or [{}])[0]).get(
+                    "Phoneme", p.get("Phoneme", "")
+                )
+                for p in phonemes_raw
+            )
             issues_out.append({
                 "word": word,
-                "ipaExpected": "",
-                "ipaHeard": "",
+                "ipaExpected": ipa_expected,
+                "ipaHeard": ipa_heard,
                 "problem": _problem_text(word, error_type),
                 "severity": severity,
                 "drill": {
@@ -133,6 +152,8 @@ async def _post_to_azure(key: str, region: str, audio_bytes: bytes, target_text:
         "GradingSystem": "HundredMark",
         "Granularity": "Phoneme",
         "Dimension": "Comprehensive",
+        "PhonemeAlphabet": "IPA",
+        "EnableProsodyAssessment": "True",
     }
     header_value = base64.b64encode(json.dumps(pronunciation_params).encode("utf-8")).decode("ascii")
 

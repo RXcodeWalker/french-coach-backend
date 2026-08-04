@@ -67,7 +67,7 @@ SAMPLE_AZURE_RESPONSE = {
 def test_normalize_maps_scores_without_rescale():
     result = _normalize_azure_response(SAMPLE_AZURE_RESPONSE, "Un bon vin blanc.")
     assert result["score"] == 85
-    assert result["subScores"] == {"accuracy": 82.0, "fluency": 90.0, "completeness": 100.0}
+    assert result["subScores"] == {"accuracy": 82.0, "fluency": 90.0, "completeness": 100.0, "prosody": None}
     assert result["provider"] == "azure"
     assert result["transcript"] == "Un bon vin blanc."
 

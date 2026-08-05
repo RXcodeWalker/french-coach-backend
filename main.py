@@ -72,6 +72,16 @@ except Exception:  # pragma: no cover - google libs may be absent in local dev
 
 load_dotenv()
 
+# Shared pronunciation pipeline pieces used by /api/repair (accent-analyzer
+# plan, Phase 3: /api/repair must call the SAME audited pipeline as
+# /api/pronunciation, not run a second, unaudited LLM scorer). Safe to import
+# at module scope — unlike routers.pronunciation, these are leaf service
+# modules with no import back into main.py.
+from services.phonology import rules as _phonology_rules
+from services.pronunciation import capabilities as _pronunciation_capabilities
+from services.pronunciation.coach_narrator import generate_coaching
+from services.pronunciation.fallback import assess_with_fallback
+
 log = logging.getLogger("french-coach")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
@@ -3126,20 +3136,29 @@ async def feedback_stream(request: Request) -> StreamingResponse:
 
 
 # ── /api/repair — micro-repair loop ──────────────────────────────────────────
+# Rewritten (accent-analyzer plan, Phase 3 roadmap item: "rewrite /api/repair
+# as a /api/pronunciation caller — it is currently a second, unaudited
+# pronunciation scorer, an LLM guessing from a transcript"). This endpoint
+# has no frontend caller today (grepped clean across src/); the rewrite
+# still applies since a second scorer must not exist in the codebase at all,
+# reachable or not. It now runs the SAME Azure/whisper-heuristic pipeline as
+# /api/pronunciation (scripted mode, word as the reference text) instead of
+# asking an LLM to invent a 0-10 verdict from a transcript, and reuses the
+# grounded coaching narrator for its prose fields.
 
 @app.post("/api/repair", response_model=None)
 async def repair_pronunciation(
     audio: Annotated[UploadFile, File(...)],
     word: str = Form(...),
-    context: str = Form(""),        # surrounding phrase for context
-    original_problem: str = Form(""), # the issue description shown to user
+    context: str = Form(""),        # surrounding phrase for context — unused by the pipeline (single-word reference), kept for API compatibility
+    original_problem: str = Form(""), # unused by the pipeline; kept for API compatibility
 ) -> dict[str, Any]:
     """
-    Evaluate a single word/phrase re-recording.
-    Returns {score, improved, feedback, phonetics_guide}.
+    Evaluate a single word/phrase re-recording via the audited pronunciation
+    pipeline (Azure phoneme assessment -> whisper-heuristic fallback).
+    Returns {score, improved, heard, feedback, phonetics_guide, tip, source}.
     """
     suffix = os.path.splitext(audio.filename or "")[1] or ".webm"
-    audio_mime = audio.content_type or "audio/webm"
     raw = await audio.read()
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
@@ -3147,7 +3166,6 @@ async def repair_pronunciation(
         tmp_path = tmp.name
 
     try:
-        # Transcribe what the user actually said
         whisper_data: dict[str, Any] = {}
         if GROQ_API_KEY:
             try:
@@ -3161,83 +3179,48 @@ async def repair_pronunciation(
                 pass
 
         heard = (whisper_data.get("text") or "").strip()
+        whisper_words = whisper_data.get("words", [])
 
-        # Shared prompt text for both Groq (text) and Gemini (multimodal)
-        repair_prompt = (
-            f"A French learner is trying to improve their pronunciation of the word/phrase: «{word}»\n"
-            f"Context sentence: {context or '(none provided)'}\n"
-            f"Original pronunciation issue: {original_problem or '(not specified)'}\n"
-            f"What speech recognition heard the learner say: {heard or '(unclear)'}\n\n"
-            f"Evaluate ONLY the pronunciation of «{word}» based on the information above.\n\n"
-            f"Return ONLY this JSON (nothing else):\n"
-            f'{{\n'
-            f'  "score": <0-10, where 10 = perfect native pronunciation>,\n'
-            f'  "improved": <true if noticeably better than described issue>,\n'
-            f'  "heard": "{heard or word}",\n'
-            f'  "feedback": "<1-2 sentences: what was good, what still needs work>",\n'
-            f'  "phonetics_guide": "<simple step-by-step guide to produce this sound correctly>",\n'
-            f'  "tip": "<one specific actionable tip for this exact word>"\n'
-            f'}}'
+        assessment = await assess_with_fallback(
+            audio_bytes=raw,
+            target_text=word,
+            heard_text=heard,
+            whisper_words=whisper_words,
+            align_fn=_align_pronunciation,
+            audio_filename=audio.filename or "",
+            mode="scripted",
+            run_with_retries=_run_with_retries,
         )
 
-        result = None
-
-        # ── Primary: Groq (text-only, uses Whisper transcript) ───────────────
-        groq = get_groq()
-        if groq:
-            try:
-                resp = await groq.chat.completions.create(
-                    model="llama-3.3-70b-versatile",
-                    response_format={"type": "json_object"},
-                    messages=[
-                        {"role": "system", "content": "You are a French pronunciation expert. Return only valid JSON."},
-                        {"role": "user", "content": repair_prompt},
-                    ],
-                    temperature=0.3,
-                    max_tokens=400,
-                )
-                result = extract_json(resp.choices[0].message.content)
-                result["source"] = "groq"
-            except Exception as e:
-                log.warning("Groq repair failed, trying Gemini: %s", e)
-
-        # ── Fallback: Gemini multimodal (sends actual audio) ─────────────────
-        if result is None and GEMINI_API_KEY:
-            try:
-                import google.generativeai as genai
-                from google.generativeai import types as gtypes
-                gemini = get_gemini_multimodal()
-                with open(tmp_path, "rb") as f:
-                    audio_bytes = f.read()
-                audio_part = gtypes.Part(
-                    inline_data=gtypes.Blob(mime_type=audio_mime, data=audio_bytes)
-                )
-                gemini_prompt = repair_prompt.replace(
-                    "Evaluate ONLY the pronunciation",
-                    "Listen to the audio recording and evaluate ONLY the pronunciation"
-                )
-                response = await asyncio.to_thread(gemini.generate_content, [audio_part, gemini_prompt])
-                result = extract_json(response.text)
-                result["source"] = "gemini"
-            except Exception as e:
-                log.warning("Gemini repair also failed: %s", e)
-
-        # ── Both failed: return graceful degraded response ────────────────────
-        if result is None:
-            return {
-                "word": word,
-                "heard": heard or word,
-                "score": None,
-                "improved": None,
-                "feedback": "Pronunciation analysis is temporarily unavailable. Keep practising — record yourself again and compare with the model IPA above.",
-                "phonetics_guide": "Try listening to the word on Forvo or Google Translate, then record yourself matching the rhythm and sounds.",
-                "tip": f"Break «{word}» into syllables and practise each one slowly before combining them.",
-                "source": "unavailable",
+        tier = assessment["provider"]
+        findings: list[dict[str, Any]] = []
+        if not assessment.get("couldNotAssess"):
+            findings = _phonology_rules.evaluate(assessment.get("words", []), locale="fr-FR")
+            allowed_categories = {
+                cat: _pronunciation_capabilities.is_available(cat, mode="scripted", tier=tier, locale="fr-FR")
+                for cat in ("liaison", "nasalVowel", "frenchR", "silentLetter")
             }
+            findings = [f for f in findings if allowed_categories.get(f.get("category"), False)]
 
-        result["word"] = word
-        result["heard"] = result.get("heard") or heard
-        return result
+        coaching = await generate_coaching(
+            findings,
+            call_groq=_call_groq_coach,
+            call_gemini=_call_gemini_coach,
+        )
+
+        score = assessment.get("score")
+        improved = None if score is None else score >= 70  # PRACTICE_PASS_SCORE convention, see practiceThresholds.ts
+
+        return {
+            "word": word,
+            "heard": heard or word,
+            "score": score,
+            "improved": improved,
+            "feedback": coaching["summary"],
+            "phonetics_guide": coaching["topPriority"],
+            "tip": coaching["tips"][0] if coaching["tips"] else coaching["topPriority"],
+            "source": tier,
+        }
 
     except HTTPException:
         raise
@@ -4388,6 +4371,7 @@ app.include_router(_content_router)
 from routers.pronunciation import (
     router as _pronunciation_router,
     configure as _configure_pronunciation,
+    configure_coaching as _configure_pronunciation_coaching,
     set_rate_limiter as _set_pronunciation_rate_limiter,
 )
 
@@ -4398,6 +4382,51 @@ _configure_pronunciation(
     lambda: bool(GROQ_API_KEY),
     _run_with_retries,
 )
+
+
+# Coaching narrator LLM callers (accent-analyzer plan §8) — own system
+# prompt, so these can't reuse get_groq()/get_gemini() (which pin the
+# unrelated feedback SYSTEM_PROMPT). Mirrors _call_groq_igcse/_call_gemini_igcse's
+# pattern: DI'd into the router rather than the router importing main.py.
+from services.pronunciation.coach_narrator import _SYSTEM_PROMPT as _COACH_SYSTEM_PROMPT
+
+
+async def _call_groq_coach(prompt: str) -> dict[str, Any]:
+    groq = get_groq()
+    if not groq:
+        raise RuntimeError("Groq not configured")
+
+    async def operation() -> dict[str, Any]:
+        resp = await groq.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": _COACH_SYSTEM_PROMPT},
+                {"role": "user", "content": prompt},
+            ],
+            temperature=0.3,
+            max_tokens=500,
+        )
+        return extract_json(resp.choices[0].message.content)
+
+    return await _run_with_retries("groq-pronunciation-coach", operation)
+
+
+async def _call_gemini_coach(prompt: str) -> dict[str, Any]:
+    if not GEMINI_API_KEY:
+        raise RuntimeError("Gemini not configured")
+    import google.generativeai as genai
+    genai.configure(api_key=GEMINI_API_KEY)
+    model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=_COACH_SYSTEM_PROMPT)
+
+    async def operation() -> dict[str, Any]:
+        response = await asyncio.to_thread(model.generate_content, prompt)
+        return extract_json(getattr(response, "text", "") or "")
+
+    return await _run_with_retries("gemini-pronunciation-coach", operation)
+
+
+_configure_pronunciation_coaching(_call_groq_coach, _call_gemini_coach)
 _set_pronunciation_rate_limiter(rate_limit)
 app.include_router(_pronunciation_router)
 

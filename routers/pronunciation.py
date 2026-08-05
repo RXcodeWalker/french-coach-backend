@@ -20,6 +20,7 @@ from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 from models.pronunciation import PronunciationAssessmentResponse
 from services.cache import BoundedTTLCache
 from services.phonology import rules as phonology_rules
+from services.pronunciation.coach_narrator import findings_hash, generate_coaching
 from services.pronunciation.capabilities import enforce_capabilities
 from services.pronunciation.confidence import compute_confidence
 from services.pronunciation.fallback import assess_with_fallback
@@ -40,6 +41,13 @@ _AUDIO_CACHE_MAX = 100
 _AUDIO_CACHE_TTL_SEC = 600.0
 _audio_cache: BoundedTTLCache[dict] = BoundedTTLCache(_AUDIO_CACHE_MAX, _AUDIO_CACHE_TTL_SEC)
 
+# Coaching cache: keyed by findings hash, TTL 1h (plan §9, R5) — two learners
+# with the same errors share one LLM call. Separate instance from the audio
+# cache: different key space, different eviction pressure.
+_COACHING_CACHE_MAX = 200
+_COACHING_CACHE_TTL_SEC = 3600.0
+_coaching_cache: BoundedTTLCache[dict] = BoundedTTLCache(_COACHING_CACHE_MAX, _COACHING_CACHE_TTL_SEC)
+
 
 def _audio_cache_key(audio_bytes: bytes, reference_text: str, mode: str) -> str:
     digest = hashlib.sha256(audio_bytes).hexdigest()
@@ -58,6 +66,11 @@ _faster_whisper_fn: Callable[[str, str], Awaitable[dict[str, Any]]] | None = Non
 _align_fn: Callable[[str, str, list[dict[str, Any]]], dict[str, Any]] | None = None
 _groq_key_check_fn: Callable[[], bool] | None = None
 _run_with_retries_fn: Callable[..., Awaitable[Any]] | None = None
+# Coaching narrator LLM callers (plan §8) — separate DI seam from the
+# Whisper/align functions above since they're wired from a different call
+# in main.py and are both optional (missing key => that provider is skipped).
+_coach_call_groq: Callable[[str], Awaitable[dict[str, Any]]] | None = None
+_coach_call_gemini: Callable[[str], Awaitable[dict[str, Any]]] | None = None
 
 
 def configure(
@@ -73,6 +86,14 @@ def configure(
     _align_fn = align_fn
     _groq_key_check_fn = groq_key_check_fn
     _run_with_retries_fn = run_with_retries_fn
+
+
+def configure_coaching(call_groq_fn=None, call_gemini_fn=None) -> None:
+    """Optional — coaching degrades to the template fallback (never raises)
+    when unconfigured, same as leaving GROQ_API_KEY/GEMINI_API_KEY unset."""
+    global _coach_call_groq, _coach_call_gemini
+    _coach_call_groq = call_groq_fn
+    _coach_call_gemini = call_gemini_fn
 
 
 def set_rate_limiter(rate_limit_decorator) -> None:
@@ -93,11 +114,14 @@ async def pronunciation_evaluate(
     audio: Annotated[UploadFile, File(...)],
     target_text: str = Form(...),
     mode: str = Form("scripted"),
+    coaching: str = Form("none"),
 ) -> PronunciationAssessmentResponse:
     if _align_fn is None or _groq_whisper_fn is None or _faster_whisper_fn is None:
         raise HTTPException(status_code=503, detail="Pronunciation service not configured")
     if mode not in ("scripted", "freeform"):
         raise HTTPException(status_code=422, detail="mode must be 'scripted' or 'freeform'")
+    if coaching not in ("none", "full"):
+        raise HTTPException(status_code=422, detail="coaching must be 'none' or 'full'")
 
     suffix = os.path.splitext(audio.filename or "")[1] or ".webm"
     raw = await audio.read()
@@ -189,6 +213,27 @@ async def pronunciation_evaluate(
             }
 
         result = enforce_capabilities(result, mode=mode, tier=tier, locale=LOCALE)
+
+        # Coaching (plan §8, R5): a second, optional pass over the findings
+        # that already survived enforce_capabilities — never computed when
+        # coaching=none (drill mode default), and never blocks assessment on
+        # failure (generate_coaching itself always falls back to a template
+        # rather than raising). Cached by findings hash, not by audio, since
+        # two learners with identical findings should share one LLM call.
+        if coaching == "full" and not result.get("couldNotAssess"):
+            findings = result.get("phonologicalFindings") or []
+            coach_key = findings_hash(findings)
+            cached_coaching = await _coaching_cache.get(coach_key)
+            if cached_coaching is not None:
+                result["coaching"] = cached_coaching
+            else:
+                coaching_result = await generate_coaching(
+                    findings,
+                    call_groq=_coach_call_groq,
+                    call_gemini=_coach_call_gemini,
+                )
+                result["coaching"] = coaching_result
+                await _coaching_cache.set(coach_key, coaching_result)
 
         request.state.obs_provider = result.get("provider")
         request.state.obs_cached = was_cached

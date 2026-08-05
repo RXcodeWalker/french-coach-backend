@@ -192,6 +192,109 @@ def test_azure_scripted_response_populates_phase2_guardrails(monkeypatch):
     PronunciationAssessmentResponse(**body)
 
 
+def test_coaching_full_populates_grounded_coaching(monkeypatch):
+    """Phase 3 (§8, R5) integration proof: coaching=full triggers the
+    narrator, which is grounded in the same phonologicalFindings the
+    response already carries — not a separate, ungrounded LLM guess."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+
+    import routers.pronunciation as pronunciation_router
+
+    async def _fake_assess_with_fallback(**kwargs):
+        return {
+            "score": 85,
+            "transcript": "Un bon vin blanc.",
+            "issues": [],
+            "words": [
+                {
+                    "word": "vin", "accuracyScore": 35.0, "errorType": "mispronounced",
+                    "confidence": None,
+                    "phonemes": [{"phoneme": "v", "accuracyScore": 92.0}, {"phoneme": "ɛ̃", "accuracyScore": 20.0}],
+                    "offsetMs": 500, "durationMs": 300, "nearChunkBoundary": False,
+                },
+            ],
+            "provider": "azure",
+            "subScores": {"accuracy": 82.0, "fluency": 90.0, "completeness": 100.0, "prosody": None},
+            "couldNotAssess": False,
+            "couldNotAssessReason": None,
+            "snrDb": 22.0,
+            "azureConfidence": 0.9,
+        }
+
+    async def _fake_call_groq(prompt: str):
+        return {
+            "summary": "Watch the nasal vowel in «vin».",
+            "topPriority": "Fix the nasal vowel in «vin».",
+            "tips": ["Practise «vin» slowly."],
+        }
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", _fake_assess_with_fallback)
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _fake_call_groq)
+    monkeypatch.setattr(pronunciation_router, "_coach_call_gemini", None)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["coaching"] is not None
+    assert body["coaching"]["grounded"] is True
+    assert "vin" in body["coaching"]["summary"]
+    PronunciationAssessmentResponse(**body)
+
+
+def test_coaching_none_skips_llm_entirely(monkeypatch):
+    """Default (drill mode) — coaching stays null, and the narrator is never
+    invoked (plan §8: "coaching=none skips the LLM entirely")."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+
+    import routers.pronunciation as pronunciation_router
+
+    async def _fake_assess_with_fallback(**kwargs):
+        return {
+            "score": 85, "transcript": "Un bon vin blanc.", "issues": [],
+            "words": [], "provider": "azure",
+            "subScores": {"accuracy": 82.0, "fluency": 90.0, "completeness": 100.0, "prosody": None},
+            "couldNotAssess": False, "couldNotAssessReason": None,
+            "snrDb": 22.0, "azureConfidence": 0.9,
+        }
+
+    async def _fail_if_called(prompt: str):
+        raise AssertionError("coaching LLM must not be called when coaching=none")
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", _fake_assess_with_fallback)
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _fail_if_called)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["coaching"] is None
+
+
+def test_invalid_coaching_value_is_rejected(monkeypatch):
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "coaching": "bogus"},
+        files={"audio": ("clip.webm", b"fake-audio-bytes", "audio/webm")},
+    )
+    assert response.status_code == 422
+
+
 if __name__ == "__main__":
     with pytest.MonkeyPatch.context() as mp:
         test_pronunciation_degrades_to_whisper_heuristic_without_azure_key(mp)

@@ -74,7 +74,70 @@ def test_pronunciation_degrades_to_whisper_heuristic_without_azure_key(monkeypat
     PronunciationAssessmentResponse(**body)
 
 
+def test_invalid_mode_is_rejected(monkeypatch):
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "bogus"},
+        files={"audio": ("clip.webm", b"fake-audio-bytes", "audio/webm")},
+    )
+    assert response.status_code == 422
+
+
+def test_freeform_mode_without_azure_reports_no_verdict_not_a_fabricated_score(monkeypatch):
+    """Defect #5 regression, whisper-heuristic-tier edge case: in freeform
+    mode there is no independent reference to diff the transcript against
+    (target_text IS heard_text), so the fallback tier must not produce a
+    diff-based score — that would always be a trivial perfect match."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        # target_text deliberately does NOT match what _fake_faster_whisper
+        # returns — proving the backend ignores it in freeform mode rather
+        # than diffing against it.
+        data={"target_text": "Ceci ne sera jamais utilisé.", "mode": "freeform"},
+        files={"audio": ("clip.webm", b"fake-audio-bytes", "audio/webm")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["provider"] == "whisper-heuristic"
+    assert body["score"] is None
+    assert body["couldNotAssess"] is True
+    assert body["transcript"] == "Un bon vin blanc."  # from _fake_faster_whisper
+    PronunciationAssessmentResponse(**body)
+
+
+def test_scripted_mode_without_azure_still_uses_align_fn_diff(monkeypatch):
+    """Unchanged behaviour: scripted mode's whisper-heuristic fallback still
+    diffs the caller's real target_text against the transcript."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted"},
+        files={"audio": ("clip.webm", b"fake-audio-bytes", "audio/webm")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["provider"] == "whisper-heuristic"
+    assert body["couldNotAssess"] is False
+    assert body["score"] == 70  # _fake_align returns score=7, rescaled *10
+
+
 if __name__ == "__main__":
     with pytest.MonkeyPatch.context() as mp:
         test_pronunciation_degrades_to_whisper_heuristic_without_azure_key(mp)
+        test_invalid_mode_is_rejected(mp)
+        test_freeform_mode_without_azure_reports_no_verdict_not_a_fabricated_score(mp)
+        test_scripted_mode_without_azure_still_uses_align_fn_diff(mp)
     print("All test_pronunciation tests passed.")

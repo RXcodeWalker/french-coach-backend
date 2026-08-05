@@ -1,8 +1,16 @@
 """Offline test for the Azure response normalizer — no live call needed.
 
-Sample JSON payload shape copied from Microsoft's published Pronunciation
-Assessment docs (NBest[0].PronunciationAssessment + Words[].PronunciationAssessment),
-adapted to a short French phrase for this app.
+Two fixture families:
+  - SAMPLE_AZURE_RESPONSE / SAMPLE_WITH_SKIPPED_PHONEME_SCORE: the SDK-nested
+    shape (PronunciationAssessment wrapper), kept to prove the accessor's
+    fallback branch actually works, not because a REST endpoint returns it.
+  - SAMPLE_AZURE_RESPONSE_REST_SHAPE: copied verbatim (values only, not real
+    audio) from a live capture against a real Azure resource on 2026-08-04 —
+    see backend/scripts/_probe_output/response_corrected_legacy_host.json.
+    This is the shape defect #7 was about: scores flat on NBest[0]/Words[],
+    RecognitionStatus as a string. Every prior version of this test suite
+    only exercised the nested shape and stayed green against a normalizer
+    that could not read a real response — do not remove this fixture.
 
 Run: pytest backend/tests/test_azure_client.py
 """
@@ -63,13 +71,39 @@ SAMPLE_AZURE_RESPONSE = {
     ],
 }
 
+# Flat REST shape — see module docstring. Values adapted from a real capture.
+SAMPLE_AZURE_RESPONSE_REST_SHAPE = {
+    "RecognitionStatus": "Success",
+    "DisplayText": "Un bon vin blanc.",
+    "NBest": [
+        {
+            "Confidence": 0.87,
+            "Display": "Un bon vin blanc.",
+            "AccuracyScore": 82.0,
+            "FluencyScore": 90.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 85.0,
+            "Words": [
+                {"Word": "Un", "AccuracyScore": 95.0, "ErrorType": "None"},
+                {"Word": "bon", "AccuracyScore": 88.0, "ErrorType": "None"},
+                {"Word": "vin", "AccuracyScore": 35.0, "ErrorType": "Mispronunciation"},
+                {"Word": "blanc", "AccuracyScore": 0.0, "ErrorType": "Omission"},
+            ],
+        }
+    ],
+}
+
 
 def test_normalize_maps_scores_without_rescale():
     result = _normalize_azure_response(SAMPLE_AZURE_RESPONSE, "Un bon vin blanc.")
     assert result["score"] == 85
-    assert result["subScores"] == {"accuracy": 82.0, "fluency": 90.0, "completeness": 100.0, "prosody": None}
+    assert result["subScores"]["accuracy"] == 82.0
+    assert result["subScores"]["fluency"] == 90.0
+    assert result["subScores"]["completeness"] == 100.0
+    assert result["subScores"]["prosody"] is None
     assert result["provider"] == "azure"
     assert result["transcript"] == "Un bon vin blanc."
+    assert result["couldNotAssess"] is False
 
 
 def test_normalize_maps_error_types_to_own_vocabulary():
@@ -91,11 +125,56 @@ def test_normalize_synthesizes_issues_for_non_correct_words():
     assert blanc_issue["severity"] == "high"
 
 
-def test_normalize_leaves_ipa_fields_empty():
+def test_normalize_leaves_ipa_heard_empty_without_nbest_phonemes():
+    # Fixed behaviour (was: fell back to the expected phoneme and silently
+    # rendered "what you should have said" as "what you said" — defect #3).
     result = _normalize_azure_response(SAMPLE_AZURE_RESPONSE, "Un bon vin blanc.")
     for issue in result["issues"]:
-        assert issue["ipaExpected"] == ""
         assert issue["ipaHeard"] == ""
+
+
+def test_normalize_rest_shape_produces_nonzero_scores():
+    """Defect #7 regression: the flat REST shape must not silently zero out
+    every score the way `best.get("PronunciationAssessment") or {}` did."""
+    result = _normalize_azure_response(SAMPLE_AZURE_RESPONSE_REST_SHAPE, "Un bon vin blanc.")
+    assert result["score"] == 85
+    assert result["subScores"]["accuracy"] == 82.0
+    assert result["couldNotAssess"] is False
+    by_word = {w["word"]: w for w in result["words"]}
+    assert by_word["Un"]["accuracyScore"] == 95.0
+    assert by_word["Un"]["errorType"] == "correct"
+    assert by_word["blanc"]["errorType"] == "skipped"
+
+
+def test_normalize_recognition_status_no_match_yields_could_not_assess_not_zero():
+    response = {"RecognitionStatus": "NoMatch", "DisplayText": ""}
+    result = _normalize_azure_response(response, "Un bon vin blanc.")
+    assert result["couldNotAssess"] is True
+    assert result["couldNotAssessReason"] == "no_speech_recognized"
+    assert result["score"] is None
+
+
+def test_normalize_initial_silence_timeout_yields_could_not_assess():
+    response = {"RecognitionStatus": "InitialSilenceTimeout", "DisplayText": ""}
+    result = _normalize_azure_response(response, "Un bon vin blanc.")
+    assert result["couldNotAssess"] is True
+    assert result["couldNotAssessReason"] == "silence"
+    assert result["score"] is None
+
+
+def test_normalize_missing_assessment_block_yields_could_not_assess_not_zero():
+    """Defect #8: a 200 OK with plain STT output and no assessment block
+    (malformed/rejected Pronunciation-Assessment header) must not silently
+    become score: 0."""
+    response = {
+        "RecognitionStatus": "Success",
+        "DisplayText": "Un bon vin blanc.",
+        "NBest": [{"Confidence": 0.87, "Display": "Un bon vin blanc."}],
+    }
+    result = _normalize_azure_response(response, "Un bon vin blanc.")
+    assert result["couldNotAssess"] is True
+    assert result["couldNotAssessReason"] == "assessment_unavailable"
+    assert result["score"] is None
 
 
 SAMPLE_WITH_SKIPPED_PHONEME_SCORE = {
@@ -145,6 +224,10 @@ if __name__ == "__main__":
     test_normalize_maps_scores_without_rescale()
     test_normalize_maps_error_types_to_own_vocabulary()
     test_normalize_synthesizes_issues_for_non_correct_words()
-    test_normalize_leaves_ipa_fields_empty()
+    test_normalize_leaves_ipa_heard_empty_without_nbest_phonemes()
+    test_normalize_rest_shape_produces_nonzero_scores()
+    test_normalize_recognition_status_no_match_yields_could_not_assess_not_zero()
+    test_normalize_initial_silence_timeout_yields_could_not_assess()
+    test_normalize_missing_assessment_block_yields_could_not_assess_not_zero()
     test_normalize_coerces_missing_phoneme_score_to_none_not_error()
     print("All test_azure_client tests passed.")

@@ -1,0 +1,79 @@
+{
+  "locale": "fr-FR",
+  "capabilities": {
+    "scripted": {
+      "azure": {
+        "accuracy": "authoritative",
+        "fluency": "authoritative",
+        "completeness": "authoritative",
+        "pronScore": "authoritative",
+        "wordErrorType": "authoritative",
+        "phonemeAccuracy": "authoritative",
+        "observedIpa": "unavailable",
+        "prosodyScore": "unavailable",
+        "syllables": "unavailable",
+        "rhythmMetrics": "derived",
+        "liaison": "inferred",
+        "nasalVowel": "inferred",
+        "frenchR": "inferred",
+        "silentLetter": "inferred"
+      },
+      "whisper-heuristic": {
+        "accuracy": "unavailable",
+        "fluency": "unavailable",
+        "completeness": "unavailable",
+        "pronScore": "authoritative",
+        "wordErrorType": "unavailable",
+        "phonemeAccuracy": "unavailable",
+        "observedIpa": "unavailable",
+        "prosodyScore": "unavailable",
+        "syllables": "unavailable",
+        "rhythmMetrics": "unavailable",
+        "liaison": "unavailable",
+        "nasalVowel": "unavailable",
+        "frenchR": "unavailable",
+        "silentLetter": "unavailable"
+      }
+    },
+    "freeform": {
+      "azure": {
+        "accuracy": "authoritative",
+        "fluency": "authoritative",
+        "completeness": "unavailable",
+        "pronScore": "authoritative",
+        "wordErrorType": "unavailable",
+        "phonemeAccuracy": "authoritative",
+        "observedIpa": "unavailable",
+        "prosodyScore": "unavailable",
+        "syllables": "unavailable",
+        "rhythmMetrics": "derived",
+        "liaison": "inferred",
+        "nasalVowel": "inferred",
+        "frenchR": "inferred",
+        "silentLetter": "inferred"
+      },
+      "whisper-heuristic": {
+        "accuracy": "unavailable",
+        "fluency": "unavailable",
+        "completeness": "unavailable",
+        "pronScore": "unavailable",
+        "wordErrorType": "unavailable",
+        "phonemeAccuracy": "unavailable",
+        "observedIpa": "unavailable",
+        "prosodyScore": "unavailable",
+        "syllables": "unavailable",
+        "rhythmMetrics": "unavailable",
+        "liaison": "unavailable",
+        "nasalVowel": "unavailable",
+        "frenchR": "unavailable",
+        "silentLetter": "unavailable"
+      }
+    }
+  },
+  "confidenceCeilings": {
+    "liaison": 0.6,
+    "nasalVowel": 0.6,
+    "frenchR": 0.6,
+    "silentLetter": 0.6
+  }
+}

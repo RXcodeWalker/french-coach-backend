@@ -196,10 +196,11 @@ async def _cache_set(key: str, value: Any, ttl_sec: float) -> None:
         _CACHE[key] = (value, time.monotonic() + ttl_sec)
 
 # ── LRU feedback cache ────────────────────────────────────────────────────────
+from services.cache import BoundedTTLCache
+
 _FEEDBACK_CACHE_MAX = 50
 _FEEDBACK_CACHE_TTL = 300.0  # 5 minutes
-_feedback_cache: OrderedDict[str, tuple[dict, float]] = OrderedDict()
-_feedback_cache_lock = asyncio.Lock()
+_feedback_cache: BoundedTTLCache[dict] = BoundedTTLCache(_FEEDBACK_CACHE_MAX, _FEEDBACK_CACHE_TTL)
 
 
 def _feedback_cache_key(
@@ -213,27 +214,15 @@ def _feedback_cache_key(
 
 
 async def _feedback_cache_get(key: str) -> dict | None:
-    async with _feedback_cache_lock:
-        entry = _feedback_cache.get(key)
-        if entry is None:
-            return None
-        value, expires_at = entry
-        if time.monotonic() > expires_at:
-            del _feedback_cache[key]
-            return None
-        _feedback_cache.move_to_end(key)
+    value = await _feedback_cache.get(key)
+    if value is not None:
         with _METRICS_LOCK:
             _METRICS["cache_hits"] += 1
-        return value
+    return value
 
 
 async def _feedback_cache_set(key: str, value: dict) -> None:
-    async with _feedback_cache_lock:
-        if key in _feedback_cache:
-            _feedback_cache.move_to_end(key)
-        _feedback_cache[key] = (value, time.monotonic() + _FEEDBACK_CACHE_TTL)
-        while len(_feedback_cache) > _FEEDBACK_CACHE_MAX:
-            _feedback_cache.popitem(last=False)
+    await _feedback_cache.set(key, value)
 
 
 def _is_cacheable_result(result: dict) -> bool:
@@ -248,6 +237,10 @@ _METRICS: dict[str, Any] = {
     "latency_sum_ms": 0.0,
     "latency_count": 0,
     "by_endpoint": {},
+    "pronunciation": {
+        "by_provider": {},            # {"azure": n, "whisper-heuristic": n}
+        "by_recognition_status": {},  # {"Success": n, "NoMatch": n, ...}
+    },
 }
 _METRICS_LOCK = threading.Lock()
 
@@ -291,6 +284,7 @@ async def _observability_middleware(request: Request, call_next):
     request.state.request_id = req_id
     request.state.obs_provider = None
     request.state.obs_cached = False
+    request.state.obs_extra = None
     t0 = time.monotonic()
     response = None
     status = 500
@@ -303,6 +297,7 @@ async def _observability_middleware(request: Request, call_next):
         latency_ms = round((time.monotonic() - t0) * 1000, 1)
         provider = getattr(request.state, "obs_provider", None)
         cached = getattr(request.state, "obs_cached", False)
+        extra = getattr(request.state, "obs_extra", None) or {}
         path = request.url.path
         with _METRICS_LOCK:
             _METRICS["requests_total"] += 1
@@ -311,6 +306,14 @@ async def _observability_middleware(request: Request, call_next):
             if status >= 500:
                 _METRICS["errors_total"] += 1
             _METRICS["by_endpoint"][path] = _METRICS["by_endpoint"].get(path, 0) + 1
+            if path == "/api/pronunciation" and provider:
+                pron_metrics = _METRICS["pronunciation"]
+                pron_metrics["by_provider"][provider] = pron_metrics["by_provider"].get(provider, 0) + 1
+                recognition_status = extra.get("recognition_status")
+                if recognition_status:
+                    pron_metrics["by_recognition_status"][recognition_status] = (
+                        pron_metrics["by_recognition_status"].get(recognition_status, 0) + 1
+                    )
         log.info(json.dumps({
             "ts": datetime.now(timezone.utc).isoformat(),
             "request_id": req_id,
@@ -320,6 +323,7 @@ async def _observability_middleware(request: Request, call_next):
             "status_code": status,
             "provider_used": provider,
             "cached": cached,
+            **extra,
         }, ensure_ascii=False))
     if response is not None:
         response.headers["X-Request-ID"] = req_id
@@ -399,6 +403,10 @@ def metrics() -> dict[str, Any]:
             "cache_hits": int(_METRICS["cache_hits"]),
             "avg_latency_ms": round(avg, 1),
             "by_endpoint": dict(_METRICS["by_endpoint"]),
+            "pronunciation": {
+                "by_provider": dict(_METRICS["pronunciation"]["by_provider"]),
+                "by_recognition_status": dict(_METRICS["pronunciation"]["by_recognition_status"]),
+            },
         }
 
 # ── AI Feedback models + logic ────────────────────────────────────────────────
@@ -1828,6 +1836,10 @@ def _is_retryable(exc: Exception) -> bool:
             return True
     except ImportError:
         pass
+    if isinstance(exc, httpx.HTTPStatusError):
+        return exc.response.status_code in (429, 503)
+    if isinstance(exc, (httpx.ConnectError, httpx.ReadTimeout)):
+        return True
     status = getattr(exc, "status_code", None) or getattr(exc, "code", None)
     return status in (429, 503)
 
@@ -1857,7 +1869,8 @@ async def _run_with_retries(
             _log_provider_failure(provider, exc, attempt)
             if attempt >= attempts or not _is_retryable(exc):
                 break
-            await asyncio.sleep(_RETRY_DELAYS[min(attempt - 1, len(_RETRY_DELAYS) - 1)])
+            base_delay = _RETRY_DELAYS[min(attempt - 1, len(_RETRY_DELAYS) - 1)]
+            await asyncio.sleep(base_delay + random.uniform(0, base_delay * 0.5))
 
     if last_exc:
         raise last_exc

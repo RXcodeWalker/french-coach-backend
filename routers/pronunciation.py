@@ -9,6 +9,7 @@ by routers/content.py (set_cache) and routers/admin.py (set_cache_invalidator).
 
 from __future__ import annotations
 
+import hashlib
 import logging
 import os
 import tempfile
@@ -17,11 +18,36 @@ from typing import Annotated, Any, Awaitable, Callable
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 
 from models.pronunciation import PronunciationAssessmentResponse
+from services.cache import BoundedTTLCache
+from services.pronunciation.capabilities import enforce_capabilities
 from services.pronunciation.fallback import assess_with_fallback
 
 log = logging.getLogger("uvicorn.error")
 
 router = APIRouter(prefix="/api", tags=["pronunciation"])
+
+ASSESSOR_VERSION = "pronunciation-v3"
+LOCALE = "fr-FR"
+
+# Audio cache: sha256(audio + reference + mode + locale + assessorVersion),
+# TTL 10 min (plan §9) — makes retries and Learn's double-submits free.
+# A dedicated instance, not main.py's feedback cache: sharing one would let
+# pronunciation traffic evict feedback entries and vice versa.
+_AUDIO_CACHE_MAX = 100
+_AUDIO_CACHE_TTL_SEC = 600.0
+_audio_cache: BoundedTTLCache[dict] = BoundedTTLCache(_AUDIO_CACHE_MAX, _AUDIO_CACHE_TTL_SEC)
+
+
+def _audio_cache_key(audio_bytes: bytes, reference_text: str, mode: str) -> str:
+    digest = hashlib.sha256(audio_bytes).hexdigest()
+    return f"{digest}::{reference_text}::{mode}::{LOCALE}::{ASSESSOR_VERSION}"
+
+
+def _is_cacheable(result: dict[str, Any]) -> bool:
+    # Mirror main.py's _is_cacheable_result rule (never cache couldNotAssess,
+    # fallback-tier, or errors) — a cached "couldn't assess" would deny a
+    # legitimate retry on the exact same audio.
+    return not result.get("couldNotAssess", False) and result.get("provider") == "azure"
 
 # ── Injected from main.py ────────────────────────────────────────────────────
 _groq_whisper_fn: Callable[[str, str], Awaitable[dict[str, Any]]] | None = None
@@ -63,9 +89,12 @@ async def pronunciation_evaluate(
     request: Request,
     audio: Annotated[UploadFile, File(...)],
     target_text: str = Form(...),
+    mode: str = Form("scripted"),
 ) -> PronunciationAssessmentResponse:
     if _align_fn is None or _groq_whisper_fn is None or _faster_whisper_fn is None:
         raise HTTPException(status_code=503, detail="Pronunciation service not configured")
+    if mode not in ("scripted", "freeform"):
+        raise HTTPException(status_code=422, detail="mode must be 'scripted' or 'freeform'")
 
     suffix = os.path.splitext(audio.filename or "")[1] or ".webm"
     raw = await audio.read()
@@ -88,14 +117,53 @@ async def pronunciation_evaluate(
         heard_text = (whisper_data.get("text") or "").strip()
         whisper_words = whisper_data.get("words", [])
 
-        result = await assess_with_fallback(
-            audio_bytes=raw,
-            target_text=target_text,
-            heard_text=heard_text,
-            whisper_words=whisper_words,
-            align_fn=_align_fn,
-            run_with_retries=_run_with_retries_fn,
-        )
+        # Freeform mode (accent-analyzer plan defect #5): the caller's
+        # target_text is not a real reference transcript (e.g. Learn used to
+        # send the Web Speech API's own, separately-unreliable guess). Azure
+        # must grade against what was actually said, not a third
+        # recognizer's guess at it — so the reference text becomes Whisper's
+        # own transcript of this same audio. EnableMiscue is force-disabled
+        # for this mode inside assess_pronunciation (mode == "freeform"):
+        # you cannot "omit" a word from your own transcript.
+        reference_text = heard_text if mode == "freeform" else target_text
+
+        cache_key = _audio_cache_key(raw, reference_text, mode)
+        cached_result = await _audio_cache.get(cache_key)
+        if cached_result is not None:
+            result = dict(cached_result)
+            was_cached = True
+        else:
+            result = await assess_with_fallback(
+                audio_bytes=raw,
+                target_text=reference_text,
+                heard_text=heard_text,
+                whisper_words=whisper_words,
+                align_fn=_align_fn,
+                audio_filename=audio.filename or "",
+                mode=mode,
+                run_with_retries=_run_with_retries_fn,
+            )
+            was_cached = False
+            if _is_cacheable(result):
+                await _audio_cache.set(cache_key, result)
+
+        result.setdefault("mode", mode)
+        result.setdefault("locale", LOCALE)
+        result.setdefault("assessorVersion", ASSESSOR_VERSION)
+        result.setdefault("chunkCount", 1)
+        result.setdefault("chunksFailed", 0)
+        result = enforce_capabilities(result, mode=mode, tier=result["provider"], locale=LOCALE)
+
+        request.state.obs_provider = result.get("provider")
+        request.state.obs_cached = was_cached
+        request.state.obs_extra = {
+            "recognition_status": result.get("couldNotAssessReason") if result.get("couldNotAssess") else "Success",
+            "chunk_count": result.get("chunkCount", 1),
+            "chunks_failed": result.get("chunksFailed", 0),
+            "mode": mode,
+            "audio_ms": None,
+        }
+
         return PronunciationAssessmentResponse(**result)
     finally:
         try:

@@ -1,0 +1,700 @@
+{
+  "status_code": 200,
+  "body": {
+    "RecognitionStatus": "Success",
+    "Offset": 1300000,
+    "Duration": 27300000,
+    "DisplayText": "Je voudrais aller au marché avec ma mère demain matin.",
+    "SNR": 43.231426,
+    "NBest": [
+      {
+        "Confidence": 0.90848035,
+        "Lexical": "Je voudrais aller au marché avec ma mère demain matin",
+        "ITN": "Je voudrais aller au marché avec ma mère demain matin",
+        "MaskedITN": "je voudrais aller au marché avec ma mère demain matin",
+        "Display": "Je voudrais aller au marché avec ma mère demain matin.",
+        "AccuracyScore": 100.0,
+        "FluencyScore": 100.0,
+        "CompletenessScore": 100.0,
+        "PronScore": 100.0,
+        "Words": [
+          {
+            "Word": "Je",
+            "Offset": 1300000,
+            "Duration": 2900000,
+            "Confidence": 0.0,
+            "AccuracyScore": 100.0,
+            "ErrorType": "None",
+            "Syllables": [
+              {
+                "Syllable": "",
+                "Grapheme": "je",
+                "Offset": 1300000,
+                "Duration": 2900000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Phonemes": [
+              {
+                "Phoneme": "",
+                "Offset": 1300000,
+                "Duration": 1900000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 3300000,
+                "Duration": 900000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Feedback": {
+              "Prosody": {
+                "Break": {
+                  "ErrorTypes": [
+                    "None"
+                  ],
+                  "BreakLength": 0
+                },
+                "Intonation": {
+                  "ErrorTypes": [],
+                  "Monotone": {
+                    "Confidence": 0.0,
+                    "WordPitchSlopeConfidence": 0.0,
+                    "SyllablePitchDeltaConfidence": 0.49917686
+                  }
+                }
+              }
+            }
+          },
+          {
+            "Word": "voudrais",
+            "Offset": 4300000,
+            "Duration": 4100000,
+            "Confidence": 0.0,
+            "AccuracyScore": 100.0,
+            "ErrorType": "None",
+            "Syllables": [
+              {
+                "Syllable": "",
+                "Grapheme": "vou",
+                "Offset": 4300000,
+                "Duration": 1700000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Syllable": "",
+                "Grapheme": "drais",
+                "Offset": 6100000,
+                "Duration": 2300000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Phonemes": [
+              {
+                "Phoneme": "",
+                "Offset": 4300000,
+                "Duration": 800000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 5200000,
+                "Duration": 800000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 6100000,
+                "Duration": 700000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 6900000,
+                "Duration": 700000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 7700000,
+                "Duration": 700000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Feedback": {
+              "Prosody": {
+                "Break": {
+                  "ErrorTypes": [
+                    "None"
+                  ],
+                  "UnexpectedBreak": {
+                    "Confidence": 6.2043796e-08
+                  },
+                  "MissingBreak": {
+                    "Confidence": 0.99999994
+                  },
+                  "BreakLength": 0
+                },
+                "Intonation": {
+                  "ErrorTypes": [],
+                  "Monotone": {
+                    "Confidence": 0.0,
+                    "WordPitchSlopeConfidence": 0.0,
+                    "SyllablePitchDeltaConfidence": 0.49917686
+                  }
+                }
+              }
+            }
+          },
+          {
+            "Word": "aller",
+            "Offset": 8500000,
+            "Duration": 2300000,
+            "Confidence": 0.0,
+            "AccuracyScore": 100.0,
+            "ErrorType": "None",
+            "Syllables": [
+              {
+                "Syllable": "",
+                "Grapheme": "al",
+                "Offset": 8500000,
+                "Duration": 900000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Syllable": "",
+                "Grapheme": "ler",
+                "Offset": 9500000,
+                "Duration": 1300000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Phonemes": [
+              {
+                "Phoneme": "",
+                "Offset": 8500000,
+                "Duration": 900000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 9500000,
+                "Duration": 500000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 10100000,
+                "Duration": 700000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Feedback": {
+              "Prosody": {
+                "Break": {
+                  "ErrorTypes": [
+                    "None"
+                  ],
+                  "UnexpectedBreak": {
+                    "Confidence": 6.2043796e-08
+                  },
+                  "MissingBreak": {
+                    "Confidence": 0.99999994
+                  },
+                  "BreakLength": 0
+                },
+                "Intonation": {
+                  "ErrorTypes": [],
+                  "Monotone": {
+                    "Confidence": 0.0,
+                    "WordPitchSlopeConfidence": 0.0,
+                    "SyllablePitchDeltaConfidence": 0.49917686
+                  }
+                }
+              }
+            }
+          },
+          {
+            "Word": "au",
+            "Offset": 10900000,
+            "Duration": 700000,
+            "Confidence": 0.0,
+            "AccuracyScore": 100.0,
+            "ErrorType": "None",
+            "Syllables": [
+              {
+                "Syllable": "",
+                "Grapheme": "au",
+                "Offset": 10900000,
+                "Duration": 700000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Phonemes": [
+              {
+                "Phoneme": "",
+                "Offset": 10900000,
+                "Duration": 700000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Feedback": {
+              "Prosody": {
+                "Break": {
+                  "ErrorTypes": [
+                    "None"
+                  ],
+                  "UnexpectedBreak": {
+                    "Confidence": 6.2043796e-08
+                  },
+                  "MissingBreak": {
+                    "Confidence": 0.99999994
+                  },
+                  "BreakLength": 0
+                },
+                "Intonation": {
+                  "ErrorTypes": [],
+                  "Monotone": {
+                    "Confidence": 0.0,
+                    "WordPitchSlopeConfidence": 0.0,
+                    "SyllablePitchDeltaConfidence": 0.49917686
+                  }
+                }
+              }
+            }
+          },
+          {
+            "Word": "marché",
+            "Offset": 11700000,
+            "Duration": 3500000,
+            "Confidence": 0.0,
+            "AccuracyScore": 100.0,
+            "ErrorType": "None",
+            "Syllables": [
+              {
+                "Syllable": "",
+                "Grapheme": "mar",
+                "Offset": 11700000,
+                "Duration": 1900000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Syllable": "",
+                "Grapheme": "ché",
+                "Offset": 13700000,
+                "Duration": 1500000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Phonemes": [
+              {
+                "Phoneme": "",
+                "Offset": 11700000,
+                "Duration": 700000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 12500000,
+                "Duration": 300000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 12900000,
+                "Duration": 700000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 13700000,
+                "Duration": 900000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 14700000,
+                "Duration": 500000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Feedback": {
+              "Prosody": {
+                "Break": {
+                  "ErrorTypes": [
+                    "None"
+                  ],
+                  "UnexpectedBreak": {
+                    "Confidence": 6.2043796e-08
+                  },
+                  "MissingBreak": {
+                    "Confidence": 0.99999994
+                  },
+                  "BreakLength": 0
+                },
+                "Intonation": {
+                  "ErrorTypes": [],
+                  "Monotone": {
+                    "Confidence": 0.0,
+                    "WordPitchSlopeConfidence": 0.0,
+                    "SyllablePitchDeltaConfidence": 0.49917686
+                  }
+                }
+              }
+            }
+          },
+          {
+            "Word": "avec",
+            "Offset": 15300000,
+            "Duration": 2700000,
+            "Confidence": 0.0,
+            "AccuracyScore": 97.0,
+            "ErrorType": "None",
+            "Syllables": [
+              {
+                "Syllable": "",
+                "Grapheme": "a",
+                "Offset": 15300000,
+                "Duration": 700000,
+                "AccuracyScore": 97.0
+              },
+              {
+                "Syllable": "",
+                "Grapheme": "vec",
+                "Offset": 16100000,
+                "Duration": 1900000,
+                "AccuracyScore": 97.0
+              }
+            ],
+            "Phonemes": [
+              {
+                "Phoneme": "",
+                "Offset": 15300000,
+                "Duration": 700000,
+                "AccuracyScore": 97.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 16100000,
+                "Duration": 500000,
+                "AccuracyScore": 97.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 16700000,
+                "Duration": 500000,
+                "AccuracyScore": 97.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 17300000,
+                "Duration": 700000,
+                "AccuracyScore": 97.0
+              }
+            ],
+            "Feedback": {
+              "Prosody": {
+                "Break": {
+                  "ErrorTypes": [
+                    "None"
+                  ],
+                  "UnexpectedBreak": {
+                    "Confidence": 6.2043796e-08
+                  },
+                  "MissingBreak": {
+                    "Confidence": 0.99999994
+                  },
+                  "BreakLength": 0
+                },
+                "Intonation": {
+                  "ErrorTypes": [],
+                  "Monotone": {
+                    "Confidence": 0.0,
+                    "WordPitchSlopeConfidence": 0.0,
+                    "SyllablePitchDeltaConfidence": 0.49917686
+                  }
+                }
+              }
+            }
+          },
+          {
+            "Word": "ma",
+            "Offset": 18100000,
+            "Duration": 1500000,
+            "Confidence": 0.0,
+            "AccuracyScore": 100.0,
+            "ErrorType": "None",
+            "Syllables": [
+              {
+                "Syllable": "",
+                "Grapheme": "ma",
+                "Offset": 18100000,
+                "Duration": 1500000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Phonemes": [
+              {
+                "Phoneme": "",
+                "Offset": 18100000,
+                "Duration": 500000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 18700000,
+                "Duration": 900000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Feedback": {
+              "Prosody": {
+                "Break": {
+                  "ErrorTypes": [
+                    "None"
+                  ],
+                  "UnexpectedBreak": {
+                    "Confidence": 6.2043796e-08
+                  },
+                  "MissingBreak": {
+                    "Confidence": 0.99999994
+                  },
+                  "BreakLength": 0
+                },
+                "Intonation": {
+                  "ErrorTypes": [],
+                  "Monotone": {
+                    "Confidence": 0.0,
+                    "WordPitchSlopeConfidence": 0.0,
+                    "SyllablePitchDeltaConfidence": 0.49917686
+                  }
+                }
+              }
+            }
+          },
+          {
+            "Word": "mère",
+            "Offset": 19700000,
+            "Duration": 2300000,
+            "Confidence": 0.0,
+            "AccuracyScore": 100.0,
+            "ErrorType": "None",
+            "Syllables": [
+              {
+                "Syllable": "",
+                "Offset": 19700000,
+                "Duration": 1400000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Syllable": "",
+                "Offset": 21200000,
+                "Duration": 800000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Phonemes": [
+              {
+                "Phoneme": "",
+                "Offset": 19700000,
+                "Duration": 500000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 20300000,
+                "Duration": 800000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 21200000,
+                "Duration": 300000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 21600000,
+                "Duration": 400000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Feedback": {
+              "Prosody": {
+                "Break": {
+                  "ErrorTypes": [
+                    "None"
+                  ],
+                  "UnexpectedBreak": {
+                    "Confidence": 6.2043796e-08
+                  },
+                  "MissingBreak": {
+                    "Confidence": 0.99999994
+                  },
+                  "BreakLength": 0
+                },
+                "Intonation": {
+                  "ErrorTypes": [],
+                  "Monotone": {
+                    "Confidence": 0.0,
+                    "WordPitchSlopeConfidence": 0.0,
+                    "SyllablePitchDeltaConfidence": 0.49917686
+                  }
+                }
+              }
+            }
+          },
+          {
+            "Word": "demain",
+            "Offset": 22100000,
+            "Duration": 2300000,
+            "Confidence": 0.0,
+            "AccuracyScore": 100.0,
+            "ErrorType": "None",
+            "Syllables": [
+              {
+                "Syllable": "",
+                "Grapheme": "de",
+                "Offset": 22100000,
+                "Duration": 1000000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Syllable": "",
+                "Grapheme": "main",
+                "Offset": 23200000,
+                "Duration": 1200000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Phonemes": [
+              {
+                "Phoneme": "",
+                "Offset": 22100000,
+                "Duration": 400000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 22600000,
+                "Duration": 500000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 23200000,
+                "Duration": 400000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 23700000,
+                "Duration": 700000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Feedback": {
+              "Prosody": {
+                "Break": {
+                  "ErrorTypes": [
+                    "None"
+                  ],
+                  "UnexpectedBreak": {
+                    "Confidence": 6.2043796e-08
+                  },
+                  "MissingBreak": {
+                    "Confidence": 0.99999994
+                  },
+                  "BreakLength": 0
+                },
+                "Intonation": {
+                  "ErrorTypes": [],
+                  "Monotone": {
+                    "Confidence": 0.0,
+                    "WordPitchSlopeConfidence": 0.0,
+                    "SyllablePitchDeltaConfidence": 0.49917686
+                  }
+                }
+              }
+            }
+          },
+          {
+            "Word": "matin",
+            "Offset": 24500000,
+            "Duration": 4100000,
+            "Confidence": 0.0,
+            "AccuracyScore": 100.0,
+            "ErrorType": "None",
+            "Syllables": [
+              {
+                "Syllable": "",
+                "Grapheme": "ma",
+                "Offset": 24500000,
+                "Duration": 1500000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Syllable": "",
+                "Grapheme": "tin",
+                "Offset": 26100000,
+                "Duration": 2500000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Phonemes": [
+              {
+                "Phoneme": "",
+                "Offset": 24500000,
+                "Duration": 500000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 25100000,
+                "Duration": 900000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 26100000,
+                "Duration": 900000,
+                "AccuracyScore": 100.0
+              },
+              {
+                "Phoneme": "",
+                "Offset": 27100000,
+                "Duration": 1500000,
+                "AccuracyScore": 100.0
+              }
+            ],
+            "Feedback": {
+              "Prosody": {
+                "Break": {
+                  "ErrorTypes": [
+                    "None"
+                  ],
+                  "UnexpectedBreak": {
+                    "Confidence": 6.2043796e-08
+                  },
+                  "MissingBreak": {
+                    "Confidence": 0.99999994
+                  },
+                  "BreakLength": 0
+                },
+                "Intonation": {
+                  "ErrorTypes": [],
+                  "Monotone": {
+                    "Confidence": 0.0,
+                    "WordPitchSlopeConfidence": 0.0,
+                    "SyllablePitchDeltaConfidence": 0.49917686
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

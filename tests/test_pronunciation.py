@@ -134,10 +134,69 @@ def test_scripted_mode_without_azure_still_uses_align_fn_diff(monkeypatch):
     assert body["score"] == 70  # _fake_align returns score=7, rescaled *10
 
 
+def test_azure_scripted_response_populates_phase2_guardrails(monkeypatch):
+    """Integration proof for Phase 2 (§6, §7, §11): an azure-scripted
+    response gets prosodyMetrics/phonologicalFindings/confidence populated
+    by the router, not just unit-tested against the modules in isolation.
+    Mocks assess_with_fallback directly (already-normalized shape) since a
+    real Azure call is out of scope for an offline test."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+
+    import routers.pronunciation as pronunciation_router
+
+    async def _fake_assess_with_fallback(**kwargs):
+        return {
+            "score": 85,
+            "transcript": "Un bon vin blanc.",
+            "issues": [],
+            "words": [
+                {
+                    "word": "vin", "accuracyScore": 35.0, "errorType": "mispronounced",
+                    "confidence": None,
+                    "phonemes": [{"phoneme": "v", "accuracyScore": 92.0}, {"phoneme": "ɛ̃", "accuracyScore": 20.0}],
+                    "offsetMs": 500, "durationMs": 300, "nearChunkBoundary": False,
+                },
+                {
+                    "word": "blanc", "accuracyScore": 90.0, "errorType": "correct",
+                    "confidence": None, "phonemes": [], "offsetMs": 900, "durationMs": 400,
+                    "nearChunkBoundary": False,
+                },
+            ],
+            "provider": "azure",
+            "subScores": {"accuracy": 82.0, "fluency": 90.0, "completeness": 100.0, "prosody": None},
+            "couldNotAssess": False,
+            "couldNotAssessReason": None,
+            "snrDb": 22.0,
+            "azureConfidence": 0.9,
+        }
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", _fake_assess_with_fallback)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["provider"] == "azure"
+    assert body["prosodyMetrics"] is not None
+    assert body["prosodyMetrics"]["speechRateWpm"] is not None
+    assert any(f["category"] == "nasalVowel" for f in body["phonologicalFindings"])
+    assert body["confidence"] is not None
+    assert body["confidence"]["overall"] > 0.0
+    assert body["audioQuality"]["snrDb"] == 22.0
+    PronunciationAssessmentResponse(**body)
+
+
 if __name__ == "__main__":
     with pytest.MonkeyPatch.context() as mp:
         test_pronunciation_degrades_to_whisper_heuristic_without_azure_key(mp)
         test_invalid_mode_is_rejected(mp)
         test_freeform_mode_without_azure_reports_no_verdict_not_a_fabricated_score(mp)
         test_scripted_mode_without_azure_still_uses_align_fn_diff(mp)
+        test_azure_scripted_response_populates_phase2_guardrails(mp)
     print("All test_pronunciation tests passed.")

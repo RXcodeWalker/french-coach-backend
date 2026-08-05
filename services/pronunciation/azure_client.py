@@ -173,6 +173,13 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
     }
     score = round(float(assessment.get("PronScore", 0.0)))
 
+    # Previously discarded fields (plan §5): SNR gates confidence rather than
+    # producing a bogus low score; NBest[0].Confidence feeds confidence.py's
+    # azure_confidence term. Both optional — absent on some resource/region
+    # combinations, never fabricated when missing.
+    snr_db = raw_json.get("SNR")
+    azure_confidence = best.get("Confidence")
+
     words_out: list[dict[str, Any]] = []
     issues_out: list[dict[str, Any]] = []
     for w in best.get("Words") or []:
@@ -258,6 +265,8 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
         "subScores": sub_scores,
         "couldNotAssess": False,
         "couldNotAssessReason": None,
+        "snrDb": float(snr_db) if snr_db is not None else None,
+        "azureConfidence": float(azure_confidence) if azure_confidence is not None else None,
     }
 
 

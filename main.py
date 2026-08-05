@@ -3613,10 +3613,6 @@ async def _faster_whisper(tmp_path: str, language: str) -> dict[str, Any]:
                     "start": round(w.start, 3),
                     "end": round(w.end, 3),
                     "probability": round(w.probability, 3) if w.probability else None,
-                    # Flag common French phonetic triggers
-                    "is_nasal": any(n in w.word.lower() for n in ["on", "an", "en", "in", "un"]),
-                    "is_vibrant": "r" in w.word.lower(),
-                    "is_silent_end": w.word.lower().endswith(("t", "d", "s", "x", "z"))
                 })
     
     avg_prob = (total_prob / word_count) if word_count > 0 else 0

@@ -19,8 +19,11 @@ from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 
 from models.pronunciation import PronunciationAssessmentResponse
 from services.cache import BoundedTTLCache
+from services.phonology import rules as phonology_rules
 from services.pronunciation.capabilities import enforce_capabilities
+from services.pronunciation.confidence import compute_confidence
 from services.pronunciation.fallback import assess_with_fallback
+from services.pronunciation.prosody import compute_rhythm_metrics
 
 log = logging.getLogger("uvicorn.error")
 
@@ -152,7 +155,40 @@ async def pronunciation_evaluate(
         result.setdefault("assessorVersion", ASSESSOR_VERSION)
         result.setdefault("chunkCount", 1)
         result.setdefault("chunksFailed", 0)
-        result = enforce_capabilities(result, mode=mode, tier=result["provider"], locale=LOCALE)
+
+        tier = result["provider"]
+
+        # L3 guardrails (accent-analyzer plan §6, §7, §11): derived prosody
+        # and inferred phonology findings are computed here, unconditionally
+        # populated on the dict, then enforce_capabilities (below) nulls out
+        # whatever the matrix marks unavailable for this (mode, tier) — the
+        # computation itself doesn't need to know about capability gating.
+        if not result.get("couldNotAssess"):
+            timed_words = [
+                w for w in result.get("words", [])
+                if w.get("offsetMs") is not None and w.get("durationMs") is not None
+            ]
+            duration_ms = (
+                max(w["offsetMs"] + w["durationMs"] for w in timed_words)
+                if timed_words else None
+            )
+            result["prosodyMetrics"] = compute_rhythm_metrics(result.get("words", []))
+            result["phonologicalFindings"] = phonology_rules.evaluate(result.get("words", []), locale=LOCALE)
+            result["confidence"] = compute_confidence(
+                snr_db=result.get("snrDb"),
+                azure_confidence=result.get("azureConfidence"),
+                whisper_text=heard_text,
+                azure_text=result.get("transcript", ""),
+                duration_ms=duration_ms,
+            )
+            result["audioQuality"] = {
+                "snrDb": result.get("snrDb"),
+                "durationMs": duration_ms,
+                "recognitionStatus": "Success",
+                "clipped": False,
+            }
+
+        result = enforce_capabilities(result, mode=mode, tier=tier, locale=LOCALE)
 
         request.state.obs_provider = result.get("provider")
         request.state.obs_cached = was_cached

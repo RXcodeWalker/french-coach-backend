@@ -75,5 +75,48 @@
     "nasalVowel": 0.6,
     "frenchR": 0.6,
     "silentLetter": 0.6
+  },
+  "phonologyRules": {
+    "nasalVowels": {
+      "ipaTriggers": ["ɛ̃", "ɑ̃", "ɔ̃", "œ̃"],
+      "lowAccuracyThreshold": 60.0,
+      "explanationTemplate": "'{word}' has a nasal vowel ({phoneme}) that was denasalised — say it through the nose, not as a vowel + n/m.",
+      "inverseExplanationTemplate": "'{word}' was over-nasalised — the vowel here should be oral, not nasal.",
+      "drill": {
+        "hint": "Practise the nasal vowel in isolation, then in '{word}'.",
+        "repeatPhrase": "{word}"
+      }
+    },
+    "frenchR": {
+      "ipaTriggers": ["ʁ"],
+      "lowAccuracyThreshold": 60.0,
+      "positions": {
+        "onset": "at the start of a word or syllable",
+        "coda": "at the end of a syllable — this is the hardest position for anglophones",
+        "cluster": "in a consonant cluster"
+      },
+      "explanationTemplate": "The French R in '{word}' ({position}) was mispronounced — it's a uvular sound, not the English R.",
+      "drill": {
+        "hint": "Practise the uvular R in isolation, then in '{word}'.",
+        "repeatPhrase": "{word}"
+      }
+    },
+    "silentLetters": {
+      "finalConsonants": ["t", "d", "s", "x", "z", "p", "g"],
+      "explanationTemplate": "The final '{letter}' in '{word}' should usually be silent in French.",
+      "drill": {
+        "hint": "Say '{word}' without pronouncing the final letter.",
+        "repeatPhrase": "{word}"
+      }
+    },
+    "liaison": {
+      "maxGapMs": 80,
+      "obligatoryContexts": ["det_noun", "pron_verb", "mono_prep_noun"],
+      "explanationTemplate": "A liaison was expected between '{wordA}' and '{wordB}' but wasn't made — link the final consonant of '{wordA}' to the vowel that starts '{wordB}'.",
+      "drill": {
+        "hint": "Practise linking '{wordA}' and '{wordB}' as one breath group.",
+        "repeatPhrase": "{wordA} {wordB}"
+      }
+    }
   }
 }

@@ -96,13 +96,25 @@ def configure_coaching(call_groq_fn=None, call_gemini_fn=None) -> None:
     _coach_call_gemini = call_gemini_fn
 
 
-def set_rate_limiter(rate_limit_decorator) -> None:
+def set_rate_limiter(rate_limit_decorator, target_router) -> None:
     """Applies main.py's slowapi-based rate_limit("20/minute") to the already
     -registered route. Applied post-hoc (rather than as a decorator at
     definition time) because main.py's `_limiter` doesn't exist until main.py
-    has started executing, and this module is imported by main.py."""
+    has started executing, and this module is imported by main.py.
+
+    Must run AFTER `app.include_router(router)`, and must mutate the route
+    object living on `target_router` (the app / its router), not on this
+    module's own `router`. `include_router` copies each route by rebuilding
+    its parameter dependant from `route.endpoint` — rebuilding it from the
+    slowapi wrapper (rather than the original, correctly-annotated
+    `pronunciation_evaluate`) resolves the `from __future__ import
+    annotations` string annotations against slowapi's module globals, which
+    don't have `UploadFile`/`File` in scope. That silently drops the `audio`
+    param to a query parameter, breaking every upload with a 422. Registering
+    first (so the dependant is built from the real function) and only then
+    swapping the already-built route's callable avoids that."""
     limited = rate_limit_decorator("20/minute")(pronunciation_evaluate)
-    for route in router.routes:
+    for route in target_router.routes:
         if getattr(route, "path", None) == "/api/pronunciation":
             route.endpoint = limited
             route.dependant.call = limited

@@ -4427,8 +4427,8 @@ async def _call_gemini_coach(prompt: str) -> dict[str, Any]:
 
 
 _configure_pronunciation_coaching(_call_groq_coach, _call_gemini_coach)
-_set_pronunciation_rate_limiter(rate_limit)
 app.include_router(_pronunciation_router)
+_set_pronunciation_rate_limiter(rate_limit, app)
 
 
 # ── One-time admin bootstrap ──────────────────────────────────────────────────

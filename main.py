@@ -102,6 +102,20 @@ WHISPER_MODEL        = os.getenv("WHISPER_MODEL", "small")
 WHISPER_DEVICE       = os.getenv("WHISPER_DEVICE", "cpu")
 WHISPER_COMPUTE_TYPE = os.getenv("WHISPER_COMPUTE_TYPE", "int8")
 
+# Local faster-whisper is opt-in, and off by default, for EVERY endpoint.
+# get_whisper() loads a multi-hundred-MB model into the worker process; on a
+# memory-constrained host (Render's 512MB instances) the kernel OOM-kills the
+# worker mid-load. That kill is uncatchable — no try/except around the call
+# helps — and reaches the browser as a bare 502. Groq Whisper is the real
+# transcriber in every deployed environment; this fallback only makes sense
+# where the instance has the headroom, so it must be turned on explicitly.
+# PRONUNCIATION_LOCAL_WHISPER is the older, endpoint-scoped spelling, honoured
+# so existing configs keep working.
+LOCAL_WHISPER_ENABLED = (
+    os.getenv("LOCAL_WHISPER_ENABLED", "").strip().lower() in ("1", "true", "yes")
+    or os.getenv("PRONUNCIATION_LOCAL_WHISPER", "").strip().lower() in ("1", "true", "yes")
+)
+
 APP_DIR = Path(__file__).resolve().parent
 DEFAULT_CORS_ORIGINS = (
     "http://localhost:5173,"
@@ -183,6 +197,13 @@ _whisper = None
 def get_whisper():
     global _whisper
     if _whisper is None:
+        # Gate the load here rather than at each call site, so a new caller
+        # can't reintroduce the OOM kill by forgetting to check the flag.
+        if not LOCAL_WHISPER_ENABLED:
+            raise RuntimeError(
+                "Local faster-whisper is disabled (set LOCAL_WHISPER_ENABLED=1 to "
+                "enable it on a host with enough memory for the model)."
+            )
         from faster_whisper import WhisperModel
         log.info("Loading faster-whisper model=%s device=%s compute=%s",
                  WHISPER_MODEL, WHISPER_DEVICE, WHISPER_COMPUTE_TYPE)
@@ -395,6 +416,7 @@ async def health() -> dict[str, Any]:
         "groq": groq_status,
         "gemini": gemini_status,
         "whisper_loaded": _whisper is not None,
+        "local_whisper_enabled": LOCAL_WHISPER_ENABLED,
         "db_connected": db_ok,
         "groq_configured": bool(GROQ_API_KEY),
         "gemini_configured": bool(GEMINI_API_KEY),
@@ -2667,7 +2689,14 @@ async def _feedback_impl(
                     log.warning("Groq Whisper failed, using faster-whisper: %s", e)
 
             if not whisper_data:
-                whisper_data = await _faster_whisper(tmp_path, "fr")
+                # Best-effort: the client usually also posts its own transcript,
+                # and an empty one falls through to the 400 below rather than
+                # surfacing a transcription failure as a 500.
+                try:
+                    whisper_data = await _faster_whisper(tmp_path, "fr")
+                except Exception as e:
+                    _log_provider_failure("faster-whisper", e)
+                    whisper_data = {}
 
             transcript = (whisper_data.get("text") or transcript or "").strip()
 
@@ -3001,7 +3030,14 @@ async def feedback_stream(request: Request) -> StreamingResponse:
                     except Exception as e:
                         log.warning("Stream: Groq Whisper failed: %s", e)
                 if not whisper_data:
-                    whisper_data = await _faster_whisper(tmp_path, "fr")
+                    # Best-effort, as in _feedback_impl: an empty transcript
+                    # falls through to the "No transcript available" event
+                    # below rather than tearing down the stream.
+                    try:
+                        whisper_data = await _faster_whisper(tmp_path, "fr")
+                    except Exception as e:
+                        log.warning("Stream: faster-whisper failed: %s", e)
+                        whisper_data = {}
 
                 actual_transcript = (whisper_data.get("text") or transcript or "").strip()
 
@@ -4375,21 +4411,15 @@ from routers.pronunciation import (
     set_rate_limiter as _set_pronunciation_rate_limiter,
 )
 
-# Local faster-whisper as the transcription fallback for /api/pronunciation is
-# opt-in, and off by default. Unlike /api/transcribe (whose whole job is
-# transcription, and which is called from flows that tolerate a slow answer),
-# this endpoint only uses the transcript as a *supporting* input: Azure grades
-# the audio directly in scripted mode, and the whisper-heuristic tier reports
-# couldNotAssess without one. Meanwhile get_whisper() loads a multi-hundred-MB
-# model into the worker process on first call. On a memory-constrained host
-# that load gets the process OOM-killed by the kernel — which no try/except can
-# catch, and which reaches the browser as a bare 502 with an empty body. Set
-# PRONUNCIATION_LOCAL_WHISPER=1 only where the instance has headroom for it.
-_PRONUNCIATION_LOCAL_WHISPER = os.getenv("PRONUNCIATION_LOCAL_WHISPER", "0").strip().lower() in ("1", "true", "yes")
-
+# Local faster-whisper is opt-in process-wide (see LOCAL_WHISPER_ENABLED near
+# the top of this file for why). This endpoint additionally treats it as
+# *optional* rather than merely gated: the transcript is a supporting input
+# here, not the assessment. Azure grades the audio directly in scripted mode,
+# and the whisper-heuristic tier reports couldNotAssess without a transcript —
+# so passing None degrades the result instead of refusing the request.
 _configure_pronunciation(
     _groq_whisper,
-    _faster_whisper if _PRONUNCIATION_LOCAL_WHISPER else None,
+    _faster_whisper if LOCAL_WHISPER_ENABLED else None,
     _align_pronunciation,
     lambda: bool(GROQ_API_KEY),
     _run_with_retries,

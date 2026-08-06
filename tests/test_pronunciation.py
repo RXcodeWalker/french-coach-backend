@@ -350,7 +350,7 @@ def test_transcription_failure_degrades_instead_of_crashing_the_worker(monkeypat
 
 def test_absent_local_whisper_fallback_degrades_instead_of_503(monkeypatch):
     """main.py passes None for the faster-whisper seam when
-    PRONUNCIATION_LOCAL_WHISPER is off, so that a Groq failure cannot trigger
+    LOCAL_WHISPER_ENABLED is off, so that a Groq failure cannot trigger
     an in-process model load (an OOM-kill there is uncatchable and reaches the
     browser as an empty-bodied 502). A missing local fallback must degrade the
     result, not refuse the request."""

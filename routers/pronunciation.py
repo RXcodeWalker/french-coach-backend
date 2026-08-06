@@ -128,7 +128,12 @@ async def pronunciation_evaluate(
     mode: str = Form("scripted"),
     coaching: str = Form("none"),
 ) -> PronunciationAssessmentResponse:
-    if _align_fn is None or _groq_whisper_fn is None or _faster_whisper_fn is None:
+    # _faster_whisper_fn is deliberately NOT required: main.py passes None for
+    # it when the local-model fallback is disabled (see PRONUNCIATION_LOCAL_WHISPER
+    # there). Transcription is a best-effort input to this endpoint, not the
+    # assessment itself, so its absence degrades the result rather than
+    # refusing the request.
+    if _align_fn is None or _groq_whisper_fn is None:
         raise HTTPException(status_code=503, detail="Pronunciation service not configured")
     if mode not in ("scripted", "freeform"):
         raise HTTPException(status_code=422, detail="mode must be 'scripted' or 'freeform'")
@@ -150,8 +155,17 @@ async def pronunciation_evaluate(
             except Exception as e:
                 log.warning("Groq Whisper failed in /api/pronunciation, trying faster-whisper: %s", e)
 
-        if not whisper_data:
-            whisper_data = await _faster_whisper_fn(tmp_path, "fr")
+        if not whisper_data and _faster_whisper_fn is not None:
+            # Guarded exactly like /api/transcribe's faster-whisper branch in
+            # main.py. Transcription is a best-effort input here, not the
+            # assessment itself: Azure grades from the audio, and the
+            # whisper-heuristic tier degrades to couldNotAssess on an empty
+            # transcript. Never let it fail the request.
+            try:
+                whisper_data = await _faster_whisper_fn(tmp_path, "fr")
+            except Exception as e:
+                log.warning("faster-whisper failed in /api/pronunciation, continuing without a transcript: %s", e)
+                whisper_data = {}
 
         heard_text = (whisper_data.get("text") or "").strip()
         whisper_words = whisper_data.get("words", [])
@@ -165,6 +179,25 @@ async def pronunciation_evaluate(
         # for this mode inside assess_pronunciation (mode == "freeform"):
         # you cannot "omit" a word from your own transcript.
         reference_text = heard_text if mode == "freeform" else target_text
+
+        if mode == "freeform" and not reference_text:
+            # No transcript => no reference text at all in this mode. Azure
+            # would be asked to grade against an empty ReferenceText, which
+            # yields a meaningless result rather than an error. Report the
+            # honest outcome instead.
+            return PronunciationAssessmentResponse(
+                score=None,
+                transcript="",
+                issues=[],
+                words=[],
+                provider="whisper-heuristic",
+                subScores=None,
+                couldNotAssess=True,
+                couldNotAssessReason="no_speech_recognized",
+                mode=mode,
+                locale=LOCALE,
+                assessorVersion=ASSESSOR_VERSION,
+            )
 
         cache_key = _audio_cache_key(raw, reference_text, mode)
         cached_result = await _audio_cache.get(cache_key)

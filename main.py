@@ -4375,9 +4375,21 @@ from routers.pronunciation import (
     set_rate_limiter as _set_pronunciation_rate_limiter,
 )
 
+# Local faster-whisper as the transcription fallback for /api/pronunciation is
+# opt-in, and off by default. Unlike /api/transcribe (whose whole job is
+# transcription, and which is called from flows that tolerate a slow answer),
+# this endpoint only uses the transcript as a *supporting* input: Azure grades
+# the audio directly in scripted mode, and the whisper-heuristic tier reports
+# couldNotAssess without one. Meanwhile get_whisper() loads a multi-hundred-MB
+# model into the worker process on first call. On a memory-constrained host
+# that load gets the process OOM-killed by the kernel — which no try/except can
+# catch, and which reaches the browser as a bare 502 with an empty body. Set
+# PRONUNCIATION_LOCAL_WHISPER=1 only where the instance has headroom for it.
+_PRONUNCIATION_LOCAL_WHISPER = os.getenv("PRONUNCIATION_LOCAL_WHISPER", "0").strip().lower() in ("1", "true", "yes")
+
 _configure_pronunciation(
     _groq_whisper,
-    _faster_whisper,
+    _faster_whisper if _PRONUNCIATION_LOCAL_WHISPER else None,
     _align_pronunciation,
     lambda: bool(GROQ_API_KEY),
     _run_with_retries,

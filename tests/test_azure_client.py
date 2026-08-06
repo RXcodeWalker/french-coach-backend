@@ -17,6 +17,8 @@ Run: pytest backend/tests/test_azure_client.py
 
 from __future__ import annotations
 
+import json
+import math
 import os
 import sys
 
@@ -218,6 +220,87 @@ def test_normalize_coerces_missing_phoneme_score_to_none_not_error():
     assert vin["accuracyScore"] is None
     for phoneme in vin["phonemes"]:
         assert phoneme["accuracyScore"] is None
+
+
+# Verbatim shape of a real Azure response to unusable audio, captured from a
+# live fr-FR resource on 2026-08-05. Note SNR is the *string* "NaN" and
+# RecognitionStatus is "Success" — Azure does not signal the problem through
+# the status field here.
+SAMPLE_UNUSABLE_AUDIO_RESPONSE = {
+    "RecognitionStatus": "Success",
+    "Offset": 0,
+    "Duration": 0,
+    "DisplayText": ".",
+    "SNR": "NaN",
+    "NBest": [
+        {
+            "Confidence": 0.0,
+            "Display": ".",
+            "AccuracyScore": 0.0,
+            "FluencyScore": 0.0,
+            "CompletenessScore": 0.0,
+            "PronScore": 0.0,
+            "Words": [
+                {"Word": "Un", "Offset": 0, "Duration": 0, "AccuracyScore": 0.0,
+                 "ErrorType": "Omission", "Phonemes": []},
+            ],
+        }
+    ],
+}
+
+
+def _assert_all_floats_finite(node):
+    if isinstance(node, float):
+        assert math.isfinite(node), f"non-finite float in response: {node}"
+    elif isinstance(node, dict):
+        for v in node.values():
+            _assert_all_floats_finite(v)
+    elif isinstance(node, list):
+        for v in node:
+            _assert_all_floats_finite(v)
+
+
+def test_normalize_never_emits_non_finite_floats():
+    """Regression: Azure sends `"SNR": "NaN"` as a JSON *string*. float("NaN")
+    passes Pydantic validation, then json.dumps refuses to encode it — the
+    request 500s at response-render time, after Azure has already been billed.
+    Uses a genuinely scorable response so this exercises the sanitizer rather
+    than the silence early-return."""
+    scorable_with_nan_snr = {
+        **SAMPLE_AZURE_RESPONSE,
+        "SNR": "NaN",
+    }
+    result = _normalize_azure_response(scorable_with_nan_snr, "Un bon vin blanc.")
+
+    assert result["couldNotAssess"] is False, "fixture must reach the scoring path"
+    assert result["snrDb"] is None, 'the string "NaN" must normalise to None, not nan'
+    _assert_all_floats_finite(result)
+    assert json.dumps(result, allow_nan=False), "payload must survive strict JSON encoding"
+
+
+def test_normalize_unusable_audio_response_is_json_encodable():
+    """The same live capture, end to end: silence guard plus NaN handling."""
+    result = _normalize_azure_response(SAMPLE_UNUSABLE_AUDIO_RESPONSE, "Un bon vin blanc.")
+    _assert_all_floats_finite(result)
+    assert json.dumps(result, allow_nan=False)
+
+
+def test_normalize_silent_transcript_yields_could_not_assess_not_zero():
+    """Azure returns RecognitionStatus "Success" with DisplayText "." and
+    PronScore 0 for silence. Rendering that as a confident 0/100 tells a
+    learner their pronunciation was terrible when nothing was recorded."""
+    result = _normalize_azure_response(SAMPLE_UNUSABLE_AUDIO_RESPONSE, "Un bon vin blanc.")
+    assert result["score"] is None
+    assert result["couldNotAssess"] is True
+    assert result["couldNotAssessReason"] == "no_speech_recognized"
+    assert result["issues"] == []
+
+
+def test_normalize_still_scores_a_genuine_attempt():
+    """Guard: the silence/NaN rules must not swallow real assessments."""
+    result = _normalize_azure_response(SAMPLE_AZURE_RESPONSE, "Un bon vin blanc.")
+    assert result["couldNotAssess"] is False
+    assert result["score"] is not None
 
 
 if __name__ == "__main__":

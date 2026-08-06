@@ -12,12 +12,39 @@ import logging
 from typing import Any, Awaitable, Callable
 
 from services.pronunciation.azure_client import assess_pronunciation
+from services.pronunciation.transcript import transcript_is_unusable
 
 log = logging.getLogger("uvicorn.error")
 
 # Injected by routers/pronunciation.py's configure() — main.py's existing
 # _align_pronunciation, unchanged.
 AlignFn = Callable[[str, str, list[dict[str, Any]]], dict[str, Any]]
+
+
+def _no_verdict(heard_text: str, reason: str, whisper_words: list[dict[str, Any]]) -> dict[str, Any]:
+    """The heuristic tier's honest "no result" shape — score None, never 0."""
+    return {
+        "score": None,
+        "transcript": heard_text,
+        "issues": [],
+        "words": [
+            {
+                "word": (w.get("word") or "").strip(),
+                "accuracyScore": None,
+                "errorType": None,
+                "confidence": w.get("probability"),
+                "phonemes": None,
+                "offsetMs": None,
+                "durationMs": None,
+                "nearChunkBoundary": None,
+            }
+            for w in whisper_words
+        ],
+        "provider": "whisper-heuristic",
+        "subScores": None,
+        "couldNotAssess": True,
+        "couldNotAssessReason": reason,
+    }
 
 
 async def assess_with_fallback(
@@ -51,6 +78,15 @@ async def assess_with_fallback(
     except Exception as exc:
         log.warning("Azure pronunciation assessment failed, falling back to Whisper heuristic: %s", exc)
 
+    if transcript_is_unusable(heard_text):
+        # Nothing recognisable was said (or Whisper hallucinated a subtitle
+        # credit over silence). The alignment below would score this 0/100 and
+        # attach per-word "you said X instead of Y" issues built from the
+        # hallucinated text — a fabricated verdict on audio that was never
+        # assessable. Same "never invent a number" rule the Azure tier already
+        # follows for RecognitionStatus != Success.
+        return _no_verdict(heard_text, "no_speech_recognized", whisper_words)
+
     if mode == "freeform":
         # The whisper-heuristic tier's alignment score is a target-vs-heard
         # diff (difflib.SequenceMatcher). In freeform mode target_text IS
@@ -82,6 +118,16 @@ async def assess_with_fallback(
     alignment = align_fn(target_text, heard_text, whisper_words)
     # _align_pronunciation returns a 0-10 score; rescale to the 0-100 contract.
     score_100 = max(0, min(100, round(alignment["score"] * 10)))
+
+    if score_100 == 0:
+        # Zero means not one reference word aligned. This tier has no acoustic
+        # signal at all — only a word-diff — so it genuinely cannot tell
+        # "spoke, but nothing matched" apart from "the audio was unusable and
+        # the recogniser guessed". Reporting a confident 0/100 to a learner who
+        # is reading the phrase off the screen is the least likely of those
+        # explanations and the most damaging one to be wrong about.
+        return _no_verdict(heard_text, "no_speech_recognized", whisper_words)
+
     return {
         "score": score_100,
         "transcript": heard_text,

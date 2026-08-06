@@ -295,6 +295,200 @@ def test_invalid_coaching_value_is_rejected(monkeypatch):
     assert response.status_code == 422
 
 
+@pytest.fixture(autouse=True)
+def _clear_pronunciation_caches():
+    """The router's audio/coaching caches are module-level singletons, so a
+    result cached by one test leaks into any later test that posts the same
+    audio bytes + reference text. Reset them around every test."""
+    import routers.pronunciation as pronunciation_router
+
+    pronunciation_router._audio_cache._store.clear()
+    pronunciation_router._coaching_cache._store.clear()
+    yield
+    pronunciation_router._audio_cache._store.clear()
+    pronunciation_router._coaching_cache._store.clear()
+
+
+def _build_app_with(groq_fn, faster_fn, align_fn=_fake_align) -> FastAPI:
+    """Same fresh-router construction as _build_app, with the injected
+    transcription/alignment seams overridable per test."""
+    configure(groq_fn, faster_fn, align_fn, lambda: True, None)
+    fresh_router = APIRouter(prefix="/api", tags=["pronunciation"])
+    fresh_router.post("/pronunciation", response_model=PronunciationAssessmentResponse)(pronunciation_evaluate)
+    app = FastAPI()
+    app.include_router(fresh_router)
+    return app
+
+
+def test_transcription_failure_degrades_instead_of_crashing_the_worker(monkeypatch):
+    """Regression: an unguarded `await _faster_whisper_fn(...)` propagated out
+    of the handler. In production that call loads a local model in-process and
+    took the worker down on a memory-constrained host — the client saw a bare
+    502 with an empty body, not a handled error. Transcription is a
+    best-effort input, never a reason to fail the request."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+
+    async def _boom_groq(tmp_path: str, language: str):
+        raise RuntimeError("groq rejected the audio")
+
+    async def _boom_faster(tmp_path: str, language: str):
+        raise MemoryError("model load exhausted available memory")
+
+    client = TestClient(_build_app_with(_boom_groq, _boom_faster))
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted"},
+        files={"audio": ("clip.webm", b"fake-audio-bytes", "audio/webm")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["couldNotAssess"] is True
+    assert body["score"] is None
+
+
+def test_absent_local_whisper_fallback_degrades_instead_of_503(monkeypatch):
+    """main.py passes None for the faster-whisper seam when
+    PRONUNCIATION_LOCAL_WHISPER is off, so that a Groq failure cannot trigger
+    an in-process model load (an OOM-kill there is uncatchable and reaches the
+    browser as an empty-bodied 502). A missing local fallback must degrade the
+    result, not refuse the request."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+
+    async def _boom_groq(tmp_path: str, language: str):
+        raise RuntimeError("groq rejected the audio")
+
+    client = TestClient(_build_app_with(_boom_groq, None))
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted"},
+        files={"audio": ("clip.webm", b"fake-audio-bytes", "audio/webm")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["couldNotAssess"] is True
+    assert body["score"] is None
+
+
+def test_whisper_silence_hallucination_is_not_scored_as_a_real_attempt(monkeypatch):
+    """Regression: Whisper emits a subtitle-credit artefact when fed silence.
+    Aligning the target against it produced a confident score 0 plus fabricated
+    per-word issues ("Said 'sous-titrage' instead of 'un'") — a verdict on
+    audio that was never assessable."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+
+    async def _hallucinating_groq(tmp_path: str, language: str):
+        return {"text": "Sous-titrage Société Radio-Canada", "words": []}
+
+    client = TestClient(_build_app_with(_hallucinating_groq, _fake_faster_whisper))
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["score"] is None, "silence must never render as a score of 0"
+    assert body["couldNotAssess"] is True
+    assert body["couldNotAssessReason"] == "no_speech_recognized"
+    assert body["issues"] == [], "no fabricated per-word issues from hallucinated text"
+
+
+def test_empty_transcript_reports_no_verdict_rather_than_zero(monkeypatch):
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+
+    async def _silent_groq(tmp_path: str, language: str):
+        return {"text": "  .  ", "words": []}
+
+    client = TestClient(_build_app_with(_silent_groq, _fake_faster_whisper))
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    body = response.json()
+    assert body["score"] is None
+    assert body["couldNotAssess"] is True
+
+
+def test_zero_alignment_reports_no_verdict_rather_than_a_confident_zero(monkeypatch):
+    """The heuristic tier has no acoustic signal — only a word diff — so a
+    zero-match result cannot be distinguished from unusable audio."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+
+    async def _mismatched_groq(tmp_path: str, language: str):
+        return {"text": "bonjour tout le monde", "words": []}
+
+    def _zero_align(target_text: str, heard_text: str, whisper_words):
+        return {"score": 0, "issues": [{"word": "un", "problem": "x", "severity": "medium", "drill": {}}]}
+
+    client = TestClient(_build_app_with(_mismatched_groq, _fake_faster_whisper, _zero_align))
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    body = response.json()
+    assert body["score"] is None
+    assert body["couldNotAssess"] is True
+    assert body["issues"] == []
+
+
+def test_freeform_without_a_transcript_reports_no_verdict(monkeypatch):
+    """Freeform mode derives its reference text from the transcript; with no
+    transcript there is no reference to grade against at all."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+
+    async def _boom_groq(tmp_path: str, language: str):
+        raise RuntimeError("nope")
+
+    async def _boom_faster(tmp_path: str, language: str):
+        raise RuntimeError("nope")
+
+    client = TestClient(_build_app_with(_boom_groq, _boom_faster))
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "ignored in freeform", "mode": "freeform"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["score"] is None
+    assert body["couldNotAssess"] is True
+    assert body["couldNotAssessReason"] == "no_speech_recognized"
+
+
+def test_genuine_partial_attempt_still_receives_a_score(monkeypatch):
+    """Guard against the no-verdict rules swallowing real, scorable attempts."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+
+    async def _partial_groq(tmp_path: str, language: str):
+        return {"text": "Un bon vin blanc.", "words": []}
+
+    client = TestClient(_build_app_with(_partial_groq, _fake_faster_whisper))
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    body = response.json()
+    assert body["couldNotAssess"] is False
+    assert body["score"] == 70  # _fake_align's 0-10 score of 7, rescaled
+
+
 if __name__ == "__main__":
     with pytest.MonkeyPatch.context() as mp:
         test_pronunciation_degrades_to_whisper_heuristic_without_azure_key(mp)

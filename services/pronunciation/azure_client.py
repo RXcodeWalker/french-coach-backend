@@ -22,12 +22,34 @@ from __future__ import annotations
 import base64
 import json
 import logging
+import math
 import os
 from typing import Any
 
 import httpx
 
+from services.pronunciation.transcript import transcript_is_unusable
+
 log = logging.getLogger("uvicorn.error")
+
+
+def _finite_float(value: Any) -> float | None:
+    """Coerce an Azure numeric field to a JSON-safe float, or None.
+
+    Azure sends non-finite values as JSON *strings* — a silent or unusable
+    clip comes back with `"SNR": "NaN"`. `float("NaN")` happily produces a
+    nan, which survives Pydantic validation and then makes the response
+    un-encodable: json.dumps raises "Out of range float values are not JSON
+    compliant" and the whole request 500s, after Azure has already been paid
+    for. Every raw Azure float must go through here.
+    """
+    if value is None:
+        return None
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if math.isfinite(parsed) else None
 
 # Azure's own vocabulary — allowed to appear ONLY in this module.
 _ERROR_TYPE_MAP: dict[str, str] = {
@@ -148,6 +170,24 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
     assessment = _pron_assessment(best)
     transcript = (raw_json.get("DisplayText") or best.get("Display") or "").strip()
 
+    if transcript_is_unusable(transcript):
+        # Azure reports RecognitionStatus "Success" with DisplayText "." for a
+        # silent/unusable clip, then scores every word Omission and PronScore
+        # 0. Rendering that as a confident 0/100 tells a learner their
+        # pronunciation was terrible when in fact nothing was recorded — the
+        # same fabricated-verdict failure the RecognitionStatus branch above
+        # already guards against, just reached through a different door.
+        return {
+            "score": None,
+            "transcript": transcript,
+            "issues": [],
+            "words": [],
+            "provider": "azure",
+            "subScores": None,
+            "couldNotAssess": True,
+            "couldNotAssessReason": "no_speech_recognized",
+        }
+
     if not assessment or assessment.get("PronScore") is None:
         # 200 OK with plain STT output and no assessment block (defect #8) —
         # a malformed/rejected Pronunciation-Assessment header fails this way,
@@ -164,21 +204,20 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
         }
 
     sub_scores = {
-        "accuracy": float(assessment.get("AccuracyScore", 0.0)),
-        "fluency": float(assessment.get("FluencyScore", 0.0)),
-        "completeness": (
-            float(assessment["CompletenessScore"]) if assessment.get("CompletenessScore") is not None else None
-        ),
-        "prosody": assessment.get("ProsodyScore"),
+        "accuracy": _finite_float(assessment.get("AccuracyScore")) or 0.0,
+        "fluency": _finite_float(assessment.get("FluencyScore")) or 0.0,
+        "completeness": _finite_float(assessment.get("CompletenessScore")),
+        "prosody": _finite_float(assessment.get("ProsodyScore")),
     }
-    score = round(float(assessment.get("PronScore", 0.0)))
+    score = round(_finite_float(assessment.get("PronScore")) or 0.0)
 
     # Previously discarded fields (plan §5): SNR gates confidence rather than
     # producing a bogus low score; NBest[0].Confidence feeds confidence.py's
     # azure_confidence term. Both optional — absent on some resource/region
-    # combinations, never fabricated when missing.
-    snr_db = raw_json.get("SNR")
-    azure_confidence = best.get("Confidence")
+    # combinations, never fabricated when missing. SNR in particular arrives
+    # as the string "NaN" on unusable audio, hence _finite_float.
+    snr_db = _finite_float(raw_json.get("SNR"))
+    azure_confidence = _finite_float(best.get("Confidence"))
 
     words_out: list[dict[str, Any]] = []
     issues_out: list[dict[str, Any]] = []
@@ -189,18 +228,13 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
         w_assessment = _pron_assessment(w)
         azure_error = w_assessment.get("ErrorType", "None")
         error_type = _ERROR_TYPE_MAP.get(azure_error, "correct")
-        accuracy_score = w_assessment.get("AccuracyScore")
-        accuracy_score = float(accuracy_score) if accuracy_score is not None else None
+        accuracy_score = _finite_float(w_assessment.get("AccuracyScore"))
 
         phonemes_raw = w.get("Phonemes") or []
         phonemes_out = [
             {
                 "phoneme": p.get("Phoneme"),
-                "accuracyScore": (
-                    float(raw_phoneme_score)
-                    if (raw_phoneme_score := _pron_assessment(p).get("AccuracyScore")) is not None
-                    else None
-                ),
+                "accuracyScore": _finite_float(_pron_assessment(p).get("AccuracyScore")),
             }
             for p in phonemes_raw
         ]
@@ -265,8 +299,8 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
         "subScores": sub_scores,
         "couldNotAssess": False,
         "couldNotAssessReason": None,
-        "snrDb": float(snr_db) if snr_db is not None else None,
-        "azureConfidence": float(azure_confidence) if azure_confidence is not None else None,
+        "snrDb": snr_db,
+        "azureConfidence": azure_confidence,
     }
 
 

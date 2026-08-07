@@ -94,6 +94,9 @@ GEMINI_API_KEY      = os.getenv("GEMINI_API_KEY", "").strip()
 # retires the 2.x line. gemini-3.5-flash is the current callable default;
 # override via env if Google moves the goalposts again.
 GEMINI_MODEL        = os.getenv("GEMINI_MODEL", "gemini-3.5-flash").strip()
+# Measured ~23s for a full feedback prompt against gemini-3.5-flash; the health
+# probe sends a trivial one but still pays the model's thinking latency.
+GEMINI_PROBE_TIMEOUT_SEC = float(os.getenv("GEMINI_PROBE_TIMEOUT_SEC", "12"))
 SUPABASE_URL        = os.getenv("SUPABASE_URL", "").strip()
 SUPABASE_KEY        = os.getenv("SUPABASE_SERVICE_KEY", "").strip()
 SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "").strip()
@@ -1947,9 +1950,12 @@ async def _probe_gemini() -> str:
         gemini = get_gemini()
         if not gemini:
             return "not_configured"
+        # Gemini 3.x flash spends thinking time before emitting a first token, so
+        # even "Hi" does not come back inside the 3s Groq gets. A too-short probe
+        # reported gemini as permanently "degraded" while real calls succeeded.
         await asyncio.wait_for(
             asyncio.to_thread(gemini.generate_content, "Hi"),
-            timeout=3.0,
+            timeout=GEMINI_PROBE_TIMEOUT_SEC,
         )
         return "ok"
     except Exception as exc:
@@ -2418,42 +2424,46 @@ async def call_ai_feedback(
     provider_errors: list[dict[str, str]] = []
     t_start = time.monotonic()
 
-    primary_name = f"gemini/{GEMINI_MODEL}-multimodal" if has_audio else f"gemini/{GEMINI_MODEL}"
-    result = await _try_feedback_provider(
-        primary_name,
-        lambda: _call_gemini_multimodal(prompt, audio_path, mime_type=audio_mime) if has_audio else _call_gemini(prompt),
-        provider_errors,
-    )
-    if result:
-        result.setdefault("providerStatus", "primary")
-        result["engineMeta"] = {
-            "requestedEngine": req.model or "gemini",
-            "actualEngine": "gemini",
-            "fallbackUsed": False,
-            "latencyMs": int((time.monotonic() - t_start) * 1000),
-            "evaluatedAt": datetime.now(timezone.utc).isoformat(),
-        }
-        _log_coaching_quality(result, req.transcript)
-        return result
+    gemini_name = f"gemini/{GEMINI_MODEL}-multimodal" if has_audio else f"gemini/{GEMINI_MODEL}"
 
-    result = await _try_feedback_provider(
-        "groq/llama-3.3-70b-versatile",
-        lambda: _call_groq(prompt, detailed),
-        provider_errors,
-    )
-    if result:
+    def _call_gemini_either():
+        if has_audio:
+            return _call_gemini_multimodal(prompt, audio_path, mime_type=audio_mime)
+        return _call_gemini(prompt)
+
+    providers: dict[str, tuple[str, Any]] = {
+        "gemini": (gemini_name, _call_gemini_either),
+        "groq": ("groq/llama-3.3-70b-versatile", lambda: _call_groq(prompt, detailed)),
+    }
+
+    # Honour the client's engine preference. Without this the chain was always
+    # Gemini-first, so a client that asked for Groq (and budgeted a short Groq
+    # timeout) still paid the full Gemini latency before Groq was even called —
+    # which read on the client as "Groq timed out".
+    requested = (req.model or "").strip().lower()
+    order = ["groq", "gemini"] if requested == "groq" else ["gemini", "groq"]
+
+    for index, engine in enumerate(order):
+        name, operation = providers[engine]
+        result = await _try_feedback_provider(name, operation, provider_errors)
+        if not result:
+            continue
+
         failover_reason = "; ".join(
             f"{e['provider']} {e['type']}: {e.get('message', '')[:80]}"
             for e in provider_errors
         )
-        result.setdefault("providerStatus", "fallback")
-        result["fallbackReason"] = provider_errors[0]["type"] if provider_errors else "primary_unavailable"
-        result["providerErrors"] = provider_errors
+        if index == 0:
+            result.setdefault("providerStatus", "primary")
+        else:
+            result.setdefault("providerStatus", "fallback")
+            result["fallbackReason"] = provider_errors[0]["type"] if provider_errors else "primary_unavailable"
+            result["providerErrors"] = provider_errors
         result["engineMeta"] = {
             "requestedEngine": req.model or "gemini",
-            "actualEngine": "groq",
-            "fallbackUsed": True,
-            "failoverReason": failover_reason,
+            "actualEngine": engine,
+            "fallbackUsed": index > 0,
+            **({"failoverReason": failover_reason} if index > 0 else {}),
             "latencyMs": int((time.monotonic() - t_start) * 1000),
             "evaluatedAt": datetime.now(timezone.utc).isoformat(),
         }
@@ -2831,6 +2841,9 @@ async def feedback(request: Request) -> dict[str, Any]:
                 transcript = str(data_payload.get("transcript") or "")
             skill_context = data_payload.get("skillContext") or None
             difficulty_context = data_payload.get("difficultyContext") or None
+            # Same as the JSON branch: the client bundles its engine choice in
+            # `data`, not as a top-level form field.
+            model = str(data_payload.get("enginePreference") or data_payload.get("model") or model)
             if not metrics_json or metrics_json == "{}":
                 m = data_payload.get("metrics")
                 if isinstance(m, dict):
@@ -2860,7 +2873,10 @@ async def feedback(request: Request) -> dict[str, Any]:
             payload.get("question") or payload.get("prompt") or ""
         )
         transcript = str(payload.get("transcript") or payload.get("text") or "")
-        model = str(payload.get("model") or "gemini")
+        # `enginePreference` is what the web client actually sends; `model` is the
+        # older spelling kept for other callers. Reading only `model` meant the
+        # preference was silently dropped and every request ran Gemini-first.
+        model = str(payload.get("enginePreference") or payload.get("model") or "gemini")
         detailed = bool(payload.get("detailed", False))
         skill_context = payload.get("skillContext") or None
         difficulty_context = payload.get("difficultyContext") or None

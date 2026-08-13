@@ -37,5 +37,6 @@ uvicorn main:app --host 0.0.0.0 --port $PORT
 - `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, and `SUPABASE_JWT_SECRET` are required for database-backed endpoints.
 - `CORS_ORIGINS` should be your frontend domains, comma-separated, with no trailing slash.
 - `IGCSE_DB_PATH` defaults to `data/igcse_speaking.db`.
+- `AZURE_SPEECH_KEY` and `AZURE_SPEECH_REGION` are optional and enable phoneme/prosody-level pronunciation assessment via Azure AI Speech. Get them from a "Speech" resource at [portal.azure.com](https://portal.azure.com) (the free F0 tier has no cost but has monthly-hour and rate quotas). Without both set, pronunciation scoring degrades gracefully to the `whisper-heuristic` tier (word-diff only, no acoustic signal) — no crash, no fabricated score.
 
 Hosted AI providers are rate-limited. The backend logs failures, tries provider fallbacks, and returns structured offline JSON when providers are unavailable.

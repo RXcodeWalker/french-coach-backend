@@ -423,6 +423,7 @@ async def health() -> dict[str, Any]:
         "db_connected": db_ok,
         "groq_configured": bool(GROQ_API_KEY),
         "gemini_configured": bool(GEMINI_API_KEY),
+        "azure_speech_configured": bool(os.getenv("AZURE_SPEECH_KEY")) and bool(os.getenv("AZURE_SPEECH_REGION")),
     }
 
 

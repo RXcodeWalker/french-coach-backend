@@ -9,18 +9,22 @@ by routers/content.py (set_cache) and routers/admin.py (set_cache_invalidator).
 
 from __future__ import annotations
 
+import asyncio
 import hashlib
+import json
 import logging
 import os
 import tempfile
+import uuid
 from typing import Annotated, Any, Awaitable, Callable
 
-from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
+from fastapi import APIRouter, File, Form, Header, HTTPException, Request, UploadFile
 
+from lib.auth import verify_supabase_jwt
 from models.pronunciation import PronunciationAssessmentResponse
 from services.cache import BoundedTTLCache
 from services.phonology import rules as phonology_rules
-from services.pronunciation.coach_narrator import findings_hash, generate_coaching
+from services.pronunciation.coach_narrator import generate_shadowing_coaching
 from services.pronunciation.capabilities import enforce_capabilities
 from services.pronunciation.confidence import compute_confidence
 from services.pronunciation.fallback import assess_with_fallback
@@ -40,14 +44,6 @@ LOCALE = "fr-FR"
 _AUDIO_CACHE_MAX = 100
 _AUDIO_CACHE_TTL_SEC = 600.0
 _audio_cache: BoundedTTLCache[dict] = BoundedTTLCache(_AUDIO_CACHE_MAX, _AUDIO_CACHE_TTL_SEC)
-
-# Coaching cache: keyed by findings hash, TTL 1h (plan §9, R5) — two learners
-# with the same errors share one LLM call. Separate instance from the audio
-# cache: different key space, different eviction pressure.
-_COACHING_CACHE_MAX = 200
-_COACHING_CACHE_TTL_SEC = 3600.0
-_coaching_cache: BoundedTTLCache[dict] = BoundedTTLCache(_COACHING_CACHE_MAX, _COACHING_CACHE_TTL_SEC)
-
 
 def _audio_cache_key(audio_bytes: bytes, reference_text: str, mode: str) -> str:
     digest = hashlib.sha256(audio_bytes).hexdigest()
@@ -71,6 +67,157 @@ _run_with_retries_fn: Callable[..., Awaitable[Any]] | None = None
 # in main.py and are both optional (missing key => that provider is skipped).
 _coach_call_groq: Callable[[str], Awaitable[dict[str, Any]]] | None = None
 _coach_call_gemini: Callable[[str], Awaitable[dict[str, Any]]] | None = None
+
+# ── Shadowing detailed-coaching quota (Phase 4, plan §4) ────────────────────
+# COACHING_DAILY_LIMIT is used ONLY for the degraded-quota dicts below (the
+# shapes returned when the RPC was never reached at all) — the RPC's own
+# v_limit is the single source of truth for the real limit, and the client
+# reads `limit` off the response rather than hardcoding it.
+COACHING_DAILY_LIMIT = 3
+
+# Shadowing coaching cache: keyed by a hash of the FULL normalized context
+# (target text + per-word accuracy scores + sub-scores + rhythm), not just
+# findings — a retry-dedup cache, not a cross-user sharing cache. Its job is
+# to stop an identical replay costing a second Groq call; two users landing
+# on the same key implies identical assessments, in which case identical
+# coaching is correct, not a leak.
+_SHADOWING_COACHING_CACHE_MAX = 200
+_SHADOWING_COACHING_CACHE_TTL_SEC = 3600.0
+_shadowing_coaching_cache: BoundedTTLCache[dict] = BoundedTTLCache(
+    _SHADOWING_COACHING_CACHE_MAX, _SHADOWING_COACHING_CACHE_TTL_SEC
+)
+
+_supabase_admin = None
+
+
+def _db():
+    """Lazy service-role Supabase client (copied from routers/admin.py's
+    `_db()` — same pattern, separate instance since this router has no
+    other reason to import admin.py)."""
+    global _supabase_admin
+    if _supabase_admin is None:
+        url = os.getenv("SUPABASE_URL", "").strip()
+        key = os.getenv("SUPABASE_SERVICE_KEY", "").strip()
+        if not (url and key):
+            return None
+        from supabase import create_client
+        _supabase_admin = create_client(url, key)
+    return _supabase_admin
+
+
+def _degraded_quota(reason: str) -> dict[str, Any]:
+    return {"used": 0, "limit": COACHING_DAILY_LIMIT, "granted": False, "reason": reason}
+
+
+def _coaching_user_id(authorization: str | None) -> str | None:
+    """Never raises — every failure (missing/malformed/expired/forged JWT,
+    or SUPABASE_JWT_SECRET unset) becomes None, which the caller degrades to
+    the 'unauthenticated' quota reason. Degrading rather than 401ing is
+    *stricter* (no coaching) and satisfies "never fail the shadowing
+    attempt" (plan §4)."""
+    try:
+        payload = verify_supabase_jwt(authorization)
+    except Exception as e:
+        log.warning("shadowing coaching: auth failed, degrading to unauthenticated: %s", e)
+        return None
+    sub = payload.get("sub")
+    return str(sub) if sub else None
+
+
+async def _consume_quota(user_id: str, idempotency_key: str) -> dict[str, Any]:
+    """Fail closed on spend, open on the attempt: any Supabase/RPC error
+    degrades to 'quota_unavailable' rather than raising, so a misconfigured
+    or unreachable Supabase project never fails the underlying assessment."""
+    db = _db()
+    if db is None:
+        return _degraded_quota("quota_unavailable")
+    try:
+        res = await asyncio.to_thread(
+            lambda: db.rpc(
+                "consume_shadowing_coaching_quota",
+                {"p_user_id": user_id, "p_idempotency_key": idempotency_key},
+            ).execute()
+        )
+        data = res.data or {}
+        return {
+            "used": data.get("used", 0),
+            "limit": data.get("limit", COACHING_DAILY_LIMIT),
+            "granted": bool(data.get("granted", False)),
+            "reason": data.get("reason"),
+        }
+    except Exception as e:
+        log.warning("shadowing coaching: consume_shadowing_coaching_quota RPC failed: %s", e)
+        return _degraded_quota("quota_unavailable")
+
+
+async def _release_quota(user_id: str, idempotency_key: str) -> dict[str, Any]:
+    """A failing release leaves the user charged; logged at WARNING, never
+    surfaced as an error — the assessment result must not be blocked by a
+    refund failure."""
+    db = _db()
+    if db is None:
+        return _degraded_quota("quota_unavailable")
+    try:
+        res = await asyncio.to_thread(
+            lambda: db.rpc(
+                "release_shadowing_coaching_grant",
+                {"p_user_id": user_id, "p_idempotency_key": idempotency_key},
+            ).execute()
+        )
+        data = res.data or {}
+        return {
+            "used": data.get("used", 0),
+            "limit": data.get("limit", COACHING_DAILY_LIMIT),
+            "granted": False,
+            "reason": None,
+        }
+    except Exception as e:
+        log.warning("shadowing coaching: release_shadowing_coaching_grant RPC failed (user stays charged): %s", e)
+        return _degraded_quota("quota_unavailable")
+
+
+def _build_shadowing_context(result: dict[str, Any], target_text: str) -> dict[str, Any]:
+    """Rounds floats (scores to int, ratios to 2 dp) so trivial jitter
+    doesn't destroy cache hits (plan §4, review item 6)."""
+    words = result.get("words") or []
+    mispronounced = [
+        {"word": w.get("word"), "accuracyScore": round(w["accuracyScore"]) if w.get("accuracyScore") is not None else None}
+        for w in words if w.get("errorType") in ("mispronounced", "skipped")
+    ]
+    correct = [
+        {"word": w.get("word"), "accuracyScore": round(w["accuracyScore"]) if w.get("accuracyScore") is not None else None}
+        for w in words if w.get("errorType") == "correct"
+    ]
+    sub_scores = result.get("subScores") or {}
+    rounded_sub_scores = {
+        k: (round(v) if isinstance(v, (int, float)) else v) for k, v in sub_scores.items()
+    }
+    prosody = result.get("prosodyMetrics")
+    rounded_prosody = None
+    if prosody is not None:
+        rounded_prosody = {
+            k: (round(v, 2) if isinstance(v, float) else v) for k, v in prosody.items()
+        }
+    findings = [
+        {"category": f.get("category"), "word": f.get("word"), "explanation": f.get("explanation")}
+        for f in (result.get("phonologicalFindings") or [])
+    ]
+    return {
+        "targetText": target_text,
+        "score": round(result["score"]) if result.get("score") is not None else None,
+        "subScores": rounded_sub_scores,
+        "prosodyMetrics": rounded_prosody,
+        "mispronouncedWords": mispronounced,
+        "correctWords": correct,
+        "findings": findings,
+    }
+
+
+def _shadowing_cache_key(ctx: dict[str, Any]) -> str:
+    """Hashes the ENTIRE payload handed to the prompt builder, so no context
+    field can differ without changing the key (plan §4, review item 6)."""
+    digest_input = json.dumps(ctx, sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(digest_input.encode("utf-8")).hexdigest()
 
 
 def configure(
@@ -127,6 +274,8 @@ async def pronunciation_evaluate(
     target_text: str = Form(...),
     mode: str = Form("scripted"),
     coaching: str = Form("none"),
+    coaching_request_id: str = Form(""),
+    authorization: str | None = Header(None),
 ) -> PronunciationAssessmentResponse:
     # _faster_whisper_fn is deliberately NOT required: main.py passes None for
     # it when the local-model fallback is disabled (see PRONUNCIATION_LOCAL_WHISPER
@@ -259,26 +408,52 @@ async def pronunciation_evaluate(
 
         result = enforce_capabilities(result, mode=mode, tier=tier, locale=LOCALE)
 
-        # Coaching (plan §8, R5): a second, optional pass over the findings
-        # that already survived enforce_capabilities — never computed when
-        # coaching=none (drill mode default), and never blocks assessment on
-        # failure (generate_coaching itself always falls back to a template
-        # rather than raising). Cached by findings hash, not by audio, since
-        # two learners with identical findings should share one LLM call.
-        if coaching == "full" and not result.get("couldNotAssess"):
-            findings = result.get("phonologicalFindings") or []
-            coach_key = findings_hash(findings)
-            cached_coaching = await _coaching_cache.get(coach_key)
-            if cached_coaching is not None:
-                result["coaching"] = cached_coaching
+        # Coaching (Phase 4 — Shadowing Mode, plan §4): a second, optional,
+        # server-metered pass over the findings that already survived
+        # enforce_capabilities. Never computed when coaching=none (the
+        # default for Drills/Learn/SayItAgainCard — none of which currently
+        # send coaching='full'), and never blocks assessment on failure —
+        # every helper below degrades to a dict rather than raising.
+        # Quota is consumed BEFORE the Groq call and refunded whenever the
+        # narrator's `grounded` flag comes back False (Groq unavailable,
+        # timed out, malformed JSON, or failed the per-claim grounding gate)
+        # — a user is never charged for feedback they didn't receive.
+        if coaching == "full":
+            if result.get("couldNotAssess"):
+                quota = _degraded_quota("could_not_assess")
+            elif _coach_call_groq is None:
+                quota = _degraded_quota("coaching_unavailable")
             else:
-                coaching_result = await generate_coaching(
-                    findings,
-                    call_groq=_coach_call_groq,
-                    call_gemini=_coach_call_gemini,
-                )
-                result["coaching"] = coaching_result
-                await _coaching_cache.set(coach_key, coaching_result)
+                user_id = _coaching_user_id(authorization)
+                if user_id is None:
+                    quota = _degraded_quota("unauthenticated")
+                else:
+                    # Empty coaching_request_id => server-generated uuid4().
+                    # This loses replay protection for that one request (a
+                    # retried call would consume a second slot), but the
+                    # client always sends one in practice; documented rather
+                    # than silently defaulting to something replay-safe.
+                    request_id = coaching_request_id or str(uuid.uuid4())
+                    quota = await _consume_quota(user_id, request_id)
+                    if quota["granted"]:
+                        ctx = _build_shadowing_context(result, target_text)
+                        coach_key = _shadowing_cache_key(ctx)
+                        cached = await _shadowing_coaching_cache.get(coach_key)
+                        if cached is not None:
+                            result["coaching"] = cached
+                        else:
+                            out = await generate_shadowing_coaching(
+                                ctx,
+                                result.get("phonologicalFindings") or [],
+                                call_groq=_coach_call_groq,
+                            )
+                            if out["grounded"]:
+                                result["coaching"] = out
+                                await _shadowing_coaching_cache.set(coach_key, out)
+                            else:
+                                result["coaching"] = out
+                                quota = await _release_quota(user_id, request_id)
+            result["coachingQuota"] = quota
 
         request.state.obs_provider = result.get("provider")
         request.state.obs_cached = was_cached

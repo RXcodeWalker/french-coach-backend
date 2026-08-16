@@ -100,6 +100,15 @@ class PronunciationCoaching(BaseModel):
     grounded: bool = True  # False when the LLM pass failed and this is a template fallback
 
 
+class PronunciationCoachingQuota(BaseModel):
+    used: int
+    limit: int
+    granted: bool
+    reason: str | None = None
+    # 'daily_limit_reached' | 'unauthenticated' | 'quota_unavailable'
+    # | 'could_not_assess' | 'coaching_unavailable'
+
+
 class PronunciationAssessmentResponse(BaseModel):
     score: int | None  # 0-100; null when couldNotAssess is True — never a fabricated 0
     transcript: str
@@ -122,3 +131,4 @@ class PronunciationAssessmentResponse(BaseModel):
     audioQuality: AudioQuality | None = None
     confidence: PronunciationConfidence | None = None
     coaching: PronunciationCoaching | None = None
+    coachingQuota: PronunciationCoachingQuota | None = None

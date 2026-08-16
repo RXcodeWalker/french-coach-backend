@@ -19,6 +19,14 @@ except for the two network calls, so it degrades to a template summary
 built from each finding's own `explanation` (already authored per category
 in data/phonology/fr.json) whenever the LLM is unavailable or its output
 fails the gate. `grounded=False` marks a template fallback.
+
+`generate_shadowing_coaching` (Phase 4 — Shadowing Mode, implementation plan
+i-am-implementing-phase-sunny-lagoon.md §4) is a separate function added
+alongside `generate_coaching`, not a variant of it: `generate_coaching`,
+`_build_prompt`, `_apply_gate`, `_template_fallback`, and `findings_hash`
+stay exactly as they were so /api/repair (main.py) keeps its current
+behaviour including Gemini. The shadowing path takes no `call_gemini`
+parameter at all, by signature, so Gemini can never be reintroduced into it.
 """
 
 from __future__ import annotations
@@ -187,6 +195,216 @@ async def generate_coaching(
             log.warning("coach_narrator: LLM call failed, trying next provider: %s", e)
 
     return _template_fallback(findings)
+
+
+_SHADOWING_SYSTEM_PROMPT = (
+    "You are a French pronunciation coach for Cambridge IGCSE learners doing a "
+    "shadowing exercise (listen to a model sentence, repeat it, get scored on "
+    "how closely they matched it). You will be given the target sentence, "
+    "which words the speech-assessment engine marked as problem words vs "
+    "praise words, and (optionally) rhythm metrics. You may claim a problem "
+    "ONLY about a word in the problem-words list, and praise ONLY a word in "
+    "the praise-words list. Never invent a word, an error, or a strength not "
+    "present in those lists. If rhythm metrics are not provided, you MUST "
+    "NOT comment on rhythm at all (rhythmNote must be null). Return ONLY JSON."
+)
+
+
+def _shadowing_prompt(context: dict[str, Any], problem_words: set[str], praise_words: set[str]) -> str:
+    payload = {
+        "targetText": context.get("targetText"),
+        "problemWords": sorted(problem_words),
+        "praiseWords": sorted(praise_words),
+        "rhythmMetrics": context.get("prosodyMetrics"),
+    }
+    return (
+        f"CONTEXT:\n{json.dumps(payload, ensure_ascii=False)}\n\n"
+        "Return ONLY this JSON (nothing else):\n"
+        "{\n"
+        '  "summary": "<1-2 sentences on the overall attempt, quoting only '
+        'words from problemWords/praiseWords>",\n'
+        '  "strengths": [{"word": "<a word from praiseWords>", "note": "<why it was good>"}],\n'
+        '  "problems": [{"word": "<a word from problemWords>", "note": "<a concrete fix>"}],\n'
+        '  "rhythmNote": "<a short note on pace/pauses, or null if rhythmMetrics is null>",\n'
+        '  "nextRepetition": "<one actionable cue for the next attempt>"\n'
+        "}"
+    )
+
+
+def _shadowing_template_fallback(problem_words: set[str], praise_words: set[str]) -> dict[str, Any]:
+    """Grounded-by-construction degrade: names at most the words the caller
+    already told us about, never anything drawn from the LLM."""
+    if not problem_words:
+        return {
+            "summary": "Nice work — no specific pronunciation problems were flagged this time.",
+            "topPriority": "Keep practising at your current pace.",
+            "tips": [],
+            "grounded": False,
+        }
+    top = sorted(problem_words)[0]
+    tips = [f"Focus on «{w}» next time." for w in sorted(problem_words)[:3]]
+    return {
+        "summary": f"This attempt had trouble with: {', '.join(sorted(problem_words))}.",
+        "topPriority": f"Focus on «{top}» next time.",
+        "tips": tips,
+        "grounded": False,
+    }
+
+
+def _apply_shadowing_gate(
+    raw: dict[str, Any],
+    *,
+    problem_words: set[str],
+    praise_words: set[str],
+    target_words: set[str],
+    has_rhythm: bool,
+) -> dict[str, Any] | None:
+    """Per-claim gate (plan §4, review item 5): unlike _apply_gate, this
+    validates each problems[]/strengths[] entry against its OWN vocabulary
+    (problem_words vs praise_words respectively), not a single combined
+    allowed-words set — a claim that "you mispronounced X" must name an
+    actual mispronunciation, not merely any word that appeared anywhere.
+    All-or-nothing: any single violation drops the whole result."""
+    summary = str(raw.get("summary", ""))
+    next_repetition = str(raw.get("nextRepetition", ""))
+    rhythm_note = raw.get("rhythmNote")
+    strengths = raw.get("strengths") or []
+    problems = raw.get("problems") or []
+
+    if not isinstance(strengths, list) or not isinstance(problems, list):
+        return None
+
+    allowed_all = problem_words | praise_words | target_words
+
+    if _mentions_ungrounded_word(summary, allowed_all):
+        return None
+    if _mentions_ungrounded_word(next_repetition, allowed_all):
+        return None
+
+    if not has_rhythm:
+        if rhythm_note not in (None, ""):
+            return None
+        rhythm_note = None
+    else:
+        rhythm_note = str(rhythm_note) if rhythm_note else None
+
+    kept_problems: list[dict[str, str]] = []
+    for item in problems:
+        if not isinstance(item, dict):
+            return None
+        word = str(item.get("word", "")).strip().lower()
+        note = str(item.get("note", ""))
+        if word not in problem_words:
+            return None
+        kept_problems.append({"word": word, "note": note})
+
+    kept_strengths: list[dict[str, str]] = []
+    for item in strengths:
+        if not isinstance(item, dict):
+            return None
+        word = str(item.get("word", "")).strip().lower()
+        note = str(item.get("note", ""))
+        if word not in praise_words:
+            return None
+        kept_strengths.append({"word": word, "note": note})
+
+    return {
+        "summary": summary,
+        "strengths": kept_strengths,
+        "problems": kept_problems,
+        "rhythmNote": rhythm_note,
+        "nextRepetition": next_repetition,
+    }
+
+
+def _project_shadowing_result(gated: dict[str, Any]) -> dict[str, Any]:
+    """Projects the structured intermediate JSON to the stable wire shape
+    {summary, topPriority, tips, grounded} — the response contract does not
+    change, so nothing downstream needs updating (plan §4)."""
+    problems = gated["problems"]
+    tips: list[str] = [p["note"] for p in problems[1:] if p.get("note")]
+    if gated.get("rhythmNote"):
+        tips.append(gated["rhythmNote"])
+    if gated.get("nextRepetition"):
+        tips.append(gated["nextRepetition"])
+    tips = tips[:3]
+
+    if problems and problems[0].get("note"):
+        top_priority = problems[0]["note"]
+    else:
+        top_priority = gated.get("nextRepetition", "")
+
+    return {
+        "summary": gated.get("summary", ""),
+        "topPriority": top_priority,
+        "tips": tips,
+        "grounded": True,
+    }
+
+
+async def generate_shadowing_coaching(
+    context: dict[str, Any],
+    findings: list[dict[str, Any]],
+    *,
+    call_groq: Callable[[str], Awaitable[dict[str, Any]]] | None,
+) -> dict[str, Any]:
+    """Shadowing-specific coaching narrator (plan §4, review item 5). Unlike
+    generate_coaching, this validates each claim against a specific vocabulary
+    (problem_words vs praise_words), derived from Azure-authoritative word
+    results only — never from `findings` alone, since the existing gate
+    validates which words are quoted, never what is claimed about them, and
+    widening `allowed_words` to the whole target phrase would let the model
+    assert "you mispronounced X" about a word Azure scored as correct.
+
+    No `call_gemini` parameter at all, by signature — Gemini cannot be
+    reintroduced into this path by a future wiring change. generate_coaching
+    (used by /api/repair) is untouched.
+
+    `context` is the shape _build_shadowing_context (routers/pronunciation.py)
+    produces: {targetText, score, subScores, prosodyMetrics,
+    mispronouncedWords: [{word, accuracyScore}], correctWords: [...], findings}."""
+    mispronounced: list[dict[str, Any]] = context.get("mispronouncedWords") or []
+    correct: list[dict[str, Any]] = context.get("correctWords") or []
+
+    problem_words = {str(f.get("word", "")).strip().lower() for f in findings if f.get("word")}
+    problem_words |= {
+        str(w.get("word", "")).strip().lower()
+        for w in mispronounced
+        if w.get("word")
+    }
+    problem_words.discard("")
+
+    praise_words = {
+        str(w.get("word", "")).strip().lower()
+        for w in correct
+        if w.get("word")
+    }
+    praise_words.discard("")
+
+    target_text = str(context.get("targetText", ""))
+    target_words = {t.strip(".,!?;:'’«»").lower() for t in target_text.split()}
+    target_words.discard("")
+
+    has_rhythm = context.get("prosodyMetrics") is not None
+
+    if call_groq is not None:
+        prompt = _shadowing_prompt(context, problem_words, praise_words)
+        try:
+            raw = await call_groq(prompt)
+            gated = _apply_shadowing_gate(
+                raw,
+                problem_words=problem_words,
+                praise_words=praise_words,
+                target_words=target_words,
+                has_rhythm=has_rhythm,
+            )
+            if gated is not None:
+                return _project_shadowing_result(gated)
+            log.warning("coach_narrator: shadowing LLM output failed the per-claim gate, falling back to template")
+        except Exception as e:
+            log.warning("coach_narrator: shadowing LLM call failed: %s", e)
+
+    return _shadowing_template_fallback(problem_words, praise_words)
 
 
 def findings_hash(findings: list[dict[str, Any]]) -> str:

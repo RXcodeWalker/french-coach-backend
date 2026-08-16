@@ -17,6 +17,7 @@ import pytest
 from fastapi import APIRouter, FastAPI
 from fastapi.testclient import TestClient
 
+import lib.auth as lib_auth
 from routers.pronunciation import configure, pronunciation_evaluate
 from models.pronunciation import PronunciationAssessmentResponse
 from services.pronunciation.azure_client import _is_configured
@@ -192,46 +193,179 @@ def test_azure_scripted_response_populates_phase2_guardrails(monkeypatch):
     PronunciationAssessmentResponse(**body)
 
 
-def test_coaching_full_populates_grounded_coaching(monkeypatch):
-    """Phase 3 (§8, R5) integration proof: coaching=full triggers the
-    narrator, which is grounded in the same phonologicalFindings the
-    response already carries — not a separate, ungrounded LLM guess."""
+_VALID_JWT_SECRET = "test-jwt-secret-at-least-32-characters-long!!"
+
+
+def _fake_jwt(sub: str = "user-123", secret: str = _VALID_JWT_SECRET, expired: bool = False) -> str:
+    import time
+    import jwt as pyjwt
+
+    exp = int(time.time()) - 3600 if expired else int(time.time()) + 3600
+    return pyjwt.encode({"sub": sub, "exp": exp}, secret, algorithm="HS256")
+
+
+async def _fake_assess_with_fallback_azure(**kwargs):
+    return {
+        "score": 85,
+        "transcript": "Un bon vin blanc.",
+        "issues": [],
+        "words": [
+            {
+                "word": "vin", "accuracyScore": 35.0, "errorType": "mispronounced",
+                "confidence": None,
+                "phonemes": [{"phoneme": "v", "accuracyScore": 92.0}, {"phoneme": "ɛ̃", "accuracyScore": 20.0}],
+                "offsetMs": 500, "durationMs": 300, "nearChunkBoundary": False,
+            },
+            {
+                "word": "blanc", "accuracyScore": 90.0, "errorType": "correct",
+                "confidence": None, "phonemes": [], "offsetMs": 900, "durationMs": 400,
+                "nearChunkBoundary": False,
+            },
+        ],
+        "provider": "azure",
+        "subScores": {"accuracy": 82.0, "fluency": 90.0, "completeness": 100.0, "prosody": None},
+        "couldNotAssess": False,
+        "couldNotAssessReason": None,
+        "snrDb": 22.0,
+        "azureConfidence": 0.9,
+    }
+
+
+class _FakeRpcCall:
+    """Stand-in for the object `db.rpc(name, args)` returns, which the
+    router then calls `.execute()` on (matching the real Supabase client's
+    call shape used in routers/pronunciation.py's `_consume_quota`/`_release_quota`)."""
+
+    def __init__(self, data=None, raise_on_execute=False):
+        self._data = data
+        self._raise = raise_on_execute
+
+    def execute(self):
+        if self._raise:
+            raise RuntimeError("rpc unreachable")
+        return _FakeRpcResult(self._data)
+
+
+class _FakeRpcResult:
+    def __init__(self, data):
+        self.data = data
+
+
+class _FakeQuotaDb:
+    """Stand-in for the Supabase service-role client's .rpc(name, args).execute()
+    chain, used to drive the quota gate without a real Supabase instance."""
+
+    def __init__(self, consume_response=None, release_response=None, raise_on_consume=False, raise_on_release=False):
+        self.consume_response = consume_response or {"used": 1, "limit": 3, "granted": True, "replayed": False}
+        self.release_response = release_response or {"used": 0, "limit": 3, "released": True}
+        self.raise_on_consume = raise_on_consume
+        self.raise_on_release = raise_on_release
+        self.consume_calls: list[dict] = []
+        self.release_calls: list[dict] = []
+
+    def rpc(self, name: str, args: dict):
+        if name == "consume_shadowing_coaching_quota":
+            self.consume_calls.append(args)
+            return _FakeRpcCall(self.consume_response, raise_on_execute=self.raise_on_consume)
+        if name == "release_shadowing_coaching_grant":
+            self.release_calls.append(args)
+            return _FakeRpcCall(self.release_response, raise_on_execute=self.raise_on_release)
+        raise AssertionError(f"unexpected rpc: {name}")
+
+
+def test_coaching_full_grounded_groq_no_refund(monkeypatch):
+    """Case 1 (plan §6): coaching='full', quota granted, Groq returns valid
+    grounded JSON -> coaching populated, grounded True, coachingQuota.granted
+    True, and the refund RPC is never called."""
     monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
     monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
 
     import routers.pronunciation as pronunciation_router
 
-    async def _fake_assess_with_fallback(**kwargs):
+    fake_db = _FakeQuotaDb(consume_response={"used": 1, "limit": 3, "granted": True, "replayed": False})
+
+    async def _fake_groq(prompt: str):
         return {
-            "score": 85,
-            "transcript": "Un bon vin blanc.",
-            "issues": [],
-            "words": [
-                {
-                    "word": "vin", "accuracyScore": 35.0, "errorType": "mispronounced",
-                    "confidence": None,
-                    "phonemes": [{"phoneme": "v", "accuracyScore": 92.0}, {"phoneme": "ɛ̃", "accuracyScore": 20.0}],
-                    "offsetMs": 500, "durationMs": 300, "nearChunkBoundary": False,
-                },
-            ],
-            "provider": "azure",
-            "subScores": {"accuracy": 82.0, "fluency": 90.0, "completeness": 100.0, "prosody": None},
-            "couldNotAssess": False,
-            "couldNotAssessReason": None,
-            "snrDb": 22.0,
-            "azureConfidence": 0.9,
+            "summary": "Overall solid, watch «vin».",
+            "strengths": [{"word": "blanc", "note": "Clean vowel."}],
+            "problems": [{"word": "vin", "note": "Nasalize the vowel more."}],
+            "rhythmNote": None,
+            "nextRepetition": "Slow down slightly on «vin».",
         }
 
-    async def _fake_call_groq(prompt: str):
-        return {
-            "summary": "Watch the nasal vowel in «vin».",
-            "topPriority": "Fix the nasal vowel in «vin».",
-            "tips": ["Practise «vin» slowly."],
-        }
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _fake_groq)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+    client = TestClient(_build_app())
 
-    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", _fake_assess_with_fallback)
-    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _fake_call_groq)
-    monkeypatch.setattr(pronunciation_router, "_coach_call_gemini", None)
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-1"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["coaching"] is not None
+    assert body["coaching"]["grounded"] is True
+    assert body["coachingQuota"]["granted"] is True
+    assert len(fake_db.consume_calls) == 1
+    assert len(fake_db.release_calls) == 0
+    PronunciationAssessmentResponse(**body)
+
+
+def test_coaching_full_quota_denied_groq_never_invoked(monkeypatch):
+    """Case 2: quota stubbed granted:false -> coaching is None, reason is
+    daily_limit_reached, Groq is never invoked."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb(consume_response={"used": 3, "limit": 3, "granted": False, "reason": "daily_limit_reached"})
+
+    async def _fail_if_called(prompt: str):
+        raise AssertionError("Groq must not be called when quota is denied")
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _fail_if_called)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-2"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["coaching"] is None
+    assert body["coachingQuota"]["reason"] == "daily_limit_reached"
+
+
+def test_coaching_full_no_auth_header_degrades(monkeypatch):
+    """Case 3: no Authorization header + coaching='full' -> 200, coaching is
+    None, reason unauthenticated, Groq never invoked, assessment intact."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    async def _fail_if_called(prompt: str):
+        raise AssertionError("Groq must not be called without auth")
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _fail_if_called)
     client = TestClient(_build_app())
 
     response = client.post(
@@ -242,34 +376,493 @@ def test_coaching_full_populates_grounded_coaching(monkeypatch):
 
     assert response.status_code == 200
     body = response.json()
-    assert body["coaching"] is not None
-    assert body["coaching"]["grounded"] is True
-    assert "vin" in body["coaching"]["summary"]
-    PronunciationAssessmentResponse(**body)
+    assert body["coaching"] is None
+    assert body["coachingQuota"]["reason"] == "unauthenticated"
+    assert body["score"] == 85
 
 
-def test_coaching_none_skips_llm_entirely(monkeypatch):
-    """Default (drill mode) — coaching stays null, and the narrator is never
-    invoked (plan §8: "coaching=none skips the LLM entirely")."""
+def test_coaching_full_expired_token_degrades(monkeypatch):
+    """Case 4: expired/forged token behaves identically to no header — fails
+    closed."""
     monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
     monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
 
     import routers.pronunciation as pronunciation_router
 
-    async def _fake_assess_with_fallback(**kwargs):
+    async def _fail_if_called(prompt: str):
+        raise AssertionError("Groq must not be called with an expired token")
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _fail_if_called)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full"},
+        headers={"Authorization": f"Bearer {_fake_jwt(expired=True)}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["coaching"] is None
+    assert body["coachingQuota"]["reason"] == "unauthenticated"
+
+
+def test_coaching_full_quota_rpc_raises_degrades(monkeypatch):
+    """Case 5: quota RPC raises -> 200, quota_unavailable, Groq never
+    invoked."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb(raise_on_consume=True)
+
+    async def _fail_if_called(prompt: str):
+        raise AssertionError("Groq must not be called when quota RPC raises")
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _fail_if_called)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-5"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["coaching"] is None
+    assert body["coachingQuota"]["reason"] == "quota_unavailable"
+
+
+def test_coaching_full_groq_raises_fallback_and_refund(monkeypatch):
+    """Case 6: Groq raises -> template fallback (grounded False) AND the
+    refund RPC is called once."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb(
+        consume_response={"used": 1, "limit": 3, "granted": True, "replayed": False},
+        release_response={"used": 0, "limit": 3, "released": True},
+    )
+
+    async def _boom_groq(prompt: str):
+        raise RuntimeError("groq unreachable")
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _boom_groq)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-6"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["coaching"] is not None
+    assert body["coaching"]["grounded"] is False
+    assert len(fake_db.release_calls) == 1
+    assert fake_db.release_calls[0]["p_idempotency_key"] == "req-6"
+
+
+def test_coaching_full_malformed_json_fallback_and_refund(monkeypatch):
+    """Case 7: Groq returns malformed JSON -> same as case 6 (fallback +
+    refund)."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb()
+
+    async def _malformed_groq(prompt: str):
+        raise ValueError("No JSON object found in model response")
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _malformed_groq)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-7"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["coaching"]["grounded"] is False
+    assert len(fake_db.release_calls) == 1
+
+
+def test_coaching_full_invented_problem_word_fallback_and_refund(monkeypatch):
+    """Case 8: Groq invents a problem word absent from problem_words -> the
+    per-claim gate drops it -> fallback + refund."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb()
+
+    async def _inventing_groq(prompt: str):
         return {
-            "score": 85, "transcript": "Un bon vin blanc.", "issues": [],
-            "words": [], "provider": "azure",
-            "subScores": {"accuracy": 82.0, "fluency": 90.0, "completeness": 100.0, "prosody": None},
-            "couldNotAssess": False, "couldNotAssessReason": None,
-            "snrDb": 22.0, "azureConfidence": 0.9,
+            "summary": "Watch out.",
+            "strengths": [],
+            "problems": [{"word": "fromage", "note": "Not even in the sentence."}],
+            "rhythmNote": None,
+            "nextRepetition": "Try again.",
         }
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _inventing_groq)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-8"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["coaching"]["grounded"] is False
+    assert len(fake_db.release_calls) == 1
+
+
+def test_coaching_full_praises_mispronounced_word_fallback_and_refund(monkeypatch):
+    """Case 9: Groq praises a word Azure marked mispronounced -> gate drops
+    it -> fallback + refund."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb()
+
+    async def _wrongly_praising_groq(prompt: str):
+        return {
+            "summary": "Nice work overall.",
+            # "vin" was mispronounced per the fixture, not correct — this
+            # must fail the per-claim gate.
+            "strengths": [{"word": "vin", "note": "Great nasal vowel."}],
+            "problems": [],
+            "rhythmNote": None,
+            "nextRepetition": "Keep it up.",
+        }
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _wrongly_praising_groq)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-9"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["coaching"]["grounded"] is False
+    assert len(fake_db.release_calls) == 1
+
+
+def test_coaching_full_no_prosody_rhythm_note_fails_gate(monkeypatch):
+    """Case 10: prosodyMetrics is None -> the prompt tells the model not to
+    comment on rhythm, and a non-null rhythmNote in the response fails the
+    gate (fallback + refund). The capability matrix
+    (data/phonology/fr.json) marks rhythmMetrics 'unavailable' for the
+    whisper-heuristic tier in both modes, so enforce_capabilities nulls
+    prosodyMetrics whenever the provider is whisper-heuristic — used here
+    instead of freeform mode, since freeform+azure keeps rhythmMetrics
+    'derived' (only completeness/wordErrorType go unavailable there)."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb()
+
+    async def _rhythm_commenting_groq(prompt: str):
+        return {
+            "summary": "Good attempt.",
+            "strengths": [{"word": "blanc", "note": "Good."}],
+            "problems": [{"word": "vin", "note": "Fix the nasal vowel."}],
+            "rhythmNote": "Your rhythm was a bit choppy.",  # forbidden: no prosody available
+            "nextRepetition": "Try again slower.",
+        }
+
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _rhythm_commenting_groq)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+    # Whisper-heuristic tier, real align_fn path (no AZURE_SPEECH_KEY set),
+    # scripted mode: rhythmMetrics is 'unavailable' for whisper-heuristic in
+    # both modes per the capability matrix.
+    client = TestClient(_build_app_with(_fake_groq_whisper, _fake_faster_whisper))
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-10"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["provider"] == "whisper-heuristic"
+    assert body["prosodyMetrics"] is None
+    assert body["coaching"]["grounded"] is False
+    assert len(fake_db.release_calls) == 1
+
+
+def test_coaching_full_could_not_assess_skips_quota(monkeypatch):
+    """Case 11: couldNotAssess + coaching='full' -> quota RPC not called,
+    reason 'could_not_assess'."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb()
+
+    async def _silent_groq(tmp_path: str, language: str):
+        return {"text": "  .  ", "words": []}
+
+    async def _fail_if_called(prompt: str):
+        raise AssertionError("Groq must not be called on couldNotAssess")
+
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _fail_if_called)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+    client = TestClient(_build_app_with(_silent_groq, _fake_faster_whisper))
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-11"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["couldNotAssess"] is True
+    assert body["coachingQuota"]["reason"] == "could_not_assess"
+    assert len(fake_db.consume_calls) == 0
+
+
+def test_coaching_full_refund_rpc_raises_still_charged_but_200(monkeypatch):
+    """Case 12: refund RPC itself raises -> still 200, coaching present as
+    the template, user stays charged, warning logged (not asserted here,
+    just that the request doesn't fail)."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb(raise_on_release=True)
+
+    async def _boom_groq(prompt: str):
+        raise RuntimeError("groq unreachable")
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _boom_groq)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-12"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["coaching"] is not None
+    assert body["coaching"]["grounded"] is False
+
+
+def test_coaching_cache_differs_by_target_text_shares_by_identical_context(monkeypatch):
+    """Case 13: two requests with identical findings but different
+    target_text do NOT share cached coaching; two byte-identical contexts DO
+    (one Groq call, both charged)."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb()
+    call_count = {"n": 0}
+
+    async def _counting_groq(prompt: str):
+        call_count["n"] += 1
+        return {
+            "summary": "Watch «vin».",
+            "strengths": [{"word": "blanc", "note": "Good."}],
+            "problems": [{"word": "vin", "note": "Fix it."}],
+            "rhythmNote": None,
+            "nextRepetition": "Again.",
+        }
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _counting_groq)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+
+    client = TestClient(_build_app())
+    headers = {"Authorization": f"Bearer {_fake_jwt()}"}
+
+    r1 = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-a1"},
+        headers=headers, files={"audio": ("clip1.wav", b"audio-bytes-1", "audio/wav")},
+    )
+    r2 = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un different target text.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-a2"},
+        headers=headers, files={"audio": ("clip2.wav", b"audio-bytes-2", "audio/wav")},
+    )
+    assert r1.status_code == 200 and r2.status_code == 200
+    assert call_count["n"] == 2, "different target_text must not share a cache entry"
+
+    r3 = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-a3"},
+        headers=headers, files={"audio": ("clip1.wav", b"audio-bytes-1", "audio/wav")},
+    )
+    assert r3.status_code == 200
+    assert call_count["n"] == 2, "byte-identical context must share the cached coaching (no 3rd Groq call)"
+    assert len(fake_db.consume_calls) == 3, "each request still consumes its own quota slot"
+
+
+def test_coaching_cache_never_stores_fallback(monkeypatch):
+    """Case 14: only grounded output is cached — a fallback result is never
+    written to the shadowing coaching cache."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb()
+
+    async def _boom_groq(prompt: str):
+        raise RuntimeError("groq unreachable")
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _boom_groq)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+
+    client = TestClient(_build_app())
+    client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-cache-1"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"}, files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert len(pronunciation_router._shadowing_coaching_cache._store) == 0
+
+
+def test_coaching_full_never_reaches_gemini(monkeypatch):
+    """Case 15: Gemini is never reachable from the shadowing path — patch
+    _coach_call_gemini to raise and make Groq fail; assert the template
+    fallback, not a Gemini result."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb()
+
+    async def _boom_groq(prompt: str):
+        raise RuntimeError("groq unreachable")
+
+    async def _gemini_should_never_be_called(prompt: str):
+        raise AssertionError("Gemini must never be reachable from the shadowing coaching path")
+
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
+    monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _boom_groq)
+    monkeypatch.setattr(pronunciation_router, "_coach_call_gemini", _gemini_should_never_be_called)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
+    client = TestClient(_build_app())
+
+    response = client.post(
+        "/api/pronunciation",
+        data={"target_text": "Un bon vin blanc.", "mode": "scripted", "coaching": "full", "coaching_request_id": "req-15"},
+        headers={"Authorization": f"Bearer {_fake_jwt()}"},
+        files={"audio": ("clip.wav", b"fake-audio-bytes", "audio/wav")},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["coaching"]["grounded"] is False
+
+
+def test_coaching_none_skips_llm_and_quota_entirely(monkeypatch):
+    """Case 16 (extends the old test_coaching_none_skips_llm_entirely):
+    default (drill mode) — coaching stays null, the narrator is never
+    invoked, and the quota RPC is not called either."""
+    monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+    monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://fake.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "fake-service-key")
+
+    import routers.pronunciation as pronunciation_router
+
+    fake_db = _FakeQuotaDb()
 
     async def _fail_if_called(prompt: str):
         raise AssertionError("coaching LLM must not be called when coaching=none")
 
-    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", _fake_assess_with_fallback)
+    monkeypatch.setattr(pronunciation_router, "assess_with_fallback", lambda **k: _fake_assess_with_fallback_azure(**k))
     monkeypatch.setattr(pronunciation_router, "_coach_call_groq", _fail_if_called)
+    monkeypatch.setattr(pronunciation_router, "_db", lambda: fake_db)
     client = TestClient(_build_app())
 
     response = client.post(
@@ -279,7 +872,10 @@ def test_coaching_none_skips_llm_entirely(monkeypatch):
     )
 
     assert response.status_code == 200
-    assert response.json()["coaching"] is None
+    body = response.json()
+    assert body["coaching"] is None
+    assert body.get("coachingQuota") is None
+    assert len(fake_db.consume_calls) == 0
 
 
 def test_invalid_coaching_value_is_rejected(monkeypatch):
@@ -303,10 +899,10 @@ def _clear_pronunciation_caches():
     import routers.pronunciation as pronunciation_router
 
     pronunciation_router._audio_cache._store.clear()
-    pronunciation_router._coaching_cache._store.clear()
+    pronunciation_router._shadowing_coaching_cache._store.clear()
     yield
     pronunciation_router._audio_cache._store.clear()
-    pronunciation_router._coaching_cache._store.clear()
+    pronunciation_router._shadowing_coaching_cache._store.clear()
 
 
 def _build_app_with(groq_fn, faster_fn, align_fn=_fake_align) -> FastAPI:

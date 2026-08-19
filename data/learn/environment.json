@@ -1,0 +1,789 @@
+{
+  "schemaVersion": "learn-demands-v1",
+  "topicKey": "environment",
+  "entries": [
+    {
+      "questionId": "env_01",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss specific eco-friendly actions you take at home, school, or in your community.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_02",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss how technology affects your daily life — positives and negatives.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_03",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "extended",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Identify and discuss major environmental issues like climate change, pollution, or deforestation.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_04",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss your use of bus, train, or metro, and its environmental impact.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.75
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_05",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give your opinion on recycling, explain what you recycle and why it's important.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_06",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the pros and cons of electric vehicles for the environment.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_07",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "short",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "A complete answer should: Talk about environmental initiatives at your school.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_08",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "short",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Suggest practical ways to reduce water consumption at home.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_09",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about littering and cleanliness in your area.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_10",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the impact of single-use plastics and possible alternatives.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_11",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Suggest ways to save species like pandas, polar bears, or bees.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_12",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "past"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Describe any green activity like planting trees or a beach clean-up (past tense).",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_13",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Give your opinion on the gravity of climate change.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_14",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the impact of fast fashion on the environment and workers.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_15",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss flights, hotel waste, and the destruction of natural sites.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_16",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss solar, wind, and hydraulic energy vs. fossil fuels.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_17",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Suggest ideas like better education, more bins, or financial incentives.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_18",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Use conditional to describe a bold environmental policy.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.85
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_19",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss plastic pollution, marine life, and the role of oceans in the climate.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.65
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_20",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss planting more trees and parks in cities.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_21",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about your personal actions like transport, diet, and consumption.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_22",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the role of insects in pollination and the food chain.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.65
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_23",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss how noise and too much light affect people and wildlife in cities.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_24",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "past"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Talk about environmental activism, protests, or school campaigns.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_25",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss air pollution levels where you live and what causes them.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_26",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss ways to use less paper at home or school using technology.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_27",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "short",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Describe the features of a sustainable house using the conditional.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_28",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "short",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss how you can influence your peers to adopt greener habits.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_29",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss if sharing resources like cars or homes helps the planet.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_30",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss the role of protected areas for nature and tourism.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_31",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss upcycling and fixing broken items instead of buying new ones.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_32",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the excessive use of plastic packaging and its impact.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_33",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain what composting is and how it helps reduce landfill waste.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_34",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the challenges and benefits of trying to eliminate waste completely.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_35",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "short",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about the mental health impact of climate change on the younger generation.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_36",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss digital pollution, such as energy used by data centers and streaming.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_37",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss the role of trees in absorbing CO2 and protecting biodiversity.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.65
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_38",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the impact of chemicals on bees, biodiversity, and human health.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_39",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the trend of growing food and plants in city centers or on buildings.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_40",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss the environmental cost of the mass production of cheap clothing.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "env_41",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about solar panels, heat pumps, or insulation improvements.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    }
+  ]
+}

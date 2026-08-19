@@ -466,6 +466,22 @@ class FeedbackMetrics(BaseModel):
     wordProbabilities: list[WordProbability] | None = None
 
 
+class DemandSignals(BaseModel):
+    """Client-computed L1 marker readout for THIS transcript (docs §9.1/§9.2)
+    — mirrors src/domain/learn/demand/satisfaction.ts's detectors. Rendered
+    into the prompt as ground truth the LLM must not contradict; never used
+    to resolve demands itself (that's questionId + demandsVersion only)."""
+    cognitiveDemand: str | None = None
+    wordCount: int | None = None
+    hasJustification: bool | None = None
+    hasOpinion: bool | None = None
+    hasConnectors: bool | None = None
+    hasPerspective: bool | None = None
+    hasSubjunctive: bool | None = None
+    hasConditional: bool | None = None
+    hasPastOrFuture: bool | None = None
+
+
 class FeedbackRequest(BaseModel):
     question: str = Field(..., description="The question the student was answering")
     transcript: str = Field(..., description="Student's spoken answer, transcribed")
@@ -474,6 +490,14 @@ class FeedbackRequest(BaseModel):
     detailed: bool = False         # True = expanded feedback with more items
     skill_context: dict[str, Any] | None = None  # weak/strong skill profile from client
     difficulty_context: dict[str, Any] | None = None  # tier/label/cefrTarget/coachingTone/coachingRubric from client
+    # docs §9.1 trust boundary: the client sends only the id + hash of the
+    # demands corpus it built against — never the demand fields themselves.
+    # Demands are resolved server-side via resolve_learn_demands(); on
+    # unknown id or version mismatch the QUESTION DEMANDS prompt section is
+    # simply omitted (demandsResolved: false), never trusted from the client.
+    question_id: str | None = None
+    demands_version: str | None = None
+    demand_signals: DemandSignals | None = None
 
 
 class IGCSEFeedbackRequest(BaseModel):
@@ -493,6 +517,121 @@ class VocabItem(BaseModel):
 class VocabPrepResponse(BaseModel):
     vocab: list[VocabItem]
     phrases: list[VocabItem]
+
+
+# ── Learn adaptive-difficulty demands (docs §9.1 trust boundary) ─────────────
+#
+# backend/data/learn/*.json is a byte-for-byte copy of
+# src/data/learn/demands/*.json (synced via `npm run learn:sync-backend`,
+# checked in separately per CLAUDE.md — backend/ is its own git repo). The
+# client sends only questionId + demandsVersion, never the demand fields
+# themselves; this module is the sole source of truth those two are resolved
+# against. On unknown id or version mismatch, resolution is omitted entirely
+# rather than trusting anything the client asserted.
+LEARN_DEMANDS_DIR = APP_DIR / "data" / "learn"
+
+
+def _hash_corpus(files: list[tuple[str, str]]) -> str:
+    """SHA-256 hex over sorted-filename-concatenated raw file bytes — mirrors
+    scripts/authoring/buildDemandsManifest.ts::hashCorpus exactly (same
+    delimiter scheme) so both sides compute the same demandsVersion for the
+    same file contents."""
+    h = hashlib.sha256()
+    for filename, raw in sorted(files, key=lambda pair: pair[0]):
+        h.update(filename.encode("utf-8"))
+        h.update(b" ")
+        h.update(raw.encode("utf-8"))
+        h.update(b" ")
+    return h.hexdigest()
+
+
+def _load_learn_demands() -> tuple[str, dict[str, dict[str, Any]]]:
+    """Returns (demandsVersion, {questionId: QuestionDemands dict}). Empty/
+    absent directory yields ("", {}) — resolution then always misses, which
+    degrades to demandsResolved: false rather than raising at startup."""
+    if not LEARN_DEMANDS_DIR.is_dir():
+        return "", {}
+
+    files: list[tuple[str, str]] = []
+    by_question_id: dict[str, dict[str, Any]] = {}
+    for path in sorted(LEARN_DEMANDS_DIR.glob("*.json")):
+        raw = path.read_text(encoding="utf-8")
+        files.append((path.name, raw))
+        parsed = json.loads(raw)
+        for entry in parsed.get("entries", []):
+            qid = entry.get("questionId")
+            demands = entry.get("demands")
+            if qid and demands:
+                by_question_id[qid] = demands
+
+    return _hash_corpus(files), by_question_id
+
+
+LEARN_DEMANDS_VERSION, LEARN_DEMANDS_BY_QUESTION_ID = _load_learn_demands()
+
+
+_DEMAND_BASE_SCORE = {
+    "describe": 2.0,
+    "explain": 4.0,
+    "justify": 6.0,
+    "compare": 6.5,
+    "hypothesize": 8.0,
+}
+_DEMAND_STRUCTURE_BONUS_SET = {"subjunctive", "conditional", "comparison"}
+_DEMAND_STRUCTURE_BONUS_PER_MATCH = 0.25
+_DEMAND_STRUCTURE_BONUS_CAP = 0.75
+
+
+def derive_demand_score(demands: dict[str, Any]) -> float:
+    """Python port of src/domain/learn/demand/deriveDemandLevel.ts::deriveDemandScore
+    — kept byte-for-byte equivalent in logic (not importable: TS -> Python).
+    Used only for the prompt's "Demand level" line; the client independently
+    computes and displays the same value."""
+    score = _DEMAND_BASE_SCORE.get(demands.get("cognitiveDemand"), 0.0)
+
+    time_frames = demands.get("timeFrames") or []
+    if "conditional" in time_frames:
+        score += 1.0
+    if len(set(time_frames)) >= 3:
+        score += 0.5
+
+    response_load = demands.get("responseLoad")
+    if response_load == "extended":
+        score += 0.75
+    elif response_load == "short":
+        score -= 0.75
+
+    structures = demands.get("structures") or []
+    structure_matches = sum(1 for s in structures if s in _DEMAND_STRUCTURE_BONUS_SET)
+    score += min(structure_matches * _DEMAND_STRUCTURE_BONUS_PER_MATCH, _DEMAND_STRUCTURE_BONUS_CAP)
+
+    if demands.get("lexicalReach") == "abstract":
+        score += 0.25
+
+    return max(0.0, min(score, 10.0))
+
+
+def demand_score_to_level(demand_score: float) -> str:
+    """Python port of deriveDemandLevel.ts::demandScoreToLevel."""
+    if demand_score < 3.0:
+        return "A1"
+    if demand_score < 5.0:
+        return "A2"
+    if demand_score < 7.5:
+        return "B1"
+    return "B2"
+
+
+def resolve_learn_demands(question_id: str | None, demands_version: str | None) -> dict[str, Any] | None:
+    """Resolves demands server-side by questionId + demandsVersion (§9.1).
+    Returns None (demandsResolved: false) on missing id, unknown id, or a
+    demandsVersion that disagrees with this backend's own corpus hash — never
+    substitutes a stale or mismatched set silently."""
+    if not question_id or not demands_version:
+        return None
+    if demands_version != LEARN_DEMANDS_VERSION:
+        return None
+    return LEARN_DEMANDS_BY_QUESTION_ID.get(question_id)
 
 
 # ── IGCSE Themes (Cambridge 0520) ─────────────────────────────────────────────
@@ -1393,6 +1532,12 @@ JSON schema:
 }
 """
 
+# Bump whenever SYSTEM_PROMPT or build_user_prompt's QUESTION DEMANDS /
+# DETERMINISTIC SIGNALS rendering changes in a way that changes the rendered
+# prompt — mirrors src/domain/igcse/judgement/version.ts's SCORING_PROMPT_VERSION
+# discipline; paired with a snapshot test in backend/tests/.
+LEARN_PROMPT_VERSION = "learn-prompt-v1"
+
 SYSTEM_PROMPT = """You are an elite private French tutor specialising in IGCSE Cambridge 0520/0680 oral preparation.
 Your mission is to TEACH, not to grade. Every piece of feedback must make the student think:
 "This is specifically about MY answer, and I learned something useful."
@@ -1491,7 +1636,12 @@ JSON SCHEMA (return exactly this shape, no extra keys):
   "pronunciation": {
     "score": <0-10 or null if no audio>,
     "issues": []
-  }
+  },
+
+  "answered_the_question": <OPTIONAL. true/false — did the student's answer actually address what was asked?>,
+  "demands_met": <OPTIONAL. array of strings — which of the QUESTION DEMANDS section's requirements this answer satisfied, in your own judgement. Only meaningful when a QUESTION DEMANDS section was provided above.>,
+  "demands_missed": <OPTIONAL. array of strings — which requirements from QUESTION DEMANDS this answer did not satisfy.>,
+  "difficulty_fit": <OPTIONAL. one of: "too easy" | "right level" | "too hard" — your judgement of whether this question suited the student's demonstrated level.>
 }
 
 FINAL RULES:
@@ -1500,6 +1650,9 @@ FINAL RULES:
 3. followUpQuestion MUST reference something specific the student mentioned.
 4. vocabulary MUST only reference words the student actually used.
 5. Output raw JSON only — nothing outside the JSON object.
+6. answered_the_question, demands_met, demands_missed, and difficulty_fit are OPTIONAL —
+   omit them entirely rather than guessing if a QUESTION DEMANDS section was not provided above.
+   When DETERMINISTIC SIGNALS were provided, do not contradict them.
 """
 
 MULTIMODAL_SYSTEM_PROMPT = """You are a professional French oral examiner with specialist phonetics training (IPA-certified).
@@ -1790,6 +1943,53 @@ def build_user_prompt(req: FeedbackRequest) -> str:
         if skill_section:
             skill_section += " Prioritise feedback on the weakness areas."
 
+    demands_section = ""
+    demands = resolve_learn_demands(req.question_id, req.demands_version)
+    if demands:
+        cognitive_demand = demands.get("cognitiveDemand") or ""
+        time_frames = demands.get("timeFrames") or []
+        structures = demands.get("structures") or []
+        response_load = demands.get("responseLoad") or ""
+        sufficient_answer = demands.get("sufficientAnswer") or ""
+        demand_level = demand_score_to_level(derive_demand_score(demands))
+        target_level = ""
+        if req.difficulty_context:
+            target_level = req.difficulty_context.get("cefrTarget") or ""
+
+        load_hint = {
+            "short": "about 15+ words",
+            "developed": "about 40-70 words",
+            "extended": "about 70+ words",
+        }.get(response_load, response_load)
+
+        demands_section += (
+            f"\n\nQUESTION DEMANDS\n"
+            f"- What the learner must do: {cognitive_demand}\n"
+            f"- Time frames the question invites: {', '.join(time_frames) or 'none specified'}\n"
+            f"- Structures it invites: {', '.join(structures) or 'none specified'}\n"
+            f"- Expected developed answer: {load_hint}\n"
+            f"- Demand level: {demand_level}"
+        )
+        if target_level:
+            demands_section += f"   |   Learner's session target: {target_level}"
+        if sufficient_answer:
+            demands_section += f"\n\nA complete answer must: {sufficient_answer}"
+
+        if req.demand_signals:
+            ds = req.demand_signals
+            present_absent = lambda v: "present" if v else ("absent" if v is False else "not measurable")
+            demands_section += (
+                f"\n\nDETERMINISTIC SIGNALS (already measured — do not contradict these)\n"
+                f"- justification markers: {present_absent(ds.hasJustification)}"
+                f"    - connectors: {present_absent(ds.hasConnectors)}"
+                f"    - word count: {ds.wordCount if ds.wordCount is not None else 'unknown'}\n"
+                f"- opinion markers: {present_absent(ds.hasOpinion)}"
+                f"    - perspective markers: {present_absent(ds.hasPerspective)}\n"
+                f"- past/future tense: {present_absent(ds.hasPastOrFuture)}"
+                f"    - subjunctive: {present_absent(ds.hasSubjunctive)}"
+                f"    - conditional: {present_absent(ds.hasConditional)}"
+            )
+
     difficulty_section = ""
     if req.difficulty_context:
         cefr_target     = req.difficulty_context.get("cefrTarget") or ""
@@ -1807,6 +2007,7 @@ def build_user_prompt(req: FeedbackRequest) -> str:
         f"STUDENT TRANSCRIPT (French): {cleaned}\n\n"
         f"DELIVERY METRICS: {json.dumps(m, ensure_ascii=False)}"
         f"{skill_section}"
+        f"{demands_section}"
         f"{difficulty_section}"
         f"{pron_section}"
         f"{detail_instruction}\n\n"
@@ -2670,6 +2871,9 @@ async def _feedback_impl(
     audio: UploadFile | None,
     skill_context: dict[str, Any] | None = None,
     difficulty_context: dict[str, Any] | None = None,
+    question_id: str | None = None,
+    demands_version: str | None = None,
+    demand_signals: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """
     Unified feedback endpoint. Two modes:
@@ -2738,6 +2942,9 @@ async def _feedback_impl(
             detailed=detailed,
             skill_context=skill_context,
             difficulty_context=difficulty_context,
+            question_id=question_id,
+            demands_version=demands_version,
+            demand_signals=DemandSignals(**demand_signals) if demand_signals else None,
         )
 
         # ── Step 3: AI feedback (multimodal if audio present) ─────────────────
@@ -2807,6 +3014,9 @@ async def feedback(request: Request) -> dict[str, Any]:
     metrics_json = "{}"
     skill_context: dict[str, Any] | None = None
     difficulty_context: dict[str, Any] | None = None
+    question_id: str | None = None
+    demands_version: str | None = None
+    demand_signals: dict[str, Any] | None = None
     audio: UploadFile | None = None
 
     def _extract_question_text(raw: Any) -> str:
@@ -2842,6 +3052,9 @@ async def feedback(request: Request) -> dict[str, Any]:
                 transcript = str(data_payload.get("transcript") or "")
             skill_context = data_payload.get("skillContext") or None
             difficulty_context = data_payload.get("difficultyContext") or None
+            question_id = data_payload.get("questionId") or None
+            demands_version = data_payload.get("demandsVersion") or None
+            demand_signals = data_payload.get("demandSignals") or None
             # Same as the JSON branch: the client bundles its engine choice in
             # `data`, not as a top-level form field.
             model = str(data_payload.get("enginePreference") or data_payload.get("model") or model)
@@ -2881,6 +3094,9 @@ async def feedback(request: Request) -> dict[str, Any]:
         detailed = bool(payload.get("detailed", False))
         skill_context = payload.get("skillContext") or None
         difficulty_context = payload.get("difficultyContext") or None
+        question_id = payload.get("questionId") or None
+        demands_version = payload.get("demandsVersion") or None
+        demand_signals = payload.get("demandSignals") or None
         metrics = payload.get("metrics")
         if isinstance(metrics, dict):
             metrics_json = json.dumps(metrics)
@@ -2897,6 +3113,9 @@ async def feedback(request: Request) -> dict[str, Any]:
             audio=audio,
             skill_context=skill_context,
             difficulty_context=difficulty_context,
+            question_id=question_id,
+            demands_version=demands_version,
+            demand_signals=demand_signals,
         )
         try:
             request.state.obs_provider = result.get("provider")
@@ -2937,11 +3156,12 @@ def _extract_question_text_util(raw: Any) -> str:
 
 
 async def _parse_feedback_request(request: Request) -> tuple[
-    str, str, str, bool, str, dict[str, Any] | None, dict[str, Any] | None, bytes | None, str
+    str, str, str, bool, str, dict[str, Any] | None, dict[str, Any] | None, bytes | None, str,
+    str | None, str | None, dict[str, Any] | None,
 ]:
     """Parse multipart or JSON feedback request. Returns (question, transcript,
     model, detailed, metrics_json, skill_context, difficulty_context, audio_bytes,
-    audio_mime)."""
+    audio_mime, question_id, demands_version, demand_signals)."""
     content_type = (request.headers.get("content-type") or "").lower()
     question = ""
     transcript = ""
@@ -2950,6 +3170,9 @@ async def _parse_feedback_request(request: Request) -> tuple[
     metrics_json = "{}"
     skill_context: dict[str, Any] | None = None
     difficulty_context: dict[str, Any] | None = None
+    question_id: str | None = None
+    demands_version: str | None = None
+    demand_signals: dict[str, Any] | None = None
     audio_bytes: bytes | None = None
     audio_mime = "audio/webm"
 
@@ -2981,6 +3204,13 @@ async def _parse_feedback_request(request: Request) -> tuple[
                 transcript = str(data_payload.get("transcript") or "")
             skill_context = data_payload.get("skillContext") or None
             difficulty_context = data_payload.get("difficultyContext") or None
+            question_id = data_payload.get("questionId") or None
+            demands_version = data_payload.get("demandsVersion") or None
+            demand_signals = data_payload.get("demandSignals") or None
+            # Same as the JSON branch below: the client bundles its engine
+            # choice in `data`, not as a top-level form field — reading only
+            # `model` meant the preference was silently dropped here too.
+            model = str(data_payload.get("enginePreference") or data_payload.get("model") or model)
             if not metrics_json or metrics_json == "{}":
                 m = data_payload.get("metrics")
                 if isinstance(m, dict):
@@ -2996,10 +3226,16 @@ async def _parse_feedback_request(request: Request) -> tuple[
             payload.get("question") or payload.get("prompt") or ""
         )
         transcript = str(payload.get("transcript") or payload.get("text") or "")
-        model = str(payload.get("model") or "groq")
+        # `enginePreference` is what the web client actually sends (apiClient.ts's
+        # streamFeedback never sent `model`) — reading only `model` meant this
+        # endpoint silently ran Groq-only regardless of the client's choice.
+        model = str(payload.get("enginePreference") or payload.get("model") or "groq")
         detailed = bool(payload.get("detailed", False))
         skill_context = payload.get("skillContext") or None
         difficulty_context = payload.get("difficultyContext") or None
+        question_id = payload.get("questionId") or None
+        demands_version = payload.get("demandsVersion") or None
+        demand_signals = payload.get("demandSignals") or None
         metrics = payload.get("metrics")
         if isinstance(metrics, dict):
             metrics_json = json.dumps(metrics)
@@ -3007,6 +3243,7 @@ async def _parse_feedback_request(request: Request) -> tuple[
     return (
         question, transcript, model, detailed, metrics_json,
         skill_context, difficulty_context, audio_bytes, audio_mime,
+        question_id, demands_version, demand_signals,
     )
 
 
@@ -3020,7 +3257,8 @@ async def feedback_stream(request: Request) -> StreamingResponse:
     """
     try:
         (question, transcript, model, detailed, metrics_json,
-         skill_context, difficulty_context, audio_bytes, audio_mime) = await _parse_feedback_request(request)
+         skill_context, difficulty_context, audio_bytes, audio_mime,
+         question_id, demands_version, demand_signals) = await _parse_feedback_request(request)
     except HTTPException:
         raise
     except Exception as exc:
@@ -3087,6 +3325,9 @@ async def feedback_stream(request: Request) -> StreamingResponse:
                 detailed=detailed,
                 skill_context=skill_context,
                 difficulty_context=difficulty_context,
+                question_id=question_id,
+                demands_version=demands_version,
+                demand_signals=DemandSignals(**demand_signals) if demand_signals else None,
             )
 
             # ── cache check ──────────────────────────────────────────────────

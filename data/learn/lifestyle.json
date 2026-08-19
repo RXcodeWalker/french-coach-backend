@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "learn-demands-v1",
+  "topicKey": "lifestyle",
+  "entries": [
+    {
+      "questionId": "life_01",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Mention at least two of: Discuss self-expression, peer pressure, and sustainable fashion.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    }
+  ]
+}

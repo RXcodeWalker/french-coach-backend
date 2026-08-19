@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "learn-demands-v1",
+  "topicKey": "art",
+  "entries": [
+    {
+      "questionId": "art_01",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Mention at least two of: Focus on colors, composition, and emotions felt.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.9
+      },
+      "review": {
+        "status": "draft"
+      }
+    }
+  ]
+}

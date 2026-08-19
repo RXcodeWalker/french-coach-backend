@@ -1,0 +1,931 @@
+{
+  "schemaVersion": "learn-demands-v1",
+  "topicKey": "school",
+  "entries": [
+    {
+      "questionId": "sch_01",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about your school — size, subjects, teachers, uniform, facilities.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.9
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_02",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe 2-3 favourite subjects, give reasons, compare with subjects you dislike.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.75
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_03",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain your journey to school — transport, how long it takes, who you go with.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_04",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification",
+          "comparison"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give a balanced opinion with both positives and negatives, plus reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.75
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_05",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "past"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Use passé composé to describe specific events — a lesson, a test, a school trip.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_06",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "short",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Walk through your day from morning to end of school using time phrases.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.9
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_07",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Identify your least favorite subject, explain why (boring, difficult, teacher), and compare it to others.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.75
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_08",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe a teacher you admire — their subject, personality, and why they are a good teacher.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.9
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_09",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss school rules — uniform, phone usage, punctuality — and give your opinion on whether they are fair.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_10",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Use conditional tense to describe changes you would make to school life, facilities, or schedule.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.85
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_11",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification",
+          "comparison"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the pros and cons of individual vs. group work in school.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_12",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your uniform and give your opinion on whether it should be mandatory.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.9
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_13",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give a balanced view on the necessity and amount of homework.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_14",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Imagine your perfect school day — subjects, breaks, food, and duration.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.9
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_15",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Mention at least two of: Talk about extracurricular activities and their benefits.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_16",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Talk about laptops, tablets, and the internet in your lessons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_17",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your dream school trip and what you would do there.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_18",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the benefits of bilingualism for travel, work, and culture.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.65
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_19",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about friendships, atmosphere, and how students get along.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_20",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "short",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare your current school with your previous one (past vs present).",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_21",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss the pros and cons of mixed-gender schools vs. single-sex schools.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_22",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about the resources, quiet space, and benefits for students.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_23",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Share your tips for staying calm and organized during test periods.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_24",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Think about something practical or fun that isn't currently taught.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.85
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_25",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "short",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the benefits of learning outside the traditional classroom setting.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_26",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the traits that make a teacher effective and inspiring.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_27",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the ethics of cheating and its consequences.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_28",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about school sports days and their impact on students.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_29",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the benefits and drawbacks of a later start time for students.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_30",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the pros and cons of being a boarding student vs. a day student.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_31",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain the benefits of language learning for travel, career, and culture.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.65
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_32",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss how technology helps or hinders learning in the classroom.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_33",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "past"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about a school exchange trip or your desire to participate in one.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_34",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss academic pressure, competition, and how you cope with it.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_35",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your social life at school and how you get along with others.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_36",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Talk about career advice, internships, or guidance you receive at school.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_37",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the value of community service and volunteering for students.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_38",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss if rewards for good grades or behavior are a good motivation.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_39",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe the sports facilities like gym, fields, or pool at your school.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_40",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Mention at least two of: Discuss school safety and policies regarding bullying.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_41",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Review the school food — taste, variety, and healthiness.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_42",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss learning life skills like cooking, DIY, or personal finance at school.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_43",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the benefits of public speaking and debating clubs.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_44",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Reflect on your early education and how it differs from secondary school.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_45",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the role of extra tutoring or catch-up classes for students.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_46",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe school events like plays, concerts, or end-of-year parties.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_47",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss student representation and how students can voice their opinions.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_48",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Use the future tense to describe changes in technology, subjects, or school life.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "sch_49",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss the balance between academic subjects and physical education.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    }
+  ]
+}

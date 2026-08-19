@@ -1,0 +1,838 @@
+{
+  "schemaVersion": "learn-demands-v1",
+  "topicKey": "future",
+  "entries": [
+    {
+      "questionId": "fut_01",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss future career or study plans. Use future tense and conditional.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_02",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification",
+          "comparison"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Give a clear opinion on university with pros/cons and alternatives.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.75
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_03",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "future",
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your dream job, why it appeals, what skills are needed.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_04",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about your immediate post-exam plans — holidays, summer job, next year's studies.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_05",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the pros and cons of working in another country, mention a specific place if you have one in mind.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_06",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your ideal job, what you'd do daily, and why it's your dream.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.75
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_07",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the pros and cons of being an entrepreneur vs. an employee.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_08",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification",
+          "negation"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Identify a job you dislike and explain the reasons (stress, boredom, danger).",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.75
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_09",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Use future tense to describe your personal and professional situation in 10 years.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_10",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about your creative ambitions and what you'd write about.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_11",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "short",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "A complete answer should: Discuss your priorities for your future career.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_12",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [],
+        "responseLoad": "short",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about your family plans for the future.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_13",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [],
+        "responseLoad": "short",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your ideal living situation in the distant future.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_14",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss the role of AI and automation in your chosen field.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_15",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the role of automation in our daily home lives.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_16",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Think about faster transport, virtual reality, or space travel.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_17",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about a personal goal or obstacle you want to overcome.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_18",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Mention at least two of: Discuss environmental, social, and technological progress.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_19",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "future",
+          "conditional"
+        ],
+        "structures": [
+          "justification",
+          "conditional"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Mention at least two of: Discuss the advantages and disadvantages of fame.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.75
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_20",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss your views on traditional marriage vs. other forms of commitment.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_21",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss space colonization and living on Mars or the Moon.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_22",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "short",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the modern idea of career mobility vs. having one job for life.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_23",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about your plans for your late years (travel, relaxation, hobbies).",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_24",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Mention at least two of: International travel, communication, competitive advantage.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.65
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_25",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Mention at least two of: Pros and cons: flexibility, socialization, distraction, concentration.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_26",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "extended",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Mention at least two of: Traveling, volunteering, working, maturing.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_27",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Helping others, causes you care about (environment, animals, poverty).",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_28",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "New careers, digital marketing, the importance of online presence.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_29",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Environmental impact of food, synthetic products, local consumption.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_30",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Mention at least two of: Adaptability, creativity, technical skills, languages.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_31",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "future",
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Mention at least two of: Automation, energy saving, security, privacy.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_32",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Mention at least two of: Sustainable energy, ecology, social responsibility.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_33",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Mention at least two of: Working hours, leisure time, priorities.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_34",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss future transportation methods — flying cars, high-speed trains, electric planes.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_35",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Imagine future classrooms — technology, subjects, or if schools will even exist physically.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_36",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Discuss the possibility of visiting the Moon or Mars as a tourist.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_37",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare digital reading with traditional books and predict which will survive.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_38",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about robots helping with daily life or providing company.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_39",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Predict future hobbies — eSports, virtual reality games, or new sports.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_40",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss medical advances — living longer, curing diseases, nanotechnology.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_41",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Imagine smart clothing — self-cleaning, temperature-controlled, or eco-friendly materials.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_42",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss the future of shopping — drones, no physical stores, virtual fitting rooms.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.55
+      },
+      "review": {
+        "status": "draft"
+      }
+    },
+    {
+      "questionId": "fut_43",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss AI-generated art, virtual concerts, and if human creativity will still be valued.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.4
+      },
+      "review": {
+        "status": "draft"
+      }
+    }
+  ]
+}

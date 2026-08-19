@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "learn-demands-v1",
+  "topicKey": "pro",
+  "entries": [
+    {
+      "questionId": "pro_01",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Discuss soft skills (communication, teamwork) vs hard skills (languages, tech).",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    }
+  ]
+}

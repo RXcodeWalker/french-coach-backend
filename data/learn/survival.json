@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "learn-demands-v1",
+  "topicKey": "survival",
+  "entries": [
+    {
+      "questionId": "surv_01",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "High-pressure situation. Describe steps to take (consulate, police).",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.85
+      },
+      "review": {
+        "status": "draft"
+      }
+    }
+  ]
+}

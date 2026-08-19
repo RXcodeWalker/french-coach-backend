@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "learn-demands-v1",
+  "topicKey": "slang",
+  "entries": [
+    {
+      "questionId": "slang_01",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Mention at least two of: Discuss slang (verlan) and idiomatic expressions.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.7
+      },
+      "review": {
+        "status": "draft"
+      }
+    }
+  ]
+}

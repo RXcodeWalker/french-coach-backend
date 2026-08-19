@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "learn-demands-v1",
+  "topicKey": "culture",
+  "entries": [
+    {
+      "questionId": "cul_01",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Talk about identity, heritage, and the impact of modernization.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.65
+      },
+      "review": {
+        "status": "draft"
+      }
+    }
+  ]
+}

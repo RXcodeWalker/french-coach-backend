@@ -1219,17 +1219,21 @@
       "demands": {
         "cognitiveDemand": "hypothesize",
         "timeFrames": [
-          "present"
+          "present",
+          "conditional"
         ],
-        "structures": [],
+        "structures": [
+          "conditional"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "A complete answer should: Discuss entomophagy as a sustainable protein source.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.85
+        "sufficientAnswer": "State whether you would eat insects and give at least one reason tied to sustainability.",
+        "provenance": "reviewed"
       },
       "review": {
-        "status": "draft"
+        "status": "approved",
+        "reviewedBy": "stage9-review",
+        "reviewedAt": "2026-08-19"
       }
     },
     {

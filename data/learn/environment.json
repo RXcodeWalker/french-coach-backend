@@ -334,11 +334,12 @@
         "responseLoad": "developed",
         "lexicalReach": "abstract",
         "sufficientAnswer": "Use conditional to describe a bold environmental policy.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.85
+        "provenance": "reviewed"
       },
       "review": {
-        "status": "draft"
+        "status": "approved",
+        "reviewedBy": "stage9-review",
+        "reviewedAt": "2026-08-19"
       }
     },
     {

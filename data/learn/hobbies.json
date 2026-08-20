@@ -827,12 +827,13 @@
         ],
         "responseLoad": "extended",
         "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss board games, rules, and playing with family or friends.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
+        "sufficientAnswer": "State a preference between simple and complex strategy games and give at least one reason for the comparison.",
+        "provenance": "reviewed"
       },
       "review": {
-        "status": "draft"
+        "status": "approved",
+        "reviewedBy": "stage9-review",
+        "reviewedAt": "2026-08-19"
       }
     },
     {

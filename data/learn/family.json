@@ -157,16 +157,18 @@
           "present"
         ],
         "structures": [
-          "justification"
+          "justification",
+          "comparison"
         ],
         "responseLoad": "extended",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a funny family member and give examples of their humor.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.75
+        "sufficientAnswer": "Name the funniest family member (superlative comparison) and give at least one reason or example supporting why they are funny.",
+        "provenance": "reviewed"
       },
       "review": {
-        "status": "draft"
+        "status": "approved",
+        "reviewedBy": "stage9-review",
+        "reviewedAt": "2026-08-19"
       }
     },
     {

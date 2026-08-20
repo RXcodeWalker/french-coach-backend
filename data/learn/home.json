@@ -188,11 +188,12 @@
         "responseLoad": "developed",
         "lexicalReach": "everyday",
         "sufficientAnswer": "Use conditional to describe where you would move and why.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.85
+        "provenance": "reviewed"
       },
       "review": {
-        "status": "draft"
+        "status": "approved",
+        "reviewedBy": "stage9-review",
+        "reviewedAt": "2026-08-19"
       }
     },
     {

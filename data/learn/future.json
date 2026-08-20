@@ -366,12 +366,13 @@
         ],
         "responseLoad": "extended",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss the advantages and disadvantages of fame.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.75
+        "sufficientAnswer": "State whether you would like to be famous and give at least two reasons covering both advantages and disadvantages of fame.",
+        "provenance": "reviewed"
       },
       "review": {
-        "status": "draft"
+        "status": "approved",
+        "reviewedBy": "stage9-review",
+        "reviewedAt": "2026-08-19"
       }
     },
     {

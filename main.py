@@ -94,6 +94,24 @@ GEMINI_API_KEY      = os.getenv("GEMINI_API_KEY", "").strip()
 # retires the 2.x line. gemini-3.5-flash is the current callable default;
 # override via env if Google moves the goalposts again.
 GEMINI_MODEL        = os.getenv("GEMINI_MODEL", "gemini-3.5-flash").strip()
+# Groq retired the Llama chat line: llama-3.3-70b-versatile now 404s with
+# model_not_found for this key, which took every Groq path down at once
+# (feedback, streaming, examiner, IGCSE, roleplay, pronunciation coach) and left
+# the client falling back to offline evaluation. openai/gpt-oss-120b is the
+# current general-purpose chat model on the account. Override via env if Groq
+# moves the goalposts again.
+GROQ_MODEL          = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b").strip()
+# gpt-oss is a reasoning model: it spends completion tokens thinking before it
+# answers. "low" holds that to ~50-250 tokens, which is all this workload needs,
+# and keeps time-to-first-content short on the streaming path. Its reasoning
+# arrives in a separate `reasoning` delta, so streamed `content` stays pure JSON
+# and _emit_ready_sections keeps working unchanged. Set this to "" if GROQ_MODEL
+# is pointed at a non-reasoning model, which would reject the parameter.
+GROQ_REASONING_EFFORT = os.getenv("GROQ_REASONING_EFFORT", "low").strip()
+# Reasoning tokens come out of the same max_tokens budget as the answer, so a
+# call site asking for 300 tokens could otherwise have all 300 eaten by the
+# thinking phase and return empty. Every budget is topped up by this much.
+GROQ_REASONING_TOKEN_RESERVE = int(os.getenv("GROQ_REASONING_TOKEN_RESERVE", "512"))
 # Measured ~23s for a full feedback prompt against gemini-3.5-flash; the health
 # probe sends a trivial one but still pays the model's thinking latency.
 GEMINI_PROBE_TIMEOUT_SEC = float(os.getenv("GEMINI_PROBE_TIMEOUT_SEC", "12"))
@@ -141,6 +159,15 @@ def get_groq():
         from groq import AsyncGroq
         _groq_client = AsyncGroq(api_key=GROQ_API_KEY)
     return _groq_client
+
+def _groq_reasoning_kwargs() -> dict[str, Any]:
+    """Extra chat-completion params for a reasoning GROQ_MODEL; empty otherwise."""
+    return {"reasoning_effort": GROQ_REASONING_EFFORT} if GROQ_REASONING_EFFORT else {}
+
+
+def _groq_token_budget(answer_tokens: int) -> int:
+    """Grow an answer-token budget so the reasoning phase cannot consume it."""
+    return answer_tokens + (GROQ_REASONING_TOKEN_RESERVE if GROQ_REASONING_EFFORT else 0)
 
 # ── Gemini lazy init ──────────────────────────────────────────────────────────
 _gemini_model = None
@@ -2132,9 +2159,10 @@ async def _probe_groq() -> str:
         groq = get_groq()
         await asyncio.wait_for(
             groq.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model=GROQ_MODEL,
                 messages=[{"role": "user", "content": "Hi"}],
                 max_tokens=1,
+                **_groq_reasoning_kwargs(),
             ),
             timeout=3.0,
         )
@@ -2172,20 +2200,21 @@ async def _call_groq(prompt: str, detailed: bool = False) -> dict[str, Any]:
 
     async def operation() -> dict[str, Any]:
         resp = await groq.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model=GROQ_MODEL,
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": prompt},
             ],
             temperature=0.4,
-            max_tokens=3000 if detailed else 2048,
+            max_tokens=_groq_token_budget(3000 if detailed else 2048),
+            **_groq_reasoning_kwargs(),
         )
         result = extract_json(resp.choices[0].message.content)
-        result["modelUsed"] = "groq/llama-3.3-70b-versatile"
+        result["modelUsed"] = f"groq/{GROQ_MODEL}"
         return result
 
-    return await _run_with_retries("groq/llama-3.3-70b-versatile", operation)
+    return await _run_with_retries(f"groq/{GROQ_MODEL}", operation)
 
 
 # ── Streaming Groq + section detector ────────────────────────────────────────
@@ -2417,15 +2446,16 @@ async def _stream_groq(
     already_emitted: set[str] = set()
 
     stream = await groq.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model=GROQ_MODEL,
         response_format={"type": "json_object"},
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": prompt},
         ],
         temperature=0.4,
-        max_tokens=3000 if detailed else 2048,
+        max_tokens=_groq_token_budget(3000 if detailed else 2048),
         stream=True,
+        **_groq_reasoning_kwargs(),
     )
 
     async for chunk in stream:
@@ -2436,7 +2466,7 @@ async def _stream_groq(
                 await on_section(event_type, data)
 
     result = extract_json(buffer)
-    result["modelUsed"] = "groq/llama-3.3-70b-versatile"
+    result["modelUsed"] = f"groq/{GROQ_MODEL}"
     return result
 
 
@@ -2635,7 +2665,7 @@ async def call_ai_feedback(
 
     providers: dict[str, tuple[str, Any]] = {
         "gemini": (gemini_name, _call_gemini_either),
-        "groq": ("groq/llama-3.3-70b-versatile", lambda: _call_groq(prompt, detailed)),
+        "groq": (f"groq/{GROQ_MODEL}", lambda: _call_groq(prompt, detailed)),
     }
 
     # Honour the client's engine preference. Without this the chain was always
@@ -2703,18 +2733,19 @@ async def _call_groq_examiner(prompt: str) -> dict[str, Any]:
 
     async def operation() -> dict[str, Any]:
         resp = await groq.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model=GROQ_MODEL,
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": _EXAMINER_MODE_SYSTEM_PROMPT},
                 {"role": "user", "content": prompt},
             ],
             temperature=0.3,
-            max_tokens=1500,
+            max_tokens=_groq_token_budget(1500),
+            **_groq_reasoning_kwargs(),
         )
         return extract_json(resp.choices[0].message.content)
 
-    return await _run_with_retries("groq/llama-3.3-70b-versatile-examiner", operation)
+    return await _run_with_retries(f"groq/{GROQ_MODEL}-examiner", operation)
 
 
 async def _call_gemini_examiner(prompt: str) -> dict[str, Any]:
@@ -3617,17 +3648,18 @@ async def _call_groq_igcse(prompt: str) -> dict[str, Any]:
 
     async def operation() -> dict[str, Any]:
         resp = await groq.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model=GROQ_MODEL,
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": IGCSE_SYSTEM_PROMPT},
                 {"role": "user", "content": prompt},
             ],
             temperature=0.3,
-            max_tokens=1500,
+            max_tokens=_groq_token_budget(1500),
+            **_groq_reasoning_kwargs(),
         )
         result = extract_json(resp.choices[0].message.content)
-        result["modelUsed"] = "groq/llama-3.3-70b-versatile"
+        result["modelUsed"] = f"groq/{GROQ_MODEL}"
         return result
 
     return await _run_with_retries("groq-igcse", operation)
@@ -4250,10 +4282,11 @@ async def get_grammar_lesson(topic: str) -> dict:
     if groq:
         try:
             resp = await groq.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model=GROQ_MODEL,
                 messages=[{"role": "user", "content": prompt}],
-                max_tokens=400,
+                max_tokens=_groq_token_budget(400),
                 temperature=0.3,
+                **_groq_reasoning_kwargs(),
             )
             raw = resp.choices[0].message.content.strip()
         except Exception as e:
@@ -4430,10 +4463,11 @@ async def roleplay_turn(request: Request, req: RoleplayTurnRequest) -> dict:
     if groq:
         try:
             resp = await groq.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model=GROQ_MODEL,
                 messages=[{"role": "system", "content": system}] + messages,
-                max_tokens=300,
+                max_tokens=_groq_token_budget(300),
                 temperature=0.7,
+                **_groq_reasoning_kwargs(),
             )
             raw = resp.choices[0].message.content.strip()
         except Exception as e:
@@ -4698,14 +4732,15 @@ async def _call_groq_coach(prompt: str) -> dict[str, Any]:
 
     async def operation() -> dict[str, Any]:
         resp = await groq.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model=GROQ_MODEL,
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": _COACH_SYSTEM_PROMPT},
                 {"role": "user", "content": prompt},
             ],
             temperature=0.3,
-            max_tokens=500,
+            max_tokens=_groq_token_budget(500),
+            **_groq_reasoning_kwargs(),
         )
         return extract_json(resp.choices[0].message.content)
 

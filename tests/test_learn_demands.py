@@ -199,7 +199,7 @@ def test_parse_feedback_request_json_extracts_demand_fields():
 
         return await main._parse_feedback_request(_FakeRequest())
 
-    (question, transcript, model, detailed, metrics_json,
+    (question, transcript, model, depth, metrics_json,
      skill_context, difficulty_context, audio_bytes, audio_mime,
      question_id, demands_version, demand_signals) = asyncio.run(_run())
 
@@ -241,7 +241,7 @@ def test_parse_feedback_request_multipart_extracts_demand_fields_and_engine():
 
         return await main._parse_feedback_request(_FakeRequest())
 
-    (question, transcript, model, detailed, metrics_json,
+    (question, transcript, model, depth, metrics_json,
      skill_context, difficulty_context, audio_bytes, audio_mime,
      question_id, demands_version, demand_signals) = asyncio.run(_run())
 

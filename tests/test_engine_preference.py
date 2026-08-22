@@ -28,7 +28,7 @@ def _stub_providers(monkeypatch, calls: list[str], *, gemini_ok=True, groq_ok=Tr
             raise RuntimeError("gemini down")
         return {"scores": {"comm": 7}, "modelUsed": f"gemini/{main.GEMINI_MODEL}"}
 
-    async def fake_groq(prompt, detailed=False):
+    async def fake_groq(prompt, depth="standard"):
         calls.append("groq")
         if not groq_ok:
             raise RuntimeError("groq down")

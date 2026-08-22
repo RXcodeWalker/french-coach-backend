@@ -40,7 +40,7 @@ import traceback
 import unicodedata
 from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import Annotated, Any
+from typing import Annotated, Any, Literal
 
 import httpx
 import jwt as pyjwt
@@ -171,6 +171,74 @@ def _groq_token_budget(answer_tokens: int) -> int:
     """Grow an answer-token budget so the reasoning phase cannot consume it."""
     return answer_tokens + (GROQ_REASONING_TOKEN_RESERVE if GROQ_REASONING_EFFORT else 0)
 
+
+# ── Adaptive feedback depth (docs Stage 3) ───────────────────────────────────
+# Replaces the old `detailed: bool` flag. `depth` is a client-computed hint
+# (src/domain/learn/feedback/computeDepth.ts) reflecting response length,
+# error density, demand fit and evidence availability — the server treats it
+# as a hint only and owns the ceiling: FEEDBACK_DEPTH_ANSWER_TOKENS bounds the
+# provider call regardless of what the client asked for, and
+# FEEDBACK_DEPTH_ITEM_CAPS truncates any oversized arrays the model returns
+# even under a 'deep' request.
+FeedbackDepth = Literal["brief", "standard", "deep"]
+_VALID_FEEDBACK_DEPTHS: frozenset[str] = frozenset({"brief", "standard", "deep"})
+
+FEEDBACK_DEPTH_ANSWER_TOKENS: dict[FeedbackDepth, int] = {
+    "brief": 1400,
+    "standard": 2048,
+    "deep": 3000,
+}
+
+FEEDBACK_DEPTH_ITEM_CAPS: dict[FeedbackDepth, dict[str, int]] = {
+    "brief":    {"grammar": 3, "vocabulary": 3, "corrections": 3},
+    "standard": {"grammar": 5, "vocabulary": 5, "corrections": 5},
+    "deep":     {"grammar": 8, "vocabulary": 7, "corrections": 8},
+}
+
+FEEDBACK_DEPTH_PROMPT_RANGES: dict[FeedbackDepth, str] = {
+    "brief": (
+        "\n\nFEEDBACK DEPTH: brief. Use the lower end of all item ranges "
+        "(2-3 grammar items, 2-3 vocabulary items). Keep explanations to one "
+        "sentence each — this learner's answer was long and largely correct, "
+        "so do not manufacture extra items to fill space."
+    ),
+    "standard": "",
+    "deep": (
+        "\n\nFEEDBACK DEPTH: deep. Use the upper end of all item ranges "
+        "(5-8 grammar items, 4-7 vocabulary items, 3-5 structure items). "
+        "Go beyond surface corrections — explain WHY each error matters for IGCSE, "
+        "what mark band it affects, and give a corrected model sentence for each grammar issue."
+    ),
+}
+
+
+def _normalize_feedback_depth(raw: Any) -> FeedbackDepth:
+    value = str(raw or "standard").strip().lower()
+    return value if value in _VALID_FEEDBACK_DEPTHS else "standard"
+
+
+def _apply_depth_item_caps(fb: dict[str, Any], depth: FeedbackDepth) -> dict[str, Any]:
+    """Server-owned ceiling (docs Stage 3): truncate oversized arrays
+    regardless of what the client asked for or what the model returned."""
+    caps = FEEDBACK_DEPTH_ITEM_CAPS[depth]
+
+    grammar = fb.get("grammar")
+    if isinstance(grammar, dict):
+        for bucket in ("critical", "polish"):
+            items = grammar.get(bucket)
+            if isinstance(items, list) and len(items) > caps["grammar"]:
+                grammar[bucket] = items[: caps["grammar"]]
+
+    vocabulary = fb.get("vocabulary")
+    if isinstance(vocabulary, list) and len(vocabulary) > caps["vocabulary"]:
+        fb["vocabulary"] = vocabulary[: caps["vocabulary"]]
+
+    corrections = fb.get("corrections")
+    if isinstance(corrections, list) and len(corrections) > caps["corrections"]:
+        fb["corrections"] = corrections[: caps["corrections"]]
+
+    return fb
+
 # ── Gemini lazy init ──────────────────────────────────────────────────────────
 _gemini_model = None
 
@@ -267,13 +335,18 @@ _feedback_cache: BoundedTTLCache[dict] = BoundedTTLCache(_FEEDBACK_CACHE_MAX, _F
 
 
 def _feedback_cache_key(
-    transcript: str, question_id: str, difficulty_context: dict[str, Any] | None = None
+    transcript: str,
+    question_id: str,
+    difficulty_context: dict[str, Any] | None = None,
+    depth: FeedbackDepth = "standard",
 ) -> str:
     # Tier is part of the key so a Beginner-toned cached response can never be
     # served back for an Expert request (and vice versa) once the tier reaches
-    # the prompt (see build_user_prompt's difficulty_section).
+    # the prompt (see build_user_prompt's difficulty_section). depth is part
+    # of the key for the same reason (docs Stage 3) — otherwise a 'brief'
+    # response gets served back to a 'deep' request.
     tier = (difficulty_context or {}).get("tier") or ""
-    return hashlib.sha256(f"{transcript}::{question_id}::{tier}".encode()).hexdigest()
+    return hashlib.sha256(f"{transcript}::{question_id}::{tier}::{depth}".encode()).hexdigest()
 
 
 async def _feedback_cache_get(key: str) -> dict | None:
@@ -522,7 +595,7 @@ class FeedbackRequest(BaseModel):
     transcript: str = Field(..., description="Student's spoken answer, transcribed")
     metrics: FeedbackMetrics | None = None
     model: str | None = None      # "groq" | "gemini" | None (auto)
-    detailed: bool = False         # True = expanded feedback with more items
+    depth: FeedbackDepth = "standard"  # client-computed hint (docs Stage 3); server owns the ceiling
     skill_context: dict[str, Any] | None = None  # weak/strong skill profile from client
     difficulty_context: dict[str, Any] | None = None  # tier/label/cefrTarget/coachingTone/coachingRubric from client
     # docs §9.1 trust boundary: the client sends only the id + hash of the
@@ -1690,6 +1763,15 @@ JSON SCHEMA (return exactly this shape, no extra keys):
 
   "improved_answer": "<Take the student's exact answer and improve it: fix grammar, add missing articles, correct word order. Preserve ALL their ideas. Should feel like 'your answer, but better.' 30-70 words.>",
 
+  "changes": [
+    {
+      "quote": "<the exact original word(s) from the student's transcript that improved_answer changed — verbatim, not from improved_answer>",
+      "quoteContext": "<REQUIRED only if quote is not unique in the transcript — a few surrounding words that identify which occurrence>",
+      "category": "<one of: grammar | tense | gender | agreement | preposition | elision | auxiliary | subjunctive | anglicism | vocabulary | connectors | pronunciation | rhythm | fluency>",
+      "explanation": "<one sentence: why this specific change was made>"
+    }
+  ],
+
   "advanced_answer": "<A higher-level model response on the same topic showing what one IGCSE band higher looks like. Richer vocabulary, varied tenses, better connectives. 50-80 words.>",
 
   "rephrase": "<Same content as improved_answer — the corrected version of the student's answer>",
@@ -1723,6 +1805,10 @@ FINAL RULES:
 6. answered_the_question, demands_met, demands_missed, and difficulty_fit are OPTIONAL —
    omit them entirely rather than guessing if a QUESTION DEMANDS section was not provided above.
    When DETERMINISTIC SIGNALS were provided, do not contradict them.
+7. changes[] entries are annotations only — you do NOT compute the diff between the transcript
+   and improved_answer (the app computes that itself). Only supply quote/quoteContext/category/
+   explanation for word(s) you know improved_answer changed. quote MUST be verbatim from the
+   STUDENT TRANSCRIPT, never from improved_answer. Omit changes entirely if improved_answer is empty.
 """
 
 MULTIMODAL_SYSTEM_PROMPT = """You are a professional French oral examiner with specialist phonetics training (IPA-certified).
@@ -2114,13 +2200,7 @@ def build_user_prompt(req: FeedbackRequest) -> str:
     # Remove wordProbabilities from metrics dict for the prompt (too verbose)
     m.pop("wordProbabilities", None)
 
-    detail_instruction = (
-        "\n\nDETAILED MODE: Provide maximum depth. Use the upper end of all item ranges "
-        "(5–8 grammar items, 4–7 vocabulary items, 3–5 structure items). "
-        "Go beyond surface corrections — explain WHY each error matters for IGCSE, "
-        "what mark band it affects, and give a corrected model sentence for each grammar issue."
-        if req.detailed else ""
-    )
+    detail_instruction = FEEDBACK_DEPTH_PROMPT_RANGES[req.depth]
 
     cleaned = clean_transcript(req.transcript)
 
@@ -2379,7 +2459,7 @@ async def _probe_gemini() -> str:
         return "degraded"
 
 
-async def _call_groq(prompt: str, detailed: bool = False) -> dict[str, Any]:
+async def _call_groq(prompt: str, depth: FeedbackDepth = "standard") -> dict[str, Any]:
     groq = get_groq()
     if not groq:
         raise RuntimeError("Groq not configured")
@@ -2393,7 +2473,7 @@ async def _call_groq(prompt: str, detailed: bool = False) -> dict[str, Any]:
                 {"role": "user", "content": prompt},
             ],
             temperature=0.4,
-            max_tokens=_groq_token_budget(3000 if detailed else 2048),
+            max_tokens=_groq_token_budget(FEEDBACK_DEPTH_ANSWER_TOKENS[depth]),
             **_groq_reasoning_kwargs(),
         )
         result = extract_json(resp.choices[0].message.content)
@@ -2621,7 +2701,7 @@ def _repair_partial_json(text: str) -> str:
 
 async def _stream_groq(
     prompt: str,
-    detailed: bool,
+    depth: FeedbackDepth,
     on_section,  # async callable(type: str, data: dict)
 ) -> dict[str, Any]:
     """Stream a Groq completion, calling on_section for each detected section."""
@@ -2640,7 +2720,7 @@ async def _stream_groq(
             {"role": "user", "content": prompt},
         ],
         temperature=0.4,
-        max_tokens=_groq_token_budget(3000 if detailed else 2048),
+        max_tokens=_groq_token_budget(FEEDBACK_DEPTH_ANSWER_TOKENS[depth]),
         stream=True,
         **_groq_reasoning_kwargs(),
     )
@@ -2838,7 +2918,7 @@ async def call_ai_feedback(
     audio_mime: str = "audio/webm",
 ) -> dict[str, Any]:
     prompt = build_user_prompt(req)
-    detailed = req.detailed
+    depth = req.depth
     has_audio = bool(audio_path)
     provider_errors: list[dict[str, str]] = []
     t_start = time.monotonic()
@@ -2852,7 +2932,7 @@ async def call_ai_feedback(
 
     providers: dict[str, tuple[str, Any]] = {
         "gemini": (gemini_name, _call_gemini_either),
-        "groq": (f"groq/{GROQ_MODEL}", lambda: _call_groq(prompt, detailed)),
+        "groq": (f"groq/{GROQ_MODEL}", lambda: _call_groq(prompt, depth)),
     }
 
     # Honour the client's engine preference. Without this the chain was always
@@ -3013,6 +3093,23 @@ def _apply_coaching_quality_gate(result: dict[str, Any], transcript: str = "") -
         # rather than filter quoteSpans separately, so the two can never drift.
         result["quoteSpans"] = _build_quote_spans(transcript, filtered_corrections) if transcript else []
 
+    # changes[] (docs Stage 3) — same drop-only evidence policy as
+    # corrections[] (generalized via _drop_unevidenced_items: quote is
+    # required, description/explanation/label are the free-text fields
+    # checked for a « » quote as an alternative). Annotations are decoration
+    # over a diff the client computes itself (invariant #3/#10) — a diff
+    # without an improved_answer to diff against is meaningless (invariant
+    # #11), so changes[] never ships without one.
+    changes = result.get("changes")
+    if isinstance(changes, list):
+        if result.get("improved_answer"):
+            filtered_changes, dropped_count = _drop_unevidenced_items(changes)
+            if dropped_count:
+                log.warning("Non-streaming: dropped %d unevidenced change annotation(s)", dropped_count)
+            result["changes"] = filtered_changes
+        else:
+            result["changes"] = []
+
     return result
 
 
@@ -3071,6 +3168,13 @@ def enrich_feedback(fb: dict[str, Any], req: FeedbackRequest) -> dict[str, Any]:
     fb["corrections"] = corrections if isinstance(corrections, list) else []
     fb["quoteSpans"] = _build_quote_spans(req.transcript, fb["corrections"])
 
+    # ── changes[] annotations (docs Stage 3) ──────────────────────────────────
+    # The diff itself is computed client-side from transcript + improved_answer
+    # (invariant #3/#10) — this is only the LLM's {quote, quoteContext,
+    # category, explanation} annotation list, drop-only verified below.
+    changes = fb.get("changes")
+    fb["changes"] = changes if isinstance(changes, list) else []
+
     # ── Pronunciation ─────────────────────────────────────────────────────────
     existing_pron = fb.get("pronunciation", {})
     delivery_metrics = {
@@ -3113,7 +3217,7 @@ async def _feedback_impl(
     question: str,
     transcript: str,
     model: str,
-    detailed: bool,
+    depth: FeedbackDepth,
     metrics_json: str,
     audio: UploadFile | None,
     skill_context: dict[str, Any] | None = None,
@@ -3193,7 +3297,7 @@ async def _feedback_impl(
             transcript=transcript,
             metrics=metrics_obj,
             model=model,
-            detailed=detailed,
+            depth=depth,
             skill_context=skill_context,
             difficulty_context=difficulty_context,
             question_id=question_id,
@@ -3207,7 +3311,7 @@ async def _feedback_impl(
         was_cached = False
 
         if not tmp_path and transcript and _cache_id:
-            cache_key = _feedback_cache_key(transcript, _cache_id, difficulty_context)
+            cache_key = _feedback_cache_key(transcript, _cache_id, difficulty_context, depth)
             hit = await _feedback_cache_get(cache_key)
             if hit is not None:
                 _log_feedback_latency(
@@ -3238,6 +3342,7 @@ async def _feedback_impl(
         # _feedback_cache_get/_feedback_cache_set).
         result = enrich_feedback(fb, req)
         result = _apply_coaching_quality_gate(result, transcript)
+        result = _apply_depth_item_caps(result, depth)
         if was_cached:
             result["_was_cached"] = True
 
@@ -3274,7 +3379,7 @@ async def feedback(request: Request) -> dict[str, Any]:
     question = ""
     transcript = ""
     model = "gemini"
-    detailed = False
+    depth: FeedbackDepth = "standard"
     metrics_json = "{}"
     skill_context: dict[str, Any] | None = None
     difficulty_context: dict[str, Any] | None = None
@@ -3294,7 +3399,7 @@ async def feedback(request: Request) -> dict[str, Any]:
         question = str(form.get("question") or "")
         transcript = str(form.get("transcript") or "")
         model = str(form.get("model") or "gemini")
-        detailed = str(form.get("detailed") or "false").lower() == "true"
+        depth = _normalize_feedback_depth(form.get("depth"))
         metrics_json = str(form.get("metrics_json") or "{}")
         maybe_audio = form.get("audio")
         if isinstance(maybe_audio, UploadFile) or (
@@ -3322,6 +3427,8 @@ async def feedback(request: Request) -> dict[str, Any]:
             # Same as the JSON branch: the client bundles its engine choice in
             # `data`, not as a top-level form field.
             model = str(data_payload.get("enginePreference") or data_payload.get("model") or model)
+            if "depth" in data_payload:
+                depth = _normalize_feedback_depth(data_payload.get("depth"))
             if not metrics_json or metrics_json == "{}":
                 m = data_payload.get("metrics")
                 if isinstance(m, dict):
@@ -3355,7 +3462,7 @@ async def feedback(request: Request) -> dict[str, Any]:
         # older spelling kept for other callers. Reading only `model` meant the
         # preference was silently dropped and every request ran Gemini-first.
         model = str(payload.get("enginePreference") or payload.get("model") or "gemini")
-        detailed = bool(payload.get("detailed", False))
+        depth = _normalize_feedback_depth(payload.get("depth"))
         skill_context = payload.get("skillContext") or None
         difficulty_context = payload.get("difficultyContext") or None
         question_id = payload.get("questionId") or None
@@ -3372,7 +3479,7 @@ async def feedback(request: Request) -> dict[str, Any]:
             question=question,
             transcript=transcript,
             model=model,
-            detailed=detailed,
+            depth=depth,
             metrics_json=metrics_json,
             audio=audio,
             skill_context=skill_context,
@@ -3396,7 +3503,7 @@ async def feedback(request: Request) -> dict[str, Any]:
             transcript=transcript or "",
             metrics=None,
             model=model,
-            detailed=detailed,
+            depth=depth,
             skill_context=skill_context,
             difficulty_context=difficulty_context,
         )
@@ -3420,17 +3527,17 @@ def _extract_question_text_util(raw: Any) -> str:
 
 
 async def _parse_feedback_request(request: Request) -> tuple[
-    str, str, str, bool, str, dict[str, Any] | None, dict[str, Any] | None, bytes | None, str,
+    str, str, str, FeedbackDepth, str, dict[str, Any] | None, dict[str, Any] | None, bytes | None, str,
     str | None, str | None, dict[str, Any] | None,
 ]:
     """Parse multipart or JSON feedback request. Returns (question, transcript,
-    model, detailed, metrics_json, skill_context, difficulty_context, audio_bytes,
+    model, depth, metrics_json, skill_context, difficulty_context, audio_bytes,
     audio_mime, question_id, demands_version, demand_signals)."""
     content_type = (request.headers.get("content-type") or "").lower()
     question = ""
     transcript = ""
     model = "groq"
-    detailed = False
+    depth: FeedbackDepth = "standard"
     metrics_json = "{}"
     skill_context: dict[str, Any] | None = None
     difficulty_context: dict[str, Any] | None = None
@@ -3445,7 +3552,7 @@ async def _parse_feedback_request(request: Request) -> tuple[
         question = str(form.get("question") or "")
         transcript = str(form.get("transcript") or "")
         model = str(form.get("model") or "groq")
-        detailed = str(form.get("detailed") or "false").lower() == "true"
+        depth = _normalize_feedback_depth(form.get("depth"))
         metrics_json = str(form.get("metrics_json") or "{}")
         maybe_audio = form.get("audio")
         if isinstance(maybe_audio, UploadFile) or (
@@ -3475,6 +3582,8 @@ async def _parse_feedback_request(request: Request) -> tuple[
             # choice in `data`, not as a top-level form field — reading only
             # `model` meant the preference was silently dropped here too.
             model = str(data_payload.get("enginePreference") or data_payload.get("model") or model)
+            if "depth" in data_payload:
+                depth = _normalize_feedback_depth(data_payload.get("depth"))
             if not metrics_json or metrics_json == "{}":
                 m = data_payload.get("metrics")
                 if isinstance(m, dict):
@@ -3494,7 +3603,7 @@ async def _parse_feedback_request(request: Request) -> tuple[
         # streamFeedback never sent `model`) — reading only `model` meant this
         # endpoint silently ran Groq-only regardless of the client's choice.
         model = str(payload.get("enginePreference") or payload.get("model") or "groq")
-        detailed = bool(payload.get("detailed", False))
+        depth = _normalize_feedback_depth(payload.get("depth"))
         skill_context = payload.get("skillContext") or None
         difficulty_context = payload.get("difficultyContext") or None
         question_id = payload.get("questionId") or None
@@ -3505,7 +3614,7 @@ async def _parse_feedback_request(request: Request) -> tuple[
             metrics_json = json.dumps(metrics)
 
     return (
-        question, transcript, model, detailed, metrics_json,
+        question, transcript, model, depth, metrics_json,
         skill_context, difficulty_context, audio_bytes, audio_mime,
         question_id, demands_version, demand_signals,
     )
@@ -3520,7 +3629,7 @@ async def feedback_stream(request: Request) -> StreamingResponse:
     Degrades gracefully to a single buffered `complete` for Gemini/offline.
     """
     try:
-        (question, transcript, model, detailed, metrics_json,
+        (question, transcript, model, depth, metrics_json,
          skill_context, difficulty_context, audio_bytes, audio_mime,
          question_id, demands_version, demand_signals) = await _parse_feedback_request(request)
     except HTTPException:
@@ -3591,7 +3700,7 @@ async def feedback_stream(request: Request) -> StreamingResponse:
                 transcript=actual_transcript,
                 metrics=metrics_obj,
                 model=model,
-                detailed=detailed,
+                depth=depth,
                 skill_context=skill_context,
                 difficulty_context=difficulty_context,
                 question_id=question_id,
@@ -3604,7 +3713,7 @@ async def feedback_stream(request: Request) -> StreamingResponse:
             fb: dict[str, Any] | None = None
             was_cached = False
             if not tmp_path and actual_transcript and question:
-                cache_key = _feedback_cache_key(actual_transcript, question, difficulty_context)
+                cache_key = _feedback_cache_key(actual_transcript, question, difficulty_context, depth)
                 hit = await _feedback_cache_get(cache_key)
                 if hit is not None:
                     fb = hit
@@ -3632,7 +3741,7 @@ async def feedback_stream(request: Request) -> StreamingResponse:
 
                     groq_task = asyncio.create_task(_stream_groq(
                         build_user_prompt(req),
-                        detailed,
+                        depth,
                         on_section,
                     ))
 
@@ -3661,6 +3770,7 @@ async def feedback_stream(request: Request) -> StreamingResponse:
             # bleed from the first caller into every later cache hit.
             result = enrich_feedback(fb, req)
             result = _apply_coaching_quality_gate(result, actual_transcript)
+            result = _apply_depth_item_caps(result, depth)
             result["transcript"] = actual_transcript
             result["whisper_segments"] = whisper_data.get("segments", [])
             result["whisper_words"] = whisper_words
@@ -3678,7 +3788,7 @@ async def feedback_stream(request: Request) -> StreamingResponse:
                 transcript=transcript or "",
                 metrics=None,
                 model=model,
-                detailed=detailed,
+                depth=depth,
                 skill_context=skill_context,
                 difficulty_context=difficulty_context,
             )

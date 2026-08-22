@@ -109,7 +109,7 @@ def test_multipart_with_question_field_still_extracts_skill_and_difficulty_conte
         result = await main._parse_feedback_request(_FakeRequest())
         return result
 
-    (question, transcript, model, detailed, metrics_json,
+    (question, transcript, model, depth, metrics_json,
      skill_context, difficulty_context, audio_bytes, audio_mime,
      question_id, demands_version, demand_signals) = asyncio.run(_run())
 

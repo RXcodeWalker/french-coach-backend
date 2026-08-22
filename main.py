@@ -24,6 +24,7 @@ Run locally:
 from __future__ import annotations
 
 import asyncio
+import copy
 import hashlib
 import json
 import logging
@@ -275,15 +276,21 @@ def _feedback_cache_key(
 
 
 async def _feedback_cache_get(key: str) -> dict | None:
+    # BoundedTTLCache stores/returns by reference — deep-copy on the way out
+    # so enrich_feedback (which mutates in place) can never bake one caller's
+    # delivery metrics into the object served to every later caller.
     value = await _feedback_cache.get(key)
     if value is not None:
         with _METRICS_LOCK:
             _METRICS["cache_hits"] += 1
-    return value
+        return copy.deepcopy(value)
+    return None
 
 
 async def _feedback_cache_set(key: str, value: dict) -> None:
-    await _feedback_cache.set(key, value)
+    # Deep-copy on the way in too: the caller's dict is enriched in place
+    # after this call, and the cache must hold the raw provider payload only.
+    await _feedback_cache.set(key, copy.deepcopy(value))
 
 
 def _is_cacheable_result(result: dict) -> bool:
@@ -1565,6 +1572,13 @@ JSON schema:
 # discipline; paired with a snapshot test in backend/tests/.
 LEARN_PROMPT_VERSION = "learn-prompt-v1"
 
+# Tracks the wire *shape* of the /v3 and /stream feedback response — separate
+# from LEARN_PROMPT_VERSION, which tracks prompt text. Bump only when the
+# transport contract itself changes (new/renamed top-level fields), not when
+# prompt wording changes. Read by the frontend's mergeV2Fields to decide
+# whether the rich coaching fields are safe to trust.
+FEEDBACK_CONTRACT_VERSION = 2
+
 SYSTEM_PROMPT = """You are an elite private French tutor specialising in IGCSE Cambridge 0520/0680 oral preparation.
 Your mission is to TEACH, not to grade. Every piece of feedback must make the student think:
 "This is specifically about MY answer, and I learned something useful."
@@ -2825,6 +2839,10 @@ def enrich_feedback(fb: dict[str, Any], req: FeedbackRequest) -> dict[str, Any]:
     m = req.metrics.model_dump(exclude_none=True) if req.metrics else {}
     m.pop("wordProbabilities", None)
     fb.setdefault("wordCount", len(req.transcript.split()))
+    # Short hash of the canonical transcript this response was produced from.
+    # The client drops any span it holds if this doesn't match what it
+    # rendered — see docs/architecture (Stage 1, finding A0).
+    fb["transcriptHash"] = hashlib.sha256(req.transcript.encode()).hexdigest()[:16]
 
     # ── Grammar schema normalisation ─────────────────────────────────────────
     # If the AI still returned the old flat array, convert it to the new object shape.
@@ -2848,6 +2866,7 @@ def enrich_feedback(fb: dict[str, Any], req: FeedbackRequest) -> dict[str, Any]:
     if "scores" not in fb and fb.get("providerStatus") != "offline_fallback":
         fb["providerStatus"] = "malformed_response"
     fb.setdefault("cefrLevel", "A2")
+    fb["schemaVersion"] = FEEDBACK_CONTRACT_VERSION
     fb.setdefault("best_moment", "")
     fb.setdefault("biggest_opportunity", "")
     fb.setdefault("expansion_ideas", [])
@@ -2949,6 +2968,13 @@ async def _feedback_impl(
         if not transcript.strip():
             raise HTTPException(status_code=400, detail="No transcript provided and audio was empty or unrecognisable")
 
+        # One canonical transcript for this attempt: the same string feeds the
+        # prompt, the echoed `transcript` field and (once spans exist) offset
+        # resolution. Normalising here — instead of separately in the prompt
+        # builder — means req.transcript IS that canonical string everywhere
+        # it's read, so there is no second, differently-cleaned copy to drift.
+        transcript = clean_transcript(transcript)
+
         # ── Step 2: Parse frontend metrics ────────────────────────────────────
         try:
             metrics_dict = json.loads(metrics_json) if metrics_json and metrics_json != "{}" else {}
@@ -2981,6 +3007,7 @@ async def _feedback_impl(
         # ── Step 3: AI feedback (multimodal if audio present) ─────────────────
         _cache_id = question or transcript[:64]
         cache_key: str | None = None
+        was_cached = False
 
         if not tmp_path and transcript and _cache_id:
             cache_key = _feedback_cache_key(transcript, _cache_id, difficulty_context)
@@ -2990,23 +3017,32 @@ async def _feedback_impl(
                     hit.get("modelUsed", "unknown"), 0, cached=True,
                     tier=hit.get("providerStatus", "primary"),
                 )
-                return {**hit, "_was_cached": True}
+                fb = hit
+                was_cached = True
 
-        t_start = time.monotonic()
-        fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
-        latency_ms = (time.monotonic() - t_start) * 1000
-        _log_feedback_latency(
-            fb.get("modelUsed", "unknown"),
-            latency_ms,
-            cached=False,
-            tier=fb.get("providerStatus", "primary"),
-        )
+        if not was_cached:
+            t_start = time.monotonic()
+            fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
+            latency_ms = (time.monotonic() - t_start) * 1000
+            _log_feedback_latency(
+                fb.get("modelUsed", "unknown"),
+                latency_ms,
+                cached=False,
+                tier=fb.get("providerStatus", "primary"),
+            )
 
-        if cache_key and _is_cacheable_result(fb):
-            await _feedback_cache_set(cache_key, fb)
+            if cache_key and _is_cacheable_result(fb):
+                await _feedback_cache_set(cache_key, fb)
 
+        # Enrichment + the quality gate run on every response, cache hit or
+        # miss, so normalization is single-sourced and no metrics bleed from
+        # the first caller into every later one (the cache now stores only
+        # the raw provider payload, deep-copied in/out — see
+        # _feedback_cache_get/_feedback_cache_set).
         result = enrich_feedback(fb, req)
         result = _apply_coaching_quality_gate(result)
+        if was_cached:
+            result["_was_cached"] = True
 
         result["transcript"]       = transcript
         result["whisper_segments"] = whisper_data.get("segments", [])
@@ -3331,6 +3367,11 @@ async def feedback_stream(request: Request) -> StreamingResponse:
                 yield json.dumps({"type": "error", "data": {"message": "No transcript available"}}) + "\n"
                 return
 
+            # One canonical transcript for this attempt (see _feedback_impl):
+            # normalise before it is emitted so the "transcript" event, the
+            # prompt and the final echoed field all agree.
+            actual_transcript = clean_transcript(actual_transcript)
+
             yield json.dumps({"type": "transcript", "data": {"text": actual_transcript}}) + "\n"
 
             # ── parse metrics ────────────────────────────────────────────────
@@ -3363,60 +3404,64 @@ async def feedback_stream(request: Request) -> StreamingResponse:
 
             # ── cache check ──────────────────────────────────────────────────
             cache_key: str | None = None
+            fb: dict[str, Any] | None = None
+            was_cached = False
             if not tmp_path and actual_transcript and question:
                 cache_key = _feedback_cache_key(actual_transcript, question, difficulty_context)
                 hit = await _feedback_cache_get(cache_key)
                 if hit is not None:
-                    yield json.dumps({"type": "complete", "data": hit}) + "\n"
-                    return
+                    fb = hit
+                    was_cached = True
 
-            yield json.dumps({"type": "status", "data": {"phase": "generating"}}) + "\n"
+            if not was_cached:
+                yield json.dumps({"type": "status", "data": {"phase": "generating"}}) + "\n"
 
-            # ── determine if we can stream (Groq only) ───────────────────────
-            use_groq_stream = bool(GROQ_API_KEY and get_groq())
-            fb: dict[str, Any] | None = None
+                # ── determine if we can stream (Groq only) ───────────────────
+                use_groq_stream = bool(GROQ_API_KEY and get_groq())
 
-            if use_groq_stream:
-                section_queue: asyncio.Queue = asyncio.Queue()
+                if use_groq_stream:
+                    section_queue: asyncio.Queue = asyncio.Queue()
 
-                async def on_section(event_type: str, data: dict[str, Any]) -> None:
-                    # No unvalidated coaching text reaches the screen — validated
-                    # before queueing (i.e. before yield). See
-                    # _validate_and_filter_section's docstring for why a failed
-                    # section is dropped, never emitted with a warning.
-                    filtered_data = _validate_and_filter_section(event_type, data)
-                    if filtered_data is None:
-                        log.warning("Stream: dropping %s section — quality gate failed", event_type)
-                        return
-                    await section_queue.put((event_type, filtered_data))
+                    async def on_section(event_type: str, data: dict[str, Any]) -> None:
+                        # No unvalidated coaching text reaches the screen — validated
+                        # before queueing (i.e. before yield). See
+                        # _validate_and_filter_section's docstring for why a failed
+                        # section is dropped, never emitted with a warning.
+                        filtered_data = _validate_and_filter_section(event_type, data)
+                        if filtered_data is None:
+                            log.warning("Stream: dropping %s section — quality gate failed", event_type)
+                            return
+                        await section_queue.put((event_type, filtered_data))
 
-                groq_task = asyncio.create_task(_stream_groq(
-                    build_user_prompt(req),
-                    detailed,
-                    on_section,
-                ))
+                    groq_task = asyncio.create_task(_stream_groq(
+                        build_user_prompt(req),
+                        detailed,
+                        on_section,
+                    ))
 
-                # Drain section events as they arrive
-                while not groq_task.done():
-                    try:
+                    # Drain section events as they arrive
+                    while not groq_task.done():
+                        try:
+                            event_type, data = section_queue.get_nowait()
+                            yield json.dumps({"type": event_type, "data": data}) + "\n"
+                        except asyncio.QueueEmpty:
+                            await asyncio.sleep(0.05)
+
+                    # Drain any remaining events after task completes
+                    while not section_queue.empty():
                         event_type, data = section_queue.get_nowait()
                         yield json.dumps({"type": event_type, "data": data}) + "\n"
-                    except asyncio.QueueEmpty:
-                        await asyncio.sleep(0.05)
 
-                # Drain any remaining events after task completes
-                while not section_queue.empty():
-                    event_type, data = section_queue.get_nowait()
-                    yield json.dumps({"type": event_type, "data": data}) + "\n"
+                    fb = await groq_task
+                else:
+                    fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
 
-                fb = await groq_task
-            else:
-                fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
+                if cache_key and _is_cacheable_result(fb):
+                    await _feedback_cache_set(cache_key, fb)
 
-            # ── tail processing (same as _feedback_impl) ─────────────────────
-            if cache_key and _is_cacheable_result(fb):
-                await _feedback_cache_set(cache_key, fb)
-
+            # ── tail processing (same as _feedback_impl) — runs for cache
+            # hits too, so normalization is single-sourced and no metrics
+            # bleed from the first caller into every later cache hit.
             result = enrich_feedback(fb, req)
             result = _apply_coaching_quality_gate(result)
             result["transcript"] = actual_transcript

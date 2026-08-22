@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 2,
+  "transcript": "Jaime Paris et ma soeur aime Paris aussi.",
+  "transcriptHash": "fixture-repeated-with-context",
+  "scores": { "comm": 6.0, "know": 5.5, "acc": 5.5 },
+  "cefrLevel": "A2",
+  "grammar": { "critical": [], "polish": [] },
+  "corrections": [
+    {
+      "id": "gender_ville",
+      "severity": "minor",
+      "label": "Adjective Agreement",
+      "description": "The second « Paris » should be followed by a feminine agreement if you add an adjective.",
+      "explanation": "Paris behaves like a feminine city name for agreement purposes when qualified.",
+      "correction": "Paris aussi",
+      "quote": "Paris",
+      "quoteContext": "ma soeur aime Paris aussi",
+      "tip": "City names are typically treated as feminine when qualified by an adjective.",
+      "priority": 1,
+      "lesson": null
+    }
+  ],
+  "quoteSpans": [
+    { "correctionId": "gender_ville", "start": 29, "end": 34 }
+  ],
+  "vocabulary": [],
+  "expansion_ideas": [],
+  "best_moment": "Your use of « ma soeur » introduces a second perspective naturally.",
+  "biggest_opportunity": "Try adding a reason why both of you like Paris.",
+  "improved_answer": "J'aime Paris et ma soeur aime Paris aussi.",
+  "advanced_answer": "J'adore Paris, et ma soeur partage cette passion pour la capitale.",
+  "wordCount": 8
+}

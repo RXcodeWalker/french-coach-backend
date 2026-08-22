@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 2,
+  "transcript": "Paris est belle. Jaime Paris beaucoup.",
+  "transcriptHash": "fixture-repeated-no-context",
+  "scores": { "comm": 5.5, "know": 5.0, "acc": 6.0 },
+  "cefrLevel": "A2",
+  "grammar": { "critical": [], "polish": [] },
+  "corrections": [
+    {
+      "id": "elision_jaime",
+      "severity": "minor",
+      "label": "Elision",
+      "description": "« Jaime » is missing the elision apostrophe.",
+      "explanation": "Je + aime elides to j'aime before a vowel sound.",
+      "correction": "j'aime",
+      "quote": "Paris",
+      "tip": "Elide je before a vowel: j'aime, j'ai, j'adore.",
+      "priority": 1,
+      "lesson": null
+    }
+  ],
+  "quoteSpans": [],
+  "vocabulary": [],
+  "expansion_ideas": [],
+  "best_moment": "Your use of « beaucoup » adds intensity to your opinion.",
+  "biggest_opportunity": "Try explaining WHY you like Paris to add depth to your opinion.",
+  "improved_answer": "Paris est belle. J'aime Paris beaucoup.",
+  "advanced_answer": "Paris est une ville magnifique que j'adore pour son architecture et son ambiance.",
+  "wordCount": 6
+}

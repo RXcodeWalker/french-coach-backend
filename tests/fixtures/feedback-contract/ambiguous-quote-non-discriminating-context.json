@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 2,
+  "transcript": "Paris est belle. Jaime Paris.",
+  "transcriptHash": "fixture-ambiguous-non-discriminating",
+  "scores": { "comm": 5.5, "know": 5.0, "acc": 6.0 },
+  "cefrLevel": "A2",
+  "grammar": { "critical": [], "polish": [] },
+  "corrections": [
+    {
+      "id": "ambiguous_paris",
+      "severity": "minor",
+      "label": "Vocabulary",
+      "description": "Consider varying repeated use of « Paris ».",
+      "explanation": "Repeating the same noun reduces lexical range — a pronoun or synonym shows more control.",
+      "correction": "cette ville",
+      "quote": "Paris",
+      "quoteContext": "quelque chose sans rapport avec le texte",
+      "tip": "Replace a repeated noun with a pronoun (elle) once it's established.",
+      "priority": 1,
+      "lesson": null
+    }
+  ],
+  "quoteSpans": [],
+  "vocabulary": [],
+  "expansion_ideas": [],
+  "best_moment": "Your two short sentences are both grammatically clean.",
+  "biggest_opportunity": "Combine the two ideas into one sentence using « parce que » for cause and effect.",
+  "improved_answer": "Paris est belle et je l'aime beaucoup.",
+  "advanced_answer": "Paris est une ville magnifique que j'aime énormément pour son charme unique.",
+  "wordCount": 5
+}

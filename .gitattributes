@@ -6,3 +6,9 @@
 # frontend repo, silently breaking hash parity depending on platform. Force
 # LF so the checked-out bytes are the same on every machine.
 data/learn/*.json text eol=lf
+
+# docs Stage 2 (learn-feedback-contract): same hash-parity requirement as
+# above, for the feedback-contract fixture set synced from
+# ../src/services/api/__fixtures__/feedback-contract/ via
+# `npm run feedback:sync-fixtures`.
+tests/fixtures/feedback-contract/*.json text eol=lf

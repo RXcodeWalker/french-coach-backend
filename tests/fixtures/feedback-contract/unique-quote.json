@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 2,
+  "transcript": "Je suis allé à Paris hier avec mes amis.",
+  "transcriptHash": "fixture-unique-quote",
+  "scores": { "comm": 6.5, "know": 6.0, "acc": 5.5 },
+  "cefrLevel": "B1",
+  "grammar": { "critical": [], "polish": [] },
+  "corrections": [
+    {
+      "id": "aux_aller",
+      "severity": "major",
+      "label": "Avoir vs Être",
+      "description": "« allé » needs the auxiliary être, not avoir, in the passé composé.",
+      "explanation": "Aller is one of the small set of verbs (Dr Mrs Vandertramp) that take être as their auxiliary in compound tenses.",
+      "correction": "je suis allé",
+      "quote": "allé",
+      "tip": "Dr Mrs Vandertramp verbs take être.",
+      "priority": 3,
+      "lesson": null
+    }
+  ],
+  "quoteSpans": [
+    { "correctionId": "aux_aller", "start": 8, "end": 12 }
+  ],
+  "vocabulary": [],
+  "expansion_ideas": [],
+  "best_moment": "Your use of « avec mes amis » shows natural prepositional phrasing.",
+  "biggest_opportunity": "Adding a time expression like « la semaine dernière » would show more temporal range.",
+  "improved_answer": "Je suis allé à Paris hier avec mes amis.",
+  "advanced_answer": "La semaine dernière, je suis allé à Paris avec mes amis, où nous avons visité plusieurs musées.",
+  "wordCount": 8
+}

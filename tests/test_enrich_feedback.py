@@ -58,21 +58,58 @@ def test_enrich_feedback_leaves_a_real_scores_object_untouched():
     assert result["providerStatus"] == "primary"
 
 
-def test_offline_feedback_and_offline_igcse_feedback_emit_the_identical_marker():
+def test_offline_igcse_feedback_still_emits_the_offline_marker():
     import main
 
-    feedback_req = main.FeedbackRequest(question="Q", transcript="Une reponse.")
-    offline = main._offline_feedback(feedback_req, [])
-    assert offline["providerStatus"] == "offline_fallback"
-
+    # Stage 4 item 8 (Learn-mode coach feedback plan) removed the coach
+    # path's _offline_feedback — a second, strictly worse offline evaluator
+    # (empty best_moment, empty grammar, one hardcoded vocab entry) that could
+    # drift from coachService.evaluate (the client's single authoritative
+    # offline evaluator). Provider exhaustion on /v3 and the stream endpoint
+    # now raises instead, and apiClient.ts's existing engine chain falls
+    # through to coachService.evaluate. The legacy /api/feedback/igcse
+    # endpoint is untouched — it never routed through the coach path — so its
+    # own offline evaluator keeps the same marker.
     igcse_req = main.IGCSEFeedbackRequest(question="Q", transcript="Une reponse.")
     offline_igcse = main._offline_igcse_feedback(igcse_req, [])
     assert offline_igcse["providerStatus"] == "offline_fallback"
+
+
+def test_call_ai_feedback_raises_when_all_providers_exhausted(monkeypatch):
+    """Stage 4 item 8: call_ai_feedback must raise (HTTPException 502), never
+    fabricate a plausible-looking response, when every provider fails. No live
+    network call is made — both provider callables are monkeypatched, matching
+    test_engine_preference.py's pattern."""
+    import asyncio
+    import main
+
+    async def fake_gemini(prompt, *a, **kw):
+        raise RuntimeError("gemini down")
+
+    async def fake_groq(prompt, depth="standard"):
+        raise RuntimeError("groq down")
+
+    monkeypatch.setattr(main, "_call_gemini", fake_gemini)
+    monkeypatch.setattr(main, "_call_gemini_multimodal", fake_gemini)
+    monkeypatch.setattr(main, "_call_groq", fake_groq)
+
+    req = main.FeedbackRequest(question="Q", transcript="Une reponse quelconque avec assez de mots.")
+
+    async def _run():
+        try:
+            await main.call_ai_feedback(req)
+            return None
+        except main.HTTPException as exc:
+            return exc
+
+    exc = asyncio.run(_run())
+    assert exc is not None, "call_ai_feedback must raise, not fabricate a response, when both providers fail"
+    assert exc.status_code == 502
 
 
 if __name__ == "__main__":
     test_enrich_feedback_no_longer_fabricates_555_when_scores_missing_from_a_live_response()
     test_enrich_feedback_preserves_offline_fallback_marker_instead_of_overwriting_it()
     test_enrich_feedback_leaves_a_real_scores_object_untouched()
-    test_offline_feedback_and_offline_igcse_feedback_emit_the_identical_marker()
-    print("All test_enrich_feedback tests passed.")
+    test_offline_igcse_feedback_still_emits_the_offline_marker()
+    print("All test_enrich_feedback tests passed (run via pytest for the monkeypatch-based exhaustion case).")

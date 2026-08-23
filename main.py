@@ -2791,105 +2791,6 @@ async def _call_gemini_multimodal(
         raise
 
 
-def _offline_feedback(req: FeedbackRequest, provider_errors: list[dict[str, str]] | None = None) -> dict[str, Any]:
-    transcript = (req.transcript or "").strip()
-    words = re.findall(r"\b[\w'-]+\b", transcript, flags=re.UNICODE)
-    word_count = len(words)
-    metrics = req.metrics.model_dump(exclude_none=True) if req.metrics else {}
-    words_per_minute = _metric_float(metrics.get("wordsPerMinute"))
-
-    length_score = min(10.0, max(2.0, word_count / 8.0))
-    fluency_score = _metric_float(metrics.get("fluencyScore"), length_score) or length_score
-    if words_per_minute:
-        if 80 <= words_per_minute <= 150:
-            fluency_score = max(fluency_score, 7.0)
-        elif words_per_minute < 45:
-            fluency_score = min(fluency_score, 5.0)
-
-    has_past = bool(re.search(r"\b(ai|as|a|avons|avez|ont|suis|es|est|sommes|etes|sont)\b", transcript, re.I))
-    has_connective = bool(re.search(r"\b(parce que|mais|aussi|donc|cependant|puis|ensuite)\b", transcript, re.I))
-    has_opinion = bool(re.search(r"\b(je pense|j aime|j'aime|je n aime pas|je n'aime pas|a mon avis|selon moi)\b", transcript, re.I))
-
-    grammar = []
-    if word_count < 12:
-        grammar.append("The answer is understandable but quite short; add one or two extra details to show control of sentence structure.")
-    if not has_past:
-        grammar.append("Try to include a past-tense detail when the question allows it, for example something you did recently.")
-    if not has_connective:
-        grammar.append("Use a connective such as 'parce que', 'mais' or 'ensuite' to link ideas more naturally.")
-    if not grammar:
-        grammar.append("The response has a clear basic structure. Keep checking verb endings and agreement as you expand your answer.")
-
-    structure = []
-    if not has_opinion:
-        structure.append("Add a clear opinion and a reason so the answer feels more developed.")
-    structure.append("Aim for a simple pattern: answer the question, add a detail, then give a reason or example.")
-
-    low_conf_words = []
-    if req.metrics and req.metrics.wordProbabilities:
-        low_conf_words = [
-            wp.word for wp in req.metrics.wordProbabilities
-            if wp.probability is not None and wp.probability < 0.7
-        ][:5]
-
-    pronunciation_tips = (
-        [f"Practise the pronunciation of '{word}' slowly, then repeat it inside the full sentence." for word in low_conf_words[:3]]
-        if low_conf_words
-        else ["Pronunciation detail is limited because the AI audio provider is unavailable; record again later for word-level analysis."]
-    )
-
-    comm = min(10.0, 3.0 + (word_count / 15.0) + (1.5 if has_opinion else 0))
-    know = min(10.0, 2.0 + (2.0 if has_past else 0) + (2.0 if has_connective else 0))
-    acc = max(0.0, 10.0 - (len([g for g in grammar if "past" in g.lower() or "connective" in g.lower()]) * 0.5))
-
-    return {
-        "fluency": round(max(0.0, min(10.0, fluency_score)), 1),
-        "scores": {
-            "comm": round(min(10.0, comm), 1),
-            "know": round(min(10.0, know), 1),
-            "acc": round(min(10.0, acc), 1),
-        },
-        "best_moment": "",
-        "biggest_opportunity": "",
-        "grammar": {"critical": [], "polish": []},
-        "vocabulary": [
-            {
-                "basic": "bien",
-                "upgrade": "vraiment intéressant",
-                "example": "C'est vraiment intéressant parce que cela me permet de progresser.",
-                "nuance": "",
-            }
-        ],
-        "expansion_ideas": [],
-        "improved_answer": "",
-        "advanced_answer": "",
-        "rephrase": None,
-        "structure": structure,
-        "pronunciationTips": pronunciation_tips,
-        "encouragement": "AI feedback is temporarily unavailable. Your answer has been saved — try again in a moment for full coaching feedback.",
-        "followUpQuestion": "Peux-tu me donner un exemple ?",
-        "igcseLevel": "Core — Secure" if word_count >= 25 else "Foundation — Developing",
-        "cefrLevel": "A2" if word_count >= 20 else "A1",
-        "pronunciation": {
-            "score": None,
-            "issues": [
-                {
-                    "word": word,
-                    "problem": "Speech recognition confidence was low for this word.",
-                    "expected": "Repeat slowly, then blend it back into the sentence.",
-                    "severity": "medium",
-                    "timestamp": None,
-                }
-                for word in low_conf_words
-            ],
-        },
-        "words": [],
-        "providerStatus": "offline_fallback",
-        "providerErrors": provider_errors or [],
-        "modelUsed": "offline/local-evaluator",
-    }
-
-
 async def _try_feedback_provider(
     provider_name: str,
     operation,
@@ -2973,16 +2874,19 @@ async def call_ai_feedback(
         f"{e['provider']} {e['type']}: {e.get('message', '')[:80]}"
         for e in provider_errors
     )
-    offline = _offline_feedback(req, provider_errors)
-    offline["engineMeta"] = {
-        "requestedEngine": req.model or "gemini",
-        "actualEngine": "offline",
-        "fallbackUsed": True,
-        "failoverReason": failover_reason,
-        "latencyMs": int((time.monotonic() - t_start) * 1000),
-        "evaluatedAt": datetime.now(timezone.utc).isoformat(),
-    }
-    return offline
+    # Stage 4 item 8 (docs/architecture — Learn-mode coach feedback plan):
+    # both live providers failed. Previously this substituted _offline_feedback
+    # (a strictly worse second offline evaluator — empty best_moment, empty
+    # grammar, one hardcoded vocab entry) and returned 200 as if graded. Raise
+    # instead: /v3 and the stream endpoint each turn this into an honest
+    # non-2xx/error response, and apiClient.ts's existing engine chain already
+    # falls through to the single authoritative offline evaluator
+    # (coachService.evaluate) on any such failure — no client change needed
+    # for this call site.
+    raise HTTPException(
+        status_code=502,
+        detail=f"AI feedback unavailable — {failover_reason or 'no provider available'}",
+    )
 
 
 _EXAMINER_MODE_SYSTEM_PROMPT = (
@@ -3497,25 +3401,16 @@ async def feedback(request: Request) -> dict[str, Any]:
     except HTTPException:
         raise
     except Exception as exc:
+        # Stage 4 item 8: an unhandled exception here (not just provider
+        # exhaustion, which now raises HTTPException(502) from
+        # call_ai_feedback and is already re-raised above) used to be
+        # silently converted into a fabricated _offline_feedback response.
+        # apiClient.ts's tryNetworkFeedback treats any non-2xx as this
+        # engine's failure and falls through the chain to the client's own
+        # coachService.evaluate, so an honest 500 here is a strict
+        # improvement over a plausible-looking but ungraded response.
         _log_provider_failure("feedback_endpoint_unhandled", exc, request_id=getattr(request.state, "request_id", None))
-        fallback_req = FeedbackRequest(
-            question=question or "General French speaking practice",
-            transcript=transcript or "",
-            metrics=None,
-            model=model,
-            depth=depth,
-            skill_context=skill_context,
-            difficulty_context=difficulty_context,
-        )
-        fallback_result = enrich_feedback(
-            _offline_feedback(
-                fallback_req,
-                [{"provider": "feedback_endpoint", "type": exc.__class__.__name__, "message": str(exc)}],
-            ),
-            fallback_req,
-        )
-        fallback_result["provider"] = _feedback_provider_name(fallback_result)
-        return fallback_result
+        raise HTTPException(status_code=500, detail=f"Feedback generation failed — {exc.__class__.__name__}") from exc
 
 
 # ── /api/feedback/stream — NDJSON streaming endpoint ─────────────────────────
@@ -3782,26 +3677,14 @@ async def feedback_stream(request: Request) -> StreamingResponse:
             yield json.dumps({"type": "complete", "data": result}) + "\n"
 
         except Exception as exc:
+            # Stage 4 item 8: this used to yield `error` immediately followed
+            # by a `complete` carrying a fabricated _offline_feedback payload
+            # — two terminal-looking events for one attempt. `error` alone is
+            # now the terminal event; the client's streamFeedback treats it as
+            # fatal and falls through to its own offline evaluator
+            # (coachService.evaluate), exactly once.
             log.error("feedback/stream error: %s\n%s", repr(exc), traceback.format_exc())
-            fallback_req = FeedbackRequest(
-                question=question or "General French speaking practice",
-                transcript=transcript or "",
-                metrics=None,
-                model=model,
-                depth=depth,
-                skill_context=skill_context,
-                difficulty_context=difficulty_context,
-            )
-            fallback = enrich_feedback(
-                _offline_feedback(
-                    fallback_req,
-                    [{"provider": "stream_endpoint", "type": exc.__class__.__name__, "message": str(exc)}],
-                ),
-                fallback_req,
-            )
-            fallback["provider"] = _feedback_provider_name(fallback)
             yield json.dumps({"type": "error", "data": {"message": str(exc)}}) + "\n"
-            yield json.dumps({"type": "complete", "data": fallback}) + "\n"
         finally:
             if tmp_path:
                 try:

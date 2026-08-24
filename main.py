@@ -219,7 +219,15 @@ def _normalize_feedback_depth(raw: Any) -> FeedbackDepth:
 
 def _apply_depth_item_caps(fb: dict[str, Any], depth: FeedbackDepth) -> dict[str, Any]:
     """Server-owned ceiling (docs Stage 3): truncate oversized arrays
-    regardless of what the client asked for or what the model returned."""
+    regardless of what the client asked for or what the model returned.
+
+    Also stamps `effectiveDepth` — the depth actually applied to this
+    response, not the client's requested hint. Both /v3 and the stream call
+    this function with the same `depth` right after enrich_feedback, on
+    every response path including cache hits, so this is a single seam for
+    both (docs Stage 5 correctness note: the client's card-plan selector
+    must read what was delivered, never recompute the pre-clamp request)."""
+    fb["effectiveDepth"] = depth
     caps = FEEDBACK_DEPTH_ITEM_CAPS[depth]
 
     grammar = fb.get("grammar")

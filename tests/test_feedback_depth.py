@@ -93,6 +93,29 @@ def test_apply_depth_item_caps_leaves_short_arrays_untouched():
     assert len(result["vocabulary"]) == 1
 
 
+def test_apply_depth_item_caps_stamps_effective_depth():
+    """docs Stage 5 correctness note: the client's card-plan selector must
+    read the depth actually applied to this response, never the pre-clamp
+    request — effectiveDepth is set here (the one place both /v3 and the
+    stream call with the applied depth, right after enrich_feedback on
+    every response path including cache hits), not merely echoed from
+    req.depth."""
+    fb = {"vocabulary": []}
+    result = main._apply_depth_item_caps(fb, "deep")
+    assert result["effectiveDepth"] == "deep"
+
+
+def test_apply_depth_item_caps_effective_depth_reflects_the_applied_value_not_a_stale_one():
+    """A dict re-used across calls (as a cache hit's deep-copied payload
+    would be) must end up stamped with whichever depth was actually applied
+    on *this* call — not whatever a prior call left behind."""
+    fb = {"vocabulary": []}
+    first = main._apply_depth_item_caps(dict(fb), "brief")
+    second = main._apply_depth_item_caps(dict(fb), "deep")
+    assert first["effectiveDepth"] == "brief"
+    assert second["effectiveDepth"] == "deep"
+
+
 if __name__ == "__main__":
     test_normalize_feedback_depth_defaults_and_rejects_garbage()
     test_feedback_cache_key_differs_across_depth()
@@ -100,4 +123,6 @@ if __name__ == "__main__":
     test_apply_depth_item_caps_truncates_regardless_of_request()
     test_apply_depth_item_caps_deep_allows_more_than_brief()
     test_apply_depth_item_caps_leaves_short_arrays_untouched()
+    test_apply_depth_item_caps_stamps_effective_depth()
+    test_apply_depth_item_caps_effective_depth_reflects_the_applied_value_not_a_stale_one()
     print("All test_feedback_depth tests passed.")

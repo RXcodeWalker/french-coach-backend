@@ -4605,6 +4605,11 @@ ROLEPLAY_SCENARIOS = [
     {"id": "cinema",        "title": "Au cinéma",            "emoji": "🎬", "setting": "You are the cinema box office. A visitor wants to buy tickets and asks about films.", "turns": 6},
     {"id": "sport",         "title": "Au centre sportif",    "emoji": "🏊", "setting": "You are the receptionist at a sports centre. A visitor wants to join activities.", "turns": 6},
     {"id": "tourisme",      "title": "À l'office de tourisme","emoji": "🗺",  "setting": "You are the tourism office assistant. A visitor asks about local sights and activities.", "turns": 6},
+    # Ids matching authored frontend scenarios (src/data/scenarios/<id>.meta.ts).
+    # Off-script improv sends ONLY an id from this table — never a scenario
+    # body — so the setting text is always server-authored.
+    {"id": "bakery",        "title": "À la boulangerie",     "emoji": "🥖", "setting": "You are the baker in a French neighbourhood bakery. A customer wants to order bread or pastries and may ask for something else before paying.", "turns": 6},
+    {"id": "hairdresser",   "title": "Chez le coiffeur",     "emoji": "💇", "setting": "You are a hairdresser at Salon Elégance. A client arrives for a cut, a colour or a treatment, with or without an appointment.", "turns": 6},
 ]
 
 ROLEPLAY_SYSTEM_PROMPT = """You are playing a French character in an IGCSE speaking roleplay scenario.
@@ -4671,7 +4676,15 @@ async def get_roleplay_scenarios() -> list[dict]:
     return [{"id": s["id"], "title": s["title"], "emoji": s["emoji"], "turns": s["turns"]} for s in ROLEPLAY_SCENARIOS]
 
 
+# Caps on the unauthenticated /api/roleplay/turn input. The turn history is
+# replayed verbatim into the model prompt, so an uncapped list or an uncapped
+# message is both an unbounded-cost and a prompt-injection surface.
+ROLEPLAY_MAX_HISTORY_TURNS = 30
+ROLEPLAY_MAX_MESSAGE_CHARS = 1000
+
+
 @app.post("/api/roleplay/turn")
+@rate_limit("20/minute")
 async def roleplay_turn(request: Request, req: RoleplayTurnRequest) -> dict:
     scenario = None
     if req.scenario_id == "custom" and req.custom_scenario:
@@ -4692,12 +4705,14 @@ async def roleplay_turn(request: Request, req: RoleplayTurnRequest) -> dict:
     if req.is_final_turn:
         system += "\n\nThis is the final turn. After your reply, set is_done to true."
 
-    # Build conversation messages for the model
+    # Build conversation messages for the model. The most recent turns are kept
+    # — the tail is what the reply has to stay coherent with.
     messages = []
-    for turn in req.turn_history:
-        role = "assistant" if turn["speaker"] == "examiner" else "user"
-        messages.append({"role": role, "content": turn["text"]})
-    messages.append({"role": "user", "content": req.student_transcript or "(silence)"})
+    for turn in req.turn_history[-ROLEPLAY_MAX_HISTORY_TURNS:]:
+        role = "assistant" if turn.get("speaker") == "examiner" else "user"
+        messages.append({"role": role, "content": str(turn.get("text") or "")[:ROLEPLAY_MAX_MESSAGE_CHARS]})
+    student = (req.student_transcript or "")[:ROLEPLAY_MAX_MESSAGE_CHARS]
+    messages.append({"role": "user", "content": student or "(silence)"})
 
     raw = None
 
@@ -4721,8 +4736,11 @@ async def roleplay_turn(request: Request, req: RoleplayTurnRequest) -> dict:
         try:
             import google.generativeai as genai
             model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=system)
-            full_prompt = "\n".join(f"{t['speaker'].upper()}: {t['text']}" for t in req.turn_history)
-            full_prompt += f"\nSTUDENT: {req.student_transcript or '(silence)'}"
+            full_prompt = "\n".join(
+                f"{str(t.get('speaker') or '').upper()}: {str(t.get('text') or '')[:ROLEPLAY_MAX_MESSAGE_CHARS]}"
+                for t in req.turn_history[-ROLEPLAY_MAX_HISTORY_TURNS:]
+            )
+            full_prompt += f"\nSTUDENT: {student or '(silence)'}"
             resp = await asyncio.to_thread(model.generate_content, full_prompt)
             raw = resp.text.strip()
         except Exception as e:

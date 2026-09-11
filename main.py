@@ -45,9 +45,11 @@ from typing import Annotated, Any, Literal
 import httpx
 import jwt as pyjwt
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadFile
+from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
+
+from lib.auth import require_admin
 from pydantic import BaseModel, Field
 
 try:
@@ -395,7 +397,17 @@ _METRICS: dict[str, Any] = {
 _METRICS_LOCK = threading.Lock()
 
 # ── App setup ─────────────────────────────────────────────────────────────────
-app = FastAPI(title="French AI Speaking Coach")
+# Interactive API docs (/docs, /redoc, /openapi.json) are OFF by default —
+# they publish the full route/schema map of an app whose provider routes are
+# unauthenticated. Set ENABLE_API_DOCS=true in a staging env to turn them
+# back on there (Phase 1.2).
+_API_DOCS_ENABLED = os.getenv("ENABLE_API_DOCS", "").strip().lower() in ("1", "true", "yes")
+app = FastAPI(
+    title="French AI Speaking Coach",
+    docs_url="/docs" if _API_DOCS_ENABLED else None,
+    redoc_url="/redoc" if _API_DOCS_ENABLED else None,
+    openapi_url="/openapi.json" if _API_DOCS_ENABLED else None,
+)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,
@@ -544,7 +556,9 @@ async def health() -> dict[str, Any]:
 
 
 # ── /metrics ──────────────────────────────────────────────────────────────────
-@app.get("/metrics")
+# Admin-only (Phase 1.2): the payload includes by_endpoint, a full traffic
+# map of every path hit — not something to expose unauthenticated.
+@app.get("/metrics", dependencies=[Depends(require_admin)])
 def metrics() -> dict[str, Any]:
     with _METRICS_LOCK:
         count = _METRICS["latency_count"]
@@ -5028,8 +5042,14 @@ _set_pronunciation_rate_limiter(rate_limit, app)
 
 
 # ── One-time admin bootstrap ──────────────────────────────────────────────────
-# Grants the admin role via service-role app_metadata. Protected by a setup
-# secret; disable (unset ADMIN_SETUP_SECRET) once the first admin is seeded.
+# Grants the admin role via service-role app_metadata. This is a break-glass
+# path for the operator, not a standing feature: it stays inert unless BOTH
+#   ADMIN_SETUP_ENABLED=true  AND  ADMIN_SETUP_SECRET=<the matching secret>
+# are set in the environment (Phase 1.2 — was gated on the secret alone,
+# which made it a live unauthenticated admin-grant backdoor whenever the
+# secret was set). When disabled it 404s rather than 403 — the route is not
+# advertised. Unset both in prod once the first admin is seeded.
+ADMIN_SETUP_ENABLED = os.getenv("ADMIN_SETUP_ENABLED", "").strip().lower() in ("1", "true", "yes")
 ADMIN_SETUP_SECRET = os.getenv("ADMIN_SETUP_SECRET", "").strip()
 
 
@@ -5040,8 +5060,8 @@ class _GrantAdminRequest(BaseModel):
 
 @app.post("/api/admin/roles")
 async def grant_admin_role(req: _GrantAdminRequest) -> dict:
-    if not ADMIN_SETUP_SECRET:
-        raise HTTPException(status_code=403, detail="Admin setup is disabled")
+    if not (ADMIN_SETUP_ENABLED and ADMIN_SETUP_SECRET):
+        raise HTTPException(status_code=404, detail="Not Found")
     if not secrets.compare_digest(req.secret, ADMIN_SETUP_SECRET):
         raise HTTPException(status_code=403, detail="Invalid setup secret")
     db = _require_supabase()
@@ -5060,6 +5080,6 @@ async def root() -> dict[str, Any]:
     return {
         "ok": True,
         "service": "french-ai-backend",
-        "docs": "/docs",
         "health": "/health",
+        **({"docs": "/docs"} if _API_DOCS_ENABLED else {}),
     }

@@ -32,6 +32,7 @@ import os
 import random
 import re
 import secrets
+import smtplib
 import sqlite3
 import tempfile
 import threading
@@ -39,6 +40,7 @@ import time
 import traceback
 import unicodedata
 from datetime import date, datetime, timezone
+from email.message import EmailMessage
 from pathlib import Path
 from typing import Annotated, Any, Literal
 
@@ -122,6 +124,19 @@ GEMINI_PROBE_TIMEOUT_SEC = float(os.getenv("GEMINI_PROBE_TIMEOUT_SEC", "12"))
 SUPABASE_URL        = os.getenv("SUPABASE_URL", "").strip()
 SUPABASE_KEY        = os.getenv("SUPABASE_SERVICE_KEY", "").strip()
 SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "").strip()
+
+# Phase 1.6 Part C — guardian consent email. Unconfigured (any of these
+# blank) means /api/consent/send-guardian-email 503s; the client falls back
+# to a "copy this link" UI instead of a sent email (see consentService.ts).
+# No provider-specific SDK — plain SMTP via stdlib smtplib so any provider
+# (SendGrid, Resend, a school's own mail relay, ...) works via its SMTP
+# credentials without a new dependency.
+SMTP_HOST      = os.getenv("SMTP_HOST", "").strip()
+SMTP_PORT      = int(os.getenv("SMTP_PORT", "587") or "587")
+SMTP_USER      = os.getenv("SMTP_USER", "").strip()
+SMTP_PASSWORD  = os.getenv("SMTP_PASSWORD", "").strip()
+SMTP_FROM      = os.getenv("SMTP_FROM", "").strip()
+APP_ORIGIN     = os.getenv("APP_ORIGIN", "").strip()
 
 WHISPER_MODEL        = os.getenv("WHISPER_MODEL", "small")
 WHISPER_DEVICE       = os.getenv("WHISPER_DEVICE", "cpu")
@@ -5073,6 +5088,60 @@ async def grant_admin_role(req: _GrantAdminRequest) -> dict:
         raise HTTPException(status_code=500, detail="Failed to grant admin role")
     return {"ok": True, "user_id": req.user_id, "role": "admin"}
 
+
+# ── Guardian consent email (Phase 1.6 Part C) ─────────────────────────────────
+# The request_guardian_consent RPC mints the guardian_consents row + raw
+# token and hands the token back to the child's own session (never
+# persisted server-side in plaintext — the row stores only its sha256).
+# This endpoint is the delivery step: it takes that token from the
+# authenticated child session and emails the guardian a confirm link. If
+# SMTP isn't configured (SMTP_HOST/USER/PASSWORD/FROM all unset by
+# default), it 503s and the client shows a copy-link fallback instead of
+# silently pretending an email was sent.
+class _SendGuardianEmailRequest(BaseModel):
+    guardian_email: str
+    token: str
+
+
+def _send_guardian_consent_email(guardian_email: str, consent_url: str) -> None:
+    msg = EmailMessage()
+    msg["Subject"] = "A learner has asked you to confirm speaking practice on Français AI"
+    msg["From"] = SMTP_FROM
+    msg["To"] = guardian_email
+    msg.set_content(
+        "A learner using Français AI, a French speaking-practice app, has told us "
+        "they're under 13 and given us your email as their parent or guardian.\n\n"
+        "Speaking practice is switched off for their account — no audio is recorded "
+        "and nothing is sent to any provider — until you confirm you're okay with it.\n\n"
+        f"To review what's collected and confirm (or decline), open this link:\n{consent_url}\n\n"
+        "If you weren't expecting this, you can ignore this email — nothing is enabled "
+        "without your confirmation."
+    )
+    with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=15) as server:
+        server.starttls()
+        if SMTP_USER:
+            server.login(SMTP_USER, SMTP_PASSWORD)
+        server.send_message(msg)
+
+
+@app.post("/api/consent/send-guardian-email")
+async def send_guardian_consent_email(
+    req: _SendGuardianEmailRequest,
+    authorization: str | None = Header(None),
+) -> dict:
+    verify_jwt(authorization)  # caller must be a signed-in learner; result unused, just gates the route
+    if not (SMTP_HOST and SMTP_FROM):
+        raise HTTPException(status_code=503, detail="Email delivery not configured")
+    if not APP_ORIGIN:
+        raise HTTPException(status_code=503, detail="APP_ORIGIN not configured")
+
+    consent_url = f"{APP_ORIGIN}/guardian-consent?token={req.token}"
+    try:
+        await asyncio.to_thread(_send_guardian_consent_email, req.guardian_email, consent_url)
+    except Exception as exc:
+        log.error("send_guardian_consent_email failed: %s", exc)
+        raise HTTPException(status_code=502, detail="Failed to send email")
+    return {"ok": True}
 
 
 @app.get("/")

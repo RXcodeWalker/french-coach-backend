@@ -7,6 +7,9 @@ from typing import Any, Dict
 
 log = logging.getLogger("french-coach.scenario")
 
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile").strip()
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash").strip()
+
 _SCENARIO_SYSTEM_PROMPT = """\
 You are a French Language Learning Architect. Your goal is to take a user's description of a scenario and turn it into a structured, high-quality roleplay module.
 
@@ -59,17 +62,17 @@ def extract_json(text: str) -> Dict[str, Any]:
     return json.loads(text)
 
 async def generate_scenario(user_description: str) -> Dict[str, Any]:
-    """Generates a structured roleplay scenario with multiple model fallbacks."""
+    """Generates a structured roleplay scenario, falling back from Groq to Gemini."""
     prompt = f"User Description: {user_description}\n\nGenerate the structured JSON scenario following the system instructions."
     
-    # 1. Try Groq (Llama 3.3 70B) - Usually very fast and generous quota
+    # 1. Try Groq - usually very fast and generous quota
     groq_key = os.getenv("GROQ_API_KEY", "").strip()
     if groq_key:
         try:
             from groq import AsyncGroq
             client = AsyncGroq(api_key=groq_key)
             resp = await client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model=GROQ_MODEL,
                 messages=[
                     {"role": "system", "content": _SCENARIO_SYSTEM_PROMPT},
                     {"role": "user", "content": prompt}
@@ -82,13 +85,13 @@ async def generate_scenario(user_description: str) -> Dict[str, Any]:
         except Exception as e:
             log.warning(f"Scenario generation with Groq failed: {e}")
 
-    # 2. Try Gemini 2.0 Flash
+    # 2. Try Gemini
     gemini_key = os.getenv("GEMINI_API_KEY", "").strip()
     if gemini_key:
         try:
             import google.generativeai as genai
             genai.configure(api_key=gemini_key)
-            model = genai.GenerativeModel("gemini-2.0-flash", system_instruction=_SCENARIO_SYSTEM_PROMPT)
+            model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=_SCENARIO_SYSTEM_PROMPT)
             response = await asyncio.to_thread(
                 model.generate_content,
                 prompt,
@@ -96,18 +99,7 @@ async def generate_scenario(user_description: str) -> Dict[str, Any]:
             )
             return extract_json(response.text)
         except Exception as e:
-            log.warning(f"Scenario generation with Gemini 2.0 failed: {e}")
-
-    # 3. Last Resort: Gemini 1.5 Flash
-    if gemini_key:
-        try:
-            import google.generativeai as genai
-            genai.configure(api_key=gemini_key)
-            model = genai.GenerativeModel("gemini-1.5-flash", system_instruction=_SCENARIO_SYSTEM_PROMPT)
-            response = await asyncio.to_thread(model.generate_content, prompt)
-            return extract_json(response.text)
-        except Exception as e:
-            log.error(f"Scenario generation with Gemini 1.5 failed: {e}")
+            log.warning(f"Scenario generation with Gemini failed: {e}")
             raise ValueError(f"All AI providers failed: {e}")
 
     raise ValueError("No AI provider API keys configured")

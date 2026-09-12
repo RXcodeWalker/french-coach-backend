@@ -49,6 +49,8 @@ router = APIRouter(prefix="/api/exam", tags=["exam"])
 
 _GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
 _GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile").strip()
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash").strip()
 
 _groq_client: Any = None
 
@@ -116,7 +118,7 @@ async def _generate_topic_question(
     if groq:
         try:
             resp = await groq.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model=GROQ_MODEL,
                 messages=[
                     {"role": "system", "content": _TOPIC_SYSTEM_PROMPT},
                     {"role": "user", "content": user_content},
@@ -134,7 +136,7 @@ async def _generate_topic_question(
 
             genai.configure(api_key=_GEMINI_API_KEY)
             model = genai.GenerativeModel(
-                "gemini-2.0-flash",
+                GEMINI_MODEL,
                 system_instruction=_TOPIC_SYSTEM_PROMPT,
             )
             resp = await asyncio.to_thread(model.generate_content, user_content)
@@ -221,7 +223,7 @@ async def exam_interpret(req: InterpretRequest) -> dict[str, Any]:
 
     try:
         resp = await groq.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model=GROQ_MODEL,
             messages=[
                 {"role": "system", "content": _INTERPRET_SYSTEM_PROMPT},
                 {"role": "user", "content": user_content},

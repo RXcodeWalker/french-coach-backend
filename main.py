@@ -4215,15 +4215,37 @@ async def _faster_whisper(tmp_path: str, language: str) -> dict[str, Any]:
     }
 
 
+_TRANSCRIBE_MAX_BYTES = 15 * 1024 * 1024  # generous headroom — a single exam turn is seconds long
+_TRANSCRIBE_READ_CHUNK_BYTES = 1 * 1024 * 1024
+
+
 @app.post("/api/transcribe", response_model=None)
 async def transcribe(
     audio: Annotated[UploadFile, File(...)],
     language: str = Form("fr"),
+    authorization: str | None = Header(None),
 ) -> dict[str, Any]:
     """Transcribe uploaded audio. Tries Groq Whisper first, falls back to faster-whisper."""
+    verify_jwt(authorization)
+
+    # Content-Length is client-supplied and not a real cap — read in bounded
+    # chunks and abort before ever writing to disk if the upload exceeds the cap,
+    # rather than trusting the header alone (reliability plan §2.4).
+    total_bytes = 0
+    chunks: list[bytes] = []
+    while True:
+        chunk = await audio.read(_TRANSCRIBE_READ_CHUNK_BYTES)
+        if not chunk:
+            break
+        total_bytes += len(chunk)
+        if total_bytes > _TRANSCRIBE_MAX_BYTES:
+            raise HTTPException(status_code=413, detail="Audio upload exceeds the size limit")
+        chunks.append(chunk)
+
     suffix = os.path.splitext(audio.filename or "")[1] or ".webm"
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-        tmp.write(await audio.read())
+        for chunk in chunks:
+            tmp.write(chunk)
         tmp_path = tmp.name
 
     try:

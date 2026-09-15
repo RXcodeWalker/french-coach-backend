@@ -40,10 +40,29 @@ class BoundedTTLCache(Generic[V]):
             self.hits += 1
             return value
 
-    async def set(self, key: str, value: V) -> None:
+    async def set(self, key: str, value: V, ttl_sec: float | None = None) -> None:
+        """ttl_sec overrides the instance default for this one entry — needed
+        by main.py's general-purpose cache (health-probe TTL is much shorter
+        than a cached news/vocab response), unlike the feedback/pronunciation
+        caches, which only ever use one TTL per instance."""
         async with self._lock:
             if key in self._store:
                 self._store.move_to_end(key)
-            self._store[key] = (value, time.monotonic() + self._ttl_sec)
+            self._store[key] = (value, time.monotonic() + (ttl_sec if ttl_sec is not None else self._ttl_sec))
             while len(self._store) > self._max_size:
                 self._store.popitem(last=False)
+
+    async def delete(self, key: str) -> None:
+        async with self._lock:
+            self._store.pop(key, None)
+
+    def pop_prefix_sync(self, prefix: str) -> None:
+        """Synchronous, lock-free by design: main.py's admin-write cache
+        invalidation hook (_invalidate_content_cache) is itself a plain sync
+        function called from request handlers already holding no lock on
+        this cache, and content-cache invalidation racing a concurrent
+        read/write here is a stale-cache-for-one-request risk, not a
+        correctness one — matching the plain-dict version this replaced,
+        which had no locking either."""
+        for k in [k for k in self._store if k.startswith(prefix)]:
+            self._store.pop(k, None)

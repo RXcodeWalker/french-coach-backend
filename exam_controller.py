@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 from dotenv import load_dotenv
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 
 from exam_sessions import create_session, delete_session, get_session, update_session
@@ -202,7 +202,7 @@ async def exam_interpret_health() -> dict[str, Any]:
 
 
 @router.post("/interpret")
-async def exam_interpret(req: InterpretRequest) -> dict[str, Any]:
+async def exam_interpret(request: Request, req: InterpretRequest) -> dict[str, Any]:
     """
     Understanding-only speech-act classification for live conduct routing.
     Facts only: {speechAct, hesitation, confidence}. Never returns examiner text.
@@ -471,7 +471,7 @@ class FinishRequest(BaseModel):
 
 
 @router.post("/start")
-async def exam_start(req: StartRequest) -> dict[str, Any]:
+async def exam_start(request: Request, req: StartRequest) -> dict[str, Any]:
     """
     Create a new exam session.
     Returns the roleplay card and session_id.
@@ -508,7 +508,7 @@ async def exam_start(req: StartRequest) -> dict[str, Any]:
 
 
 @router.post("/respond")
-async def exam_respond(req: RespondRequest) -> dict[str, Any]:
+async def exam_respond(request: Request, req: RespondRequest) -> dict[str, Any]:
     """
     Advance the exam state machine with a candidate response or a control action.
 
@@ -750,7 +750,7 @@ async def exam_respond(req: RespondRequest) -> dict[str, Any]:
 
 
 @router.post("/finish")
-async def exam_finish(req: FinishRequest) -> dict[str, Any]:
+async def exam_finish(request: Request, req: FinishRequest) -> dict[str, Any]:
     """
     Evaluate the complete exam transcript and return final scores.
     Can be called from STATE_4 (early finish) or STATE_5 (normal termination).
@@ -839,7 +839,7 @@ class EvaluateRequest(BaseModel):
 
 
 @router.post("/evaluate")
-async def exam_evaluate(req: EvaluateRequest) -> dict[str, Any]:
+async def exam_evaluate(request: Request, req: EvaluateRequest) -> dict[str, Any]:
     """
     Stateless full-exam evaluation.
     Accepts transcripts collected on the frontend and returns the 40-point Cambridge score.
@@ -898,3 +898,35 @@ async def list_roleplay_cards() -> list[dict[str, Any]]:
         {"id": c["id"], "title": c["title"], "setting": c["setting"]}
         for c in cards
     ]
+
+
+# ── Rate limiting (Phase 3, phase-3-plan-tidy-widget.md §3) ──────────────────
+# Every route here is still unauthenticated (per-user AI quota can't apply
+# until this router gains auth — a separate, already-known Phase 1.2 item;
+# see the plan's "note dependency below" for /api/exam/*). Per-IP rate
+# limiting is the interim backstop. Applied post-hoc, mirroring
+# routers/pronunciation.py's set_rate_limiter: main.py's slowapi `_limiter`
+# doesn't exist until main.py has started executing, and this module is
+# imported by main.py, so the decorator can't be applied at definition time.
+_RATE_LIMITED_ENDPOINTS = {
+    "/api/exam/interpret": exam_interpret,
+    "/api/exam/start": exam_start,
+    "/api/exam/respond": exam_respond,
+    "/api/exam/finish": exam_finish,
+    "/api/exam/evaluate": exam_evaluate,
+}
+
+
+def set_rate_limiter(rate_limit_decorator, target_router) -> None:
+    """Must run AFTER `app.include_router(router)`, and must mutate the route
+    objects living on `target_router` (the app's router), not on this
+    module's own `router` — see pronunciation.py's set_rate_limiter for why
+    (rebuilding the dependant from the wrapped function, not the original,
+    breaks `from __future__ import annotations` string-annotation
+    resolution for parameters typed on modules slowapi's wrapper can't see)."""
+    limited = {path: rate_limit_decorator("20/minute")(fn) for path, fn in _RATE_LIMITED_ENDPOINTS.items()}
+    for route in target_router.routes:
+        path = getattr(route, "path", None)
+        if path in limited:
+            route.endpoint = limited[path]
+            route.dependant.call = limited[path]

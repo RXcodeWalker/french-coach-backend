@@ -20,6 +20,7 @@ from typing import Annotated, Any, Awaitable, Callable
 
 from fastapi import APIRouter, File, Form, Header, HTTPException, Request, UploadFile
 
+from lib.ai_quota import consume_ai_quota_or_503
 from lib.auth import verify_supabase_jwt
 from models.pronunciation import PronunciationAssessmentResponse
 from services.cache import BoundedTTLCache
@@ -45,9 +46,18 @@ _AUDIO_CACHE_MAX = 100
 _AUDIO_CACHE_TTL_SEC = 600.0
 _audio_cache: BoundedTTLCache[dict] = BoundedTTLCache(_AUDIO_CACHE_MAX, _AUDIO_CACHE_TTL_SEC)
 
+# Upload size cap (phase-3-plan-tidy-widget.md §3 item 7) — this endpoint
+# previously had no cap at all. Mirrors main.py's /api/transcribe bounds.
+_AUDIO_MAX_BYTES = 15 * 1024 * 1024
+_AUDIO_READ_CHUNK_BYTES = 1 * 1024 * 1024
+
+
+def _audio_digest_key(audio_digest_hex: str, reference_text: str, mode: str) -> str:
+    return f"{audio_digest_hex}::{reference_text}::{mode}::{LOCALE}::{ASSESSOR_VERSION}"
+
+
 def _audio_cache_key(audio_bytes: bytes, reference_text: str, mode: str) -> str:
-    digest = hashlib.sha256(audio_bytes).hexdigest()
-    return f"{digest}::{reference_text}::{mode}::{LOCALE}::{ASSESSOR_VERSION}"
+    return _audio_digest_key(hashlib.sha256(audio_bytes).hexdigest(), reference_text, mode)
 
 
 def _is_cacheable(result: dict[str, Any]) -> bool:
@@ -107,21 +117,6 @@ def _db():
 
 def _degraded_quota(reason: str) -> dict[str, Any]:
     return {"used": 0, "limit": COACHING_DAILY_LIMIT, "granted": False, "reason": reason}
-
-
-def _coaching_user_id(authorization: str | None) -> str | None:
-    """Never raises — every failure (missing/malformed/expired/forged JWT,
-    or SUPABASE_JWT_SECRET unset) becomes None, which the caller degrades to
-    the 'unauthenticated' quota reason. Degrading rather than 401ing is
-    *stricter* (no coaching) and satisfies "never fail the shadowing
-    attempt" (plan §4)."""
-    try:
-        payload = verify_supabase_jwt(authorization)
-    except Exception as e:
-        log.warning("shadowing coaching: auth failed, degrading to unauthenticated: %s", e)
-        return None
-    sub = payload.get("sub")
-    return str(sub) if sub else None
 
 
 async def _consume_quota(user_id: str, idempotency_key: str) -> dict[str, Any]:
@@ -271,10 +266,10 @@ def set_rate_limiter(rate_limit_decorator, target_router) -> None:
 async def pronunciation_evaluate(
     request: Request,
     audio: Annotated[UploadFile, File(...)],
-    target_text: str = Form(...),
+    target_text: str = Form(..., max_length=2000),
     mode: str = Form("scripted"),
     coaching: str = Form("none"),
-    coaching_request_id: str = Form(""),
+    coaching_request_id: str = Form("", max_length=200),
     authorization: str | None = Header(None),
 ) -> PronunciationAssessmentResponse:
     # _faster_whisper_fn is deliberately NOT required: main.py passes None for
@@ -289,8 +284,30 @@ async def pronunciation_evaluate(
     if coaching not in ("none", "full"):
         raise HTTPException(status_code=422, detail="coaching must be 'none' or 'full'")
 
+    payload = verify_supabase_jwt(authorization)
+    user_id = str(payload.get("sub") or "")
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    # Content-Length is client-supplied and not a real cap — read in bounded
+    # chunks and abort before ever writing to disk if the upload exceeds the
+    # cap, mirroring main.py's /api/transcribe (this endpoint previously had
+    # no cap at all, a single unbounded `await audio.read()`).
     suffix = os.path.splitext(audio.filename or "")[1] or ".webm"
-    raw = await audio.read()
+    total_bytes = 0
+    chunks: list[bytes] = []
+    digest = hashlib.sha256()
+    while True:
+        chunk = await audio.read(_AUDIO_READ_CHUNK_BYTES)
+        if not chunk:
+            break
+        total_bytes += len(chunk)
+        if total_bytes > _AUDIO_MAX_BYTES:
+            raise HTTPException(status_code=413, detail="Audio upload exceeds the size limit")
+        chunks.append(chunk)
+        digest.update(chunk)
+    raw = b"".join(chunks)
+    audio_digest_hex = digest.hexdigest()
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
         tmp.write(raw)
@@ -348,12 +365,16 @@ async def pronunciation_evaluate(
                 assessorVersion=ASSESSOR_VERSION,
             )
 
-        cache_key = _audio_cache_key(raw, reference_text, mode)
+        cache_key = _audio_digest_key(audio_digest_hex, reference_text, mode)
         cached_result = await _audio_cache.get(cache_key)
         if cached_result is not None:
             result = dict(cached_result)
             was_cached = True
         else:
+            # Quota consumed only on the cache-miss branch (plan correction
+            # #6), same as main.py's /api/feedback — a cache hit never calls
+            # Azure, so it correctly never charges quota either.
+            await consume_ai_quota_or_503(_db(), user_id, "pronunciation", cache_key)
             result = await assess_with_fallback(
                 audio_bytes=raw,
                 target_text=reference_text,
@@ -424,35 +445,36 @@ async def pronunciation_evaluate(
             elif _coach_call_groq is None:
                 quota = _degraded_quota("coaching_unavailable")
             else:
-                user_id = _coaching_user_id(authorization)
-                if user_id is None:
-                    quota = _degraded_quota("unauthenticated")
-                else:
-                    # Empty coaching_request_id => server-generated uuid4().
-                    # This loses replay protection for that one request (a
-                    # retried call would consume a second slot), but the
-                    # client always sends one in practice; documented rather
-                    # than silently defaulting to something replay-safe.
-                    request_id = coaching_request_id or str(uuid.uuid4())
-                    quota = await _consume_quota(user_id, request_id)
-                    if quota["granted"]:
-                        ctx = _build_shadowing_context(result, target_text)
-                        coach_key = _shadowing_cache_key(ctx)
-                        cached = await _shadowing_coaching_cache.get(coach_key)
-                        if cached is not None:
-                            result["coaching"] = cached
+                # user_id is already verified non-empty at the top of this
+                # handler (base assessment now requires auth) — no need to
+                # re-derive it via the old degrade-to-None _coaching_user_id
+                # path here.
+                #
+                # Empty coaching_request_id => server-generated uuid4(). This
+                # loses replay protection for that one request (a retried
+                # call would consume a second slot), but the client always
+                # sends one in practice; documented rather than silently
+                # defaulting to something replay-safe.
+                request_id = coaching_request_id or str(uuid.uuid4())
+                quota = await _consume_quota(user_id, request_id)
+                if quota["granted"]:
+                    ctx = _build_shadowing_context(result, target_text)
+                    coach_key = _shadowing_cache_key(ctx)
+                    cached = await _shadowing_coaching_cache.get(coach_key)
+                    if cached is not None:
+                        result["coaching"] = cached
+                    else:
+                        out = await generate_shadowing_coaching(
+                            ctx,
+                            result.get("phonologicalFindings") or [],
+                            call_groq=_coach_call_groq,
+                        )
+                        if out["grounded"]:
+                            result["coaching"] = out
+                            await _shadowing_coaching_cache.set(coach_key, out)
                         else:
-                            out = await generate_shadowing_coaching(
-                                ctx,
-                                result.get("phonologicalFindings") or [],
-                                call_groq=_coach_call_groq,
-                            )
-                            if out["grounded"]:
-                                result["coaching"] = out
-                                await _shadowing_coaching_cache.set(coach_key, out)
-                            else:
-                                result["coaching"] = out
-                                quota = await _release_quota(user_id, request_id)
+                            result["coaching"] = out
+                            quota = await _release_quota(user_id, request_id)
             result["coachingQuota"] = quota
 
         request.state.obs_provider = result.get("provider")

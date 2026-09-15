@@ -39,6 +39,7 @@ import threading
 import time
 import traceback
 import unicodedata
+import uuid
 from datetime import date, datetime, timezone
 from email.message import EmailMessage
 from pathlib import Path
@@ -51,6 +52,7 @@ from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 
+from lib.ai_quota import QuotaDenied, consume_ai_quota_or_503, release_ai_quota_grant
 from lib.auth import require_admin
 from pydantic import BaseModel, Field
 
@@ -337,19 +339,22 @@ def get_whisper():
 
 # ── In-memory TTL cache ───────────────────────────────────────────────────────
 from collections import OrderedDict
+from services.cache import BoundedTTLCache
 
-_CACHE: dict[str, tuple[Any, float]] = {}
-_CACHE_LOCK = asyncio.Lock()
+# General-purpose cache (health probes, daily news, grammar lessons, vocab
+# prep, igcse-papers) — bounded (phase-3-plan-tidy-widget.md §3), unlike the
+# plain unbounded dict this replaced. ttl_sec is per-entry (see
+# BoundedTTLCache.set), since call sites here use very different TTLs (5s
+# health-probe failure through 86400s daily news); the instance default
+# below is never actually relied on.
+_CACHE_MAX = 500
+_CACHE: BoundedTTLCache[Any] = BoundedTTLCache(_CACHE_MAX, 3600.0)
 
 async def _cache_get(key: str) -> Any | None:
-    entry = _CACHE.get(key)
-    if entry and time.monotonic() < entry[1]:
-        return entry[0]
-    return None
+    return await _CACHE.get(key)
 
 async def _cache_set(key: str, value: Any, ttl_sec: float) -> None:
-    async with _CACHE_LOCK:
-        _CACHE[key] = (value, time.monotonic() + ttl_sec)
+    await _CACHE.set(key, value, ttl_sec)
 
 # ── LRU feedback cache ────────────────────────────────────────────────────────
 from services.cache import BoundedTTLCache
@@ -476,13 +481,23 @@ async def _observability_middleware(request: Request, call_next):
         cached = getattr(request.state, "obs_cached", False)
         extra = getattr(request.state, "obs_extra", None) or {}
         path = request.url.path
+        # by_endpoint is keyed by the route TEMPLATE (e.g. "/api/questions/{id}"),
+        # not the raw resolved path — the latter grows one key per distinct id
+        # ever requested, an unbounded dict (phase-3-plan-tidy-widget.md §3).
+        # A route not yet matched (404, or middleware ran before routing) has
+        # no `route` in scope, so it falls back to the raw path — a bounded
+        # set in practice, since a 404 storm still only produces as many keys
+        # as distinct nonsense paths a client sends, not a real growth vector
+        # on its own.
+        route = request.scope.get("route")
+        endpoint_key = getattr(route, "path", None) or path
         with _METRICS_LOCK:
             _METRICS["requests_total"] += 1
             _METRICS["latency_sum_ms"] += latency_ms
             _METRICS["latency_count"] += 1
             if status >= 500:
                 _METRICS["errors_total"] += 1
-            _METRICS["by_endpoint"][path] = _METRICS["by_endpoint"].get(path, 0) + 1
+            _METRICS["by_endpoint"][endpoint_key] = _METRICS["by_endpoint"].get(endpoint_key, 0) + 1
             if path == "/api/pronunciation" and provider:
                 pron_metrics = _METRICS["pronunciation"]
                 pron_metrics["by_provider"][provider] = pron_metrics["by_provider"].get(provider, 0) + 1
@@ -537,14 +552,17 @@ async def health() -> dict[str, Any]:
         groq_status = await _probe_groq()
         gemini_status = await _probe_gemini()
         # "ok" is cached for a full minute to avoid hammering the providers on every
-        # poll. A failure (cold start, transient network blip) is cached for only a
-        # few seconds so the next client poll re-probes soon instead of being stuck
+        # poll. A failure (cold start, transient network blip) is cached for a
+        # shorter TTL so the next client poll re-probes soon instead of being stuck
         # showing "unavailable" for up to a minute after the provider recovers.
+        # 30s (was 5s, phase-3-plan-tidy-widget.md §3) — 5s meant a health-check
+        # poller hitting /health during any provider blip re-probed both providers
+        # up to 12x/minute instead of the intended once-a-minute cadence.
         both_ok = groq_status == "ok" and gemini_status == "ok"
         await _cache_set(
             "health:probes",
             {"groq": groq_status, "gemini": gemini_status},
-            60 if both_ok else 5,
+            60 if both_ok else 30,
         )
 
     db_path = Path(os.getenv("IGCSE_DB_PATH", str(APP_DIR / "data" / "igcse_speaking.db")))
@@ -627,6 +645,24 @@ class DemandSignals(BaseModel):
     hasPastOrFuture: bool | None = None
 
 
+# Caps applied to FeedbackRequest/IGCSEFeedbackRequest content
+# (phase-3-plan-tidy-widget.md §3, "max_length on request fields") — both
+# fields are interpolated into an LLM prompt, so an uncapped field is an
+# unbounded-cost/prompt-injection surface, same rationale as
+# ROLEPLAY_MAX_MESSAGE_CHARS. A real spoken exam answer, transcribed, is
+# nowhere near this long; generous headroom over a realistic worst case.
+# FeedbackRequest itself is constructed manually in Python (not parsed
+# directly from the request body by FastAPI), so a hard Field(max_length=)
+# here would raise pydantic.ValidationError deep inside _feedback_impl —
+# an unhandled 500, not a clean 422. Truncation happens at the call sites
+# below instead (feedback() and the /api/feedback/stream parser), before
+# the value ever reaches this constructor. IGCSEFeedbackRequest IS parsed
+# directly by FastAPI (igcse_feedback(req: IGCSEFeedbackRequest, ...)), so
+# max_length there correctly produces a normal 422.
+_FEEDBACK_QUESTION_MAX_CHARS = 2000
+_FEEDBACK_TRANSCRIPT_MAX_CHARS = 8000
+
+
 class FeedbackRequest(BaseModel):
     question: str = Field(..., description="The question the student was answering")
     transcript: str = Field(..., description="Student's spoken answer, transcribed")
@@ -646,8 +682,8 @@ class FeedbackRequest(BaseModel):
 
 
 class IGCSEFeedbackRequest(BaseModel):
-    question: str
-    transcript: str
+    question: str = Field(..., max_length=_FEEDBACK_QUESTION_MAX_CHARS)
+    transcript: str = Field(..., max_length=_FEEDBACK_TRANSCRIPT_MAX_CHARS)
     metrics: FeedbackMetrics | None = None
     bullet_points: list[str] = []
     model: str | None = None
@@ -3161,6 +3197,7 @@ async def _feedback_impl(
     depth: FeedbackDepth,
     metrics_json: str,
     audio: UploadFile | None,
+    user_id: str,
     skill_context: dict[str, Any] | None = None,
     difficulty_context: dict[str, Any] | None = None,
     question_id: str | None = None,
@@ -3215,7 +3252,8 @@ async def _feedback_impl(
         # resolution. Normalising here — instead of separately in the prompt
         # builder — means req.transcript IS that canonical string everywhere
         # it's read, so there is no second, differently-cleaned copy to drift.
-        transcript = clean_transcript(transcript)
+        transcript = clean_transcript(transcript)[:_FEEDBACK_TRANSCRIPT_MAX_CHARS]
+        question = question[:_FEEDBACK_QUESTION_MAX_CHARS]
 
         # ── Step 2: Parse frontend metrics ────────────────────────────────────
         try:
@@ -3263,6 +3301,16 @@ async def _feedback_impl(
                 was_cached = True
 
         if not was_cached:
+            # Quota is consumed only on the cache-miss branch (plan correction
+            # #6) — a cache hit never calls a paid provider, so it correctly
+            # never charges quota either. The idempotency key mirrors
+            # _feedback_cache_key's inputs even when audio is present (where
+            # cache_key itself is never computed, since tmp_path disables the
+            # cache) so identical retries of the same attempt are not charged
+            # twice.
+            idempotency_key = cache_key or _feedback_cache_key(transcript, _cache_id, difficulty_context, depth)
+            await consume_ai_quota_or_503(get_supabase(), user_id, "feedback", idempotency_key)
+
             t_start = time.monotonic()
             fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
             latency_ms = (time.monotonic() - t_start) * 1000
@@ -3309,12 +3357,13 @@ async def _feedback_impl(
 @app.post("/api/feedback/v2")
 @app.post("/api/feedback/v3")
 @rate_limit("20/minute")
-async def feedback(request: Request) -> dict[str, Any]:
+async def feedback(request: Request, authorization: str | None = Header(None)) -> dict[str, Any]:
     """
     Backward-compatible feedback endpoint that accepts:
       - multipart/form-data (with optional audio file), or
       - application/json (transcript-only flow)
     """
+    user_id = verify_jwt(authorization)
     content_type = (request.headers.get("content-type") or "").lower()
 
     question = ""
@@ -3423,6 +3472,7 @@ async def feedback(request: Request) -> dict[str, Any]:
             depth=depth,
             metrics_json=metrics_json,
             audio=audio,
+            user_id=user_id,
             skill_context=skill_context,
             difficulty_context=difficulty_context,
             question_id=question_id,
@@ -3554,12 +3604,13 @@ async def _parse_feedback_request(request: Request) -> tuple[
 
 @app.post("/api/feedback/stream")
 @rate_limit("20/minute")
-async def feedback_stream(request: Request) -> StreamingResponse:
+async def feedback_stream(request: Request, authorization: str | None = Header(None)) -> StreamingResponse:
     """
     NDJSON streaming feedback endpoint. Emits section events progressively
     as the Groq model generates them, then a final `complete` chunk.
     Degrades gracefully to a single buffered `complete` for Gemini/offline.
     """
+    user_id = verify_jwt(authorization)
     try:
         (question, transcript, model, depth, metrics_json,
          skill_context, difficulty_context, audio_bytes, audio_mime,
@@ -3608,7 +3659,8 @@ async def feedback_stream(request: Request) -> StreamingResponse:
             # One canonical transcript for this attempt (see _feedback_impl):
             # normalise before it is emitted so the "transcript" event, the
             # prompt and the final echoed field all agree.
-            actual_transcript = clean_transcript(actual_transcript)
+            actual_transcript = clean_transcript(actual_transcript)[:_FEEDBACK_TRANSCRIPT_MAX_CHARS]
+            question = question[:_FEEDBACK_QUESTION_MAX_CHARS]
 
             yield json.dumps({"type": "transcript", "data": {"text": actual_transcript}}) + "\n"
 
@@ -3652,6 +3704,24 @@ async def feedback_stream(request: Request) -> StreamingResponse:
                     was_cached = True
 
             if not was_cached:
+                # Quota is consumed only on the cache-miss branch (plan
+                # correction #6), same as _feedback_impl. A denial can't
+                # raise HTTPException here — the response has already
+                # started streaming — so it's surfaced as a structured
+                # error event and the generator returns cleanly, matching
+                # the existing "No transcript available" pattern above.
+                idempotency_key = cache_key or _feedback_cache_key(actual_transcript, question, difficulty_context, depth)
+                try:
+                    await consume_ai_quota_or_503(get_supabase(), user_id, "feedback", idempotency_key)
+                except QuotaDenied as e:
+                    detail = e.detail if isinstance(e.detail, dict) else {"error": "denied"}
+                    yield json.dumps({"type": "error", "data": detail}) + "\n"
+                    return
+                except HTTPException as e:
+                    detail = e.detail if isinstance(e.detail, dict) else {"error": "quota_service_unavailable"}
+                    yield json.dumps({"type": "error", "data": detail}) + "\n"
+                    return
+
                 yield json.dumps({"type": "status", "data": {"phase": "generating"}}) + "\n"
 
                 # ── determine if we can stream (Groq only) ───────────────────
@@ -3745,10 +3815,11 @@ async def feedback_stream(request: Request) -> StreamingResponse:
 
 @app.post("/api/repair", response_model=None)
 async def repair_pronunciation(
+    request: Request,
     audio: Annotated[UploadFile, File(...)],
-    word: str = Form(...),
-    context: str = Form(""),        # surrounding phrase for context — unused by the pipeline (single-word reference), kept for API compatibility
-    original_problem: str = Form(""), # unused by the pipeline; kept for API compatibility
+    word: str = Form(..., max_length=200),
+    context: str = Form("", max_length=1000),        # surrounding phrase for context — unused by the pipeline (single-word reference), kept for API compatibility
+    original_problem: str = Form("", max_length=1000), # unused by the pipeline; kept for API compatibility
 ) -> dict[str, Any]:
     """
     Evaluate a single word/phrase re-recording via the audited pronunciation
@@ -3843,11 +3914,13 @@ async def repair_pronunciation(
 # ── /api/drill — generate a 3-step practice drill for a word ─────────────────
 
 @app.post("/api/drill")
+@rate_limit("20/minute")
 async def generate_drill(
-    word: str = Form(...),
-    context: str = Form(""),
-    ipa: str = Form(""),
-    issue: str = Form(""),
+    request: Request,
+    word: str = Form(..., max_length=200),
+    context: str = Form("", max_length=1000),
+    ipa: str = Form("", max_length=200),
+    issue: str = Form("", max_length=1000),
 ) -> dict[str, Any]:
     """
     Generate a targeted pronunciation drill for a single French word.
@@ -4005,9 +4078,17 @@ async def call_igcse_feedback(req: IGCSEFeedbackRequest) -> dict[str, Any]:
 
 
 @app.post("/api/feedback/igcse")
-async def igcse_feedback(req: IGCSEFeedbackRequest) -> dict[str, Any]:
+@rate_limit("20/minute")
+async def igcse_feedback(request: Request, req: IGCSEFeedbackRequest, authorization: str | None = Header(None)) -> dict[str, Any]:
+    user_id = verify_jwt(authorization)
     if not req.transcript.strip():
         raise HTTPException(status_code=400, detail="transcript is empty")
+    # No cache exists for this route (unlike /api/feedback) — every request
+    # reaches a provider, so quota is consumed unconditionally, once per
+    # request. Idempotency key: sha256(question_id+transcript) per the plan,
+    # since IGCSEFeedbackRequest has no equivalent cache-key function.
+    idempotency_key = hashlib.sha256(f"{req.question}::{req.transcript}".encode()).hexdigest()
+    await consume_ai_quota_or_503(get_supabase(), user_id, "feedback", idempotency_key)
     result = await call_igcse_feedback(req)
     if "total" not in result and "scores" in result:
         s = result["scores"]
@@ -4221,18 +4302,22 @@ _TRANSCRIBE_READ_CHUNK_BYTES = 1 * 1024 * 1024
 
 @app.post("/api/transcribe", response_model=None)
 async def transcribe(
+    request: Request,
     audio: Annotated[UploadFile, File(...)],
-    language: str = Form("fr"),
+    language: str = Form("fr", max_length=10),
     authorization: str | None = Header(None),
 ) -> dict[str, Any]:
     """Transcribe uploaded audio. Tries Groq Whisper first, falls back to faster-whisper."""
-    verify_jwt(authorization)
+    user_id = verify_jwt(authorization)
 
     # Content-Length is client-supplied and not a real cap — read in bounded
     # chunks and abort before ever writing to disk if the upload exceeds the cap,
-    # rather than trusting the header alone (reliability plan §2.4).
+    # rather than trusting the header alone (reliability plan §2.4). The
+    # idempotency-key hash is computed incrementally over these same chunks
+    # rather than re-reading the (already-consumed) upload stream.
     total_bytes = 0
     chunks: list[bytes] = []
+    digest = hashlib.sha256()
     while True:
         chunk = await audio.read(_TRANSCRIBE_READ_CHUNK_BYTES)
         if not chunk:
@@ -4241,6 +4326,9 @@ async def transcribe(
         if total_bytes > _TRANSCRIBE_MAX_BYTES:
             raise HTTPException(status_code=413, detail="Audio upload exceeds the size limit")
         chunks.append(chunk)
+        digest.update(chunk)
+
+    await consume_ai_quota_or_503(get_supabase(), user_id, "transcribe", digest.hexdigest())
 
     suffix = os.path.splitext(audio.filename or "")[1] or ".webm"
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
@@ -4348,7 +4436,8 @@ async def get_daily_question() -> dict:
 
 
 @app.get("/api/news/daily")
-async def generate_daily_news() -> dict:
+@rate_limit("20/minute")
+async def generate_daily_news(request: Request) -> dict:
     """Generate today's news snippet using Gemini (cached 24 h)."""
     today = date.today().isoformat()
     cache_key = f"news:{today}"
@@ -4559,7 +4648,8 @@ Grammar note: {topic}"""
 
 
 @app.get("/api/grammar-lesson")
-async def get_grammar_lesson(topic: str) -> dict:
+@rate_limit("20/minute")
+async def get_grammar_lesson(request: Request, topic: str) -> dict:
     if not topic or len(topic) > 300:
         raise HTTPException(status_code=400, detail="Invalid topic")
 
@@ -4681,19 +4771,44 @@ Return ONLY valid JSON (no markdown fences):
   "hint": "Optional short English hint for the student (what they might say next), or null"
 }"""
 
+class CustomScenario(BaseModel):
+    """ScenarioArchitectSession.tsx's AI-generated scenario (GeneratedScenario
+    in types.ts). Structured and length-capped, unlike the free-form dict
+    this replaced — every string field is truncated to
+    ROLEPLAY_MAX_MESSAGE_CHARS below before it reaches the prompt, and this
+    path is only reachable once authenticated + quota-gated (plan §2:
+    /api/roleplay/turn now requires verify_jwt), which closes the original
+    "unauthenticated open LLM proxy" concern that used to justify refusing
+    custom_scenario outright."""
+    title: str
+    scenario: str
+    npc_name: str
+    npc_personality: str
+    objectives: list[str] = []
+
+
 class RoleplayTurnRequest(BaseModel):
     scenario_id: str
     turn_history: list[dict]  # [{speaker: "examiner"|"student", text: str}]
     student_transcript: str
     is_final_turn: bool = False
-    custom_scenario: dict | None = None
+    custom_scenario: CustomScenario | None = None
+    # Client-minted UUID, one per turn attempt, resent unchanged on retry —
+    # used directly as the quota idempotency key (plan §2 correction #5).
+    # The previously-considered sha256(scenario_id + len(turn_history) +
+    # transcript) key collides across sessions, since turn_history resets to
+    # [] with no conversation identifier at the start of every session. A
+    # missing turn_id (an old client) degrades to "no dedup, always
+    # consume" rather than erroring, so an old client keeps working.
+    turn_id: str | None = None
 
 
 class ScenarioGenerateRequest(BaseModel):
     description: str
 
 @app.post("/api/generate-scenario")
-async def api_generate_scenario(req: ScenarioGenerateRequest) -> dict:
+@rate_limit("20/minute")
+async def api_generate_scenario(request: Request, req: ScenarioGenerateRequest) -> dict:
     from scenario_generator import generate_scenario
     try:
         scenario = await generate_scenario(req.description)
@@ -4727,28 +4842,36 @@ async def get_roleplay_scenarios() -> list[dict]:
     return [{"id": s["id"], "title": s["title"], "emoji": s["emoji"], "turns": s["turns"]} for s in ROLEPLAY_SCENARIOS]
 
 
-# Caps on the unauthenticated /api/roleplay/turn input. The turn history is
-# replayed verbatim into the model prompt, so an uncapped list or an uncapped
-# message is both an unbounded-cost and a prompt-injection surface.
+# Caps on /api/roleplay/turn input. The turn history is replayed verbatim
+# into the model prompt, so an uncapped list or an uncapped message is both
+# an unbounded-cost and a prompt-injection surface. custom_scenario's fields
+# get the same per-field cap applied below before they reach the prompt.
 ROLEPLAY_MAX_HISTORY_TURNS = 30
 ROLEPLAY_MAX_MESSAGE_CHARS = 1000
 
 
 @app.post("/api/roleplay/turn")
 @rate_limit("20/minute")
-async def roleplay_turn(request: Request, req: RoleplayTurnRequest) -> dict:
-    scenario = None
+async def roleplay_turn(request: Request, req: RoleplayTurnRequest, authorization: str | None = Header(None)) -> dict:
+    user_id = verify_jwt(authorization)
+    # A missing turn_id (an old client not yet sending it) degrades to
+    # "no dedup, always consume" rather than erroring — see RoleplayTurnRequest.
+    idempotency_key = req.turn_id or uuid.uuid4().hex
+    await consume_ai_quota_or_503(get_supabase(), user_id, "roleplay_turn", idempotency_key)
+
     if req.scenario_id == "custom" and req.custom_scenario:
+        cs = req.custom_scenario
+        objectives = ", ".join(o[:ROLEPLAY_MAX_MESSAGE_CHARS] for o in cs.objectives[:20])
         scenario = {
-            "setting": f"Roleplay Scenario: {req.custom_scenario.get('title')}\n"
-                       f"Description: {req.custom_scenario.get('scenario')}\n"
-                       f"NPC Name: {req.custom_scenario.get('npc_name')}\n"
-                       f"NPC Personality: {req.custom_scenario.get('npc_personality')}\n"
-                       f"Objectives: {', '.join(req.custom_scenario.get('objectives', []))}"
+            "setting": f"Roleplay Scenario: {cs.title[:ROLEPLAY_MAX_MESSAGE_CHARS]}\n"
+                       f"Description: {cs.scenario[:ROLEPLAY_MAX_MESSAGE_CHARS]}\n"
+                       f"NPC Name: {cs.npc_name[:ROLEPLAY_MAX_MESSAGE_CHARS]}\n"
+                       f"NPC Personality: {cs.npc_personality[:ROLEPLAY_MAX_MESSAGE_CHARS]}\n"
+                       f"Objectives: {objectives}"
         }
     else:
         scenario = next((s for s in ROLEPLAY_SCENARIOS if s["id"] == req.scenario_id), None)
-    
+
     if not scenario:
         raise HTTPException(status_code=404, detail="Scenario not found")
 
@@ -4816,7 +4939,8 @@ async def roleplay_turn(request: Request, req: RoleplayTurnRequest) -> dict:
 
 
 @app.get("/api/vocab-prep")
-async def vocab_prep(topic: str) -> dict[str, Any]:
+@rate_limit("20/minute")
+async def vocab_prep(request: Request, topic: str) -> dict[str, Any]:
     """Generate vocabulary and phrases for a given topic (cached 1 h)."""
     cache_key = f"vocab:{topic.strip().lower()[:100]}"
     cached = await _cache_get(cache_key)
@@ -4977,8 +5101,9 @@ async def srs_review_card(req: SRSReview) -> dict[str, Any]:
 
 # ── Exam mode pipeline ────────────────────────────────────────────────────────
 # New parallel pipeline — does NOT touch any existing endpoint.
-from exam_controller import router as _exam_router
+from exam_controller import router as _exam_router, set_rate_limiter as _set_exam_rate_limiter
 app.include_router(_exam_router)
+_set_exam_rate_limiter(rate_limit, app)
 
 
 # ── Content management (CMS) routers ──────────────────────────────────────────
@@ -4994,8 +5119,7 @@ def _invalidate_content_cache(kind: str) -> None:
     `kind` is "questions"/"scenarios" (cache hooks) or a table content_type.
     """
     prefix = "content:scenarios" if "scenario" in kind else "content:questions"
-    for key in [k for k in _CACHE if k.startswith(prefix)]:
-        _CACHE.pop(key, None)
+    _CACHE.pop_prefix_sync(prefix)
 
 
 set_cache_invalidator(_invalidate_content_cache)

@@ -12,9 +12,11 @@ from __future__ import annotations
 
 import asyncio
 import os
+import secrets
 from typing import Any, Callable
 
 from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
 
 from lib.auth import require_admin
 from models.content import (
@@ -288,6 +290,73 @@ def _data_links_to(data: Any, target: str) -> bool:
         if isinstance(intents, dict) and target in intents.values():
             return True
     return False
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# Invite codes (Phase 3, phase-3-plan-tidy-widget.md §1e) — plain table CRUD,
+# not versioned content, so no _purge/content_versions involvement. Codes
+# themselves are mutated directly here (not through redeem_invite_code/
+# check_invite_code, which are the user-facing RPCs) since an admin issuing
+# or revoking a code is a different operation from a user redeeming one.
+# ════════════════════════════════════════════════════════════════════════════
+class InviteCodeBulkCreate(BaseModel):
+    count: int = 1
+    max_uses: int = 1
+    expires_at: str | None = None
+    note: str | None = None
+
+
+def _generate_invite_code() -> str:
+    # 5 groups of 4 base32-ish chars (Crockford alphabet minus ambiguous
+    # I/L/O/U), dash-separated — 20 chars of real entropy, easy to read back
+    # over the phone/email and hard to guess or brute-force.
+    alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
+    groups = ["".join(secrets.choice(alphabet) for _ in range(4)) for _ in range(5)]
+    return "-".join(groups)
+
+
+@router.post("/invite-codes")
+async def create_invite_codes(body: InviteCodeBulkCreate, _=Depends(require_admin)):
+    if body.count < 1 or body.count > 500:
+        raise HTTPException(status_code=400, detail="count must be between 1 and 500")
+    if body.max_uses < 1:
+        raise HTTPException(status_code=400, detail="max_uses must be at least 1")
+
+    db = _db()
+    rows = [
+        {
+            "code": _generate_invite_code(),
+            "max_uses": body.max_uses,
+            "expires_at": body.expires_at,
+            "note": body.note,
+        }
+        for _ in range(body.count)
+    ]
+    res = await _run(db.table("invite_codes").insert(rows))
+    if not res.data:
+        raise HTTPException(status_code=400, detail="Insert failed")
+    return {"codes": res.data}
+
+
+@router.get("/invite-codes")
+async def list_invite_codes(_=Depends(require_admin)):
+    db = _db()
+    res = await _run(db.table("invite_codes").select("*").order("created_at", desc=True))
+    return {"codes": res.data or []}
+
+
+@router.post("/invite-codes/{code}/revoke")
+async def revoke_invite_code(code: str, _=Depends(require_admin)):
+    # Soft revoke: set expires_at to now() rather than deleting the row, so
+    # invite_code_redemptions' foreign key to invite_codes.code stays intact
+    # and the code's use history remains visible in the admin list.
+    db = _db()
+    res = await _run(
+        db.table("invite_codes").update({"expires_at": "now()"}).eq("code", code.upper())
+    )
+    if not res.data:
+        raise HTTPException(status_code=404, detail="Invite code not found")
+    return res.data[0]
 
 
 # ════════════════════════════════════════════════════════════════════════════

@@ -91,6 +91,7 @@ def test_engine_preference_field_is_read_from_json_body(monkeypatch):
         return {"scores": {}, "provider": "groq"}
 
     monkeypatch.setattr(main, "_feedback_impl", fake_impl)
+    monkeypatch.setattr(main, "verify_jwt", lambda authorization: "user-1")
 
     from fastapi.testclient import TestClient
 
@@ -98,6 +99,7 @@ def test_engine_preference_field_is_read_from_json_body(monkeypatch):
         client.post(
             "/api/feedback/v3",
             json={"transcript": "Bonjour.", "question": {"text": "Q?"}, "enginePreference": "groq"},
+            headers={"Authorization": "Bearer whatever"},
         )
 
     assert seen["model"] == "groq"

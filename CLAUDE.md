@@ -4,8 +4,9 @@
 that references it. The main repo's git history is no safety net here.
 
 - Before editing: run `git -C backend status` from the main repo (or `git status` from here)
-  and expect clean. After committing here, run `git push` — the main repo's commits don't
-  cover this directory.
+  and expect clean. **Every commit made here must be followed by `git push` in the same
+  turn — no exceptions.** The main repo's commits (and its own push) don't cover this
+  directory, so a commit left unpushed here is silently invisible everywhere else.
 - Migrations live in `backend/supabase/migrations/`, read in date order as the only in-repo
   record of the deployed schema. `backend/supabase/tests/*.test.mjs` is the executable spec of
   the privileged RPC contracts — run against a **local** `npx supabase start` stack only, never

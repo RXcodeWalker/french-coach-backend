@@ -20,11 +20,12 @@ from datetime import datetime, timezone
 from typing import Any
 
 from dotenv import load_dotenv
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Header, HTTPException, Request
 from pydantic import BaseModel
 
 from exam_sessions import create_session, delete_session, get_session, update_session
 from evaluator_service import evaluate_full_exam
+from lib.auth import verify_supabase_jwt
 from state_manager import advance_state, state_name
 
 _SUPABASE_URL = os.getenv("SUPABASE_URL", "").strip()
@@ -202,13 +203,30 @@ async def exam_interpret_health() -> dict[str, Any]:
 
 
 @router.post("/interpret")
-async def exam_interpret(request: Request, req: InterpretRequest) -> dict[str, Any]:
+async def exam_interpret(
+    request: Request,
+    req: InterpretRequest,
+    authorization: str | None = Header(None),
+) -> dict[str, Any]:
     """
     Understanding-only speech-act classification for live conduct routing.
     Facts only: {speechAct, hesitation, confidence}. Never returns examiner text.
     On any model failure, returns a low-confidence 'substantive_answer' so the
     frontend's deterministic fallback takes over cleanly.
+
+    verify_jwt only, deliberately NOT metered by consume_ai_quota_or_503 (W7
+    reliability — this closes the route's real gap, unauthenticated access,
+    documented below at set_rate_limiter; see verification-log.md for the
+    full reasoning). Unlike /api/transcribe: max_tokens=60, temperature=0.0,
+    a fixed server-side prompt, output constrained to a 7-value enum — the
+    per-call cost is a rounding error, and the exam session is already
+    metered where the real cost is (transcribe, score, and in coached mode
+    the rail's examiner-feedback call). Metering this too would double-count
+    a side-channel and, being fail-closed, turn a Supabase hiccup into a
+    dropped live-routing hint on every remaining turn. If max_tokens or the
+    prompt ever loosens, revisit this exemption.
     """
+    verify_supabase_jwt(authorization)
     transcript = (req.transcript or "").strip()
     if not transcript:
         return {"speechAct": "silence", "hesitation": False, "confidence": 1.0}
@@ -901,10 +919,12 @@ async def list_roleplay_cards() -> list[dict[str, Any]]:
 
 
 # ── Rate limiting (Phase 3, phase-3-plan-tidy-widget.md §3) ──────────────────
-# Every route here is still unauthenticated (per-user AI quota can't apply
-# until this router gains auth — a separate, already-known Phase 1.2 item;
-# see the plan's "note dependency below" for /api/exam/*). Per-IP rate
-# limiting is the interim backstop. Applied post-hoc, mirroring
+# /interpret gained verify_jwt (W7 reliability) — it's the only route here
+# the frontend actually calls (see the exam-overhaul plan's "Do NOT wire to"
+# list: start/respond/finish/evaluate are orphaned, unreached from src/, per
+# ADR-0003). It stays deliberately unmetered by AI-cost quota (see its own
+# docstring) so per-IP rate limiting is still its real volume backstop, not
+# just an interim one. Applied post-hoc, mirroring
 # routers/pronunciation.py's set_rate_limiter: main.py's slowapi `_limiter`
 # doesn't exist until main.py has started executing, and this module is
 # imported by main.py, so the decorator can't be applied at definition time.

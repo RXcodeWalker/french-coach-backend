@@ -5101,7 +5101,11 @@ _set_exam_rate_limiter(rate_limit, app)
 # Admin CRUD + public published-content reads. Additive; existing /api/questions
 # and /api/exam-sets handlers above are untouched.
 from routers.admin import router as _admin_router, set_cache_invalidator
-from routers.content import router as _content_router, set_cache as _content_set_cache
+from routers.content import (
+    router as _content_router,
+    set_cache as _content_set_cache,
+    set_rate_limiter as _set_content_rate_limiter,
+)
 
 
 def _invalidate_content_cache(kind: str) -> None:
@@ -5117,6 +5121,7 @@ set_cache_invalidator(_invalidate_content_cache)
 _content_set_cache(_cache_get, _cache_set)
 app.include_router(_admin_router)
 app.include_router(_content_router)
+_set_content_rate_limiter(rate_limit, app)
 
 # ── Pronunciation assessment router ─────────────────────────────────────────
 # Additive: replaces the old inline @app.post("/api/pronunciation") handler.

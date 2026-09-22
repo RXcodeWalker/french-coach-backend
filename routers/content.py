@@ -12,7 +12,7 @@ import asyncio
 import os
 from typing import Any, Awaitable, Callable
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 
 router = APIRouter(prefix="/api/content", tags=["content"])
 
@@ -58,7 +58,7 @@ async def _run(query):
 
 
 @router.get("/questions")
-async def list_published_questions(topic_key: str | None = None):
+async def list_published_questions(request: Request, topic_key: str | None = None):
     async def build():
         db = _db()
         q = db.table("questions").select("*").eq("status", "published")
@@ -70,7 +70,7 @@ async def list_published_questions(topic_key: str | None = None):
 
 
 @router.get("/scenarios")
-async def list_published_scenarios():
+async def list_published_scenarios(request: Request):
     async def build():
         db = _db()
         return (await _run(
@@ -81,7 +81,7 @@ async def list_published_scenarios():
 
 
 @router.get("/igcse-sets")
-async def list_published_igcse_sets():
+async def list_published_igcse_sets(request: Request):
     """S11 §8: usability-only listing of published question-set ids, so the
     frontend can pick a set without a hardcoded id. No adaptive/weighted/
     history-aware selection -- that's explicitly out of scope."""
@@ -96,7 +96,7 @@ async def list_published_igcse_sets():
 
 
 @router.get("/igcse-sets/{question_set_id}")
-async def get_published_igcse_set(question_set_id: str):
+async def get_published_igcse_set(request: Request, question_set_id: str):
     """S11: one published AuthoredQuestionSet payload, by id. The frontend
     loader (data/exam/bank/loader.ts) validates the payload again on receipt
     (parseAuthoredQuestionSet) -- this endpoint returns the raw stored payload,
@@ -114,3 +114,39 @@ async def get_published_igcse_set(question_set_id: str):
         return res.data[0]["payload"]
 
     return await _cached(f"content:igcse-sets:{question_set_id}", build)
+
+
+# ── Rate limiting (W7 reliability) ────────────────────────────────────────────
+# This router was unauthenticated AND unrate-limited. It stays unauthenticated
+# on purpose (see verification-log.md): every row here is a `status =
+# 'published'` read, already RLS-scoped so auth would add nothing the DB isn't
+# already enforcing, and igcse-sets specifically is on loader.ts's guest path
+# (falls back to the 1-set offline fixture on any non-2xx, including a 401,
+# so gating it would silently starve every guest exam attempt down to that
+# one fixture). Per-IP rate limiting is the real fix for the actual gap (open
+# to scraping/hammering), sized so ExamSelect's normal flow — one catalog
+# listing call plus a fetch per set (up to 10 today) — is nowhere near it.
+# Applied post-hoc, mirroring exam_controller.py/pronunciation.py's
+# set_rate_limiter: main.py's slowapi `_limiter` doesn't exist until main.py
+# has started executing, and this module is imported by main.py.
+_RATE_LIMITED_ENDPOINTS = {
+    "/api/content/questions": list_published_questions,
+    "/api/content/scenarios": list_published_scenarios,
+    "/api/content/igcse-sets": list_published_igcse_sets,
+    "/api/content/igcse-sets/{question_set_id}": get_published_igcse_set,
+}
+
+
+def set_rate_limiter(rate_limit_decorator, target_router) -> None:
+    """Must run AFTER `app.include_router(router)`, and must mutate the route
+    objects living on `target_router` (the app's router), not on this
+    module's own `router` — see exam_controller.py's set_rate_limiter for why
+    (rebuilding the dependant from the wrapped function rather than the
+    original breaks `from __future__ import annotations` string-annotation
+    resolution for parameters typed on modules the rate-limit wrapper can't see)."""
+    limited = {path: rate_limit_decorator("30/minute")(fn) for path, fn in _RATE_LIMITED_ENDPOINTS.items()}
+    for route in target_router.routes:
+        path = getattr(route, "path", None)
+        if path in limited:
+            route.endpoint = limited[path]
+            route.dependant.call = limited[path]

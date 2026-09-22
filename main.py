@@ -46,14 +46,13 @@ from pathlib import Path
 from typing import Annotated, Any, Literal
 
 import httpx
-import jwt as pyjwt
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 
 from lib.ai_quota import QuotaDenied, consume_ai_quota_or_503, release_ai_quota_grant
-from lib.auth import require_admin
+from lib.auth import require_admin, verify_supabase_jwt
 from pydantic import BaseModel, Field
 
 try:
@@ -523,24 +522,16 @@ async def _observability_middleware(request: Request, call_next):
 
 # ── JWT verification ──────────────────────────────────────────────────────────
 def verify_jwt(authorization: str | None) -> str:
-    """Verify Supabase JWT. Returns user_id (UUID string) or raises HTTP 401."""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Missing or invalid Authorization header")
-    token = authorization.split(" ", 1)[1]
-    if not SUPABASE_JWT_SECRET:
-        raise HTTPException(status_code=503, detail="Auth not configured on server")
-    try:
-        payload = pyjwt.decode(
-            token,
-            SUPABASE_JWT_SECRET,
-            algorithms=["HS256"],
-            options={"verify_aud": False},
-        )
-        return payload["sub"]
-    except pyjwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="Token expired")
-    except Exception:
-        raise HTTPException(status_code=401, detail="Invalid token")
+    """Verify Supabase JWT. Returns user_id (UUID string) or raises HTTP 401.
+
+    Delegates to lib.auth so there is exactly one verifier in the backend.
+    That verifier handles both the project's current asymmetric (ES256) signing
+    keys — verified against the published JWKS — and legacy HS256 tokens signed
+    with SUPABASE_JWT_SECRET; verifying HS256 only made every ES256 token read
+    as "Invalid token" and 401'd every signed-in user.
+    """
+    payload = verify_supabase_jwt(authorization, hs_secret=SUPABASE_JWT_SECRET)
+    return payload["sub"]
 
 # ── /health ───────────────────────────────────────────────────────────────────
 @app.get("/health")

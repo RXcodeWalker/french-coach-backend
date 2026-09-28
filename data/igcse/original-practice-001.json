@@ -6,7 +6,7 @@
     "status": "approved",
     "reviewedBy": "internal:claude",
     "reviewedAt": "2026-09-28T00:00:00.000Z",
-    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). G2 native-speaker review PENDING — do not seed or merge before it. Originality check against the Teacher's Notes text PENDING (the booklet was not available in the authoring session; run scripts/authoring/originalityCheck.ts before seeding). Role play: a missed train at the station."
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 native-speaker review PENDING — do not seed or merge before it. Role play: a missed train at the station."
   },
   "content": {
     "rolePlay": {
@@ -97,10 +97,10 @@
           "questionId": "t1q3",
           "part": "topic1",
           "mainText": "Parle-moi d'un voyage que tu as fait.",
-          "secondPartText": "C'était comment ?",
+          "secondPartText": "Comment ça s'est passé ?",
           "alternativeTexts": [
             "Où es-tu allé(e) le week-end dernier ?",
-            "C'était comment ?"
+            "Comment ça s'est passé ?"
           ],
           "topicArea": "A",
           "subTopic": "Travel and transport",
@@ -118,7 +118,7 @@
           "part": "topic1",
           "mainText": "À ton avis, quel est le moyen de transport le plus pratique en ville ?",
           "alternativeTexts": [
-            "Quel moyen de transport aimes-tu le plus ?"
+            "Comment préfères-tu te déplacer en ville ?"
           ],
           "topicArea": "A",
           "subTopic": "Travel and transport",
@@ -156,7 +156,7 @@
       "subTopic": "The natural world, the environment, the climate and the weather",
       "title": "L'environnement et la météo",
       "furtherQuestions": [
-        "Comment est le climat dans ta région ?",
+        "Quelle est la saison la plus agréable dans ta région ?",
         "Que penses-tu des voitures électriques ?"
       ],
       "questions": [
@@ -191,15 +191,16 @@
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "Qu'as-tu fait récemment pour protéger la planète ?",
+          "mainText": "Raconte une journée où il a fait très mauvais temps.",
           "alternativeTexts": [
-            "Qu'est-ce que tu as recyclé cette semaine ?"
+            "Qu'as-tu fait la dernière fois qu'il a plu ?"
           ],
           "topicArea": "C",
           "subTopic": "The natural world, the environment, the climate and the weather",
           "difficulty": "core",
           "targetStructures": [
-            "perfect"
+            "perfect",
+            "imperfect"
           ],
           "expectedTimeFrame": "past",
           "partsExpected": 1
@@ -226,19 +227,19 @@
         {
           "questionId": "t2q5",
           "part": "topic2",
-          "mainText": "Que vas-tu faire à l'avenir pour aider l'environnement ?",
-          "secondPartText": "Et que devrait faire le gouvernement ?",
+          "mainText": "Selon toi, comment sera le temps dans ta région dans cinquante ans ?",
+          "secondPartText": "Pourquoi ?",
           "alternativeTexts": [
-            "Comment vas-tu économiser l'énergie cette semaine ?",
-            "Et ta famille ?"
+            "Fera-t-il plus chaud ou plus froid plus tard chez toi ?",
+            "Pourquoi ?"
           ],
           "topicArea": "C",
           "subTopic": "The natural world, the environment, the climate and the weather",
           "difficulty": "higher",
           "targetStructures": [
-            "near-future",
-            "conditional",
-            "opinion"
+            "simple-future",
+            "comparison",
+            "justification"
           ],
           "expectedTimeFrame": "future",
           "partsExpected": 2

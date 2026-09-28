@@ -6,53 +6,53 @@
     "status": "approved",
     "reviewedBy": "internal:claude",
     "reviewedAt": "2026-09-28T00:00:00.000Z",
-    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). G2 native-speaker review PENDING — do not seed or merge before it. Originality check against the Teacher's Notes text PENDING (the booklet was not available in the authoring session; run scripts/authoring/originalityCheck.ts before seeding). Role play: enrolling on a French course at a language school."
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 native-speaker review PENDING — do not seed or merge before it. Role play: a guided tour on holiday in Quebec."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-010",
       "topicArea": "E",
-      "title": "Un cours de français à Nice",
-      "setup": "Vous voulez suivre un cours de français cet été dans une école de langues à Nice. Vous téléphonez à l'école. Je travaille à l'accueil de l'école.",
+      "title": "Une visite guidée au Québec",
+      "setup": "Vous êtes en vacances au Québec, au Canada. Vous commencez une visite guidée de la ville. Je suis votre guide.",
       "examinerRegister": "vous",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Bonjour. Quel est votre nom ?",
+          "mainText": "Bonjour ! Quelle est votre nationalité ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "De quelle nationalité êtes-vous ?",
+          "mainText": "Vous êtes au Québec pour combien de jours ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Comment avez-vous appris le français jusqu'à maintenant ?",
+          "mainText": "Qu'avez-vous déjà découvert au Québec ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Qu'est-ce qui a été difficile ?"
+          "secondPartText": "Qu'en avez-vous pensé ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Pourquoi voulez-vous suivre ce cours ?",
+          "mainText": "Quelle fête de votre pays aimeriez-vous faire découvrir aux Québécois ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Et que voudriez-vous améliorer ?"
+          "secondPartText": "Pourquoi ?"
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Qu'allez-vous faire à Nice pendant votre temps libre ?",
+          "mainText": "Qu'allez-vous visiter demain ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Où allez-vous loger ?"
+          "secondPartText": "Comment allez-vous y aller ?"
         }
       ]
     },
@@ -192,15 +192,15 @@
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "Quel métier voulais-tu faire quand tu étais petit(e) ?",
+          "mainText": "Qu'as-tu appris sur le monde du travail cette année ?",
           "alternativeTexts": [
-            "Tu voulais faire quel travail à six ans ?"
+            "Quel métier as-tu étudié en classe cette année ?"
           ],
           "topicArea": "D",
           "subTopic": "Work",
           "difficulty": "core",
           "targetStructures": [
-            "imperfect"
+            "perfect"
           ],
           "expectedTimeFrame": "past",
           "partsExpected": 1
@@ -208,8 +208,8 @@
         {
           "questionId": "t2q4",
           "part": "topic2",
-          "mainText": "Quels sont les avantages de travailler dans un autre pays ?",
-          "secondPartText": "Et les inconvénients ?",
+          "mainText": "Quels sont les points positifs du travail à l'étranger ?",
+          "secondPartText": "Et les points négatifs ?",
           "alternativeTexts": [
             "Qu'est-ce qui est bien quand on travaille à l'étranger ?",
             "Et qu'est-ce qui est difficile ?"

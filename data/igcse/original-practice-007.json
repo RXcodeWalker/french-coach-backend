@@ -6,20 +6,20 @@
     "status": "approved",
     "reviewedBy": "internal:claude",
     "reviewedAt": "2026-09-28T00:00:00.000Z",
-    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). G2 native-speaker review PENDING — do not seed or merge before it. Originality check against the Teacher's Notes text PENDING (the booklet was not available in the authoring session; run scripts/authoring/originalityCheck.ts before seeding). Role play: shopping for clothes with a French friend."
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 native-speaker review PENDING — do not seed or merge before it. Role play: shopping for clothes with a French friend."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-007",
       "topicArea": "B",
       "title": "Des vêtements pour une fête",
-      "setup": "Tu es en France. Tu fais les magasins avec ton ami(e) Camille parce que tu vas à une fête samedi. Je suis Camille.",
+      "setup": "Vous êtes en France. Vous faites les magasins avec votre ami(e) Camille parce que vous allez à une fête samedi. Je suis Camille.",
       "examinerRegister": "tu",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Alors, qu'est-ce que tu cherches ?",
+          "mainText": "Alors, que cherches-tu ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
@@ -36,7 +36,7 @@
           "mainText": "Qu'as-tu porté pour ta dernière fête ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "C'était comment, cette fête ?"
+          "secondPartText": "Comment s'est passée cette fête ?"
         },
         {
           "questionId": "rp4",
@@ -49,7 +49,7 @@
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Qu'est-ce qu'on va faire après les magasins ?",
+          "mainText": "Samedi, comment vas-tu aller à la fête ?",
           "alternativeTexts": [],
           "partsExpected": 2,
           "secondPartText": "À quelle heure veux-tu rentrer ?"
@@ -62,7 +62,7 @@
       "title": "Les loisirs",
       "furtherQuestions": [
         "Combien de temps libre as-tu pendant la semaine ?",
-        "Quel nouveau loisir aimerais-tu essayer ?"
+        "Quel loisir coûte trop cher, à ton avis ?"
       ],
       "questions": [
         {
@@ -99,7 +99,7 @@
           "mainText": "Que faisais-tu le week-end quand tu avais dix ans ?",
           "secondPartText": "Et maintenant ?",
           "alternativeTexts": [
-            "À quoi jouais-tu quand tu étais petit(e) ?",
+            "À quoi jouais-tu à l'école primaire ?",
             "Et maintenant ?"
           ],
           "topicArea": "B",
@@ -154,8 +154,8 @@
       "subTopic": "Culture, customs, faiths and celebrations",
       "title": "Les fêtes et les traditions",
       "furtherQuestions": [
-        "Que mange-t-on pendant une fête importante chez toi ?",
-        "Quelle tradition d'un autre pays trouves-tu intéressante ?"
+        "Quelle tradition de ta famille aimerais-tu garder plus tard ?",
+        "Comment décore-t-on les maisons pour les fêtes chez toi ?"
       ],
       "questions": [
         {
@@ -191,7 +191,7 @@
           "part": "topic2",
           "mainText": "Comment as-tu fêté ton dernier anniversaire ?",
           "alternativeTexts": [
-            "Qu'as-tu reçu pour ton anniversaire ?"
+            "Qui était à ton dernier anniversaire ?"
           ],
           "topicArea": "E",
           "subTopic": "Culture, customs, faiths and celebrations",
@@ -205,10 +205,10 @@
         {
           "questionId": "t2q4",
           "part": "topic2",
-          "mainText": "Les fêtes traditionnelles sont-elles encore importantes pour les jeunes ?",
+          "mainText": "Quelle tradition de ton pays trouves-tu la plus belle ?",
           "secondPartText": "Pourquoi ?",
           "alternativeTexts": [
-            "Aimes-tu les fêtes de famille ?",
+            "Quelle fête de ton pays aimes-tu ?",
             "Pourquoi ?"
           ],
           "topicArea": "E",
@@ -224,18 +224,17 @@
         {
           "questionId": "t2q5",
           "part": "topic2",
-          "mainText": "Comment serait ta fête idéale ?",
-          "secondPartText": "Qui inviterais-tu ?",
+          "mainText": "Quelle fête d'un autre pays aimerais-tu vivre un jour ?",
+          "secondPartText": "Avec qui voudrais-tu y aller ?",
           "alternativeTexts": [
-            "Quelle fête voudrais-tu organiser ?",
-            "Qui inviterais-tu ?"
+            "Quelle fête étrangère voudrais-tu découvrir ?",
+            "Avec qui ?"
           ],
           "topicArea": "E",
           "subTopic": "Culture, customs, faiths and celebrations",
           "difficulty": "higher",
           "targetStructures": [
-            "conditional",
-            "imperfect"
+            "conditional"
           ],
           "expectedTimeFrame": "conditional",
           "partsExpected": 2

@@ -6,14 +6,14 @@
     "status": "approved",
     "reviewedBy": "internal:claude",
     "reviewedAt": "2026-09-28T00:00:00.000Z",
-    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). G2 native-speaker review PENDING — do not seed or merge before it. Originality check against the Teacher's Notes text PENDING (the booklet was not available in the authoring session; run scripts/authoring/originalityCheck.ts before seeding). Role play: a French friend's family celebration."
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 native-speaker review PENDING — do not seed or merge before it. Role play: a French friend's family celebration."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-005",
       "topicArea": "E",
       "title": "Une fête de famille en France",
-      "setup": "Tu passes une semaine chez ton ami(e) Camille, en France. Ce soir, sa famille fait une grande fête. Je suis Camille.",
+      "setup": "Vous passez une semaine chez votre ami(e) Camille, en France. Ce soir, sa famille fait une grande fête. Je suis Camille.",
       "examinerRegister": "tu",
       "tasks": [
         {
@@ -96,10 +96,10 @@
           "questionId": "t1q3",
           "part": "topic1",
           "mainText": "Qu'as-tu fait avec ta famille le week-end dernier ?",
-          "secondPartText": "C'était comment ?",
+          "secondPartText": "Comment ça s'est passé ?",
           "alternativeTexts": [
             "Où es-tu allé(e) avec ta famille récemment ?",
-            "C'était comment ?"
+            "Comment ça s'est passé ?"
           ],
           "topicArea": "B",
           "subTopic": "Self, family and friends",
@@ -161,7 +161,7 @@
         {
           "questionId": "t2q1",
           "part": "topic2",
-          "mainText": "Qu'y a-t-il dans ton quartier ?",
+          "mainText": "Quels bâtiments y a-t-il près de chez toi ?",
           "alternativeTexts": [],
           "topicArea": "C",
           "subTopic": "The built environment",
@@ -189,10 +189,10 @@
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "Comment était ta ville quand tu étais petit(e) ?",
+          "mainText": "Comment était ta ville il y a dix ans ?",
           "secondPartText": "Qu'est-ce qui a changé ?",
           "alternativeTexts": [
-            "Quel magasin aimais-tu quand tu étais petit(e) ?",
+            "Quel magasin aimais-tu à l'âge de sept ans ?",
             "Pourquoi ?"
           ],
           "topicArea": "C",
@@ -211,7 +211,7 @@
           "part": "topic2",
           "mainText": "Qu'est-ce qui manque dans ta ville pour les jeunes ?",
           "alternativeTexts": [
-            "Qu'est-ce qu'il n'y a pas dans ta ville ?"
+            "Quel endroit n'existe pas dans ta ville ?"
           ],
           "topicArea": "C",
           "subTopic": "The built environment",

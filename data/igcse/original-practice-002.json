@@ -6,20 +6,20 @@
     "status": "approved",
     "reviewedBy": "internal:claude",
     "reviewedAt": "2026-09-28T00:00:00.000Z",
-    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). G2 native-speaker review PENDING — do not seed or merge before it. Originality check against the Teacher's Notes text PENDING (the booklet was not available in the authoring session; run scripts/authoring/originalityCheck.ts before seeding). Role play: planning an outing with a French friend."
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 native-speaker review PENDING — do not seed or merge before it. Role play: planning an outing with a French friend."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-002",
       "topicArea": "B",
       "title": "Une sortie avec Camille",
-      "setup": "Tu es en France chez ton ami(e) Camille. Tu organises une sortie avec Camille pour samedi. Je suis Camille.",
+      "setup": "Vous êtes en France chez votre ami(e) Camille. Vous organisez une sortie ensemble pour samedi. Je suis Camille.",
       "examinerRegister": "tu",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Salut ! Qu'est-ce que tu veux faire samedi ?",
+          "mainText": "Salut ! Que veux-tu faire samedi ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
@@ -41,7 +41,7 @@
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Comment est-ce qu'on va aller en ville ?",
+          "mainText": "Pour aller en ville, on prend quel transport ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
@@ -67,7 +67,7 @@
         {
           "questionId": "t1q1",
           "part": "topic1",
-          "mainText": "Qu'y a-t-il dans ta chambre ?",
+          "mainText": "Quels meubles as-tu dans ta chambre ?",
           "alternativeTexts": [],
           "topicArea": "B",
           "subTopic": "In the home",
@@ -96,10 +96,10 @@
           "questionId": "t1q3",
           "part": "topic1",
           "mainText": "Comment as-tu aidé à la maison le week-end dernier ?",
-          "secondPartText": "C'était comment ?",
+          "secondPartText": "Comment ça s'est passé ?",
           "alternativeTexts": [
             "Quelle tâche ménagère as-tu faite hier ?",
-            "C'était comment ?"
+            "Comment ça s'est passé ?"
           ],
           "topicArea": "B",
           "subTopic": "In the home",
@@ -114,8 +114,8 @@
         {
           "questionId": "t1q4",
           "part": "topic1",
-          "mainText": "Qu'est-ce que tu aimes dans ta maison ?",
-          "secondPartText": "Et qu'est-ce que tu n'aimes pas ?",
+          "mainText": "Que préfères-tu dans ta maison ?",
+          "secondPartText": "Et que n'aimes-tu pas ?",
           "alternativeTexts": [
             "Quelle pièce de ta maison préfères-tu ?",
             "Et quelle pièce n'aimes-tu pas ?"
@@ -133,15 +133,16 @@
         {
           "questionId": "t1q5",
           "part": "topic1",
-          "mainText": "Comment serait ta maison idéale ?",
+          "mainText": "Quelle chose changerais-tu chez toi si c'était possible ?",
           "alternativeTexts": [
-            "Quelle maison voudrais-tu avoir plus tard ?"
+            "Quelle pièce voudrais-tu ajouter à ta maison ?"
           ],
           "topicArea": "B",
           "subTopic": "In the home",
           "difficulty": "higher",
           "targetStructures": [
-            "conditional"
+            "conditional",
+            "imperfect"
           ],
           "expectedTimeFrame": "conditional",
           "partsExpected": 1
@@ -160,7 +161,7 @@
         {
           "questionId": "t2q1",
           "part": "topic2",
-          "mainText": "Qu'est-ce que tu fais sur Internet ?",
+          "mainText": "À quoi te sert Internet ?",
           "alternativeTexts": [],
           "topicArea": "C",
           "subTopic": "Communications and technology",
@@ -188,7 +189,7 @@
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "Comment communiquais-tu avec tes amis quand tu étais petit(e) ?",
+          "mainText": "Comment communiquais-tu avec tes amis quand tu avais huit ans ?",
           "secondPartText": "Et maintenant ?",
           "alternativeTexts": [
             "Avais-tu un téléphone quand tu avais dix ans ?",

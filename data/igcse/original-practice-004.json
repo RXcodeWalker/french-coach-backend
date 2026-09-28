@@ -6,53 +6,53 @@
     "status": "approved",
     "reviewedBy": "internal:claude",
     "reviewedAt": "2026-09-28T00:00:00.000Z",
-    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). G2 native-speaker review PENDING — do not seed or merge before it. Originality check against the Teacher's Notes text PENDING (the booklet was not available in the authoring session; run scripts/authoring/originalityCheck.ts before seeding). Role play: interview for a summer job at a campsite."
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 native-speaker review PENDING — do not seed or merge before it. Role play: first day of a work placement in a sports shop."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-004",
       "topicArea": "D",
-      "title": "Un travail dans un camping",
-      "setup": "Vous voulez travailler cet été dans un camping en France. Vous avez un entretien avec moi. Je dirige le camping.",
+      "title": "Un stage dans un magasin de sport",
+      "setup": "Vous commencez un stage d'une semaine dans un magasin de sport en France. C'est votre premier jour. Je suis le/la responsable du magasin.",
       "examinerRegister": "vous",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Bonjour. Quel âge avez-vous ?",
+          "mainText": "Bonjour et bienvenue ! Vous habitez dans quel quartier ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Quelles langues parlez-vous ?",
+          "mainText": "Combien d'heures pouvez-vous travailler par jour ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Qu'avez-vous fait l'été dernier ?",
+          "mainText": "Pourquoi avez-vous choisi un stage dans un magasin de sport ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "C'était comment ?"
+          "secondPartText": "Que voudriez-vous apprendre ici ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Pourquoi voulez-vous travailler dans un camping ?",
+          "mainText": "Quel sport avez-vous pratiqué récemment ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Qu'aimeriez-vous faire ici ?"
+          "secondPartText": "Comment ça s'est passé ?"
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Quand pouvez-vous commencer ?",
+          "mainText": "Que ferez-vous après votre stage ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Et combien de semaines pouvez-vous rester ?"
+          "secondPartText": "Et plus tard, quel métier voudriez-vous faire ?"
         }
       ]
     },
@@ -61,14 +61,14 @@
       "subTopic": "Food and drink",
       "title": "Les repas",
       "furtherQuestions": [
-        "Que manges-tu pendant les fêtes ?",
+        "Quel plat typique de ton pays préfères-tu ?",
         "Comment peut-on manger plus sainement ?"
       ],
       "questions": [
         {
           "questionId": "t1q1",
           "part": "topic1",
-          "mainText": "Que manges-tu le matin ?",
+          "mainText": "Quel est ton goûter préféré ?",
           "alternativeTexts": [],
           "topicArea": "A",
           "subTopic": "Food and drink",

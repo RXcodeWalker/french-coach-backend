@@ -4,50 +4,52 @@
   "provenance": "original-practice",
   "review": {
     "status": "approved",
-    "reviewedBy": "internal:s11-author",
-    "reviewedAt": "2026-07-17T00:00:00.000Z",
-    "notes": "Clean-room authored from the public 0520 syllabus and 04-frontend-pipeline.md §6.4 only; no Teacher's Notes booklet consulted. Archetype: appointment booking (pair B+C, role-play area B). Self-review + linguistic pass complete; independent originality review complete. G3 exam-realism review pending a 0520-familiar teacher (S11 M2)."
+    "reviewedBy": "internal:claude",
+    "reviewedAt": "2026-09-28T00:00:00.000Z",
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). G2 native-speaker review PENDING — do not seed or merge before it. Originality check against the Teacher's Notes text PENDING (the booklet was not available in the authoring session; run scripts/authoring/originalityCheck.ts before seeding). Role play: a French friend's family celebration."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-005",
-      "topicArea": "B",
-      "title": "Prendre rendez-vous chez le dentiste",
-      "setup": "Tu as mal aux dents et tu téléphones au cabinet dentaire pour prendre rendez-vous. Je suis le/la réceptionniste.",
+      "topicArea": "E",
+      "title": "Une fête de famille en France",
+      "setup": "Tu passes une semaine chez ton ami(e) Camille, en France. Ce soir, sa famille fait une grande fête. Je suis Camille.",
+      "examinerRegister": "tu",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Cabinet dentaire, bonjour. Quel est le problème ?",
+          "mainText": "Salut ! Tu vas porter quoi ce soir ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Quel est votre nom complet ?",
+          "mainText": "Comment peux-tu m'aider à préparer la fête ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Préférez-vous un rendez-vous mardi ou jeudi ?",
+          "mainText": "Quelle fête as-tu célébrée récemment chez toi ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Voulez-vous savoir si le cabinet est ouvert le samedi ?"
+          "secondPartText": "Qu'as-tu mangé ce jour-là ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Avez-vous déjà été patient(e) dans notre cabinet ?",
+          "mainText": "Quelle fête française aimerais-tu découvrir ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Pourquoi ?"
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Très bien, votre rendez-vous est confirmé. Autre chose ?",
+          "mainText": "Demain, on va au marché. Que voudrais-tu acheter ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }
@@ -55,142 +57,191 @@
     },
     "topic1": {
       "topicArea": "B",
-      "subTopic": "Health and Fitness",
+      "subTopic": "Self, family and friends",
+      "title": "La famille et les amis",
       "furtherQuestions": [
-        "Fais-tu du sport régulièrement pour rester en forme ?",
-        "As-tu déjà dû rester au lit à cause d'une maladie ?"
+        "Comment t'entends-tu avec tes parents ?",
+        "Que fais-tu quand tu te disputes avec un ami ?"
       ],
       "questions": [
         {
           "questionId": "t1q1",
           "part": "topic1",
-          "mainText": "Comment gardes-tu la forme ?",
+          "mainText": "Avec qui habites-tu ?",
           "alternativeTexts": [],
           "topicArea": "B",
-          "subTopic": "Health and Fitness",
+          "subTopic": "Self, family and friends",
           "difficulty": "foundation",
-          "targetStructures": ["present"],
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q2",
           "part": "topic1",
-          "mainText": "Que fais-tu quand tu te sens stressé(e) ?",
+          "mainText": "Qui est ton meilleur ami ou ta meilleure amie ?",
           "alternativeTexts": [],
           "topicArea": "B",
-          "subTopic": "Health and Fitness",
-          "difficulty": "core",
-          "targetStructures": ["present"],
+          "subTopic": "Self, family and friends",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q3",
           "part": "topic1",
-          "mainText": "As-tu été malade récemment ?",
-          "alternativeTexts": ["Raconte la dernière fois où tu es allé(e) chez le médecin."],
+          "mainText": "Qu'as-tu fait avec ta famille le week-end dernier ?",
+          "secondPartText": "C'était comment ?",
+          "alternativeTexts": [
+            "Où es-tu allé(e) avec ta famille récemment ?",
+            "C'était comment ?"
+          ],
           "topicArea": "B",
-          "subTopic": "Health and Fitness",
+          "subTopic": "Self, family and friends",
           "difficulty": "core",
-          "targetStructures": ["perfect"],
+          "targetStructures": [
+            "perfect",
+            "imperfect"
+          ],
           "expectedTimeFrame": "past",
-          "partsExpected": 1
+          "partsExpected": 2
         },
         {
           "questionId": "t1q4",
           "part": "topic1",
-          "mainText": "Vas-tu changer quelque chose dans ton mode de vie bientôt ?",
-          "alternativeTexts": ["Quel sport voudrais-tu commencer l'année prochaine ?"],
+          "mainText": "Qu'est-ce qui est important dans une amitié ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": [
+            "Qu'aimes-tu faire avec tes amis ?",
+            "Pourquoi ?"
+          ],
           "topicArea": "B",
-          "subTopic": "Health and Fitness",
+          "subTopic": "Self, family and friends",
           "difficulty": "core",
-          "targetStructures": ["near-future"],
-          "expectedTimeFrame": "future",
-          "partsExpected": 1
+          "targetStructures": [
+            "opinion",
+            "justification"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
         },
         {
           "questionId": "t1q5",
           "part": "topic1",
-          "mainText": "Est-il important de bien manger pour rester en bonne santé ?",
-          "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Le sommeil est-il aussi important que l'exercice selon toi ?"],
+          "mainText": "Comment imagines-tu ta vie de famille dans quinze ans ?",
+          "alternativeTexts": [
+            "Où vas-tu habiter plus tard ?"
+          ],
           "topicArea": "B",
-          "subTopic": "Health and Fitness",
+          "subTopic": "Self, family and friends",
           "difficulty": "higher",
-          "targetStructures": ["opinion", "justification", "comparison"],
-          "expectedTimeFrame": "present",
-          "partsExpected": 2
+          "targetStructures": [
+            "simple-future",
+            "near-future"
+          ],
+          "expectedTimeFrame": "future",
+          "partsExpected": 1
         }
       ]
     },
     "topic2": {
       "topicArea": "C",
-      "subTopic": "Weather and Climate",
+      "subTopic": "The built environment",
+      "title": "La ville",
       "furtherQuestions": [
-        "Ta ville a-t-elle connu des tempêtes ou des inondations récemment ?",
-        "Quel type de climat préférerais-tu si tu pouvais choisir ?"
+        "Comment peut-on rendre une ville plus agréable ?",
+        "Quel monument célèbre aimerais-tu visiter ?"
       ],
       "questions": [
         {
           "questionId": "t2q1",
           "part": "topic2",
-          "mainText": "Quel temps fait-il aujourd'hui dans ta région ?",
+          "mainText": "Qu'y a-t-il dans ton quartier ?",
           "alternativeTexts": [],
           "topicArea": "C",
-          "subTopic": "Weather and Climate",
+          "subTopic": "The built environment",
           "difficulty": "foundation",
-          "targetStructures": ["present"],
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q2",
           "part": "topic2",
-          "mainText": "Quelle saison préfères-tu ?",
+          "mainText": "Quel est ton endroit préféré en ville ?",
           "alternativeTexts": [],
           "topicArea": "C",
-          "subTopic": "Weather and Climate",
-          "difficulty": "core",
-          "targetStructures": ["present"],
+          "subTopic": "The built environment",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "Le temps sera-t-il différent le mois prochain ?",
-          "alternativeTexts": ["Quel temps fera-t-il pendant les vacances d'été ?"],
+          "mainText": "Comment était ta ville quand tu étais petit(e) ?",
+          "secondPartText": "Qu'est-ce qui a changé ?",
+          "alternativeTexts": [
+            "Quel magasin aimais-tu quand tu étais petit(e) ?",
+            "Pourquoi ?"
+          ],
           "topicArea": "C",
-          "subTopic": "Weather and Climate",
+          "subTopic": "The built environment",
           "difficulty": "core",
-          "targetStructures": ["simple-future"],
-          "expectedTimeFrame": "future",
-          "partsExpected": 1
+          "targetStructures": [
+            "imperfect",
+            "perfect",
+            "comparison"
+          ],
+          "expectedTimeFrame": "past",
+          "partsExpected": 2
         },
         {
           "questionId": "t2q4",
           "part": "topic2",
-          "mainText": "S'il faisait très chaud demain, que ferais-tu ?",
-          "alternativeTexts": ["Que ferais-tu s'il neigeait pendant une semaine entière ?"],
+          "mainText": "Qu'est-ce qui manque dans ta ville pour les jeunes ?",
+          "alternativeTexts": [
+            "Qu'est-ce qu'il n'y a pas dans ta ville ?"
+          ],
           "topicArea": "C",
-          "subTopic": "Weather and Climate",
-          "difficulty": "higher",
-          "targetStructures": ["conditional"],
-          "expectedTimeFrame": "conditional",
+          "subTopic": "The built environment",
+          "difficulty": "core",
+          "targetStructures": [
+            "opinion",
+            "negation"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q5",
           "part": "topic2",
-          "mainText": "Te souviens-tu d'un jour où le temps a changé tes projets ?",
-          "alternativeTexts": ["Le climat de ta région a-t-il changé ces dernières années ?"],
+          "mainText": "Si tu étais maire, quel bâtiment construirais-tu ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": [
+            "Que voudrais-tu avoir de nouveau dans ta ville ?",
+            "Pourquoi ?"
+          ],
           "topicArea": "C",
-          "subTopic": "Weather and Climate",
-          "difficulty": "core",
-          "targetStructures": ["perfect"],
-          "expectedTimeFrame": "past",
-          "partsExpected": 1
+          "subTopic": "The built environment",
+          "difficulty": "higher",
+          "targetStructures": [
+            "conditional",
+            "imperfect",
+            "justification"
+          ],
+          "expectedTimeFrame": "conditional",
+          "partsExpected": 2
         }
       ]
     }

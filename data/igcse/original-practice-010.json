@@ -4,193 +4,242 @@
   "provenance": "original-practice",
   "review": {
     "status": "approved",
-    "reviewedBy": "internal:s11-author",
-    "reviewedAt": "2026-07-17T00:00:00.000Z",
-    "notes": "Clean-room authored from the public 0520 syllabus and 04-frontend-pipeline.md §6.4 only; no Teacher's Notes booklet consulted. Archetype: reservation / booking (pair D+E, role-play area D). Self-review + linguistic pass complete; independent originality review complete. G3 exam-realism review pending a 0520-familiar teacher (S11 M2)."
+    "reviewedBy": "internal:claude",
+    "reviewedAt": "2026-09-28T00:00:00.000Z",
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). G2 native-speaker review PENDING — do not seed or merge before it. Originality check against the Teacher's Notes text PENDING (the booklet was not available in the authoring session; run scripts/authoring/originalityCheck.ts before seeding). Role play: enrolling on a French course at a language school."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-010",
-      "topicArea": "D",
-      "title": "Réserver une table dans un restaurant",
-      "setup": "Tu téléphones à un restaurant pour réserver une table pour ce soir. Je suis le patron / la patronne du restaurant.",
+      "topicArea": "E",
+      "title": "Un cours de français à Nice",
+      "setup": "Vous voulez suivre un cours de français cet été dans une école de langues à Nice. Vous téléphonez à l'école. Je travaille à l'accueil de l'école.",
+      "examinerRegister": "vous",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Restaurant Le Provençal, bonjour. Que puis-je faire pour vous ?",
+          "mainText": "Bonjour. Quel est votre nom ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Pour combien de personnes, s'il vous plaît ?",
+          "mainText": "De quelle nationalité êtes-vous ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Préférez-vous une table à 19h ou à 20h30 ?",
+          "mainText": "Comment avez-vous appris le français jusqu'à maintenant ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Voulez-vous une table près de la fenêtre ?"
+          "secondPartText": "Qu'est-ce qui a été difficile ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Avez-vous des allergies ou des préférences alimentaires ?",
+          "mainText": "Pourquoi voulez-vous suivre ce cours ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Et que voudriez-vous améliorer ?"
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Parfait, votre table est réservée. Autre chose ?",
+          "mainText": "Qu'allez-vous faire à Nice pendant votre temps libre ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Où allez-vous loger ?"
         }
       ]
     },
     "topic1": {
-      "topicArea": "D",
-      "subTopic": "Part-time and Future Work",
+      "topicArea": "B",
+      "subTopic": "Leisure time",
+      "title": "La musique et le cinéma",
       "furtherQuestions": [
-        "Quelqu'un dans ta famille a-t-il changé de métier récemment ?",
-        "Voudrais-tu créer ta propre entreprise un jour ?"
+        "Quel instrument de musique aimerais-tu apprendre ?",
+        "Comment découvres-tu de la nouvelle musique ?"
       ],
       "questions": [
         {
           "questionId": "t1q1",
           "part": "topic1",
-          "mainText": "Qu'aimes-tu faire quand tu aides à la maison ?",
+          "mainText": "Quelle musique écoutes-tu ?",
           "alternativeTexts": [],
-          "topicArea": "D",
-          "subTopic": "Part-time and Future Work",
+          "topicArea": "B",
+          "subTopic": "Leisure time",
           "difficulty": "foundation",
-          "targetStructures": ["present"],
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q2",
           "part": "topic1",
-          "mainText": "Postuleras-tu pour un job d'été cette année ?",
-          "alternativeTexts": ["Chercheras-tu du travail pendant les grandes vacances ?"],
-          "topicArea": "D",
-          "subTopic": "Part-time and Future Work",
-          "difficulty": "core",
-          "targetStructures": ["simple-future"],
-          "expectedTimeFrame": "future",
+          "mainText": "Où regardes-tu des films ?",
+          "alternativeTexts": [],
+          "topicArea": "B",
+          "subTopic": "Leisure time",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q3",
           "part": "topic1",
-          "mainText": "Décris un métier que tu as observé de près.",
-          "alternativeTexts": ["Raconte un jour où tu as aidé quelqu'un dans son travail."],
-          "topicArea": "D",
-          "subTopic": "Part-time and Future Work",
+          "mainText": "Parle-moi d'un film que tu as vu récemment.",
+          "secondPartText": "Qu'en as-tu pensé ?",
+          "alternativeTexts": [
+            "Quel film as-tu regardé le week-end dernier ?",
+            "Il était comment ?"
+          ],
+          "topicArea": "B",
+          "subTopic": "Leisure time",
           "difficulty": "core",
-          "targetStructures": ["perfect"],
+          "targetStructures": [
+            "perfect",
+            "imperfect",
+            "opinion"
+          ],
           "expectedTimeFrame": "past",
-          "partsExpected": 1
+          "partsExpected": 2
         },
         {
           "questionId": "t1q4",
           "part": "topic1",
-          "mainText": "Quel serait le domaine de ta propre entreprise si tu en créais une ?",
-          "alternativeTexts": ["Quel métier inventerais-tu si tu le pouvais ?"],
-          "topicArea": "D",
-          "subTopic": "Part-time and Future Work",
-          "difficulty": "higher",
-          "targetStructures": ["conditional"],
-          "expectedTimeFrame": "conditional",
+          "mainText": "Quels sont les avantages du cinéma par rapport à la télévision ?",
+          "alternativeTexts": [
+            "Où préfères-tu regarder des films ?"
+          ],
+          "topicArea": "B",
+          "subTopic": "Leisure time",
+          "difficulty": "core",
+          "targetStructures": [
+            "opinion",
+            "comparison"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q5",
           "part": "topic1",
-          "mainText": "Un salaire élevé compte-t-il plus que la satisfaction au travail ?",
+          "mainText": "Si tu pouvais rencontrer un chanteur ou un acteur, qui choisirais-tu ?",
           "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Une carrière stable te semble-t-elle meilleure qu'une carrière risquée mais passionnante ?"],
-          "topicArea": "D",
-          "subTopic": "Part-time and Future Work",
-          "difficulty": "core",
-          "targetStructures": ["comparison", "opinion", "justification"],
-          "expectedTimeFrame": "present",
+          "alternativeTexts": [
+            "Quel concert aimerais-tu voir ?",
+            "Pourquoi ?"
+          ],
+          "topicArea": "B",
+          "subTopic": "Leisure time",
+          "difficulty": "higher",
+          "targetStructures": [
+            "conditional",
+            "imperfect",
+            "justification"
+          ],
+          "expectedTimeFrame": "conditional",
           "partsExpected": 2
         }
       ]
     },
     "topic2": {
-      "topicArea": "E",
-      "subTopic": "Global Issues",
+      "topicArea": "D",
+      "subTopic": "Work",
+      "title": "Le travail et l'avenir",
       "furtherQuestions": [
-        "Quel problème mondial te préoccupe le plus ?",
-        "Une organisation internationale a-t-elle déjà aidé ta région ?"
+        "Que penses-tu du travail le week-end pour les étudiants ?",
+        "Quelles qualités faut-il pour trouver un bon travail ?"
       ],
       "questions": [
         {
           "questionId": "t2q1",
           "part": "topic2",
-          "mainText": "Quel événement international as-tu suivi récemment aux informations ?",
+          "mainText": "Quel métier trouves-tu intéressant ?",
           "alternativeTexts": [],
-          "topicArea": "E",
-          "subTopic": "Global Issues",
+          "topicArea": "D",
+          "subTopic": "Work",
           "difficulty": "foundation",
-          "targetStructures": ["perfect"],
-          "expectedTimeFrame": "past",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q2",
           "part": "topic2",
-          "mainText": "Comment t'informes-tu sur l'actualité mondiale ?",
+          "mainText": "Qui t'aide à choisir ton futur métier ?",
           "alternativeTexts": [],
-          "topicArea": "E",
-          "subTopic": "Global Issues",
-          "difficulty": "core",
-          "targetStructures": ["present"],
+          "topicArea": "D",
+          "subTopic": "Work",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "Le monde sera-t-il très différent dans vingt ans ?",
-          "alternativeTexts": ["Quels changements verra-t-on dans le monde d'ici dix ans ?"],
-          "topicArea": "E",
-          "subTopic": "Global Issues",
+          "mainText": "Quel métier voulais-tu faire quand tu étais petit(e) ?",
+          "alternativeTexts": [
+            "Tu voulais faire quel travail à six ans ?"
+          ],
+          "topicArea": "D",
+          "subTopic": "Work",
           "difficulty": "core",
-          "targetStructures": ["simple-future"],
-          "expectedTimeFrame": "future",
+          "targetStructures": [
+            "imperfect"
+          ],
+          "expectedTimeFrame": "past",
           "partsExpected": 1
         },
         {
           "questionId": "t2q4",
           "part": "topic2",
-          "mainText": "Si tu pouvais résoudre un problème mondial, lequel choisirais-tu ?",
-          "alternativeTexts": ["Quelle cause internationale soutiendrais-tu si tu avais de l'argent à donner ?"],
-          "topicArea": "E",
-          "subTopic": "Global Issues",
-          "difficulty": "higher",
-          "targetStructures": ["conditional"],
-          "expectedTimeFrame": "conditional",
-          "partsExpected": 1
+          "mainText": "Quels sont les avantages de travailler dans un autre pays ?",
+          "secondPartText": "Et les inconvénients ?",
+          "alternativeTexts": [
+            "Qu'est-ce qui est bien quand on travaille à l'étranger ?",
+            "Et qu'est-ce qui est difficile ?"
+          ],
+          "topicArea": "D",
+          "subTopic": "Work",
+          "difficulty": "core",
+          "targetStructures": [
+            "opinion",
+            "comparison"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
         },
         {
           "questionId": "t2q5",
           "part": "topic2",
-          "mainText": "Les jeunes ne s'intéressent-ils pas assez à la politique internationale ?",
-          "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Ta génération se sent-elle concernée par les problèmes mondiaux ?"],
-          "topicArea": "E",
-          "subTopic": "Global Issues",
-          "difficulty": "core",
-          "targetStructures": ["negation", "opinion", "justification"],
-          "expectedTimeFrame": "present",
+          "mainText": "Où travailleras-tu dans dix ans ?",
+          "secondPartText": "Que feras-tu exactement ?",
+          "alternativeTexts": [
+            "Quel travail vas-tu chercher plus tard ?",
+            "Pourquoi ?"
+          ],
+          "topicArea": "D",
+          "subTopic": "Work",
+          "difficulty": "higher",
+          "targetStructures": [
+            "simple-future"
+          ],
+          "expectedTimeFrame": "future",
           "partsExpected": 2
         }
       ]

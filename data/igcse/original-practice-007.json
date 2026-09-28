@@ -4,193 +4,240 @@
   "provenance": "original-practice",
   "review": {
     "status": "approved",
-    "reviewedBy": "internal:s11-author",
-    "reviewedAt": "2026-07-17T00:00:00.000Z",
-    "notes": "Clean-room authored from the public 0520 syllabus and 04-frontend-pipeline.md §6.4 only; no Teacher's Notes booklet consulted. Archetype: lost property abroad (pair B+E, role-play area E). Self-review + linguistic pass complete; independent originality review complete. G3 exam-realism review pending a 0520-familiar teacher (S11 M2)."
+    "reviewedBy": "internal:claude",
+    "reviewedAt": "2026-09-28T00:00:00.000Z",
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). G2 native-speaker review PENDING — do not seed or merge before it. Originality check against the Teacher's Notes text PENDING (the booklet was not available in the authoring session; run scripts/authoring/originalityCheck.ts before seeding). Role play: shopping for clothes with a French friend."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-007",
-      "topicArea": "E",
-      "title": "Signaler un objet perdu à l'étranger",
-      "setup": "Tu as perdu ton sac pendant un voyage à l'étranger et tu vas au bureau des objets trouvés. Je suis l'agent / l'agente.",
+      "topicArea": "B",
+      "title": "Des vêtements pour une fête",
+      "setup": "Tu es en France. Tu fais les magasins avec ton ami(e) Camille parce que tu vas à une fête samedi. Je suis Camille.",
+      "examinerRegister": "tu",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Bonjour, qu'avez-vous perdu exactement ?",
+          "mainText": "Alors, qu'est-ce que tu cherches ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "De quelle couleur est votre sac ?",
+          "mainText": "Quelle est ta taille ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Où pensez-vous l'avoir perdu ?",
+          "mainText": "Qu'as-tu porté pour ta dernière fête ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "À quelle heure l'avez-vous remarqué ?"
+          "secondPartText": "C'était comment, cette fête ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Qu'est-ce qu'il y avait de précieux dans le sac ?",
+          "mainText": "Tu préfères ce pull bleu ou ce t-shirt noir ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Pourquoi ?"
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Je vais noter votre déclaration. Quel est votre numéro de téléphone ?",
+          "mainText": "Qu'est-ce qu'on va faire après les magasins ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "À quelle heure veux-tu rentrer ?"
         }
       ]
     },
     "topic1": {
       "topicArea": "B",
-      "subTopic": "Social Media and Technology",
+      "subTopic": "Leisure time",
+      "title": "Les loisirs",
       "furtherQuestions": [
-        "Combien de temps passes-tu sur ton téléphone chaque jour ?",
-        "Un réseau social t'a-t-il déjà causé un problème ?"
+        "Combien de temps libre as-tu pendant la semaine ?",
+        "Quel nouveau loisir aimerais-tu essayer ?"
       ],
       "questions": [
         {
           "questionId": "t1q1",
           "part": "topic1",
-          "mainText": "Quelles applications utilises-tu le plus souvent ?",
+          "mainText": "Que fais-tu après l'école ?",
           "alternativeTexts": [],
           "topicArea": "B",
-          "subTopic": "Social Media and Technology",
+          "subTopic": "Leisure time",
           "difficulty": "foundation",
-          "targetStructures": ["present"],
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q2",
           "part": "topic1",
-          "mainText": "Les réseaux sociaux vont-ils continuer à changer nos vies ?",
-          "alternativeTexts": ["Comment ton téléphone changera-t-il ta journée de demain ?"],
+          "mainText": "Avec qui passes-tu ton temps libre ?",
+          "alternativeTexts": [],
           "topicArea": "B",
-          "subTopic": "Social Media and Technology",
-          "difficulty": "core",
-          "targetStructures": ["simple-future"],
-          "expectedTimeFrame": "future",
+          "subTopic": "Leisure time",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q3",
           "part": "topic1",
-          "mainText": "Avant, comment restais-tu en contact avec tes amis sans smartphone ?",
-          "alternativeTexts": ["Comment communiquais-tu avec tes amis quand tu étais plus jeune ?"],
+          "mainText": "Que faisais-tu le week-end quand tu avais dix ans ?",
+          "secondPartText": "Et maintenant ?",
+          "alternativeTexts": [
+            "À quoi jouais-tu quand tu étais petit(e) ?",
+            "Et maintenant ?"
+          ],
           "topicArea": "B",
-          "subTopic": "Social Media and Technology",
+          "subTopic": "Leisure time",
           "difficulty": "core",
-          "targetStructures": ["imperfect"],
+          "targetStructures": [
+            "imperfect",
+            "present",
+            "comparison"
+          ],
           "expectedTimeFrame": "past",
-          "partsExpected": 1
+          "partsExpected": 2
         },
         {
           "questionId": "t1q4",
           "part": "topic1",
-          "mainText": "Vivrais-tu heureux sans internet pendant une semaine ?",
-          "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Que ferais-tu si tu perdais ton téléphone pendant tes vacances ?"],
+          "mainText": "Quels sont les avantages des activités en plein air ?",
+          "alternativeTexts": [
+            "Quelle activité en plein air aimes-tu ?"
+          ],
           "topicArea": "B",
-          "subTopic": "Social Media and Technology",
-          "difficulty": "higher",
-          "targetStructures": ["conditional", "justification"],
-          "expectedTimeFrame": "conditional",
-          "partsExpected": 2
+          "subTopic": "Leisure time",
+          "difficulty": "core",
+          "targetStructures": [
+            "opinion"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 1
         },
         {
           "questionId": "t1q5",
           "part": "topic1",
-          "mainText": "Les jeunes ne passent-ils pas trop de temps sur leur téléphone selon toi ?",
-          "alternativeTexts": ["Ton téléphone t'aide-t-il plus qu'il ne te distrait ?"],
+          "mainText": "Que feras-tu pendant les prochaines vacances ?",
+          "secondPartText": "Avec qui ?",
+          "alternativeTexts": [
+            "Que vas-tu faire ce week-end ?",
+            "Avec qui ?"
+          ],
           "topicArea": "B",
-          "subTopic": "Social Media and Technology",
-          "difficulty": "core",
-          "targetStructures": ["negation", "opinion", "comparison"],
-          "expectedTimeFrame": "present",
-          "partsExpected": 1
+          "subTopic": "Leisure time",
+          "difficulty": "higher",
+          "targetStructures": [
+            "simple-future"
+          ],
+          "expectedTimeFrame": "future",
+          "partsExpected": 2
         }
       ]
     },
     "topic2": {
       "topicArea": "E",
-      "subTopic": "Life in Other Countries",
+      "subTopic": "Culture, customs, faiths and celebrations",
+      "title": "Les fêtes et les traditions",
       "furtherQuestions": [
-        "Quelle langue étrangère voudrais-tu maîtriser un jour ?",
-        "As-tu de la famille qui habite dans un autre pays ?"
+        "Que mange-t-on pendant une fête importante chez toi ?",
+        "Quelle tradition d'un autre pays trouves-tu intéressante ?"
       ],
       "questions": [
         {
           "questionId": "t2q1",
           "part": "topic2",
-          "mainText": "Quel pays francophone t'intéresse le plus ?",
+          "mainText": "Quelle est ta fête préférée ?",
           "alternativeTexts": [],
           "topicArea": "E",
-          "subTopic": "Life in Other Countries",
+          "subTopic": "Culture, customs, faiths and celebrations",
           "difficulty": "foundation",
-          "targetStructures": ["present"],
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q2",
           "part": "topic2",
-          "mainText": "Enfant, imaginais-tu la vie dans un autre pays ?",
-          "alternativeTexts": ["À quoi ressemblait ta vie avant de commencer à apprendre le français ?"],
+          "mainText": "Comment fête-t-on les anniversaires dans ta famille ?",
+          "alternativeTexts": [],
           "topicArea": "E",
-          "subTopic": "Life in Other Countries",
-          "difficulty": "core",
-          "targetStructures": ["opinion"],
-          "expectedTimeFrame": "past",
+          "subTopic": "Culture, customs, faiths and celebrations",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "As-tu déjà rencontré quelqu'un d'un pays différent du tien ?",
-          "alternativeTexts": ["Décris un échange culturel que tu as vécu."],
+          "mainText": "Comment as-tu fêté ton dernier anniversaire ?",
+          "alternativeTexts": [
+            "Qu'as-tu reçu pour ton anniversaire ?"
+          ],
           "topicArea": "E",
-          "subTopic": "Life in Other Countries",
+          "subTopic": "Culture, customs, faiths and celebrations",
           "difficulty": "core",
-          "targetStructures": ["perfect"],
+          "targetStructures": [
+            "perfect"
+          ],
           "expectedTimeFrame": "past",
           "partsExpected": 1
         },
         {
           "questionId": "t2q4",
           "part": "topic2",
-          "mainText": "L'année prochaine, correspondras-tu avec un(e) élève à l'étranger ?",
-          "alternativeTexts": ["Où voyageras-tu pour pratiquer une langue étrangère bientôt ?"],
+          "mainText": "Les fêtes traditionnelles sont-elles encore importantes pour les jeunes ?",
+          "secondPartText": "Pourquoi ?",
+          "alternativeTexts": [
+            "Aimes-tu les fêtes de famille ?",
+            "Pourquoi ?"
+          ],
           "topicArea": "E",
-          "subTopic": "Life in Other Countries",
+          "subTopic": "Culture, customs, faiths and celebrations",
           "difficulty": "core",
-          "targetStructures": ["simple-future"],
-          "expectedTimeFrame": "future",
-          "partsExpected": 1
+          "targetStructures": [
+            "opinion",
+            "justification"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
         },
         {
           "questionId": "t2q5",
           "part": "topic2",
-          "mainText": "Trouves-tu qu'apprendre une langue est plus facile qu'apprendre les mathématiques ?",
-          "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Le français te semble-t-il plus utile que les autres matières ?"],
+          "mainText": "Comment serait ta fête idéale ?",
+          "secondPartText": "Qui inviterais-tu ?",
+          "alternativeTexts": [
+            "Quelle fête voudrais-tu organiser ?",
+            "Qui inviterais-tu ?"
+          ],
           "topicArea": "E",
-          "subTopic": "Life in Other Countries",
+          "subTopic": "Culture, customs, faiths and celebrations",
           "difficulty": "higher",
-          "targetStructures": ["comparison", "justification"],
-          "expectedTimeFrame": "present",
+          "targetStructures": [
+            "conditional",
+            "imperfect"
+          ],
+          "expectedTimeFrame": "conditional",
           "partsExpected": 2
         }
       ]

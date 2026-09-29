@@ -96,7 +96,7 @@
         {
           "questionId": "t1q3",
           "part": "topic1",
-          "mainText": "Raconte-moi un repas que tu as préparé ou aidé à préparer.",
+          "mainText": "Raconte-moi une fois où tu as aidé à préparer à manger.",
           "secondPartText": "Qui était avec toi ?",
           "alternativeTexts": [
             "Qu'as-tu cuisiné récemment ?",

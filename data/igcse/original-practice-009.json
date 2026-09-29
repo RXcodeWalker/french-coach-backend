@@ -4,194 +4,243 @@
   "provenance": "original-practice",
   "review": {
     "status": "approved",
-    "reviewedBy": "internal:s11-author",
-    "reviewedAt": "2026-07-17T00:00:00.000Z",
-    "notes": "Clean-room authored from the public 0520 syllabus and 04-frontend-pipeline.md §6.4 only; no Teacher's Notes booklet consulted. Archetype: service encounter (pair C+E, role-play area C). Self-review + linguistic pass complete; independent originality review complete. G3 exam-realism review pending a 0520-familiar teacher (S11 M2)."
+    "reviewedBy": "internal:claude",
+    "reviewedAt": "2026-09-29T00:00:00.000Z",
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 waived by owner 2026-09-29; content is machine-authored and self-reviewed (G1). Role play: first day at a French school, with a classmate."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-009",
-      "topicArea": "C",
-      "title": "Commander dans un café",
-      "setup": "Tu es dans un café en France et tu veux commander quelque chose. Je suis le serveur / la serveuse.",
+      "topicArea": "D",
+      "title": "Premier jour au collège",
+      "setup": "Vous êtes dans un collège français pour une semaine d'échange. C'est votre premier jour. Je suis un(e) élève de votre classe.",
+      "examinerRegister": "tu",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Bonjour, vous avez choisi ?",
+          "mainText": "Salut ! Tu t'appelles comment ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Que voulez-vous boire ?",
+          "mainText": "Tu es en France depuis quand ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Voulez-vous un sandwich ou un gâteau avec ça ?",
+          "mainText": "Qu'as-tu pensé du cours de maths ce matin ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "C'est pour manger sur place ou pour emporter ?"
+          "secondPartText": "Pourquoi ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Voulez-vous autre chose ?",
+          "mainText": "Que vas-tu faire à midi ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Et après les cours, que voudrais-tu visiter ?"
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Très bien. Voulez-vous l'addition maintenant ?",
+          "mainText": "Comment est une journée typique dans ton école ?",
           "alternativeTexts": [],
           "partsExpected": 1
         }
       ]
     },
     "topic1": {
-      "topicArea": "C",
-      "subTopic": "Shops and Shopping",
+      "topicArea": "B",
+      "subTopic": "Self, family and friends",
+      "title": "Les amis",
       "furtherQuestions": [
-        "Préfères-tu faire les courses seul(e) ou avec quelqu'un ?",
-        "Quel cadeau as-tu offert récemment à quelqu'un ?"
+        "Qui est la personne la plus importante dans ta vie ?",
+        "Comment aides-tu tes amis quand ils ont un problème ?"
       ],
       "questions": [
         {
           "questionId": "t1q1",
           "part": "topic1",
-          "mainText": "Où fais-tu généralement tes courses ?",
+          "mainText": "Comment est ton caractère ?",
           "alternativeTexts": [],
-          "topicArea": "C",
-          "subTopic": "Shops and Shopping",
+          "topicArea": "B",
+          "subTopic": "Self, family and friends",
           "difficulty": "foundation",
-          "targetStructures": ["present"],
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q2",
           "part": "topic1",
-          "mainText": "Raconte un achat que tu as fait récemment.",
-          "alternativeTexts": ["Décris la dernière fois où tu es allé(e) dans un centre commercial."],
-          "topicArea": "C",
-          "subTopic": "Shops and Shopping",
-          "difficulty": "core",
-          "targetStructures": ["perfect"],
-          "expectedTimeFrame": "past",
+          "mainText": "Où vas-tu avec tes amis le week-end ?",
+          "alternativeTexts": [],
+          "topicArea": "B",
+          "subTopic": "Self, family and friends",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q3",
           "part": "topic1",
-          "mainText": "Le week-end prochain, achèteras-tu quelque chose de spécial ?",
-          "alternativeTexts": ["Quel magasin visiteras-tu la prochaine fois que tu sortiras ?"],
-          "topicArea": "C",
-          "subTopic": "Shops and Shopping",
+          "mainText": "Comment as-tu rencontré ton meilleur ami ou ta meilleure amie ?",
+          "alternativeTexts": [
+            "Où as-tu rencontré tes amis ?"
+          ],
+          "topicArea": "B",
+          "subTopic": "Self, family and friends",
           "difficulty": "core",
-          "targetStructures": ["simple-future"],
-          "expectedTimeFrame": "future",
+          "targetStructures": [
+            "perfect"
+          ],
+          "expectedTimeFrame": "past",
           "partsExpected": 1
         },
         {
           "questionId": "t1q4",
           "part": "topic1",
-          "mainText": "Les petits magasins sont-ils meilleurs que les grands centres commerciaux ?",
+          "mainText": "Est-il préférable d'avoir beaucoup d'amis ou quelques amis proches ?",
           "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Acheter en ligne te semble-t-il plus pratique qu'aller en magasin ?"],
-          "topicArea": "C",
-          "subTopic": "Shops and Shopping",
-          "difficulty": "higher",
-          "targetStructures": ["comparison", "opinion", "justification"],
+          "alternativeTexts": [
+            "As-tu beaucoup d'amis ?",
+            "Est-ce important pour toi ?"
+          ],
+          "topicArea": "B",
+          "subTopic": "Self, family and friends",
+          "difficulty": "core",
+          "targetStructures": [
+            "opinion",
+            "comparison",
+            "justification"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 2
         },
         {
           "questionId": "t1q5",
           "part": "topic1",
-          "mainText": "Qu'achèterais-tu en premier avec beaucoup d'argent ?",
-          "alternativeTexts": ["Quel objet cher aimerais-tu posséder un jour ?"],
-          "topicArea": "C",
-          "subTopic": "Shops and Shopping",
-          "difficulty": "core",
-          "targetStructures": ["conditional"],
-          "expectedTimeFrame": "conditional",
-          "partsExpected": 1
+          "mainText": "Comment vas-tu garder contact avec tes amis après le collège ?",
+          "secondPartText": "Pourquoi est-ce important ?",
+          "alternativeTexts": [
+            "Que vas-tu faire avec tes amis cet été ?",
+            "Pourquoi ?"
+          ],
+          "topicArea": "B",
+          "subTopic": "Self, family and friends",
+          "difficulty": "higher",
+          "targetStructures": [
+            "near-future",
+            "justification"
+          ],
+          "expectedTimeFrame": "future",
+          "partsExpected": 2
         }
       ]
     },
     "topic2": {
-      "topicArea": "E",
-      "subTopic": "Festivals and Celebrations",
+      "topicArea": "C",
+      "subTopic": "The natural world, the environment, the climate and the weather",
+      "title": "La nature et le climat",
       "furtherQuestions": [
-        "Quelle fête française ou francophone connais-tu ?",
-        "Comment célèbres-tu ton anniversaire d'habitude ?"
+        "Quel endroit naturel de ton pays est le plus beau ?",
+        "Comment ta famille économise-t-elle l'eau ?"
       ],
       "questions": [
         {
           "questionId": "t2q1",
           "part": "topic2",
-          "mainText": "Quelle est ta fête préférée de l'année ?",
+          "mainText": "Quels animaux vivent près de chez toi ?",
           "alternativeTexts": [],
-          "topicArea": "E",
-          "subTopic": "Festivals and Celebrations",
+          "topicArea": "C",
+          "subTopic": "The natural world, the environment, the climate and the weather",
           "difficulty": "foundation",
-          "targetStructures": ["present"],
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q2",
           "part": "topic2",
-          "mainText": "Comment ta famille fête-t-elle les grandes occasions ?",
+          "mainText": "Qu'aimes-tu faire dans la nature ?",
           "alternativeTexts": [],
-          "topicArea": "E",
-          "subTopic": "Festivals and Celebrations",
-          "difficulty": "core",
-          "targetStructures": ["present"],
+          "topicArea": "C",
+          "subTopic": "The natural world, the environment, the climate and the weather",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "Décris une fête ou un festival auquel tu as assisté.",
-          "alternativeTexts": ["Raconte comment tu as célébré ton dernier anniversaire."],
-          "topicArea": "E",
-          "subTopic": "Festivals and Celebrations",
+          "mainText": "Parle-moi d'une sortie dans la nature que tu as faite.",
+          "secondPartText": "Avec qui étais-tu ?",
+          "alternativeTexts": [
+            "Quand es-tu allé(e) à la campagne ou à la plage ?",
+            "Avec qui étais-tu ?"
+          ],
+          "topicArea": "C",
+          "subTopic": "The natural world, the environment, the climate and the weather",
           "difficulty": "core",
-          "targetStructures": ["perfect"],
+          "targetStructures": [
+            "perfect",
+            "imperfect"
+          ],
           "expectedTimeFrame": "past",
-          "partsExpected": 1
+          "partsExpected": 2
         },
         {
           "questionId": "t2q4",
           "part": "topic2",
-          "mainText": "Comment vas-tu célébrer la prochaine grande fête de l'année ?",
-          "alternativeTexts": ["Quels invités inviteras-tu à ta prochaine fête d'anniversaire ?"],
-          "topicArea": "E",
-          "subTopic": "Festivals and Celebrations",
+          "mainText": "Le climat de ton pays change-t-il ?",
+          "secondPartText": "Comment le sais-tu ?",
+          "alternativeTexts": [
+            "Fait-il plus chaud qu'avant chez toi ?",
+            "Pourquoi, à ton avis ?"
+          ],
+          "topicArea": "C",
+          "subTopic": "The natural world, the environment, the climate and the weather",
           "difficulty": "core",
-          "targetStructures": ["near-future"],
-          "expectedTimeFrame": "future",
-          "partsExpected": 1
+          "targetStructures": [
+            "opinion",
+            "comparison",
+            "justification"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
         },
         {
           "questionId": "t2q5",
           "part": "topic2",
-          "mainText": "Penses-tu que les traditions familiales sont encore importantes aujourd'hui ?",
-          "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Une nouvelle tradition te semblerait-elle bienvenue dans ta famille ?"],
-          "topicArea": "E",
-          "subTopic": "Festivals and Celebrations",
+          "mainText": "Que ferais-tu pour protéger les animaux, si tu en avais le pouvoir ?",
+          "alternativeTexts": [
+            "Comment voudrais-tu aider les animaux ?"
+          ],
+          "topicArea": "C",
+          "subTopic": "The natural world, the environment, the climate and the weather",
           "difficulty": "higher",
-          "targetStructures": ["opinion", "justification"],
-          "expectedTimeFrame": "present",
-          "partsExpected": 2
+          "targetStructures": [
+            "conditional",
+            "imperfect"
+          ],
+          "expectedTimeFrame": "conditional",
+          "partsExpected": 1
         }
       ]
     }

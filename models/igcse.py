@@ -37,6 +37,42 @@ TargetStructure = Literal[
 
 QUESTION_BANK_SCHEMA_VERSION = "question-bank-v1"
 
+ExaminerRegister = Literal["tu", "vous"]
+
+# The closed sub-topic list per topic area, from the 0520 syllabus 2025-27
+# (Syl p.14). Mirrors SUB_TOPICS_BY_AREA in the main repo's
+# src/data/exam/bank/types.ts - keep both in sync, verbatim.
+SUB_TOPICS_BY_AREA: dict[str, tuple[str, ...]] = {
+    "A": ("Time expressions", "Food and drink", "The human body and health", "Travel and transport"),
+    "B": ("Self, family and friends", "In the home", "Colours", "Clothes and accessories", "Leisure time"),
+    "C": (
+        "People and places",
+        "The natural world, the environment, the climate and the weather",
+        "Communications and technology",
+        "The built environment",
+        "Measurements",
+        "Materials",
+    ),
+    "D": ("Education", "Work"),
+    "E": ("Countries, nationalities and languages", "Culture, customs, faiths and celebrations"),
+}
+
+# Topic conversation 1 draws from A or B; topic conversation 2 from C, D or E
+# (0520/03 Teacher/Examiner Notes p.3, Syl p.19).
+TOPIC_SLOT_AREAS: dict[str, tuple[str, ...]] = {
+    "topic1": ("A", "B"),
+    "topic2": ("C", "D", "E"),
+}
+
+
+def _check_sub_topic_in_area(sub_topic: str, area: str, field_path: str) -> None:
+    if sub_topic in SUB_TOPICS_BY_AREA[area]:
+        return
+    owner = next((a for a, subs in SUB_TOPICS_BY_AREA.items() if sub_topic in subs), None)
+    if owner:
+        raise ValueError(f'{field_path} "{sub_topic}" belongs to area {owner}, not {area} (Syl p.14)')
+    raise ValueError(f'{field_path} "{sub_topic}" is not a syllabus sub-topic of area {area} (Syl p.14)')
+
 _ID_FORMAT = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 
 # Reserved canonicalization delimiters (hashQuestionSet.ts Sec 3.5.1): U+001D/1E/1F.
@@ -126,6 +162,8 @@ class RolePlayScenario(BaseModel):
     topic_area: TopicArea = Field(alias="topicArea")
     title: str = Field(min_length=1)
     setup: str = Field(min_length=1)
+    # Unhashed, like setup: how the examiner addresses the candidate.
+    examiner_register: ExaminerRegister = Field(alias="examinerRegister")
     tasks: list[AuthoredQuestion]
 
     model_config = {"populate_by_name": True}
@@ -133,17 +171,23 @@ class RolePlayScenario(BaseModel):
     @model_validator(mode="after")
     def _check_tasks(self) -> "RolePlayScenario":
         _check_canonicalization_safety(self.setup, "rolePlay.setup")
+        _check_canonicalization_safety(self.title, "rolePlay.title")
         if len(self.tasks) != 5:
             raise ValueError(f"rolePlay.tasks must have exactly 5 tasks, got {len(self.tasks)}")
         for i, task in enumerate(self.tasks):
             if task.part != "rolePlay":
                 raise ValueError(f'rolePlay.tasks[{i}].part must be "rolePlay", got "{task.part}"')
+            # TN p.6: no alternative questions in the role play (roleplay-alternative).
+            if task.alternative_texts:
+                raise ValueError(f"rolePlay.tasks[{i}] must not carry an alternative (TN p.6)")
         return self
 
 
 class AuthoredTopic(BaseModel):
     topic_area: TopicArea = Field(alias="topicArea")
     sub_topic: str = Field(alias="subTopic")
+    # Unhashed, like rolePlay.setup: spoken when the conversation starts.
+    title: str = Field(min_length=1)
     questions: list[AuthoredTopicQuestion]
     further_questions: tuple[str, str] = Field(alias="furtherQuestions")
 
@@ -153,10 +197,23 @@ class AuthoredTopic(BaseModel):
     def _check_questions(self) -> "AuthoredTopic":
         if len(self.questions) != 5:
             raise ValueError(f"topic must have exactly 5 questions, got {len(self.questions)}")
+        _check_sub_topic_in_area(self.sub_topic, self.topic_area, "subTopic")
+        _check_canonicalization_safety(self.title, "title")
         for i, q in enumerate(self.questions):
-            # Q3-Q5 (index 2..4) require >=1 alternative.
+            # Q3-Q5 (index 2..4) require >=1 alternative; Q1-Q2 never have one (TN p.7).
             if i >= 2 and len(q.alternative_texts) == 0:
                 raise ValueError(f"topic Q{i + 1} requires >=1 alternativeText")
+            if i < 2 and len(q.alternative_texts) > 0:
+                raise ValueError(f"topic Q{i + 1} must not carry an alternative (TN p.7)")
+            # Tag agreement: the adapter and the content hash use the question-level tags.
+            if q.topic_area != self.topic_area:
+                raise ValueError(
+                    f'questions[{i}].topicArea "{q.topic_area}" disagrees with the topic\'s topicArea "{self.topic_area}"'
+                )
+            if q.sub_topic != self.sub_topic:
+                raise ValueError(
+                    f'questions[{i}].subTopic "{q.sub_topic}" disagrees with the topic\'s subTopic "{self.sub_topic}"'
+                )
         _check_canonicalization_safety(self.further_questions[0], "furtherQuestions[0]")
         _check_canonicalization_safety(self.further_questions[1], "furtherQuestions[1]")
         return self
@@ -168,6 +225,19 @@ class AuthoredContent(BaseModel):
     topic2: AuthoredTopic
 
     model_config = {"populate_by_name": True}
+
+    @model_validator(mode="after")
+    def _check_topic_slots(self) -> "AuthoredContent":
+        for slot, topic in (("topic1", self.topic1), ("topic2", self.topic2)):
+            allowed = TOPIC_SLOT_AREAS[slot]
+            if topic.topic_area not in allowed:
+                raise ValueError(
+                    f'{slot}.topicArea "{topic.topic_area}" must be one of {"/".join(allowed)} (TN p.3)'
+                )
+            for i, q in enumerate(topic.questions):
+                if q.part != slot:
+                    raise ValueError(f'{slot}.questions[{i}].part must be "{slot}", got "{q.part}"')
+        return self
 
     @model_validator(mode="after")
     def _check_unique_ids(self) -> "AuthoredContent":

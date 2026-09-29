@@ -4,193 +4,239 @@
   "provenance": "original-practice",
   "review": {
     "status": "approved",
-    "reviewedBy": "internal:s11-author",
-    "reviewedAt": "2026-07-17T00:00:00.000Z",
-    "notes": "Clean-room authored from the public 0520 syllabus and 04-frontend-pipeline.md §6.4 only; no Teacher's Notes booklet consulted. Archetype: work-experience enquiry (pair A+D, role-play area D). Self-review + linguistic pass complete; independent originality review complete. G3 exam-realism review pending a 0520-familiar teacher (S11 M2)."
+    "reviewedBy": "internal:claude",
+    "reviewedAt": "2026-09-29T00:00:00.000Z",
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 waived by owner 2026-09-29; content is machine-authored and self-reviewed (G1). Role play: asking for information at a tourist office."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-003",
-      "topicArea": "D",
-      "title": "Se renseigner sur un stage en entreprise",
-      "setup": "Tu veux faire un stage dans une entreprise française et tu téléphones pour te renseigner. Je suis le responsable / la responsable du recrutement.",
+      "topicArea": "C",
+      "title": "À l'office de tourisme",
+      "setup": "Vous êtes en vacances dans une petite ville française. Vous allez à l'office de tourisme. Je travaille à l'office de tourisme.",
+      "examinerRegister": "vous",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Bonjour, que puis-je faire pour vous ?",
+          "mainText": "Bonjour. Quelles informations cherchez-vous ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Dans quel domaine voulez-vous travailler ?",
+          "mainText": "Vous restez combien de nuits ici ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Préférez-vous un stage d'une semaine ou de deux semaines ?",
+          "mainText": "Quelles activités aimez-vous faire en vacances ?",
           "alternativeTexts": [],
-          "partsExpected": 2,
-          "secondPartText": "Voulez-vous savoir si le stage est payé ?"
+          "partsExpected": 1
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Quand êtes-vous disponible pour commencer ?",
+          "mainText": "Qu'avez-vous déjà visité dans la ville ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Qu'en avez-vous pensé ?"
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Je vous enverrai les détails par courriel. Avez-vous des questions ?",
+          "mainText": "Que ferez-vous demain ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Pourquoi avez-vous choisi cette activité ?"
         }
       ]
     },
     "topic1": {
-      "topicArea": "A",
-      "subTopic": "School and Daily Routine",
+      "topicArea": "B",
+      "subTopic": "Clothes and accessories",
+      "title": "Les vêtements et la mode",
       "furtherQuestions": [
-        "Qu'est-ce que tu changerais dans ton emploi du temps scolaire si tu pouvais ?",
-        "Comment te déplaces-tu pour aller au lycée chaque jour ?"
+        "Que penses-tu de l'uniforme scolaire ?",
+        "Quels accessoires aimes-tu porter ?"
       ],
       "questions": [
         {
           "questionId": "t1q1",
           "part": "topic1",
-          "mainText": "À quelle heure commence ta journée scolaire d'habitude ?",
+          "mainText": "Que portes-tu le week-end ?",
           "alternativeTexts": [],
-          "topicArea": "A",
-          "subTopic": "School and Daily Routine",
+          "topicArea": "B",
+          "subTopic": "Clothes and accessories",
           "difficulty": "foundation",
-          "targetStructures": ["present"],
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q2",
           "part": "topic1",
-          "mainText": "Quelle matière préfères-tu au lycée ?",
+          "mainText": "Où achètes-tu tes vêtements ?",
           "alternativeTexts": [],
-          "topicArea": "A",
-          "subTopic": "School and Daily Routine",
-          "difficulty": "core",
-          "targetStructures": ["present"],
+          "topicArea": "B",
+          "subTopic": "Clothes and accessories",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q3",
           "part": "topic1",
-          "mainText": "As-tu appris quelque chose de nouveau en cours cette année ?",
-          "alternativeTexts": ["Parle-moi d'un projet scolaire que tu as terminé récemment."],
-          "topicArea": "A",
-          "subTopic": "School and Daily Routine",
+          "mainText": "Quels vêtements as-tu achetés récemment ?",
+          "alternativeTexts": [
+            "Qu'as-tu porté hier ?"
+          ],
+          "topicArea": "B",
+          "subTopic": "Clothes and accessories",
           "difficulty": "core",
-          "targetStructures": ["perfect"],
+          "targetStructures": [
+            "perfect"
+          ],
           "expectedTimeFrame": "past",
           "partsExpected": 1
         },
         {
           "questionId": "t1q4",
           "part": "topic1",
-          "mainText": "Crois-tu que tu ne travailles pas assez dur à l'école ?",
+          "mainText": "La mode est-elle importante pour toi ?",
           "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Y a-t-il une matière que tu n'aimes pas du tout ?"],
-          "topicArea": "A",
-          "subTopic": "School and Daily Routine",
+          "alternativeTexts": [
+            "Aimes-tu acheter des vêtements ?",
+            "Pourquoi ?"
+          ],
+          "topicArea": "B",
+          "subTopic": "Clothes and accessories",
           "difficulty": "core",
-          "targetStructures": ["opinion", "justification", "negation"],
+          "targetStructures": [
+            "opinion",
+            "justification"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 2
         },
         {
           "questionId": "t1q5",
           "part": "topic1",
-          "mainText": "Qu'est-ce que tu vas étudier l'année prochaine ?",
-          "alternativeTexts": ["Quels examens vas-tu passer bientôt ?"],
-          "topicArea": "A",
-          "subTopic": "School and Daily Routine",
+          "mainText": "Que porteras-tu pour la prochaine fête de famille ?",
+          "secondPartText": "Pourquoi ce choix ?",
+          "alternativeTexts": [
+            "Quels vêtements vas-tu mettre ce week-end ?",
+            "Pourquoi ?"
+          ],
+          "topicArea": "B",
+          "subTopic": "Clothes and accessories",
           "difficulty": "higher",
-          "targetStructures": ["near-future"],
+          "targetStructures": [
+            "simple-future",
+            "justification"
+          ],
           "expectedTimeFrame": "future",
-          "partsExpected": 1
+          "partsExpected": 2
         }
       ]
     },
     "topic2": {
       "topicArea": "D",
-      "subTopic": "Future Career Plans",
+      "subTopic": "Education",
+      "title": "L'école",
       "furtherQuestions": [
-        "Est-ce qu'un membre de ta famille t'a donné des conseils sur ton avenir professionnel ?",
-        "Aimerais-tu travailler à l'étranger un jour ?"
+        "Que faudrait-il changer dans ton école ?",
+        "Quelles activités y a-t-il après les cours dans ton école ?"
       ],
       "questions": [
         {
           "questionId": "t2q1",
           "part": "topic2",
-          "mainText": "Quel métier feras-tu après tes études ?",
+          "mainText": "Combien de cours as-tu par jour ?",
           "alternativeTexts": [],
           "topicArea": "D",
-          "subTopic": "Future Career Plans",
+          "subTopic": "Education",
           "difficulty": "foundation",
-          "targetStructures": ["simple-future"],
-          "expectedTimeFrame": "future",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q2",
           "part": "topic2",
-          "mainText": "As-tu déjà fait un petit boulot ?",
-          "alternativeTexts": ["As-tu déjà aidé quelqu'un dans son travail ?"],
+          "mainText": "Que fais-tu pendant la récréation ?",
+          "alternativeTexts": [],
           "topicArea": "D",
-          "subTopic": "Future Career Plans",
-          "difficulty": "core",
-          "targetStructures": ["perfect"],
-          "expectedTimeFrame": "past",
+          "subTopic": "Education",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "Quand tu étais enfant, quel métier rêvais-tu de faire ?",
-          "alternativeTexts": ["Qu'est-ce que tu voulais devenir à l'âge de huit ans ?"],
+          "mainText": "Comment était ton école primaire ?",
+          "secondPartText": "Qu'est-ce qui est différent maintenant ?",
+          "alternativeTexts": [
+            "Qui était ton professeur préféré à l'école primaire ?",
+            "Pourquoi ?"
+          ],
           "topicArea": "D",
-          "subTopic": "Future Career Plans",
+          "subTopic": "Education",
           "difficulty": "core",
-          "targetStructures": ["imperfect"],
+          "targetStructures": [
+            "imperfect",
+            "comparison"
+          ],
           "expectedTimeFrame": "past",
-          "partsExpected": 1
+          "partsExpected": 2
         },
         {
           "questionId": "t2q4",
           "part": "topic2",
-          "mainText": "Ne préfères-tu pas un métier bien payé à un métier intéressant mais moins payé ?",
-          "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Qu'est-ce qui compte le plus pour toi dans un futur métier ?"],
+          "mainText": "À ton avis, quels sont les avantages des devoirs ?",
+          "secondPartText": "Et les inconvénients ?",
+          "alternativeTexts": [
+            "Aimes-tu faire tes devoirs ?",
+            "Pourquoi ?"
+          ],
           "topicArea": "D",
-          "subTopic": "Future Career Plans",
-          "difficulty": "higher",
-          "targetStructures": ["opinion", "justification", "negation"],
+          "subTopic": "Education",
+          "difficulty": "core",
+          "targetStructures": [
+            "opinion",
+            "justification"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 2
         },
         {
           "questionId": "t2q5",
           "part": "topic2",
-          "mainText": "Si tu pouvais choisir n'importe quel métier, que ferais-tu ?",
-          "alternativeTexts": ["Dans quel pays aimerais-tu travailler un jour ?"],
+          "mainText": "Que feras-tu après tes examens ?",
+          "alternativeTexts": [
+            "Quelles matières vas-tu étudier l'année prochaine ?"
+          ],
           "topicArea": "D",
-          "subTopic": "Future Career Plans",
-          "difficulty": "core",
-          "targetStructures": ["conditional"],
-          "expectedTimeFrame": "conditional",
+          "subTopic": "Education",
+          "difficulty": "higher",
+          "targetStructures": [
+            "simple-future"
+          ],
+          "expectedTimeFrame": "future",
           "partsExpected": 1
         }
       ]

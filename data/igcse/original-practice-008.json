@@ -4,193 +4,241 @@
   "provenance": "original-practice",
   "review": {
     "status": "approved",
-    "reviewedBy": "internal:s11-author",
-    "reviewedAt": "2026-07-17T00:00:00.000Z",
-    "notes": "Clean-room authored from the public 0520 syllabus and 04-frontend-pipeline.md §6.4 only; no Teacher's Notes booklet consulted. Archetype: information request (pair C+D, role-play area C). Self-review + linguistic pass complete; independent originality review complete. G3 exam-realism review pending a 0520-familiar teacher (S11 M2)."
+    "reviewedBy": "internal:claude",
+    "reviewedAt": "2026-09-29T00:00:00.000Z",
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 waived by owner 2026-09-29; content is machine-authored and self-reviewed (G1). Role play: a friend organising a park clean-up."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-008",
       "topicArea": "C",
-      "title": "Demander des renseignements à l'office de tourisme",
-      "setup": "Tu es en vacances et tu vas à l'office de tourisme pour demander des renseignements sur la ville. Je suis l'employé(e) de l'office de tourisme.",
+      "title": "Nettoyer le parc",
+      "setup": "Vous êtes en France chez votre ami(e) Camille. Ce week-end, Camille organise le nettoyage du parc de son quartier. Je suis Camille.",
+      "examinerRegister": "tu",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Bonjour, comment puis-je vous renseigner ?",
+          "mainText": "Salut ! Que fais-tu samedi matin ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Voulez-vous une carte de la région ?",
+          "mainText": "Que peux-tu apporter ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Préférez-vous visiter un musée ou un monument près d'ici ?",
+          "mainText": "Comment va-t-on aller au parc ?",
           "alternativeTexts": [],
-          "partsExpected": 2,
-          "secondPartText": "Voulez-vous savoir si c'est gratuit pour les étudiants ?"
+          "partsExpected": 1
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Comment voulez-vous y aller, à pied ou en bus ?",
+          "mainText": "Qu'as-tu déjà fait pour l'environnement ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Pourquoi est-ce important pour toi ?"
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Voici une brochure. Avez-vous d'autres questions ?",
+          "mainText": "Samedi soir, que voudrais-tu faire pour fêter la fin du nettoyage ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Pourquoi ?"
         }
       ]
     },
     "topic1": {
-      "topicArea": "C",
-      "subTopic": "Environment and Nature",
+      "topicArea": "A",
+      "subTopic": "Food and drink",
+      "title": "La cuisine et les courses",
       "furtherQuestions": [
-        "Ta famille recycle-t-elle beaucoup à la maison ?",
-        "Quelle serait la meilleure solution pour réduire la pollution en ville ?"
+        "Que sais-tu cuisiner ?",
+        "Que penses-tu des repas rapides comme les hamburgers ?"
       ],
       "questions": [
         {
           "questionId": "t1q1",
           "part": "topic1",
-          "mainText": "Comment est l'environnement près de chez toi ?",
+          "mainText": "Où ta famille fait-elle les courses ?",
           "alternativeTexts": [],
-          "topicArea": "C",
-          "subTopic": "Environment and Nature",
+          "topicArea": "A",
+          "subTopic": "Food and drink",
           "difficulty": "foundation",
-          "targetStructures": ["present"],
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q2",
           "part": "topic1",
-          "mainText": "Que fait ta famille pour économiser l'énergie ?",
+          "mainText": "Quel aliment ne manges-tu jamais ?",
           "alternativeTexts": [],
-          "topicArea": "C",
-          "subTopic": "Environment and Nature",
-          "difficulty": "core",
-          "targetStructures": ["present"],
+          "topicArea": "A",
+          "subTopic": "Food and drink",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present",
+            "negation"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q3",
           "part": "topic1",
-          "mainText": "Raconte une action que tu as menée pour aider l'environnement.",
-          "alternativeTexts": ["As-tu déjà recyclé ou nettoyé un endroit avec d'autres personnes ?"],
-          "topicArea": "C",
-          "subTopic": "Environment and Nature",
+          "mainText": "Raconte-moi une fois où tu as aidé à préparer à manger.",
+          "secondPartText": "Qui était avec toi ?",
+          "alternativeTexts": [
+            "Qu'as-tu cuisiné récemment ?",
+            "Qui était avec toi ?"
+          ],
+          "topicArea": "A",
+          "subTopic": "Food and drink",
           "difficulty": "core",
-          "targetStructures": ["perfect"],
+          "targetStructures": [
+            "perfect"
+          ],
           "expectedTimeFrame": "past",
-          "partsExpected": 1
+          "partsExpected": 2
         },
         {
           "questionId": "t1q4",
           "part": "topic1",
-          "mainText": "Un mode de transport pollue-t-il plus que les autres selon toi ?",
+          "mainText": "Vaut-il mieux faire les courses au marché ou au supermarché ?",
           "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["La voiture est-elle pire pour l'environnement que l'avion ?"],
-          "topicArea": "C",
-          "subTopic": "Environment and Nature",
-          "difficulty": "higher",
-          "targetStructures": ["comparison", "justification"],
+          "alternativeTexts": [
+            "Aimes-tu aller au marché ?",
+            "Pourquoi ?"
+          ],
+          "topicArea": "A",
+          "subTopic": "Food and drink",
+          "difficulty": "core",
+          "targetStructures": [
+            "opinion",
+            "comparison",
+            "justification"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 2
         },
         {
           "questionId": "t1q5",
           "part": "topic1",
-          "mainText": "Qu'est-ce que ton lycée va faire pour protéger l'environnement cette année ?",
-          "alternativeTexts": ["Quel projet écologique ta ville va-t-elle lancer bientôt ?"],
-          "topicArea": "C",
-          "subTopic": "Environment and Nature",
-          "difficulty": "core",
-          "targetStructures": ["near-future"],
+          "mainText": "Quel plat prépareras-tu pour tes amis cet été ?",
+          "alternativeTexts": [
+            "Que vas-tu cuisiner ce week-end ?"
+          ],
+          "topicArea": "A",
+          "subTopic": "Food and drink",
+          "difficulty": "higher",
+          "targetStructures": [
+            "simple-future"
+          ],
           "expectedTimeFrame": "future",
           "partsExpected": 1
         }
       ]
     },
     "topic2": {
-      "topicArea": "D",
-      "subTopic": "Work Experience",
+      "topicArea": "C",
+      "subTopic": "People and places",
+      "title": "Les gens de mon quartier",
       "furtherQuestions": [
-        "Quelqu'un de ta famille t'a-t-il déjà expliqué son métier en détail ?",
-        "Que penses-tu faire pendant les vacances pour préparer ton avenir professionnel ?"
+        "Comment peut-on aider les personnes âgées de ton quartier ?",
+        "Quelle personne célèbre vient de ta région ?"
       ],
       "questions": [
         {
           "questionId": "t2q1",
           "part": "topic2",
-          "mainText": "Décris une visite que tu as faite sur le lieu de travail d'un parent.",
-          "alternativeTexts": ["As-tu déjà observé quelqu'un au travail pendant une journée ?"],
-          "topicArea": "D",
-          "subTopic": "Work Experience",
+          "mainText": "Comment sont tes voisins ?",
+          "alternativeTexts": [],
+          "topicArea": "C",
+          "subTopic": "People and places",
           "difficulty": "foundation",
-          "targetStructures": ["perfect"],
-          "expectedTimeFrame": "past",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q2",
           "part": "topic2",
-          "mainText": "Quelles compétences sont nécessaires pour le métier qui t'intéresse ?",
+          "mainText": "Comment est l'ambiance dans ton quartier ?",
           "alternativeTexts": [],
-          "topicArea": "D",
-          "subTopic": "Work Experience",
-          "difficulty": "core",
-          "targetStructures": ["present"],
+          "topicArea": "C",
+          "subTopic": "People and places",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "Feras-tu un stage l'été prochain ?",
-          "alternativeTexts": ["Dans quelle entreprise voudrais-tu faire un stage bientôt ?"],
-          "topicArea": "D",
-          "subTopic": "Work Experience",
+          "mainText": "Décris un événement qui a eu lieu dans ton quartier.",
+          "secondPartText": "Qui était là ?",
+          "alternativeTexts": [
+            "Quelle fête de quartier as-tu vue récemment ?",
+            "Qui était là ?"
+          ],
+          "topicArea": "C",
+          "subTopic": "People and places",
           "difficulty": "core",
-          "targetStructures": ["simple-future"],
-          "expectedTimeFrame": "future",
-          "partsExpected": 1
+          "targetStructures": [
+            "perfect",
+            "imperfect"
+          ],
+          "expectedTimeFrame": "past",
+          "partsExpected": 2
         },
         {
           "questionId": "t2q4",
           "part": "topic2",
-          "mainText": "Un travail manuel te plairait-il autant qu'un travail de bureau ?",
-          "alternativeTexts": ["Un métier créatif te conviendrait-il mieux qu'un métier scientifique ?"],
-          "topicArea": "D",
-          "subTopic": "Work Experience",
-          "difficulty": "higher",
-          "targetStructures": ["conditional", "comparison"],
-          "expectedTimeFrame": "conditional",
+          "mainText": "Qu'est-ce qui rend un quartier agréable, à ton avis ?",
+          "alternativeTexts": [
+            "Que préfères-tu dans ton quartier ?"
+          ],
+          "topicArea": "C",
+          "subTopic": "People and places",
+          "difficulty": "core",
+          "targetStructures": [
+            "opinion"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q5",
           "part": "topic2",
-          "mainText": "Est-il important de faire un stage avant de choisir sa carrière ?",
+          "mainText": "Si un ami étranger venait chez toi, où l'emmènerais-tu ?",
           "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Un stage t'aiderait-il à mieux choisir tes études futures ?"],
-          "topicArea": "D",
-          "subTopic": "Work Experience",
-          "difficulty": "core",
-          "targetStructures": ["opinion", "justification"],
-          "expectedTimeFrame": "present",
+          "alternativeTexts": [
+            "Quel endroit de ta ville voudrais-tu montrer à un ami ?",
+            "Pourquoi ?"
+          ],
+          "topicArea": "C",
+          "subTopic": "People and places",
+          "difficulty": "higher",
+          "targetStructures": [
+            "conditional",
+            "imperfect",
+            "justification"
+          ],
+          "expectedTimeFrame": "conditional",
           "partsExpected": 2
         }
       ]

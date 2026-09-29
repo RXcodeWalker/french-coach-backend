@@ -4,71 +4,75 @@
   "provenance": "original-practice",
   "review": {
     "status": "approved",
-    "reviewedBy": "architecture-proof-set",
-    "reviewedAt": "2026-07-16T00:00:00.000Z",
-    "notes": "S11 Step 3 round-trip proof set; content ported unchanged from S10 ORIGINAL_QUESTION_SET_1."
+    "reviewedBy": "internal:claude",
+    "reviewedAt": "2026-09-29T00:00:00.000Z",
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 waived by owner 2026-09-29; content is machine-authored and self-reviewed (G1). Role play: a missed train at the station."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-001",
       "topicArea": "A",
-      "title": "Acheter un billet de train",
-      "setup": "Tu es à la gare et tu veux acheter un billet de train pour Paris. Je suis le vendeur / la vendeuse au guichet.",
+      "title": "Un nouveau billet de train",
+      "setup": "Vous êtes à la gare de Lyon, en France. Vous avez raté votre train pour Marseille et vous voulez un nouveau billet. Je travaille au guichet.",
+      "examinerRegister": "vous",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Bonjour ! Où voulez-vous aller ?",
+          "mainText": "Bonjour. Qu'est-ce que je peux faire pour vous ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "À quelle heure voulez-vous partir ?",
+          "mainText": "Vous voulez partir à quelle heure ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Voulez-vous un aller simple ou un aller-retour ?",
+          "mainText": "Pourquoi avez-vous raté votre train ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Y a-t-il une réduction pour les étudiants ?"
+          "secondPartText": "À quelle heure êtes-vous arrivé(e) à la gare ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Comment voulez-vous payer ?",
+          "mainText": "Qu'allez-vous faire à Marseille ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Combien de temps allez-vous rester là-bas ?"
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Voici votre billet. Autre chose ?",
+          "mainText": "Comment voulez-vous payer ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Et pour le retour, quel jour voulez-vous voyager ?"
         }
       ]
     },
     "topic1": {
       "topicArea": "A",
-      "subTopic": "Everyday Life",
+      "subTopic": "Travel and transport",
+      "title": "Les transports",
       "furtherQuestions": [
-        "Est-ce que tu aides souvent tes parents à la maison ?",
-        "Quel est ton repas préféré en famille ?"
+        "Que penses-tu des bus et des trains dans ta région ?",
+        "Comment les gens de ta famille se déplacent-ils ?"
       ],
       "questions": [
         {
           "questionId": "t1q1",
           "part": "topic1",
-          "mainText": "Que fais-tu pour aider à la maison ?",
+          "mainText": "Comment vas-tu à l'école le matin ?",
           "alternativeTexts": [],
           "topicArea": "A",
-          "subTopic": "Everyday Life",
-          "difficulty": "core",
+          "subTopic": "Travel and transport",
+          "difficulty": "foundation",
           "targetStructures": [
             "present"
           ],
@@ -78,11 +82,11 @@
         {
           "questionId": "t1q2",
           "part": "topic1",
-          "mainText": "Décris ta maison ou ton appartement.",
+          "mainText": "Combien de temps dure ton trajet pour aller à l'école ?",
           "alternativeTexts": [],
           "topicArea": "A",
-          "subTopic": "Everyday Life",
-          "difficulty": "core",
+          "subTopic": "Travel and transport",
+          "difficulty": "foundation",
           "targetStructures": [
             "present"
           ],
@@ -92,71 +96,78 @@
         {
           "questionId": "t1q3",
           "part": "topic1",
-          "mainText": "Qu'est-ce que tu as fait le week-end dernier ?",
+          "mainText": "Parle-moi d'un voyage que tu as fait.",
+          "secondPartText": "Comment ça s'est passé ?",
           "alternativeTexts": [
-            "Raconte ta dernière sortie en famille."
+            "Où es-tu allé(e) le week-end dernier ?",
+            "Comment ça s'est passé ?"
           ],
           "topicArea": "A",
-          "subTopic": "Everyday Life",
+          "subTopic": "Travel and transport",
           "difficulty": "core",
           "targetStructures": [
-            "perfect"
+            "perfect",
+            "imperfect",
+            "opinion"
           ],
           "expectedTimeFrame": "past",
-          "partsExpected": 1
+          "partsExpected": 2
         },
         {
           "questionId": "t1q4",
           "part": "topic1",
-          "mainText": "Préfères-tu manger à la maison ou au restaurant ?",
-          "secondPartText": "Pourquoi ?",
+          "mainText": "À ton avis, quel est le moyen de transport le plus pratique en ville ?",
           "alternativeTexts": [
-            "Quel est ton repas préféré ?"
+            "Comment préfères-tu te déplacer en ville ?"
           ],
           "topicArea": "A",
-          "subTopic": "Everyday Life",
+          "subTopic": "Travel and transport",
           "difficulty": "core",
           "targetStructures": [
             "opinion",
-            "justification"
+            "comparison"
           ],
           "expectedTimeFrame": "present",
-          "partsExpected": 2
+          "partsExpected": 1
         },
         {
           "questionId": "t1q5",
           "part": "topic1",
-          "mainText": "Qu'est-ce que tu vas faire ce soir ?",
+          "mainText": "Si tu pouvais faire un grand voyage, où irais-tu ?",
+          "secondPartText": "Comment voyagerais-tu ?",
           "alternativeTexts": [
-            "Quels sont tes projets pour la semaine prochaine ?"
+            "Quel pays voudrais-tu visiter un jour ?",
+            "Pourquoi ?"
           ],
           "topicArea": "A",
-          "subTopic": "Everyday Life",
-          "difficulty": "core",
+          "subTopic": "Travel and transport",
+          "difficulty": "higher",
           "targetStructures": [
-            "near-future"
+            "conditional",
+            "imperfect"
           ],
-          "expectedTimeFrame": "future",
-          "partsExpected": 1
+          "expectedTimeFrame": "conditional",
+          "partsExpected": 2
         }
       ]
     },
     "topic2": {
       "topicArea": "C",
-      "subTopic": "The World Around Us",
+      "subTopic": "The natural world, the environment, the climate and the weather",
+      "title": "L'environnement et la météo",
       "furtherQuestions": [
-        "Qu'est-ce que ta ville pourrait faire pour être plus écologique ?",
-        "Aimerais-tu vivre dans une autre ville un jour ?"
+        "Quelle est la saison la plus agréable dans ta région ?",
+        "Que penses-tu des voitures électriques ?"
       ],
       "questions": [
         {
           "questionId": "t2q1",
           "part": "topic2",
-          "mainText": "Qu'est-ce que tu fais pour protéger l'environnement ?",
+          "mainText": "Quel temps fait-il chez toi en été ?",
           "alternativeTexts": [],
           "topicArea": "C",
-          "subTopic": "The World Around Us",
-          "difficulty": "core",
+          "subTopic": "The natural world, the environment, the climate and the weather",
+          "difficulty": "foundation",
           "targetStructures": [
             "present"
           ],
@@ -166,11 +177,11 @@
         {
           "questionId": "t2q2",
           "part": "topic2",
-          "mainText": "Décris ta ville ou ton village.",
+          "mainText": "Que fais-tu quand il fait beau ?",
           "alternativeTexts": [],
           "topicArea": "C",
-          "subTopic": "The World Around Us",
-          "difficulty": "core",
+          "subTopic": "The natural world, the environment, the climate and the weather",
+          "difficulty": "foundation",
           "targetStructures": [
             "present"
           ],
@@ -180,15 +191,16 @@
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "As-tu déjà voyagé à l’étranger ? Raconte ce voyage.",
+          "mainText": "Raconte une journée où il a fait très mauvais temps.",
           "alternativeTexts": [
-            "Parle-moi de tes dernières vacances."
+            "Qu'as-tu fait la dernière fois qu'il a plu ?"
           ],
           "topicArea": "C",
-          "subTopic": "The World Around Us",
+          "subTopic": "The natural world, the environment, the climate and the weather",
           "difficulty": "core",
           "targetStructures": [
-            "perfect"
+            "perfect",
+            "imperfect"
           ],
           "expectedTimeFrame": "past",
           "partsExpected": 1
@@ -196,14 +208,15 @@
         {
           "questionId": "t2q4",
           "part": "topic2",
-          "mainText": "Penses-tu que le changement climatique est un problème grave ?",
+          "mainText": "Quel est le plus grand problème pour l'environnement aujourd'hui ?",
           "secondPartText": "Pourquoi ?",
           "alternativeTexts": [
-            "Que penses-tu de la pollution dans les grandes villes ?"
+            "La pollution est-elle un problème dans ta ville ?",
+            "Pourquoi ?"
           ],
           "topicArea": "C",
-          "subTopic": "The World Around Us",
-          "difficulty": "higher",
+          "subTopic": "The natural world, the environment, the climate and the weather",
+          "difficulty": "core",
           "targetStructures": [
             "opinion",
             "justification"
@@ -214,18 +227,22 @@
         {
           "questionId": "t2q5",
           "part": "topic2",
-          "mainText": "Où voudrais-tu voyager à l'avenir ?",
+          "mainText": "Selon toi, quel temps fera-t-il dans ta région dans cinquante ans ?",
+          "secondPartText": "Pourquoi ?",
           "alternativeTexts": [
-            "Comment imagines-tu ta vie dans dix ans ?"
+            "Dans vingt ans, fera-t-il plus chaud ou plus froid chez toi ?",
+            "Pourquoi ?"
           ],
           "topicArea": "C",
-          "subTopic": "The World Around Us",
-          "difficulty": "core",
+          "subTopic": "The natural world, the environment, the climate and the weather",
+          "difficulty": "higher",
           "targetStructures": [
-            "conditional"
+            "simple-future",
+            "comparison",
+            "justification"
           ],
           "expectedTimeFrame": "future",
-          "partsExpected": 1
+          "partsExpected": 2
         }
       ]
     }

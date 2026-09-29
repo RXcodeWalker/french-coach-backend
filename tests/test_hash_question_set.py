@@ -7,7 +7,8 @@ against. Vendored copy - the frontend file is the source of truth; keep this
 copy in sync when the frontend vectors change (see the file's own note in the
 architecture plan Section 3.5.1).
 
-Run directly (no pytest dependency in this backend yet):
+Collected by pytest (`pytest tests/ -q`) via test_canonicalization_vectors,
+and still runnable directly:
   cd backend
   python tests/test_hash_question_set.py
 """
@@ -30,7 +31,8 @@ def _load_vectors() -> list[dict]:
         return json.load(f)
 
 
-def run() -> None:
+def check() -> list[str]:
+    """Runs every parity check; returns the failures (empty when all pass)."""
     vectors = _load_vectors()
     failures: list[str] = []
 
@@ -104,13 +106,23 @@ def run() -> None:
     else:
         print("PASS: canonical-bytes snapshot matches fixed input")
 
+    return failures
+
+
+def test_canonicalization_vectors() -> None:
+    failures = check()
+    assert failures == [], "\n".join(failures)
+
+
+def run() -> None:
+    failures = check()
     if failures:
         print(f"\n{len(failures)} FAILURE(S):")
         for f in failures:
             print(f)
         sys.exit(1)
 
-    print(f"\nAll {len(vectors)} vectors + parity checks passed.")
+    print(f"\nAll {len(_load_vectors())} vectors + parity checks passed.")
 
 
 if __name__ == "__main__":

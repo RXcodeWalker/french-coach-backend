@@ -4,194 +4,240 @@
   "provenance": "original-practice",
   "review": {
     "status": "approved",
-    "reviewedBy": "internal:s11-author",
-    "reviewedAt": "2026-07-17T00:00:00.000Z",
-    "notes": "Clean-room authored from the public 0520 syllabus and 04-frontend-pipeline.md §6.4 only; no Teacher's Notes booklet consulted. Archetype: travel disruption (pair A+E, role-play area E). Self-review + linguistic pass complete; independent originality review complete. G3 exam-realism review pending a 0520-familiar teacher (S11 M2)."
+    "reviewedBy": "internal:claude",
+    "reviewedAt": "2026-09-29T00:00:00.000Z",
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 waived by owner 2026-09-29; content is machine-authored and self-reviewed (G1). Role play: first day of a work placement in a sports shop."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-004",
-      "topicArea": "E",
-      "title": "Un train annulé à la gare",
-      "setup": "Ton train est annulé et tu vas au guichet pour demander de l'aide. Je suis l'employé(e) de la gare.",
+      "topicArea": "D",
+      "title": "Un stage dans un magasin de sport",
+      "setup": "Vous commencez un stage d'une semaine dans un magasin de sport en France. C'est votre premier jour. Je suis responsable du magasin.",
+      "examinerRegister": "vous",
       "tasks": [
         {
           "questionId": "rp1",
           "part": "rolePlay",
-          "mainText": "Bonjour, comment puis-je vous aider ?",
+          "mainText": "Bonjour et bienvenue ! Vous habitez dans quel quartier ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp2",
           "part": "rolePlay",
-          "mainText": "Quelle est votre destination ?",
+          "mainText": "Combien d'heures pouvez-vous travailler par jour ?",
           "alternativeTexts": [],
           "partsExpected": 1
         },
         {
           "questionId": "rp3",
           "part": "rolePlay",
-          "mainText": "Voulez-vous prendre le prochain train ou attendre demain ?",
+          "mainText": "Pourquoi avez-vous choisi un stage dans un magasin de sport ?",
           "alternativeTexts": [],
           "partsExpected": 2,
-          "secondPartText": "Savez-vous à quel quai il faut aller ?"
+          "secondPartText": "Que voudriez-vous apprendre ici ?"
         },
         {
           "questionId": "rp4",
           "part": "rolePlay",
-          "mainText": "Voulez-vous un remboursement ou un autre billet ?",
+          "mainText": "Quel sport avez-vous pratiqué récemment ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Comment ça s'est passé ?"
         },
         {
           "questionId": "rp5",
           "part": "rolePlay",
-          "mainText": "Je suis vraiment désolé(e) pour ce retard. Autre chose ?",
+          "mainText": "Que ferez-vous après votre stage ?",
           "alternativeTexts": [],
-          "partsExpected": 1
+          "partsExpected": 2,
+          "secondPartText": "Et plus tard, quel métier voudriez-vous faire ?"
         }
       ]
     },
     "topic1": {
       "topicArea": "A",
-      "subTopic": "Food and Meals",
+      "subTopic": "Food and drink",
+      "title": "Les repas",
       "furtherQuestions": [
-        "Qui prépare les repas chez toi d'habitude ?",
-        "Quel plat aimerais-tu apprendre à cuisiner ?"
+        "Quel plat typique de ton pays préfères-tu ?",
+        "Comment peut-on manger plus sainement ?"
       ],
       "questions": [
         {
           "questionId": "t1q1",
           "part": "topic1",
-          "mainText": "Que manges-tu normalement au petit-déjeuner ?",
+          "mainText": "Quel est ton goûter préféré ?",
           "alternativeTexts": [],
           "topicArea": "A",
-          "subTopic": "Food and Meals",
+          "subTopic": "Food and drink",
           "difficulty": "foundation",
-          "targetStructures": ["present"],
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q2",
           "part": "topic1",
-          "mainText": "Que vas-tu préparer pour le dîner ce soir ?",
+          "mainText": "Qui prépare le dîner chez toi ?",
           "alternativeTexts": [],
           "topicArea": "A",
-          "subTopic": "Food and Meals",
-          "difficulty": "core",
-          "targetStructures": ["near-future"],
-          "expectedTimeFrame": "future",
+          "subTopic": "Food and drink",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q3",
           "part": "topic1",
-          "mainText": "Quand as-tu mangé dans un restaurant pour la dernière fois ?",
-          "alternativeTexts": ["Décris un bon repas que tu as pris récemment."],
+          "mainText": "Parle-moi d'un bon repas que tu as mangé.",
+          "secondPartText": "Où était-ce ?",
+          "alternativeTexts": [
+            "Qu'as-tu mangé hier soir ?",
+            "Avec qui ?"
+          ],
           "topicArea": "A",
-          "subTopic": "Food and Meals",
+          "subTopic": "Food and drink",
           "difficulty": "core",
-          "targetStructures": ["perfect"],
+          "targetStructures": [
+            "perfect",
+            "imperfect"
+          ],
           "expectedTimeFrame": "past",
-          "partsExpected": 1
+          "partsExpected": 2
         },
         {
           "questionId": "t1q4",
           "part": "topic1",
-          "mainText": "Quelle personne célèbre choisirais-tu comme invité(e) pour un dîner ?",
-          "alternativeTexts": ["Où voudrais-tu manger si l'argent n'était pas un problème ?"],
+          "mainText": "Que penses-tu des repas à la cantine ?",
+          "alternativeTexts": [
+            "Que manges-tu à midi ?"
+          ],
           "topicArea": "A",
-          "subTopic": "Food and Meals",
-          "difficulty": "higher",
-          "targetStructures": ["conditional"],
-          "expectedTimeFrame": "conditional",
+          "subTopic": "Food and drink",
+          "difficulty": "core",
+          "targetStructures": [
+            "opinion",
+            "justification"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t1q5",
           "part": "topic1",
-          "mainText": "Trouves-tu la nourriture de ton pays meilleure que la cuisine étrangère ?",
+          "mainText": "Quel plat aimerais-tu faire goûter à un ami français ?",
           "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Comment compares-tu la cuisine de ta région à celle du reste du pays ?"],
+          "alternativeTexts": [
+            "Quel plat voudrais-tu apprendre à cuisiner ?",
+            "Pourquoi ?"
+          ],
           "topicArea": "A",
-          "subTopic": "Food and Meals",
-          "difficulty": "core",
-          "targetStructures": ["opinion", "justification", "comparison"],
-          "expectedTimeFrame": "present",
+          "subTopic": "Food and drink",
+          "difficulty": "higher",
+          "targetStructures": [
+            "conditional",
+            "justification"
+          ],
+          "expectedTimeFrame": "conditional",
           "partsExpected": 2
         }
       ]
     },
     "topic2": {
       "topicArea": "E",
-      "subTopic": "Holidays and Travel",
+      "subTopic": "Countries, nationalities and languages",
+      "title": "Les langues et les pays",
       "furtherQuestions": [
-        "Voyages-tu plutôt en avion, en train ou en voiture ?",
-        "Quel pays voisin du tien as-tu envie de visiter ?"
+        "Comment pratiques-tu le français en dehors de l'école ?",
+        "Que sais-tu d'un pays francophone ?"
       ],
       "questions": [
         {
           "questionId": "t2q1",
           "part": "topic2",
-          "mainText": "Comment préfères-tu voyager en vacances ?",
+          "mainText": "Quelles langues parle-t-on dans ton pays ?",
           "alternativeTexts": [],
           "topicArea": "E",
-          "subTopic": "Holidays and Travel",
+          "subTopic": "Countries, nationalities and languages",
           "difficulty": "foundation",
-          "targetStructures": ["present"],
+          "targetStructures": [
+            "present"
+          ],
           "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q2",
           "part": "topic2",
-          "mainText": "Décris un pays étranger que tu as visité.",
+          "mainText": "Depuis combien de temps apprends-tu le français ?",
           "alternativeTexts": [],
           "topicArea": "E",
-          "subTopic": "Holidays and Travel",
-          "difficulty": "core",
-          "targetStructures": ["perfect"],
-          "expectedTimeFrame": "past",
+          "subTopic": "Countries, nationalities and languages",
+          "difficulty": "foundation",
+          "targetStructures": [
+            "present"
+          ],
+          "expectedTimeFrame": "present",
           "partsExpected": 1
         },
         {
           "questionId": "t2q3",
           "part": "topic2",
-          "mainText": "Où iras-tu en vacances l'été prochain ?",
-          "alternativeTexts": ["Quelle destination voudrais-tu découvrir bientôt ?"],
+          "mainText": "Parle-moi d'un pays que tu as visité ou découvert à l'école.",
+          "alternativeTexts": [
+            "Qu'as-tu appris sur la France cette année ?"
+          ],
           "topicArea": "E",
-          "subTopic": "Holidays and Travel",
+          "subTopic": "Countries, nationalities and languages",
           "difficulty": "core",
-          "targetStructures": ["simple-future"],
-          "expectedTimeFrame": "future",
+          "targetStructures": [
+            "perfect"
+          ],
+          "expectedTimeFrame": "past",
           "partsExpected": 1
         },
         {
           "questionId": "t2q4",
           "part": "topic2",
-          "mainText": "Si tu gagnais un grand voyage, où irais-tu ?",
-          "alternativeTexts": ["Dans quel pays aimerais-tu vivre un jour ?"],
+          "mainText": "Pourquoi est-il utile d'apprendre une langue étrangère ?",
+          "secondPartText": "Quelle autre langue voudrais-tu apprendre ?",
+          "alternativeTexts": [
+            "Aimes-tu apprendre le français ?",
+            "Pourquoi ?"
+          ],
           "topicArea": "E",
-          "subTopic": "Holidays and Travel",
+          "subTopic": "Countries, nationalities and languages",
           "difficulty": "core",
-          "targetStructures": ["conditional"],
-          "expectedTimeFrame": "conditional",
-          "partsExpected": 1
+          "targetStructures": [
+            "opinion",
+            "justification",
+            "conditional"
+          ],
+          "expectedTimeFrame": "present",
+          "partsExpected": 2
         },
         {
           "questionId": "t2q5",
           "part": "topic2",
-          "mainText": "Préfères-tu les vacances à la plage ou à la montagne ?",
-          "secondPartText": "Pourquoi ?",
-          "alternativeTexts": ["Trouves-tu les voyages organisés meilleurs que les voyages indépendants ?"],
+          "mainText": "Dans quel pays aimerais-tu habiter plus tard ?",
+          "alternativeTexts": [
+            "Quel pays voudrais-tu visiter ?"
+          ],
           "topicArea": "E",
-          "subTopic": "Holidays and Travel",
-          "difficulty": "core",
-          "targetStructures": ["opinion", "justification", "comparison"],
-          "expectedTimeFrame": "present",
-          "partsExpected": 2
+          "subTopic": "Countries, nationalities and languages",
+          "difficulty": "higher",
+          "targetStructures": [
+            "conditional"
+          ],
+          "expectedTimeFrame": "conditional",
+          "partsExpected": 1
         }
       ]
     }

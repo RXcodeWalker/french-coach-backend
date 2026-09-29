@@ -5,8 +5,8 @@
   "review": {
     "status": "approved",
     "reviewedBy": "internal:claude",
-    "reviewedAt": "2026-09-28T00:00:00.000Z",
-    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 native-speaker review PENDING — do not seed or merge before it. Role play: a French friend's family celebration."
+    "reviewedAt": "2026-09-29T00:00:00.000Z",
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 waived by owner 2026-09-29; content is machine-authored and self-reviewed (G1). Role play: a French friend's family celebration."
   },
   "content": {
     "rolePlay": {
@@ -135,7 +135,7 @@
           "part": "topic1",
           "mainText": "Comment imagines-tu ta vie de famille dans quinze ans ?",
           "alternativeTexts": [
-            "Où vas-tu habiter plus tard ?"
+            "Où aimerais-tu habiter plus tard ?"
           ],
           "topicArea": "B",
           "subTopic": "Self, family and friends",
@@ -192,7 +192,7 @@
           "mainText": "Comment était ta ville il y a dix ans ?",
           "secondPartText": "Qu'est-ce qui a changé ?",
           "alternativeTexts": [
-            "Quel magasin aimais-tu à l'âge de sept ans ?",
+            "Quel magasin aimais-tu quand tu avais sept ans ?",
             "Pourquoi ?"
           ],
           "topicArea": "C",
@@ -211,7 +211,7 @@
           "part": "topic2",
           "mainText": "Qu'est-ce qui manque dans ta ville pour les jeunes ?",
           "alternativeTexts": [
-            "Quel endroit n'existe pas dans ta ville ?"
+            "Y a-t-il assez d'activités pour les jeunes dans ta ville ?"
           ],
           "topicArea": "C",
           "subTopic": "The built environment",
@@ -229,7 +229,7 @@
           "mainText": "Si tu étais maire, quel bâtiment construirais-tu ?",
           "secondPartText": "Pourquoi ?",
           "alternativeTexts": [
-            "Que voudrais-tu avoir de nouveau dans ta ville ?",
+            "Quel nouvel endroit voudrais-tu dans ta ville ?",
             "Pourquoi ?"
           ],
           "topicArea": "C",

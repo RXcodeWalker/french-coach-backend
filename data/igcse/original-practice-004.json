@@ -5,15 +5,15 @@
   "review": {
     "status": "approved",
     "reviewedBy": "internal:claude",
-    "reviewedAt": "2026-09-28T00:00:00.000Z",
-    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 native-speaker review PENDING — do not seed or merge before it. Role play: first day of a work placement in a sports shop."
+    "reviewedAt": "2026-09-29T00:00:00.000Z",
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 waived by owner 2026-09-29; content is machine-authored and self-reviewed (G1). Role play: first day of a work placement in a sports shop."
   },
   "content": {
     "rolePlay": {
       "scenarioId": "rp-original-practice-004",
       "topicArea": "D",
       "title": "Un stage dans un magasin de sport",
-      "setup": "Vous commencez un stage d'une semaine dans un magasin de sport en France. C'est votre premier jour. Je suis le/la responsable du magasin.",
+      "setup": "Vous commencez un stage d'une semaine dans un magasin de sport en France. C'est votre premier jour. Je suis responsable du magasin.",
       "examinerRegister": "vous",
       "tasks": [
         {
@@ -156,7 +156,7 @@
       "title": "Les langues et les pays",
       "furtherQuestions": [
         "Comment pratiques-tu le français en dehors de l'école ?",
-        "Que sais-tu sur un pays francophone ?"
+        "Que sais-tu d'un pays francophone ?"
       ],
       "questions": [
         {

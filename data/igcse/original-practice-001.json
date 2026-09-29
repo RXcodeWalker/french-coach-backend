@@ -5,8 +5,8 @@
   "review": {
     "status": "approved",
     "reviewedBy": "internal:claude",
-    "reviewedAt": "2026-09-28T00:00:00.000Z",
-    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 native-speaker review PENDING — do not seed or merge before it. Role play: a missed train at the station."
+    "reviewedAt": "2026-09-29T00:00:00.000Z",
+    "notes": "Rewritten in the 0520 conduct plan, Batch 5: structure modeled on the 0520/03 Teacher/Examiner Notes (June 2026) per ADR 0008, wording original. G1 self-review done (internal:claude). Originality check against the June 2026 Teacher's Notes text: clean (2026-09-28). G2 waived by owner 2026-09-29; content is machine-authored and self-reviewed (G1). Role play: a missed train at the station."
   },
   "content": {
     "rolePlay": {
@@ -227,10 +227,10 @@
         {
           "questionId": "t2q5",
           "part": "topic2",
-          "mainText": "Selon toi, comment sera le temps dans ta région dans cinquante ans ?",
+          "mainText": "Selon toi, quel temps fera-t-il dans ta région dans cinquante ans ?",
           "secondPartText": "Pourquoi ?",
           "alternativeTexts": [
-            "Fera-t-il plus chaud ou plus froid plus tard chez toi ?",
+            "Dans vingt ans, fera-t-il plus chaud ou plus froid chez toi ?",
             "Pourquoi ?"
           ],
           "topicArea": "C",

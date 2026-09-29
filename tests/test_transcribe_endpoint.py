@@ -33,7 +33,11 @@ def test_transcribe_requires_auth():
     assert resp.status_code == 401
 
 
-def test_transcribe_rejects_a_bogus_bearer_token():
+def test_transcribe_rejects_a_bogus_bearer_token(monkeypatch):
+    # Without a configured secret (CI has no .env) the verifier answers 503
+    # "Auth not configured" before it ever looks at the token, so the 401 path
+    # under test is only reachable when a secret is set.
+    monkeypatch.setattr(main, "SUPABASE_JWT_SECRET", "test-secret-not-used-to-sign-anything")
     with TestClient(main.app) as client:
         resp = client.post(
             "/api/transcribe",

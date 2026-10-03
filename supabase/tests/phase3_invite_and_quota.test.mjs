@@ -274,6 +274,17 @@ async function main() {
     ok(redemptionsCount === 0, `invite_code_redemptions cascaded away (got ${redemptionsCount})`);
   }
 
+  console.log('\n22. exam_turn_feedback row exists (60/day) and is consumable -- catches the FK->503 trap for the Coached rail');
+  {
+    const m = await redeemUser('exam-turn-feedback');
+    const { data: limitRow, error: limitErr } = await admin.from('ai_quota_limits').select('daily_limit').eq('feature', 'exam_turn_feedback').single();
+    ok(!limitErr && limitRow?.daily_limit === 60, `exam_turn_feedback daily_limit is 60${limitErr ? ` (error: ${limitErr.message})` : ` (got ${limitRow?.daily_limit})`}`);
+    const r = await admin.rpc('consume_ai_quota', { p_user_id: m.userId, p_feature: 'exam_turn_feedback', p_idempotency_key: 'turn-1' });
+    ok(!r.error && r.data.granted === true && r.data.replayed === false && r.data.used === 1, `exam_turn_feedback consume granted${r.error ? ` (error: ${r.error.message})` : ` (got ${JSON.stringify(r.data)})`}`);
+    const replay = await admin.rpc('consume_ai_quota', { p_user_id: m.userId, p_feature: 'exam_turn_feedback', p_idempotency_key: 'turn-1' });
+    ok(!replay.error && replay.data.replayed === true && replay.data.used === 1, `exam_turn_feedback replay is flagged and uncharged${replay.error ? ` (error: ${replay.error.message})` : ` (got ${JSON.stringify(replay.data)})`}`);
+  }
+
   console.log(`\n${pass} passed, ${fail} failed`);
   if (fail > 0) {
     console.log('\nFailures:');

@@ -221,7 +221,9 @@ async def exam_interpret(
     a fixed server-side prompt, output constrained to a 7-value enum — the
     per-call cost is a rounding error, and the exam session is already
     metered where the real cost is (transcribe, score, and in coached mode
-    the rail's examiner-feedback call). Metering this too would double-count
+    the rail's examiner-feedback call, which charges `exam_turn_feedback` via
+    main.py's _examiner_feedback_route — metered since Phase 3 Batch 0;
+    before that this claim was false). Metering this too would double-count
     a side-channel and, being fail-closed, turn a Supabase hiccup into a
     dropped live-routing hint on every remaining turn. If max_tokens or the
     prompt ever loosens, revisit this exemption.

@@ -1,4 +1,4 @@
-// Phase 3 Batch A — exam_feedback_reports (20261003120000). Run against the
+// Phase 3 Batch A — exam_feedback_reports (20261003101119). Run against the
 // LOCAL Supabase stack only (`npx supabase start` from backend/), never the
 // hosted project.
 //

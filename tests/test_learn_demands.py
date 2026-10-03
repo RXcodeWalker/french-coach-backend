@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ.pop("AZURE_SPEECH_KEY", None)
 os.environ.pop("AZURE_SPEECH_REGION", None)
 
-LEARN_PROMPT_FIXTURE_HASH = "6147c532c8965d83f9bb7dfa570115b9f19f6d1e01a70228389d72ed05a8f967"
+LEARN_PROMPT_FIXTURE_HASH = "be4eb69fd2f4519f627750a67369721b8cb7bc22c0e01b75241197d07591e286"
 
 
 def test_learn_demands_corpus_loaded():
@@ -122,7 +122,7 @@ def test_build_user_prompt_renders_demands_section_when_resolved():
         transcript="Ma famille est grande.",
         question_id="fam_01",
         demands_version=main.LEARN_DEMANDS_VERSION,
-        difficulty_context={"cefrTarget": "A2"},
+        difficulty_context={"tier": "intermediate"},
         demand_signals=main.DemandSignals(
             cognitiveDemand="describe",
             wordCount=4,
@@ -155,7 +155,7 @@ def test_learn_prompt_version_snapshot():
         transcript="Ma famille est grande.",
         question_id="fam_01",
         demands_version=main.LEARN_DEMANDS_VERSION,
-        difficulty_context={"cefrTarget": "A2"},
+        difficulty_context={"tier": "intermediate"},
         demand_signals=main.DemandSignals(
             cognitiveDemand="describe",
             wordCount=4,

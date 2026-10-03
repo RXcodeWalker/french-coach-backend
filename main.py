@@ -623,6 +623,64 @@ class DemandSignals(BaseModel):
     hasPastOrFuture: bool | None = None
 
 
+# ── Learn difficulty context (Phase 3 Batch F) ────────────────────────────────
+# The client sends only `{ "tier": ... }`. The CEFR target / tone / rubric
+# sentences are prompt text, so the backend owns them: a client-supplied
+# sentence would be uncapped instruction text outside any data boundary.
+# An unknown tier or any extra key is a 422 (extra="forbid").
+DifficultyTierName = Literal["beginner", "intermediate", "advanced", "expert"]
+
+_TIER_PROMPTS: dict[str, dict[str, str]] = {
+    "beginner": {
+        "cefrTarget": "A1",
+        "coachingTone": "warm and encouraging — celebrate every correct sentence; frame corrections as simple tips, not failures",
+        "coachingRubric": "Evaluate only against A1 standards. Correct present-tense sentences, basic vocabulary, and attempted communication are sufficient for a strong score. Do not penalise missing tenses or complex structures — these are not expected.",
+    },
+    "intermediate": {
+        "cefrTarget": "A2",
+        "coachingTone": "constructive and motivating — highlight what was communicated, then offer one or two clear improvements",
+        "coachingRubric": "Evaluate against A2 standards. Reward any attempt at past or future tense. Note repetitive vocabulary and overly short answers as areas to improve, but do not penalise absence of complex structures.",
+    },
+    "advanced": {
+        "cefrTarget": "B1",
+        "coachingTone": "precise and exam-focused — reference IGCSE mark-scheme language; reward sophistication; directly name weak structures",
+        "coachingRubric": "Evaluate against B1 standards. Penalise answers under 40 words, missing tense variety, repetitive vocabulary, and unsupported opinions. Reward connectors, specific vocabulary, and attempts at complex structures.",
+    },
+    "expert": {
+        "cefrTarget": "B2",
+        "coachingTone": "demanding and examiner-like — challenge vague responses, flag underdeveloped arguments, demand B2-register vocabulary; short answers are unacceptable",
+        "coachingRubric": "Evaluate against B2 standards. Penalise simple sentence structures, absence of subjunctive when prompted, single-perspective answers, shallow justification, and anglicisms. A short or simple answer is a failing response, not a partial one.",
+    },
+}
+
+# No tier (the adaptive Aim picker is live, so the learner never chose one):
+# the IGCSE default target, A2 with elements of B1 (Teacher's Notes p.11).
+# Target only — no tone or rubric sentence is invented for it.
+_DEFAULT_DIFFICULTY_PROMPT: dict[str, str] = {"cefrTarget": "A2 with elements of B1"}
+
+
+class DifficultyContext(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    tier: DifficultyTierName | None = None
+
+
+def _parse_difficulty_context(raw: Any) -> dict[str, Any] | None:
+    """Validate the client's difficultyContext; None when absent. 422 on an
+    unknown tier or any extra key (e.g. a free-text coachingRubric)."""
+    if not raw:
+        return None
+    try:
+        ctx = DifficultyContext.model_validate(raw)
+    except ValidationError as exc:
+        raise HTTPException(status_code=422, detail=f"Invalid difficultyContext: {exc.errors(include_url=False, include_input=False)}") from exc
+    return {"tier": ctx.tier} if ctx.tier else None
+
+
+def _difficulty_prompt(difficulty_context: dict[str, Any] | None) -> dict[str, str]:
+    tier = (difficulty_context or {}).get("tier")
+    return _TIER_PROMPTS.get(tier or "", _DEFAULT_DIFFICULTY_PROMPT)
+
+
 # Caps applied to FeedbackRequest content
 # (phase-3-plan-tidy-widget.md §3, "max_length on request fields") — both
 # fields are interpolated into an LLM prompt, so an uncapped field is an
@@ -647,7 +705,7 @@ class FeedbackRequest(BaseModel):
     model: str | None = None      # "groq" | "gemini" | None (auto)
     depth: FeedbackDepth = "standard"  # client-computed hint (docs Stage 3); server owns the ceiling
     skill_context: dict[str, Any] | None = None  # weak/strong skill profile from client
-    difficulty_context: dict[str, Any] | None = None  # tier/label/cefrTarget/coachingTone/coachingRubric from client
+    difficulty_context: dict[str, Any] | None = None  # {"tier"} only, validated by _parse_difficulty_context
     # docs §9.1 trust boundary: the client sends only the id + hash of the
     # demands corpus it built against — never the demand fields themselves.
     # Demands are resolved server-side via resolve_learn_demands(); on
@@ -1595,7 +1653,7 @@ JSON schema:
 # DETERMINISTIC SIGNALS rendering changes in a way that changes the rendered
 # prompt — mirrors src/domain/igcse/judgement/version.ts's SCORING_PROMPT_VERSION
 # discipline; paired with a snapshot test in backend/tests/.
-LEARN_PROMPT_VERSION = "learn-prompt-v3"
+LEARN_PROMPT_VERSION = "learn-prompt-v4"
 
 # Tracks the wire *shape* of the /v3 and /stream feedback response — separate
 # from LEARN_PROMPT_VERSION, which tracks prompt text. Bump only when the
@@ -2194,9 +2252,7 @@ def build_user_prompt(req: FeedbackRequest) -> str:
         response_load = demands.get("responseLoad") or ""
         sufficient_answer = demands.get("sufficientAnswer") or ""
         demand_level = demand_score_to_level(derive_demand_score(demands))
-        target_level = ""
-        if req.difficulty_context:
-            target_level = req.difficulty_context.get("cefrTarget") or ""
+        target_level = _difficulty_prompt(req.difficulty_context).get("cefrTarget") or ""
 
         load_hint = {
             "short": "about 15+ words",
@@ -2232,17 +2288,12 @@ def build_user_prompt(req: FeedbackRequest) -> str:
                 f"    - conditional: {present_absent(ds.hasConditional)}"
             )
 
-    difficulty_section = ""
-    if req.difficulty_context:
-        cefr_target     = req.difficulty_context.get("cefrTarget") or ""
-        coaching_tone    = req.difficulty_context.get("coachingTone") or ""
-        coaching_rubric  = req.difficulty_context.get("coachingRubric") or ""
-        if cefr_target:
-            difficulty_section += f"\n\nTARGET LEVEL: CEFR {cefr_target}."
-        if coaching_tone:
-            difficulty_section += f" Coaching tone: {coaching_tone}."
-        if coaching_rubric:
-            difficulty_section += f" {coaching_rubric}"
+    difficulty = _difficulty_prompt(req.difficulty_context)
+    difficulty_section = f"\n\nTARGET LEVEL: CEFR {difficulty['cefrTarget']}."
+    if difficulty.get("coachingTone"):
+        difficulty_section += f" Coaching tone: {difficulty['coachingTone']}."
+    if difficulty.get("coachingRubric"):
+        difficulty_section += f" {difficulty['coachingRubric']}"
 
     return (
         f"QUESTION (French): {req.question}\n\n"
@@ -3508,7 +3559,7 @@ async def feedback(request: Request, authorization: str | None = Header(None)) -
             if not transcript:
                 transcript = str(data_payload.get("transcript") or "")
             skill_context = data_payload.get("skillContext") or None
-            difficulty_context = data_payload.get("difficultyContext") or None
+            difficulty_context = _parse_difficulty_context(data_payload.get("difficultyContext"))
             question_id = data_payload.get("questionId") or None
             demands_version = data_payload.get("demandsVersion") or None
             demand_signals = data_payload.get("demandSignals") or None
@@ -3545,7 +3596,7 @@ async def feedback(request: Request, authorization: str | None = Header(None)) -
         model = str(payload.get("enginePreference") or payload.get("model") or "gemini")
         depth = _normalize_feedback_depth(payload.get("depth"))
         skill_context = payload.get("skillContext") or None
-        difficulty_context = payload.get("difficultyContext") or None
+        difficulty_context = _parse_difficulty_context(payload.get("difficultyContext"))
         question_id = payload.get("questionId") or None
         demands_version = payload.get("demandsVersion") or None
         demand_signals = payload.get("demandSignals") or None
@@ -3647,7 +3698,7 @@ async def _parse_feedback_request(request: Request) -> tuple[
             if not transcript:
                 transcript = str(data_payload.get("transcript") or "")
             skill_context = data_payload.get("skillContext") or None
-            difficulty_context = data_payload.get("difficultyContext") or None
+            difficulty_context = _parse_difficulty_context(data_payload.get("difficultyContext"))
             question_id = data_payload.get("questionId") or None
             demands_version = data_payload.get("demandsVersion") or None
             demand_signals = data_payload.get("demandSignals") or None
@@ -3678,7 +3729,7 @@ async def _parse_feedback_request(request: Request) -> tuple[
         model = str(payload.get("enginePreference") or payload.get("model") or "groq")
         depth = _normalize_feedback_depth(payload.get("depth"))
         skill_context = payload.get("skillContext") or None
-        difficulty_context = payload.get("difficultyContext") or None
+        difficulty_context = _parse_difficulty_context(payload.get("difficultyContext"))
         question_id = payload.get("questionId") or None
         demands_version = payload.get("demandsVersion") or None
         demand_signals = payload.get("demandSignals") or None

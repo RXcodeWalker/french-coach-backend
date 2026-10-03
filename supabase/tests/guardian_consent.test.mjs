@@ -101,6 +101,7 @@ async function main() {
 
   console.log('\n4/5. request + grant_guardian_consent flips the child to granted');
   let grantedChild;
+  let grantedToken;
   {
     grantedChild = await createTestUser('granted');
     await grantedChild.client.rpc('set_age_band', { p_band: 'under_13' });
@@ -112,7 +113,7 @@ async function main() {
 
     const guardianClient = createClient(API_URL, ANON_KEY, { auth: { autoRefreshToken: false, persistSession: false } });
     const { error: grantErr } = await guardianClient.rpc('grant_guardian_consent', {
-      p_token: reqData.token, p_relationship: 'Mother',
+      p_token: (grantedToken = reqData.token), p_relationship: 'Mother',
     });
     ok(!grantErr, `grant_guardian_consent succeeds anonymously${grantErr ? ` (${grantErr.message})` : ''}`);
 
@@ -140,8 +141,15 @@ async function main() {
 
   console.log('\n7. revoke_guardian_consent flips to revoked AND erases the child\'s profile');
   {
-    const { error } = await admin.rpc('revoke_guardian_consent', { p_child_user_id: grantedChild.userId });
-    ok(!error, `revoke_guardian_consent succeeds${error ? ` (${error.message})` : ''}`);
+    const anonClient = createClient(API_URL, ANON_KEY, { auth: { autoRefreshToken: false, persistSession: false } });
+    const { error: oldSig } = await anonClient.rpc('revoke_guardian_consent', { p_child_user_id: grantedChild.userId });
+    ok(!!oldSig, `revoking by child id alone is impossible${oldSig ? '' : ' (expected an error)'}`);
+    const { error: wrongTok } = await anonClient.rpc('revoke_guardian_consent', { p_token: 'x'.repeat(43) });
+    ok(!!wrongTok && wrongTok.message.includes('no_active_consent'), `a wrong token is rejected${wrongTok ? '' : ' (expected no_active_consent)'}`);
+    ok((await profileRow(grantedChild.userId)) !== null, `child's profile survives the failed attempts`);
+
+    const { error } = await anonClient.rpc('revoke_guardian_consent', { p_token: grantedToken });
+    ok(!error, `revoke_guardian_consent with the guardian's token succeeds${error ? ` (${error.message})` : ''}`);
 
     const row = await profileRow(grantedChild.userId);
     ok(row === null, `child's profiles row is erased after revocation`);

@@ -6,7 +6,7 @@ Endpoints (all registered under /api/exam):
   POST /api/exam/respond  — Advance state machine with candidate response or action
   POST /api/exam/finish   — Trigger full evaluation and return scored results
 
-Does NOT touch /api/feedback/igcse or any existing endpoint.
+Does NOT touch any existing endpoint (the legacy /api/feedback/igcse route was removed in Phase 3 Batch C).
 """
 from __future__ import annotations
 

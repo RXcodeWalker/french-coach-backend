@@ -2963,6 +2963,11 @@ async def call_ai_feedback(
 # stripped of delimiter strings and substituted only inside the template's
 # DATA BOUNDARY delimiters.
 #
+# Templates are versioned (promptVersion). examiner-v2 adds `inputMode` (spoken
+# vs typed, which steers the prompt's sound-alike rule) and declares the
+# top-level `responseKeys` the backend relays; examiner-v1 is kept for one
+# release and relays its two legacy keys. A version absent from the file is 409.
+#
 # Metered: Learn charges `feedback`, the Coached-exam rail charges
 # `exam_turn_feedback`. A quota replay (same user + key) never triggers a
 # model call — it is served from the in-memory cache or answered 409
@@ -3009,6 +3014,10 @@ class ExaminerFeedbackRequest(BaseModel):
     contextQuestion: str | None = Field(default=None, max_length=2000)
     rolePlaySetup: str | None = Field(default=None, max_length=2000)
     turnKind: Literal["topic", "rolePlay"]
+    # examiner-v2+: whether the answer was spoken (transcribed) or typed. It
+    # steers the prompt's sound-alike rule, so it is part of the idempotency
+    # key. Optional so a v1 client (which never sends it) still validates.
+    inputMode: Literal["speech", "text"] | None = None
 
     @model_validator(mode="after")
     def _check_transcript(self) -> "ExaminerFeedbackRequest":
@@ -3061,6 +3070,9 @@ def _render_examiner_prompt(tpl: dict[str, Any], req: ExaminerFeedbackRequest) -
         "transcript": _strip_examiner_delimiters(req.transcript),
         "contextQuestion": _strip_examiner_delimiters(req.contextQuestion),
         "rolePlaySetup": _strip_examiner_delimiters(req.rolePlaySetup),
+        # Unspecified is treated as typed: the prompt then reports spelling-only
+        # mistakes too, which can add noise but never hides a real error.
+        "inputMode": req.inputMode or "text",
     }
 
     # Single pass: a placeholder-looking string inside a value is never expanded.
@@ -3077,13 +3089,17 @@ def _examiner_idempotency_key(req: ExaminerFeedbackRequest) -> str:
     """sha256(profile|promptVersion|attempt|question|context|transcript),
     JSON-encoded so no field value can collide across the separators. The
     grounding retry (attempt 2) is a different key, so it costs exactly one
-    more unit and is bounded at two per answer."""
+    more unit and is bounded at two per answer. `inputMode` joins the context
+    only when sent, so a v1 client's keys are unchanged."""
+    context: list[str] = [req.turnKind, req.contextQuestion or "", req.rolePlaySetup or ""]
+    if req.inputMode:
+        context.append(req.inputMode)
     parts = [
         req.profile,
         req.promptVersion,
         req.attempt,
         req.question,
-        [req.turnKind, req.contextQuestion or "", req.rolePlaySetup or ""],
+        context,
         req.transcript,
     ]
     return hashlib.sha256(json.dumps(parts, ensure_ascii=False).encode()).hexdigest()
@@ -3152,7 +3168,7 @@ async def _call_gemini_examiner(prompt: str, max_tokens: int) -> dict[str, Any]:
 
 async def _examiner_feedback_impl(prompt: str, max_tokens: int) -> dict[str, Any]:
     """
-    Examiner-mode practice feedback: Groq -> Gemini fallback, raw JSON relay.
+    Examiner-mode practice feedback: Groq -> Gemini fallback, raw JSON.
     Deliberately bypasses enrich_feedback/_offline_feedback (both fabricate a
     `scores` default) — a network failure here must raise, not silently
     substitute coach-voice output. Grounding + the one-retry rule live
@@ -3173,10 +3189,22 @@ async def _examiner_feedback_impl(prompt: str, max_tokens: int) -> dict[str, Any
         detail = "; ".join(f"{e['provider']}: {e['type']}" for e in provider_errors) or "no provider available"
         raise HTTPException(status_code=502, detail=f"Examiner feedback unavailable — {detail}")
 
-    return {
-        "currentDescriptorCommentary": result.get("currentDescriptorCommentary") or [],
-        "improvementCommentary": result.get("improvementCommentary") or [],
-    }
+    return result
+
+
+# The two top-level keys examiner-v1 templates relay (they declare no `responseKeys`).
+_EXAMINER_LEGACY_KEYS = ("currentDescriptorCommentary", "improvementCommentary")
+
+
+def _relay_examiner_result(result: dict[str, Any], tpl: dict[str, Any]) -> dict[str, Any]:
+    """Relay only the keys the template declares (`responseKeys`, examiner-v2+),
+    or the two legacy keys for a template that declares none (examiner-v1, whose
+    absent keys default to []). The model's reply is otherwise untrusted: any
+    other top-level key is dropped here and the client validates each value."""
+    keys = tpl.get("responseKeys")
+    if isinstance(keys, list) and keys and all(isinstance(k, str) for k in keys):
+        return {k: result[k] for k in keys if k in result}
+    return {k: result.get(k) or [] for k in _EXAMINER_LEGACY_KEYS}
 
 
 async def _examiner_feedback_route(payload: Any, user_id: str) -> dict[str, Any]:
@@ -3206,7 +3234,9 @@ async def _examiner_feedback_route(payload: Any, user_id: str) -> dict[str, Any]
 
     prompt = _render_examiner_prompt(tpl, req)
     try:
-        result = await _examiner_feedback_impl(prompt, _examiner_max_output_tokens(tpl))
+        result = _relay_examiner_result(
+            await _examiner_feedback_impl(prompt, _examiner_max_output_tokens(tpl)), tpl
+        )
     except Exception:
         await release_ai_quota_grant(db, user_id, feature, idempotency_key)
         raise

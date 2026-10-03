@@ -58,21 +58,21 @@ def test_enrich_feedback_leaves_a_real_scores_object_untouched():
     assert result["providerStatus"] == "primary"
 
 
-def test_offline_igcse_feedback_still_emits_the_offline_marker():
+def test_legacy_igcse_feedback_route_is_gone():
+    """Phase 3 Batch C: /api/feedback/igcse (the legacy third scorer's HTTP
+    surface, 0 requests in 30 days of Render logs, no code callers) was
+    deleted. A deleted route returns 404, never wrong marks."""
     import main
 
-    # Stage 4 item 8 (Learn-mode coach feedback plan) removed the coach
-    # path's _offline_feedback — a second, strictly worse offline evaluator
-    # (empty best_moment, empty grammar, one hardcoded vocab entry) that could
-    # drift from coachService.evaluate (the client's single authoritative
-    # offline evaluator). Provider exhaustion on /v3 and the stream endpoint
-    # now raises instead, and apiClient.ts's existing engine chain falls
-    # through to coachService.evaluate. The legacy /api/feedback/igcse
-    # endpoint is untouched — it never routed through the coach path — so its
-    # own offline evaluator keeps the same marker.
-    igcse_req = main.IGCSEFeedbackRequest(question="Q", transcript="Une reponse.")
-    offline_igcse = main._offline_igcse_feedback(igcse_req, [])
-    assert offline_igcse["providerStatus"] == "offline_fallback"
+    paths = {getattr(r, "path", None) for r in main.app.routes}
+    assert "/api/feedback/igcse" not in paths
+    assert not hasattr(main, "IGCSEFeedbackRequest")
+    assert not hasattr(main, "_offline_igcse_feedback")
+
+    from fastapi.testclient import TestClient
+
+    resp = TestClient(main.app).post("/api/feedback/igcse", json={"question": "Q", "transcript": "T"})
+    assert resp.status_code in (404, 405)
 
 
 def test_call_ai_feedback_raises_when_all_providers_exhausted(monkeypatch):
@@ -111,5 +111,5 @@ if __name__ == "__main__":
     test_enrich_feedback_no_longer_fabricates_555_when_scores_missing_from_a_live_response()
     test_enrich_feedback_preserves_offline_fallback_marker_instead_of_overwriting_it()
     test_enrich_feedback_leaves_a_real_scores_object_untouched()
-    test_offline_igcse_feedback_still_emits_the_offline_marker()
+    test_legacy_igcse_feedback_route_is_gone()
     print("All test_enrich_feedback tests passed (run via pytest for the monkeypatch-based exhaustion case).")

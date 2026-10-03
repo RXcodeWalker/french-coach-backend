@@ -294,20 +294,6 @@ def get_gemini_multimodal():
         )
     return _gemini_multimodal_model
 
-# ── Gemini IGCSE lazy init (separate model with IGCSE system instruction) ─────
-_gemini_igcse_model = None
-
-def get_gemini_igcse():
-    global _gemini_igcse_model
-    if _gemini_igcse_model is None and GEMINI_API_KEY:
-        import google.generativeai as genai
-        genai.configure(api_key=GEMINI_API_KEY)
-        _gemini_igcse_model = genai.GenerativeModel(
-            GEMINI_MODEL,
-            system_instruction=IGCSE_SYSTEM_PROMPT,
-        )
-    return _gemini_igcse_model
-
 # ── Supabase lazy init ────────────────────────────────────────────────────────
 _supabase = None
 
@@ -637,7 +623,7 @@ class DemandSignals(BaseModel):
     hasPastOrFuture: bool | None = None
 
 
-# Caps applied to FeedbackRequest/IGCSEFeedbackRequest content
+# Caps applied to FeedbackRequest content
 # (phase-3-plan-tidy-widget.md §3, "max_length on request fields") — both
 # fields are interpolated into an LLM prompt, so an uncapped field is an
 # unbounded-cost/prompt-injection surface, same rationale as
@@ -648,9 +634,8 @@ class DemandSignals(BaseModel):
 # here would raise pydantic.ValidationError deep inside _feedback_impl —
 # an unhandled 500, not a clean 422. Truncation happens at the call sites
 # below instead (feedback() and the /api/feedback/stream parser), before
-# the value ever reaches this constructor. IGCSEFeedbackRequest IS parsed
-# directly by FastAPI (igcse_feedback(req: IGCSEFeedbackRequest, ...)), so
-# max_length there correctly produces a normal 422.
+# the value ever reaches this constructor. ExaminerFeedbackRequest IS parsed
+# directly by FastAPI, so its max_length correctly produces a normal 422.
 _FEEDBACK_QUESTION_MAX_CHARS = 2000
 _FEEDBACK_TRANSCRIPT_MAX_CHARS = 8000
 
@@ -671,14 +656,6 @@ class FeedbackRequest(BaseModel):
     question_id: str | None = None
     demands_version: str | None = None
     demand_signals: DemandSignals | None = None
-
-
-class IGCSEFeedbackRequest(BaseModel):
-    question: str = Field(..., max_length=_FEEDBACK_QUESTION_MAX_CHARS)
-    transcript: str = Field(..., max_length=_FEEDBACK_TRANSCRIPT_MAX_CHARS)
-    metrics: FeedbackMetrics | None = None
-    bullet_points: list[str] = []
-    model: str | None = None
 
 
 class VocabItem(BaseModel):
@@ -1597,97 +1574,6 @@ IGCSE_PAPERS = [
 ]
 
 
-# ── IGCSE Cambridge mark-scheme prompt ────────────────────────────────────────
-IGCSE_SYSTEM_PROMPT = """You are an IGCSE French oral examiner applying the Cambridge 0520/0680 mark scheme.
-Return ONLY a raw JSON object — no markdown, no code fences, no prose outside the JSON.
-ALL feedback text must be in English. French appears only inside « … » when quoting the student.
-
-Mark the student's response on exactly 4 criteria (0–5 each):
-
-CRITERION 1 — SYLLABUS COVERAGE
-  5: All bullet points addressed fully with relevant detail
-  4: Most bullet points addressed; minor omissions
-  3: About half the points addressed
-  2: Only a small portion of the task completed
-  1: Very limited attempt; most points missed
-  0: Nothing relevant
-
-CRITERION 2 — COMMUNICATION
-  5: Message fully clear, natural and fluent throughout
-  4: Message mostly clear; minor hesitations or imprecision
-  3: Message gets through despite errors
-  2: Significant effort required to understand
-  1: Very difficult to follow
-  0: No real communication
-
-CRITERION 3 — RANGE OF LANGUAGE
-  5: Wide vocab, varied tenses, complex structures, idiomatic expression
-  4: Good range; occasional repetition or simple structures
-  3: Adequate; reliant on simple vocab and present tense
-  2: Limited; basic words, very restricted tense use
-  1: Minimal; formulaic phrases only
-  0: No meaningful language
-
-CRITERION 4 — ACCURACY
-  5: Mostly accurate; only minor slips
-  4: Generally accurate; some errors with complex structures
-  3: More accurate than inaccurate overall
-  2: Frequent errors; inconsistent accuracy
-  1: Errors throughout; very little correct
-  0: No accurate language
-
-Grade bands (total /20): A*:18-20 | A:15-17 | B:12-14 | C:9-11 | D:6-8 | E:3-5 | U:0-2
-
-COACHING QUALITY GATE — before returning, verify:
-• per_criterion_feedback quotes specific student evidence with « »
-• best_moment cites exact student language, not generic praise
-• biggest_opportunity names a specific gap in this response, not generic advice
-
-Return exactly this JSON (no extra keys):
-{
-  "scores": { "coverage": <0-5>, "communication": <0-5>, "range": <0-5>, "accuracy": <0-5> },
-  "total": <0-20>,
-  "grade_band": "<A*/A/B/C/D/E/U>",
-  "per_criterion_feedback": {
-    "coverage": "<2-3 English sentences explaining the score, quoting specific evidence from the student's response>",
-    "communication": "<2-3 English sentences with specific evidence>",
-    "range": "<2-3 English sentences with specific evidence>",
-    "accuracy": "<2-3 English sentences with specific evidence>"
-  },
-  "bullet_point_coverage": [
-    { "bullet": "<bullet text>", "addressed": <true/false>, "comment": "<specific English note quoting student language>" }
-  ],
-  "best_moment": "<1-2 sentences. Quote exact student words with << >>. Explain why it earned IGCSE marks.>",
-  "biggest_opportunity": "<1-2 sentences. Name the single highest-impact improvement specific to THIS response.>",
-  "improved_answer": "<The student's actual response corrected: fix grammar, word order, missing articles. Preserve all their ideas.>",
-  "corrected_sample": "<A 60-90 word model French response that would score 5/5 on all criteria>",
-  "overall_advice": "<2-3 actionable English sentences for improving the score — must reference this specific attempt>"
-}"""
-
-NEWS_SYSTEM_PROMPT = """You are a professional French News Editor for a language learning platform.
-Your job is to generate a short, engaging news snippet in French (B1 level) for students to practice listening.
-Return ONLY a raw JSON object — no prose, no markdown fences, no code blocks.
-
-Guidelines:
-1. transcript: 3-4 sentences (approx 40-60 words). Clear, standard French.
-2. translation: An accurate English translation of the transcript.
-3. headline: Catchy and descriptive (in French).
-4. keywords: 4-6 essential French words used in the text.
-5. summaryPoints: 3-5 concise English sentences covering the key facts. These will be used to grade user comprehension.
-6. Difficulty: Ensure it is suitable for Intermediate (B1) level — avoid overly technical jargon but use natural phrasing.
-
-JSON schema:
-{
-  "id": "news-YYYY-MM-DD",
-  "date": "YYYY-MM-DD",
-  "headline": "string",
-  "transcript": "string",
-  "translation": "string",
-  "keywords": ["string"],
-  "summaryPoints": ["string"]
-}
-"""
-
 VOCAB_SYSTEM_PROMPT = """You are a professional French language instructor.
 Provide a list of 10 essential French words and 3 useful phrases (with English translations) for a roleplay scenario about a specific topic.
 Return ONLY a raw JSON object — no prose, no markdown fences, no code blocks.
@@ -1709,7 +1595,7 @@ JSON schema:
 # DETERMINISTIC SIGNALS rendering changes in a way that changes the rendered
 # prompt — mirrors src/domain/igcse/judgement/version.ts's SCORING_PROMPT_VERSION
 # discipline; paired with a snapshot test in backend/tests/.
-LEARN_PROMPT_VERSION = "learn-prompt-v2"
+LEARN_PROMPT_VERSION = "learn-prompt-v3"
 
 # Tracks the wire *shape* of the /v3 and /stream feedback response — separate
 # from LEARN_PROMPT_VERSION, which tracks prompt text. Bump only when the
@@ -1740,7 +1626,7 @@ COACHING QUALITY GATE — SELF-VALIDATE before returning. Reject and rewrite any
 • Fails to explain WHY something was strong or WHY something was wrong
 
 MANDATORY EVIDENCE RULES:
-• best_moment MUST quote exact student words with « » and explain why those words earn IGCSE marks
+• best_moment MUST quote exact student words with « » and explain what those words show
 • biggest_opportunity MUST name something missing from or weak in THIS specific answer
 • Every grammar item MUST quote the exact student text that triggered the error
 • Every corrections[] item MUST quote the exact student text that triggered it
@@ -1766,10 +1652,10 @@ JSON SCHEMA (return exactly this shape, no extra keys):
   "scores": {
     "comm": <0-10, Communication and Content: did the student answer the question with relevant ideas?>,
     "know": <0-10, Knowledge and Application: tense variety, connectives, complexity, idiomatic range>,
-    "acc": <0-10, Accuracy: start at 10, subtract 1.5 per major grammar error, 0.5 per minor>
+    "acc": <0-10, holistic practice judgement of accuracy; not a Cambridge mark, not a formula>
   },
 
-  "best_moment": "<1-2 sentences. MUST quote exact student words with <<>>. Explain precisely WHY this earns IGCSE marks. BAD example: 'You communicated clearly.' GOOD example: 'Your use of << parce que j\\'aime >> shows cause-and-effect linking that directly earns marks for connective use at IGCSE.'>",
+  "best_moment": "<1-2 sentences. MUST quote exact student words with <<>>. Explain precisely WHAT it shows. BAD example: 'You communicated clearly.' GOOD example: 'Your use of << parce que j\\'aime >> shows cause-and-effect linking with a connective.'>",
 
   "biggest_opportunity": "<1-2 sentences. The SINGLE highest-impact improvement for THIS answer. MUST reference what the student said or specifically omitted. BAD: 'Add more detail.' GOOD: 'Every sentence is in the present tense — adding one past event using the passé composé would immediately show tense range and push the score higher.'>",
 
@@ -1837,7 +1723,7 @@ JSON SCHEMA (return exactly this shape, no extra keys):
     }
   ],
 
-  "advanced_answer": "<A higher-level model response on the same topic showing what one IGCSE band higher looks like. Richer vocabulary, varied tenses, better connectives. 50-80 words.>",
+  "advanced_answer": "<A higher-level model response on the same topic showing a more developed version of the same answer. Richer vocabulary, varied tenses, better connectives. 50-80 words.>",
 
   "rephrase": "<Same content as improved_answer — the corrected version of the student's answer>",
 
@@ -1845,7 +1731,6 @@ JSON SCHEMA (return exactly this shape, no extra keys):
 
   "followUpQuestion": "<ONE natural French follow-up question that directly continues THIS specific conversation>",
 
-  "igcseLevel": "<Exactly one of: Foundation — Developing | Core — Secure | Extended — Mid Band | Extended — High Band>",
   "cefrLevel": "<Exactly one of: A1 | A2 | B1 | B2>",
 
   "pronunciationTips": [],
@@ -1932,7 +1817,6 @@ JSON schema (return EXACTLY this, no extra keys):
   "pronunciationTips": ["<concise English phonetic tip>"],
   "encouragement": "<1-2 warm specific sentences referencing something the student did>",
   "followUpQuestion": "<ONE natural French follow-up continuing THIS conversation>",
-  "igcseLevel": "<Foundation — Developing | Core — Secure | Extended — Mid Band | Extended — High Band>",
   "cefrLevel": "<A1 | A2 | B1 | B2>",
   "pronunciation": {
     "score": <0–10>,
@@ -2963,6 +2847,11 @@ async def call_ai_feedback(
 # stripped of delimiter strings and substituted only inside the template's
 # DATA BOUNDARY delimiters.
 #
+# Templates are versioned (promptVersion). examiner-v2 adds `inputMode` (spoken
+# vs typed, which steers the prompt's sound-alike rule) and declares the
+# top-level `responseKeys` the backend relays; examiner-v1 is kept for one
+# release and relays its two legacy keys. A version absent from the file is 409.
+#
 # Metered: Learn charges `feedback`, the Coached-exam rail charges
 # `exam_turn_feedback`. A quota replay (same user + key) never triggers a
 # model call — it is served from the in-memory cache or answered 409
@@ -3009,6 +2898,10 @@ class ExaminerFeedbackRequest(BaseModel):
     contextQuestion: str | None = Field(default=None, max_length=2000)
     rolePlaySetup: str | None = Field(default=None, max_length=2000)
     turnKind: Literal["topic", "rolePlay"]
+    # examiner-v2+: whether the answer was spoken (transcribed) or typed. It
+    # steers the prompt's sound-alike rule, so it is part of the idempotency
+    # key. Optional so a v1 client (which never sends it) still validates.
+    inputMode: Literal["speech", "text"] | None = None
 
     @model_validator(mode="after")
     def _check_transcript(self) -> "ExaminerFeedbackRequest":
@@ -3061,6 +2954,9 @@ def _render_examiner_prompt(tpl: dict[str, Any], req: ExaminerFeedbackRequest) -
         "transcript": _strip_examiner_delimiters(req.transcript),
         "contextQuestion": _strip_examiner_delimiters(req.contextQuestion),
         "rolePlaySetup": _strip_examiner_delimiters(req.rolePlaySetup),
+        # Unspecified is treated as typed: the prompt then reports spelling-only
+        # mistakes too, which can add noise but never hides a real error.
+        "inputMode": req.inputMode or "text",
     }
 
     # Single pass: a placeholder-looking string inside a value is never expanded.
@@ -3077,13 +2973,17 @@ def _examiner_idempotency_key(req: ExaminerFeedbackRequest) -> str:
     """sha256(profile|promptVersion|attempt|question|context|transcript),
     JSON-encoded so no field value can collide across the separators. The
     grounding retry (attempt 2) is a different key, so it costs exactly one
-    more unit and is bounded at two per answer."""
+    more unit and is bounded at two per answer. `inputMode` joins the context
+    only when sent, so a v1 client's keys are unchanged."""
+    context: list[str] = [req.turnKind, req.contextQuestion or "", req.rolePlaySetup or ""]
+    if req.inputMode:
+        context.append(req.inputMode)
     parts = [
         req.profile,
         req.promptVersion,
         req.attempt,
         req.question,
-        [req.turnKind, req.contextQuestion or "", req.rolePlaySetup or ""],
+        context,
         req.transcript,
     ]
     return hashlib.sha256(json.dumps(parts, ensure_ascii=False).encode()).hexdigest()
@@ -3152,7 +3052,7 @@ async def _call_gemini_examiner(prompt: str, max_tokens: int) -> dict[str, Any]:
 
 async def _examiner_feedback_impl(prompt: str, max_tokens: int) -> dict[str, Any]:
     """
-    Examiner-mode practice feedback: Groq -> Gemini fallback, raw JSON relay.
+    Examiner-mode practice feedback: Groq -> Gemini fallback, raw JSON.
     Deliberately bypasses enrich_feedback/_offline_feedback (both fabricate a
     `scores` default) — a network failure here must raise, not silently
     substitute coach-voice output. Grounding + the one-retry rule live
@@ -3173,10 +3073,22 @@ async def _examiner_feedback_impl(prompt: str, max_tokens: int) -> dict[str, Any
         detail = "; ".join(f"{e['provider']}: {e['type']}" for e in provider_errors) or "no provider available"
         raise HTTPException(status_code=502, detail=f"Examiner feedback unavailable — {detail}")
 
-    return {
-        "currentDescriptorCommentary": result.get("currentDescriptorCommentary") or [],
-        "improvementCommentary": result.get("improvementCommentary") or [],
-    }
+    return result
+
+
+# The two top-level keys examiner-v1 templates relay (they declare no `responseKeys`).
+_EXAMINER_LEGACY_KEYS = ("currentDescriptorCommentary", "improvementCommentary")
+
+
+def _relay_examiner_result(result: dict[str, Any], tpl: dict[str, Any]) -> dict[str, Any]:
+    """Relay only the keys the template declares (`responseKeys`, examiner-v2+),
+    or the two legacy keys for a template that declares none (examiner-v1, whose
+    absent keys default to []). The model's reply is otherwise untrusted: any
+    other top-level key is dropped here and the client validates each value."""
+    keys = tpl.get("responseKeys")
+    if isinstance(keys, list) and keys and all(isinstance(k, str) for k in keys):
+        return {k: result[k] for k in keys if k in result}
+    return {k: result.get(k) or [] for k in _EXAMINER_LEGACY_KEYS}
 
 
 async def _examiner_feedback_route(payload: Any, user_id: str) -> dict[str, Any]:
@@ -3206,7 +3118,9 @@ async def _examiner_feedback_route(payload: Any, user_id: str) -> dict[str, Any]
 
     prompt = _render_examiner_prompt(tpl, req)
     try:
-        result = await _examiner_feedback_impl(prompt, _examiner_max_output_tokens(tpl))
+        result = _relay_examiner_result(
+            await _examiner_feedback_impl(prompt, _examiner_max_output_tokens(tpl)), tpl
+        )
     except Exception:
         await release_ai_quota_grant(db, user_id, feature, idempotency_key)
         raise
@@ -4146,131 +4060,6 @@ async def generate_drill(
             "tip": issue or "Focus on one sound at a time, then rebuild the full word.",
             "source": "offline_fallback",
         }
-
-
-# ── IGCSE feedback ────────────────────────────────────────────────────────────
-
-def build_igcse_prompt(req: IGCSEFeedbackRequest) -> str:
-    bullets = "\n".join(f"  • {b}" for b in req.bullet_points) if req.bullet_points else "  (none provided)"
-    m = req.metrics.model_dump(exclude_none=True) if req.metrics else {}
-    m.pop("wordProbabilities", None)
-    return (
-        f"TASK: {req.question}\n\n"
-        f"BULLET POINTS THE STUDENT MUST ADDRESS:\n{bullets}\n\n"
-        f"STUDENT TRANSCRIPT: {req.transcript}\n\n"
-        f"DELIVERY METRICS: {json.dumps(m, ensure_ascii=False)}\n\n"
-        f"Apply the Cambridge 0520 mark scheme and return the JSON now."
-    )
-
-
-async def _call_groq_igcse(prompt: str) -> dict[str, Any]:
-    groq = get_groq()
-    if not groq:
-        raise RuntimeError("Groq not configured")
-
-    async def operation() -> dict[str, Any]:
-        resp = await groq.chat.completions.create(
-            model=GROQ_MODEL,
-            response_format={"type": "json_object"},
-            messages=[
-                {"role": "system", "content": IGCSE_SYSTEM_PROMPT},
-                {"role": "user", "content": prompt},
-            ],
-            temperature=0.3,
-            max_tokens=_groq_token_budget(1500),
-            **_groq_reasoning_kwargs(),
-        )
-        result = extract_json(resp.choices[0].message.content)
-        result["modelUsed"] = f"groq/{GROQ_MODEL}"
-        return result
-
-    return await _run_with_retries("groq-igcse", operation)
-
-
-async def _call_gemini_igcse(prompt: str) -> dict[str, Any]:
-    gemini = get_gemini_igcse()
-    if not gemini:
-        raise RuntimeError("Gemini not configured")
-
-    async def operation() -> dict[str, Any]:
-        response = await asyncio.to_thread(gemini.generate_content, prompt)
-        result = extract_json(getattr(response, "text", "") or "")
-        result["modelUsed"] = f"gemini/{GEMINI_MODEL}"
-        return result
-
-    return await _run_with_retries("gemini-igcse", operation)
-
-
-def _offline_igcse_feedback(req: IGCSEFeedbackRequest, provider_errors: list[dict[str, str]] | None = None) -> dict[str, Any]:
-    words = re.findall(r"\b[\w'-]+\b", req.transcript or "", flags=re.UNICODE)
-    word_count = len(words)
-    base = 2 if word_count < 20 else 3 if word_count < 60 else 4
-    scores = {
-        "coverage": min(5, base + (1 if req.bullet_points and word_count >= 40 else 0)),
-        "communication": min(5, base),
-        "range": min(5, base),
-        "accuracy": min(5, max(1, base - 1)),
-    }
-    total = sum(scores.values())
-    return {
-        "scores": scores,
-        "total": total,
-        "grade_band": "A" if total >= 15 else "B" if total >= 12 else "C" if total >= 9 else "D" if total >= 6 else "E",
-        "per_criterion_feedback": {
-            "coverage": "Offline estimate: coverage was inferred from transcript length and available bullet points.",
-            "communication": "Offline estimate: the response appears usable, but AI grading is temporarily unavailable.",
-            "range": "Offline estimate: add varied tenses, opinions, and connectives to improve range.",
-            "accuracy": "Offline estimate: detailed grammar checking is unavailable while providers are down.",
-        },
-        "strengths": ["You produced a response that can be reviewed and improved."],
-        "next_steps": ["Try again later for full AI marking.", "Add reasons, examples, and time phrases."],
-        "modelUsed": "offline/local-igcse-evaluator",
-        "providerStatus": "offline_fallback",
-        "providerErrors": provider_errors or [],
-    }
-
-
-async def call_igcse_feedback(req: IGCSEFeedbackRequest) -> dict[str, Any]:
-    prompt = build_igcse_prompt(req)
-    provider_errors: list[dict[str, str]] = []
-
-    result = await _try_feedback_provider(
-        "gemini-igcse",
-        lambda: _call_gemini_igcse(prompt),
-        provider_errors,
-    )
-    if result:
-        return result
-
-    result = await _try_feedback_provider(
-        "groq-igcse",
-        lambda: _call_groq_igcse(prompt),
-        provider_errors,
-    )
-    if result:
-        result["providerErrors"] = provider_errors
-        return result
-
-    return _offline_igcse_feedback(req, provider_errors)
-
-
-@app.post("/api/feedback/igcse")
-@rate_limit("20/minute")
-async def igcse_feedback(request: Request, req: IGCSEFeedbackRequest, authorization: str | None = Header(None)) -> dict[str, Any]:
-    user_id = verify_jwt(authorization)
-    if not req.transcript.strip():
-        raise HTTPException(status_code=400, detail="transcript is empty")
-    # No cache exists for this route (unlike /api/feedback) — every request
-    # reaches a provider, so quota is consumed unconditionally, once per
-    # request. Idempotency key: sha256(question_id+transcript) per the plan,
-    # since IGCSEFeedbackRequest has no equivalent cache-key function.
-    idempotency_key = hashlib.sha256(f"{req.question}::{req.transcript}".encode()).hexdigest()
-    await consume_ai_quota_or_503(get_supabase(), user_id, "feedback", idempotency_key)
-    result = await call_igcse_feedback(req)
-    if "total" not in result and "scores" in result:
-        s = result["scores"]
-        result["total"] = sum(s.get(k, 0) for k in ("coverage", "communication", "range", "accuracy"))
-    return result
 
 
 @app.get("/api/igcse-papers")
@@ -5338,8 +5127,9 @@ _configure_pronunciation(
 
 # Coaching narrator LLM callers (accent-analyzer plan §8) — own system
 # prompt, so these can't reuse get_groq()/get_gemini() (which pin the
-# unrelated feedback SYSTEM_PROMPT). Mirrors _call_groq_igcse/_call_gemini_igcse's
-# pattern: DI'd into the router rather than the router importing main.py.
+# unrelated feedback SYSTEM_PROMPT). Same
+# pattern as the other provider callers: DI'd into the router rather than
+# the router importing main.py.
 from services.pronunciation.coach_narrator import _SYSTEM_PROMPT as _COACH_SYSTEM_PROMPT
 
 

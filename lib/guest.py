@@ -16,14 +16,17 @@ spend backstop:
   (the client's "sign in again" path), never silently downgraded to a guest.
 
 Kill switch: set ``GUEST_AI_ENABLED=0`` and every route is back to JWT-only.
-Cap: ``GUEST_AI_DAILY_LIMIT`` (default 15 units per guest per feature per UTC day).
+Caps (lifetime of the process, not daily — the app itself shows guests 3 free
+attempts then asks them to sign in; these are the looser server backstop):
+``GUEST_AI_LIMIT`` (default 5: feedback / roleplay / examiner calls) and
+``GUEST_AI_AUDIO_LIMIT`` (default 8: transcribe / pronunciation, which a single
+attempt can use more than once). Both reset when the server restarts.
 """
 
 from __future__ import annotations
 
 import os
 import threading
-from datetime import datetime, timezone
 from typing import Any, Callable
 
 from fastapi import Request
@@ -31,12 +34,13 @@ from fastapi import Request
 from lib.auth import verify_supabase_jwt
 
 GUEST_PREFIX = "guest:"
-_DEFAULT_DAILY_LIMIT = 15
+_DEFAULT_LIMIT = 5
+_DEFAULT_AUDIO_LIMIT = 8
+_AUDIO_FEATURES = {"transcribe", "pronunciation"}
 _MAX_TRACKED = 50_000  # hard bound on memory if someone sprays IPs
 
 _lock = threading.Lock()
-_day = ""
-# (guest_id, feature) -> idempotency keys already charged today
+# (guest_id, feature) -> idempotency keys already charged
 _grants: dict[tuple[str, str], set[str]] = {}
 
 
@@ -44,11 +48,16 @@ def guest_ai_enabled() -> bool:
     return os.getenv("GUEST_AI_ENABLED", "1").strip().lower() not in ("0", "false", "no", "off")
 
 
-def _daily_limit() -> int:
+def _limit_for(feature: str) -> int:
+    name, default = (
+        ("GUEST_AI_AUDIO_LIMIT", _DEFAULT_AUDIO_LIMIT)
+        if feature in _AUDIO_FEATURES
+        else ("GUEST_AI_LIMIT", _DEFAULT_LIMIT)
+    )
     try:
-        return max(0, int(os.getenv("GUEST_AI_DAILY_LIMIT", str(_DEFAULT_DAILY_LIMIT))))
+        return max(0, int(os.getenv(name, str(default))))
     except ValueError:
-        return _DEFAULT_DAILY_LIMIT
+        return default
 
 
 def is_guest(user_id: str | None) -> bool:
@@ -78,32 +87,23 @@ def verify_user_or_guest(
     return str(verify_supabase_jwt(authorization)["sub"])
 
 
-def _roll_day() -> None:
-    global _day
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    if today != _day:
-        _day = today
-        _grants.clear()
-
-
 def consume_guest_quota(guest_id: str, feature: str, idempotency_key: str) -> dict[str, Any]:
     """Same contract as ai_quota.consume_ai_quota_or_503 for a guest: returns a
     granted dict (``replayed`` true for an already-charged key) or raises 429."""
     from lib.ai_quota import QuotaDenied  # local: ai_quota imports this module
 
-    limit = _daily_limit()
+    limit = _limit_for(feature)
     with _lock:
-        _roll_day()
         bucket_key = (guest_id, feature)
         if bucket_key not in _grants and len(_grants) >= _MAX_TRACKED:
-            raise QuotaDenied(status_code=429, detail={"error": "guest_daily_limit", "limit": limit})
+            raise QuotaDenied(status_code=429, detail={"error": "guest_limit_reached", "limit": limit})
         keys = _grants.setdefault(bucket_key, set())
         if idempotency_key in keys:
             return {"granted": True, "replayed": True, "used": len(keys), "limit": limit}
         if len(keys) >= limit:
             raise QuotaDenied(
                 status_code=429,
-                detail={"error": "guest_daily_limit", "used": len(keys), "limit": limit, "granted": False},
+                detail={"error": "guest_limit_reached", "used": len(keys), "limit": limit, "granted": False},
             )
         keys.add(idempotency_key)
         return {"granted": True, "replayed": False, "used": len(keys), "limit": limit}

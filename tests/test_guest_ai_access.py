@@ -47,7 +47,7 @@ def test_bad_token_is_never_downgraded_to_guest():
 
 
 def test_guest_quota_caps_per_feature_and_replays_are_free(monkeypatch):
-    monkeypatch.setenv("GUEST_AI_DAILY_LIMIT", "2")
+    monkeypatch.setenv("GUEST_AI_LIMIT", "2")
     g = "guest:1.2.3.4"
     run = lambda k, f="feedback": asyncio.run(consume_ai_quota_or_503(None, g, f, k))
     assert run("a")["granted"] and run("b")["granted"]
@@ -56,6 +56,10 @@ def test_guest_quota_caps_per_feature_and_replays_are_free(monkeypatch):
         run("c")
     assert e.value.status_code == 429
     assert run("c", "transcribe")["granted"]  # separate feature bucket
+    monkeypatch.setenv("GUEST_AI_AUDIO_LIMIT", "1")
+    assert run("t1", "pronunciation")["granted"]
+    with pytest.raises(QuotaDenied):
+        run("t2", "pronunciation")
 
 
 def test_guest_never_touches_supabase():

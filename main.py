@@ -52,6 +52,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 
+from lib.guest import verify_user_or_guest
 from lib.ai_quota import QuotaDenied, consume_ai_quota_or_503, release_ai_quota_grant
 from lib.auth import require_admin, verify_supabase_jwt
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
@@ -3558,7 +3559,7 @@ async def feedback(request: Request, authorization: str | None = Header(None)) -
       - multipart/form-data (with optional audio file), or
       - application/json (transcript-only flow)
     """
-    user_id = verify_jwt(authorization)
+    user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
     content_type = (request.headers.get("content-type") or "").lower()
 
     question = ""
@@ -3798,7 +3799,7 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
     as the Groq model generates them, then a final `complete` chunk.
     Degrades gracefully to a single buffered `complete` for Gemini/offline.
     """
-    user_id = verify_jwt(authorization)
+    user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
     try:
         (question, transcript, model, depth, metrics_json,
          skill_context, difficulty_context, audio_bytes, audio_mime,
@@ -4371,7 +4372,7 @@ async def transcribe(
     authorization: str | None = Header(None),
 ) -> dict[str, Any]:
     """Transcribe uploaded audio. Tries Groq Whisper first, falls back to faster-whisper."""
-    user_id = verify_jwt(authorization)
+    user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
 
     # Content-Length is client-supplied and not a real cap — read in bounded
     # chunks and abort before ever writing to disk if the upload exceeds the cap,
@@ -4916,7 +4917,7 @@ ROLEPLAY_MAX_MESSAGE_CHARS = 1000
 @app.post("/api/roleplay/turn")
 @rate_limit("20/minute")
 async def roleplay_turn(request: Request, req: RoleplayTurnRequest, authorization: str | None = Header(None)) -> dict:
-    user_id = verify_jwt(authorization)
+    user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
     # A missing turn_id (an old client not yet sending it) degrades to
     # "no dedup, always consume" rather than erroring — see RoleplayTurnRequest.
     idempotency_key = req.turn_id or uuid.uuid4().hex

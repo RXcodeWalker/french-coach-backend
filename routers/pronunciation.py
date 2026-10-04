@@ -22,6 +22,7 @@ from fastapi import APIRouter, File, Form, Header, HTTPException, Request, Uploa
 
 from lib.ai_quota import consume_ai_quota_or_503
 from lib.auth import verify_supabase_jwt
+from lib.guest import is_guest, verify_user_or_guest
 from models.pronunciation import PronunciationAssessmentResponse
 from services.cache import BoundedTTLCache
 from services.phonology import rules as phonology_rules
@@ -284,8 +285,7 @@ async def pronunciation_evaluate(
     if coaching not in ("none", "full"):
         raise HTTPException(status_code=422, detail="coaching must be 'none' or 'full'")
 
-    payload = verify_supabase_jwt(authorization)
-    user_id = str(payload.get("sub") or "")
+    user_id = verify_user_or_guest(authorization, request, lambda a: str(verify_supabase_jwt(a).get("sub") or ""))
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid token")
 
@@ -444,6 +444,10 @@ async def pronunciation_evaluate(
                 quota = _degraded_quota("could_not_assess")
             elif _coach_call_groq is None:
                 quota = _degraded_quota("coaching_unavailable")
+            elif is_guest(user_id):
+                # Guests have no profile row for the coaching-quota RPC; the
+                # base assessment is open to them, the extra coaching is not.
+                quota = _degraded_quota("sign_in_required")
             else:
                 # user_id is already verified non-empty at the top of this
                 # handler (base assessment now requires auth) — no need to

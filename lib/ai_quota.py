@@ -25,6 +25,8 @@ from typing import Any
 
 from fastapi import HTTPException
 
+from lib.guest import consume_guest_quota, is_guest, release_guest_grant
+
 log = logging.getLogger("uvicorn.error")
 
 
@@ -44,7 +46,12 @@ async def consume_ai_quota_or_503(db, user_id: str, feature: str, idempotency_ke
     could not be consulted at all (db is None, RPC raises, or the response
     is malformed) — the caller must not invoke the paid provider in that
     case.
+
+    A guest id (``guest:<ip>``, lib/guest.py) never reaches Supabase: it is
+    charged against the in-process guest cap instead.
     """
+    if is_guest(user_id):
+        return consume_guest_quota(user_id, feature, idempotency_key)
     if db is None:
         raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"})
     try:
@@ -77,6 +84,9 @@ async def release_ai_quota_grant(db, user_id: str, feature: str, idempotency_key
     work it paid for never completed). Logged at WARNING on failure, never
     raised: a failed refund must not fail the response to the caller, who
     already has their real result or real error from the provider call."""
+    if is_guest(user_id):
+        release_guest_grant(user_id, feature, idempotency_key)
+        return
     if db is None:
         return
     try:

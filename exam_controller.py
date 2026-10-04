@@ -26,6 +26,7 @@ from pydantic import BaseModel
 from exam_sessions import create_session, delete_session, get_session, update_session
 from evaluator_service import evaluate_full_exam
 from lib.auth import verify_supabase_jwt
+from lib.guest import verify_user_or_guest
 from lib.model_config import GEMINI_MODEL, GROQ_MODEL, groq_reasoning_kwargs, groq_token_budget
 from state_manager import advance_state, state_name
 
@@ -229,7 +230,7 @@ async def exam_interpret(
     dropped live-routing hint on every remaining turn. If max_tokens or the
     prompt ever loosens, revisit this exemption.
     """
-    verify_supabase_jwt(authorization)
+    verify_user_or_guest(authorization, request, lambda a: verify_supabase_jwt(a)["sub"])
     transcript = (req.transcript or "").strip()
     if not transcript:
         return {"speechAct": "silence", "hesitation": False, "confidence": 1.0}

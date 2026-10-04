@@ -2350,11 +2350,31 @@ def _log_provider_failure(
     )
 
 
+def _is_daily_quota_exhausted(exc: Exception) -> bool:
+    """A Gemini 429 for a per-day quota (e.g. the free tier's 20 requests/day):
+    it resets hours from now, so retrying it only adds latency before the 502."""
+    return "PerDay" in str(exc)
+
+
+def _is_groq_json_validate_failed(exc: Exception) -> bool:
+    """Groq's 400 `json_validate_failed`: the model sampled malformed JSON in
+    json_object mode. A resample usually succeeds, so it is transient, unlike
+    every other 400."""
+    body = getattr(exc, "body", None)
+    if isinstance(body, dict):
+        err = body.get("error", body)
+        if isinstance(err, dict) and err.get("code") == "json_validate_failed":
+            return True
+    return "json_validate_failed" in str(exc)
+
+
 def _is_retryable(exc: Exception) -> bool:
     """True for transient 429/503 errors that merit a retry."""
     try:
         from google.api_core.exceptions import ResourceExhausted, ServiceUnavailable
-        if isinstance(exc, (ResourceExhausted, ServiceUnavailable)):
+        if isinstance(exc, ResourceExhausted):
+            return not _is_daily_quota_exhausted(exc)
+        if isinstance(exc, ServiceUnavailable):
             return True
     except ImportError:
         pass
@@ -2363,6 +2383,8 @@ def _is_retryable(exc: Exception) -> bool:
         if isinstance(exc, _groq.RateLimitError):
             return True
         if isinstance(exc, _groq.APIStatusError) and getattr(exc, "status_code", None) == 503:
+            return True
+        if isinstance(exc, _groq.BadRequestError) and _is_groq_json_validate_failed(exc):
             return True
     except ImportError:
         pass
@@ -2383,6 +2405,26 @@ def _log_feedback_latency(
     )
 
 
+# Groq's tokens-per-minute 429 says when the window frees up (`retry-after`,
+# typically a few seconds). Waiting that long turns the retry into a success
+# instead of a second 429; anything longer than this cap isn't worth holding
+# the request open for, so the normal backoff applies and the fallback runs.
+_MAX_RETRY_AFTER_SEC = 10.0
+
+
+def _retry_after_seconds(exc: Exception) -> float:
+    """The provider's `retry-after` hint in seconds, or 0 when absent or too long."""
+    response = getattr(exc, "response", None)
+    headers = getattr(response, "headers", None)
+    if headers is None:
+        return 0.0
+    try:
+        value = float(headers.get("retry-after") or 0)
+    except (TypeError, ValueError):
+        return 0.0
+    return value if 0 < value <= _MAX_RETRY_AFTER_SEC else 0.0
+
+
 async def _run_with_retries(
     provider: str,
     operation,
@@ -2400,7 +2442,8 @@ async def _run_with_retries(
             if attempt >= attempts or not _is_retryable(exc):
                 break
             base_delay = _RETRY_DELAYS[min(attempt - 1, len(_RETRY_DELAYS) - 1)]
-            await asyncio.sleep(base_delay + random.uniform(0, base_delay * 0.5))
+            delay = base_delay + random.uniform(0, base_delay * 0.5)
+            await asyncio.sleep(max(delay, _retry_after_seconds(exc)))
 
     if last_exc:
         raise last_exc

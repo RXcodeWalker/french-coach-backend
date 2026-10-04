@@ -94,6 +94,72 @@ def test_run_with_retries_does_not_retry_on_400(monkeypatch):
     assert len(attempts) == 1
 
 
+def _make_groq_error(status_code: int, code: str, headers: dict[str, str] | None = None):
+    import groq
+
+    request = httpx.Request("POST", "https://api.groq.com/openai/v1/chat/completions")
+    body = {"error": {"message": "boom", "type": "invalid_request_error", "code": code}}
+    response = httpx.Response(status_code, request=request, json=body, headers=headers or {})
+    return groq.Groq(api_key="test")._make_status_error_from_response(response)
+
+
+def test_is_retryable_true_for_groq_json_validate_failed():
+    """Groq json_object mode 400s when the model samples malformed JSON; a
+    resample usually succeeds (seen live on the Coached rail, 2026-10-04)."""
+    import main
+
+    assert main._is_retryable(_make_groq_error(400, "json_validate_failed")) is True
+
+
+def test_is_retryable_false_for_other_groq_400():
+    import main
+
+    assert main._is_retryable(_make_groq_error(400, "invalid_request")) is False
+
+
+def test_is_retryable_false_for_gemini_daily_quota():
+    from google.api_core.exceptions import ResourceExhausted
+
+    import main
+
+    daily = ResourceExhausted("Quota exceeded quota_id: GenerateRequestsPerDayPerProjectPerModel-FreeTier")
+    per_minute = ResourceExhausted("Quota exceeded quota_id: GenerateRequestsPerMinutePerProjectPerModel")
+    assert main._is_retryable(daily) is False
+    assert main._is_retryable(per_minute) is True
+
+
+def test_retry_after_seconds_honours_short_hint_only():
+    import main
+
+    assert main._retry_after_seconds(_make_groq_error(429, "rate_limit_exceeded", {"retry-after": "7"})) == 7.0
+    assert main._retry_after_seconds(_make_groq_error(429, "rate_limit_exceeded", {"retry-after": "3600"})) == 0.0
+    assert main._retry_after_seconds(_make_groq_error(429, "rate_limit_exceeded")) == 0.0
+    assert main._retry_after_seconds(_make_http_status_error(429)) == 0.0
+
+
+def test_run_with_retries_waits_for_retry_after(monkeypatch):
+    import main
+
+    monkeypatch.setattr(main, "_RETRY_DELAYS", (0.0, 0.0))
+    slept: list[float] = []
+
+    async def fake_sleep(seconds: float) -> None:
+        slept.append(seconds)
+
+    monkeypatch.setattr(main.asyncio, "sleep", fake_sleep)
+    attempts: list[int] = []
+
+    async def operation():
+        attempts.append(1)
+        if len(attempts) < 2:
+            raise _make_groq_error(429, "rate_limit_exceeded", {"retry-after": "7"})
+        return {"ok": True}
+
+    result = asyncio.run(main._run_with_retries("test-provider", operation, attempts=2))
+    assert result == {"ok": True}
+    assert slept == [7.0]
+
+
 if __name__ == "__main__":
     test_is_retryable_unwraps_httpx_http_status_error_429()
     test_is_retryable_unwraps_httpx_http_status_error_503()

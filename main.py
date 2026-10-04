@@ -93,6 +93,9 @@ from services.pronunciation.fallback import assess_with_fallback
 log = logging.getLogger("french-coach")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
+# Defaults live in lib/model_config.py so every module shares one model ID.
+import lib.model_config as _model_config
+
 # ── Config ────────────────────────────────────────────────────────────────────
 GROQ_API_KEY        = os.getenv("GROQ_API_KEY", "").strip()
 GEMINI_API_KEY      = os.getenv("GEMINI_API_KEY", "").strip()
@@ -101,25 +104,25 @@ GEMINI_API_KEY      = os.getenv("GEMINI_API_KEY", "").strip()
 # gemini-2.5-flash now 404 ("no longer available to new users") as Google
 # retires the 2.x line. gemini-3.5-flash is the current callable default;
 # override via env if Google moves the goalposts again.
-GEMINI_MODEL        = os.getenv("GEMINI_MODEL", "gemini-3.5-flash").strip()
+GEMINI_MODEL        = _model_config.GEMINI_MODEL
 # Groq retired the Llama chat line: llama-3.3-70b-versatile now 404s with
 # model_not_found for this key, which took every Groq path down at once
 # (feedback, streaming, examiner, IGCSE, roleplay, pronunciation coach) and left
 # the client falling back to offline evaluation. openai/gpt-oss-120b is the
 # current general-purpose chat model on the account. Override via env if Groq
 # moves the goalposts again.
-GROQ_MODEL          = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b").strip()
+GROQ_MODEL          = _model_config.GROQ_MODEL
 # gpt-oss is a reasoning model: it spends completion tokens thinking before it
 # answers. "low" holds that to ~50-250 tokens, which is all this workload needs,
 # and keeps time-to-first-content short on the streaming path. Its reasoning
 # arrives in a separate `reasoning` delta, so streamed `content` stays pure JSON
 # and _emit_ready_sections keeps working unchanged. Set this to "" if GROQ_MODEL
 # is pointed at a non-reasoning model, which would reject the parameter.
-GROQ_REASONING_EFFORT = os.getenv("GROQ_REASONING_EFFORT", "low").strip()
+GROQ_REASONING_EFFORT = _model_config.GROQ_REASONING_EFFORT
 # Reasoning tokens come out of the same max_tokens budget as the answer, so a
 # call site asking for 300 tokens could otherwise have all 300 eaten by the
 # thinking phase and return empty. Every budget is topped up by this much.
-GROQ_REASONING_TOKEN_RESERVE = int(os.getenv("GROQ_REASONING_TOKEN_RESERVE", "512"))
+GROQ_REASONING_TOKEN_RESERVE = _model_config.GROQ_REASONING_TOKEN_RESERVE
 # Measured ~23s for a full feedback prompt against gemini-3.5-flash; the health
 # probe sends a trivial one but still pays the model's thinking latency.
 GEMINI_PROBE_TIMEOUT_SEC = float(os.getenv("GEMINI_PROBE_TIMEOUT_SEC", "12"))

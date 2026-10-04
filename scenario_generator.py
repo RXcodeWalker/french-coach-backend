@@ -7,8 +7,7 @@ from typing import Any, Dict
 
 log = logging.getLogger("french-coach.scenario")
 
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile").strip()
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash").strip()
+from lib.model_config import GEMINI_MODEL, GROQ_MODEL, groq_reasoning_kwargs, groq_token_budget
 
 _SCENARIO_SYSTEM_PROMPT = """\
 You are a French Language Learning Architect. Your goal is to take a user's description of a scenario and turn it into a structured, high-quality roleplay module.
@@ -77,9 +76,10 @@ async def generate_scenario(user_description: str) -> Dict[str, Any]:
                     {"role": "system", "content": _SCENARIO_SYSTEM_PROMPT},
                     {"role": "user", "content": prompt}
                 ],
-                max_tokens=1000,
+                max_tokens=groq_token_budget(1000),
                 temperature=0.7,
-                response_format={"type": "json_object"}
+                response_format={"type": "json_object"},
+                **groq_reasoning_kwargs(),
             )
             return json.loads(resp.choices[0].message.content)
         except Exception as e:

@@ -26,6 +26,7 @@ from pydantic import BaseModel
 from exam_sessions import create_session, delete_session, get_session, update_session
 from evaluator_service import evaluate_full_exam
 from lib.auth import verify_supabase_jwt
+from lib.model_config import GEMINI_MODEL, GROQ_MODEL, groq_reasoning_kwargs, groq_token_budget
 from state_manager import advance_state, state_name
 
 _SUPABASE_URL = os.getenv("SUPABASE_URL", "").strip()
@@ -50,8 +51,6 @@ router = APIRouter(prefix="/api/exam", tags=["exam"])
 
 _GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
 _GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile").strip()
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash").strip()
 
 _groq_client: Any = None
 
@@ -124,8 +123,9 @@ async def _generate_topic_question(
                     {"role": "system", "content": _TOPIC_SYSTEM_PROMPT},
                     {"role": "user", "content": user_content},
                 ],
-                max_tokens=120,
+                max_tokens=groq_token_budget(120),
                 temperature=0.7,
+                **groq_reasoning_kwargs(),
             )
             raw = resp.choices[0].message.content.strip()
         except Exception as exc:
@@ -217,7 +217,8 @@ async def exam_interpret(
     verify_jwt only, deliberately NOT metered by consume_ai_quota_or_503 (W7
     reliability — this closes the route's real gap, unauthenticated access,
     documented below at set_rate_limiter; see verification-log.md for the
-    full reasoning). Unlike /api/transcribe: max_tokens=60, temperature=0.0,
+    full reasoning). Unlike /api/transcribe: a 60-token answer budget (plus
+    the shared reasoning reserve on a reasoning GROQ_MODEL), temperature=0.0,
     a fixed server-side prompt, output constrained to a 7-value enum — the
     per-call cost is a rounding error, and the exam session is already
     metered where the real cost is (transcribe, score, and in coached mode
@@ -248,9 +249,10 @@ async def exam_interpret(
                 {"role": "system", "content": _INTERPRET_SYSTEM_PROMPT},
                 {"role": "user", "content": user_content},
             ],
-            max_tokens=60,
+            max_tokens=groq_token_budget(60),
             temperature=0.0,
             response_format={"type": "json_object"},
+            **groq_reasoning_kwargs(),
         )
         raw = resp.choices[0].message.content.strip()
         data = json.loads(raw)

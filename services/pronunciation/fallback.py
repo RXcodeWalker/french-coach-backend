@@ -11,7 +11,7 @@ from __future__ import annotations
 import logging
 from typing import Any, Awaitable, Callable
 
-from services.pronunciation.azure_client import assess_pronunciation
+from services.pronunciation.azure_client import AzureQuotaExceeded, assess_pronunciation
 from services.pronunciation.transcript import transcript_is_unusable
 
 log = logging.getLogger("uvicorn.error")
@@ -57,6 +57,56 @@ async def assess_with_fallback(
     audio_filename: str = "",
     mode: str = "scripted",
     run_with_retries=None,
+    azure_allowed: bool = True,
+) -> dict[str, Any]:
+    """Wraps _assess_with_fallback; a result reached because Azure's budget is
+    spent carries `azureBudgetExhausted: True` (exam-pronunciation plan §4).
+
+    `azure_allowed=False` (the monthly cap in lib/azure_budget.py is set and
+    reached) skips Azure entirely. An Azure quota-exceeded response
+    (AzureQuotaExceeded) is treated the same way, for this request only."""
+    budget_exhausted = not azure_allowed
+    try:
+        result = await _assess_with_fallback(
+            audio_bytes=audio_bytes,
+            target_text=target_text,
+            heard_text=heard_text,
+            whisper_words=whisper_words,
+            align_fn=align_fn,
+            audio_filename=audio_filename,
+            mode=mode,
+            run_with_retries=run_with_retries,
+            azure_allowed=azure_allowed,
+        )
+    except AzureQuotaExceeded:
+        budget_exhausted = True
+        result = await _assess_with_fallback(
+            audio_bytes=audio_bytes,
+            target_text=target_text,
+            heard_text=heard_text,
+            whisper_words=whisper_words,
+            align_fn=align_fn,
+            audio_filename=audio_filename,
+            mode=mode,
+            run_with_retries=run_with_retries,
+            azure_allowed=False,
+        )
+    if budget_exhausted:
+        result["azureBudgetExhausted"] = True
+    return result
+
+
+async def _assess_with_fallback(
+    *,
+    audio_bytes: bytes,
+    target_text: str,
+    heard_text: str,
+    whisper_words: list[dict[str, Any]],
+    align_fn: AlignFn,
+    audio_filename: str,
+    mode: str,
+    run_with_retries,
+    azure_allowed: bool,
 ) -> dict[str, Any]:
     """Try Azure (if configured); on None/exception, fall through to the
     existing Whisper-alignment heuristic. `heard_text`/`whisper_words` are
@@ -68,15 +118,18 @@ async def assess_with_fallback(
     no-match, missing assessment block) is still returned as-is — it is not
     a failure to fall back from, since the whisper-heuristic tier cannot do
     better against audio Azure already found unassessable."""
-    try:
-        azure_result = await assess_pronunciation(
-            audio_bytes, target_text,
-            audio_filename=audio_filename, mode=mode, run_with_retries=run_with_retries,
-        )
-        if azure_result is not None:
-            return azure_result
-    except Exception as exc:
-        log.warning("Azure pronunciation assessment failed, falling back to Whisper heuristic: %s", exc)
+    if azure_allowed:
+        try:
+            azure_result = await assess_pronunciation(
+                audio_bytes, target_text,
+                audio_filename=audio_filename, mode=mode, run_with_retries=run_with_retries,
+            )
+            if azure_result is not None:
+                return azure_result
+        except AzureQuotaExceeded:
+            raise
+        except Exception as exc:
+            log.warning("Azure pronunciation assessment failed, falling back to Whisper heuristic: %s", exc)
 
     if transcript_is_unusable(heard_text):
         # Nothing recognisable was said (or Whisper hallucinated a subtitle

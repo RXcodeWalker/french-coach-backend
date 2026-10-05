@@ -360,6 +360,20 @@ async def revoke_invite_code(code: str, _=Depends(require_admin)):
 
 
 # ════════════════════════════════════════════════════════════════════════════
+# Azure Speech usage (exam-pronunciation plan §4)
+# Month-to-date seconds from the azure_speech_usage ledger, by source and per
+# exam session — the data the owner sets Azure limits from. Aggregated by the
+# azure_speech_usage_summary() RPC (20261005090000), so PostgREST's row limit
+# never truncates the totals.
+# ════════════════════════════════════════════════════════════════════════════
+@router.get("/azure-usage")
+async def azure_usage(_=Depends(require_admin)):
+    db = _db()
+    res = await _run(db.rpc("azure_speech_usage_summary", {}))
+    return res.data or {}
+
+
+# ════════════════════════════════════════════════════════════════════════════
 # Shared helpers — versions, restore, bulk
 # ════════════════════════════════════════════════════════════════════════════
 async def _versions(content_type: str, content_id: str):

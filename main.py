@@ -54,6 +54,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 
 from lib.guest import verify_user_or_guest
 from lib.ai_quota import QuotaDenied, consume_ai_quota_or_503, release_ai_quota_grant
+from lib.consent import require_speaking_consent
 from lib.auth import require_admin, verify_supabase_jwt
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
@@ -80,16 +81,6 @@ except Exception:  # pragma: no cover - google libs may be absent in local dev
         pass
 
 load_dotenv()
-
-# Shared pronunciation pipeline pieces used by /api/repair (accent-analyzer
-# plan, Phase 3: /api/repair must call the SAME audited pipeline as
-# /api/pronunciation, not run a second, unaudited LLM scorer). Safe to import
-# at module scope — unlike routers.pronunciation, these are leaf service
-# modules with no import back into main.py.
-from services.phonology import rules as _phonology_rules
-from services.pronunciation import capabilities as _pronunciation_capabilities
-from services.pronunciation.coach_narrator import generate_coaching
-from services.pronunciation.fallback import assess_with_fallback
 
 log = logging.getLogger("french-coach")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -3991,115 +3982,6 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
     return StreamingResponse(generate(), media_type="application/x-ndjson")
 
 
-# ── /api/repair — micro-repair loop ──────────────────────────────────────────
-# Rewritten (accent-analyzer plan, Phase 3 roadmap item: "rewrite /api/repair
-# as a /api/pronunciation caller — it is currently a second, unaudited
-# pronunciation scorer, an LLM guessing from a transcript"). This endpoint
-# has no frontend caller today (grepped clean across src/); the rewrite
-# still applies since a second scorer must not exist in the codebase at all,
-# reachable or not. It now runs the SAME Azure/whisper-heuristic pipeline as
-# /api/pronunciation (scripted mode, word as the reference text) instead of
-# asking an LLM to invent a 0-10 verdict from a transcript, and reuses the
-# grounded coaching narrator for its prose fields.
-
-@app.post("/api/repair", response_model=None)
-async def repair_pronunciation(
-    request: Request,
-    audio: Annotated[UploadFile, File(...)],
-    word: str = Form(..., max_length=200),
-    context: str = Form("", max_length=1000),        # surrounding phrase for context — unused by the pipeline (single-word reference), kept for API compatibility
-    original_problem: str = Form("", max_length=1000), # unused by the pipeline; kept for API compatibility
-) -> dict[str, Any]:
-    """
-    Evaluate a single word/phrase re-recording via the audited pronunciation
-    pipeline (Azure phoneme assessment -> whisper-heuristic fallback).
-    Returns {score, improved, heard, feedback, phonetics_guide, tip, source}.
-    """
-    suffix = os.path.splitext(audio.filename or "")[1] or ".webm"
-    raw = await audio.read()
-
-    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-        tmp.write(raw)
-        tmp_path = tmp.name
-
-    try:
-        whisper_data: dict[str, Any] = {}
-        if GROQ_API_KEY:
-            try:
-                whisper_data = await _groq_whisper(tmp_path, "fr")
-            except Exception as e:
-                log.warning("Groq Whisper repair failed: %s", e)
-        if not whisper_data:
-            try:
-                whisper_data = await _faster_whisper(tmp_path, "fr")
-            except Exception:
-                pass
-
-        heard = (whisper_data.get("text") or "").strip()
-        whisper_words = whisper_data.get("words", [])
-
-        assessment = await assess_with_fallback(
-            audio_bytes=raw,
-            target_text=word,
-            heard_text=heard,
-            whisper_words=whisper_words,
-            align_fn=_align_pronunciation,
-            audio_filename=audio.filename or "",
-            mode="scripted",
-            run_with_retries=_run_with_retries,
-        )
-
-        tier = assessment["provider"]
-        findings: list[dict[str, Any]] = []
-        if not assessment.get("couldNotAssess"):
-            findings = _phonology_rules.evaluate(assessment.get("words", []), locale="fr-FR")
-            allowed_categories = {
-                cat: _pronunciation_capabilities.is_available(cat, mode="scripted", tier=tier, locale="fr-FR")
-                for cat in ("liaison", "nasalVowel", "frenchR", "silentLetter")
-            }
-            findings = [f for f in findings if allowed_categories.get(f.get("category"), False)]
-
-        coaching = await generate_coaching(
-            findings,
-            call_groq=_call_groq_coach,
-            call_gemini=_call_gemini_coach,
-        )
-
-        score = assessment.get("score")
-        improved = None if score is None else score >= 70  # PRACTICE_PASS_SCORE convention, see practiceThresholds.ts
-
-        return {
-            "word": word,
-            "heard": heard or word,
-            "score": score,
-            "improved": improved,
-            "feedback": coaching["summary"],
-            "phonetics_guide": coaching["topPriority"],
-            "tip": coaching["tips"][0] if coaching["tips"] else coaching["topPriority"],
-            "source": tier,
-        }
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        _log_provider_failure("repair-endpoint", e)
-        return {
-            "word": word,
-            "heard": word,
-            "score": None,
-            "improved": None,
-            "feedback": "Pronunciation analysis is temporarily unavailable. Please try again shortly.",
-            "phonetics_guide": "Break the word into syllables, practise each sound slowly, then rebuild the full word.",
-            "tip": f"Repeat {word} three times slowly, then once in the full sentence.",
-            "source": "offline_fallback",
-        }
-    finally:
-        try:
-            os.unlink(tmp_path)
-        except OSError:
-            pass
-
-
 # ── /api/drill — generate a 3-step practice drill for a word ─────────────────
 
 @app.post("/api/drill")
@@ -4373,6 +4255,9 @@ async def transcribe(
 ) -> dict[str, Any]:
     """Transcribe uploaded audio. Tries Groq Whisper first, falls back to faster-whisper."""
     user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
+    # Before the upload is read: a `pending` (under-13, no guardian
+    # confirmation yet) account's audio never reaches a provider.
+    await require_speaking_consent(get_supabase(), user_id)
 
     # Content-Length is client-supplied and not a real cap — read in bounded
     # chunks and abort before ever writing to disk if the upload exceeds the cap,

@@ -20,12 +20,21 @@ from typing import Annotated, Any, Awaitable, Callable
 
 from fastapi import APIRouter, File, Form, Header, HTTPException, Request, UploadFile
 
-from lib.ai_quota import consume_ai_quota_or_503
+from lib.ai_quota import consume_ai_quota_or_503, release_ai_quota_grant
 from lib.auth import verify_supabase_jwt
+from lib.azure_budget import (
+    billable_seconds,
+    release_azure_seconds,
+    reserve_azure_seconds,
+    settle_azure_seconds,
+    wav_duration_seconds,
+)
+from lib.consent import require_speaking_consent
 from lib.guest import is_guest, verify_user_or_guest
 from models.pronunciation import PronunciationAssessmentResponse
 from services.cache import BoundedTTLCache
 from services.phonology import rules as phonology_rules
+from services.pronunciation import azure_client
 from services.pronunciation.coach_narrator import generate_shadowing_coaching
 from services.pronunciation.capabilities import enforce_capabilities
 from services.pronunciation.confidence import compute_confidence
@@ -53,12 +62,69 @@ _AUDIO_MAX_BYTES = 15 * 1024 * 1024
 _AUDIO_READ_CHUNK_BYTES = 1 * 1024 * 1024
 
 
+# Ledger attribution (azure_speech_usage.source) for this route. The client
+# names its screen; anything else is inferred from the request shape. "exam"
+# and "repair" are not claimable here — they belong to other routes.
+_CLIENT_SOURCES = ("learn", "lab", "shadowing")
+
+
+def _ledger_source(source: str, mode: str, coaching: str) -> str:
+    if source in _CLIENT_SOURCES:
+        return source
+    if coaching == "full":
+        return "shadowing"
+    return "learn" if mode == "freeform" else "lab"
+
+
+def _whisper_duration_seconds(whisper_data: dict[str, Any]) -> float | None:
+    ends = [seg.get("end") for seg in whisper_data.get("segments") or [] if isinstance(seg.get("end"), (int, float))]
+    ends += [w.get("end") for w in whisper_data.get("words") or [] if isinstance(w.get("end"), (int, float))]
+    return max(ends) if ends else None
+
+
+async def _assess_metered(
+    *,
+    user_id: str,
+    source: str,
+    raw: bytes,
+    whisper_data: dict[str, Any],
+    **assess_kwargs: Any,
+) -> dict[str, Any]:
+    """assess_with_fallback inside one Azure ledger reservation. Reserves
+    only when an Azure call would actually be made; settles when Azure
+    processed the audio (provider "azure", couldNotAssess or not — Azure bills
+    the audio either way) and releases otherwise, including on an exception."""
+    if not azure_client.is_configured():
+        return await assess_with_fallback(**assess_kwargs)
+
+    seconds, _measured = billable_seconds(raw, _whisper_duration_seconds(whisper_data))
+    reservation = await reserve_azure_seconds(_db(), user_id=user_id, source=source, seconds=seconds)
+    try:
+        result = await assess_with_fallback(azure_allowed=reservation.granted, **assess_kwargs)
+    except BaseException:
+        if reservation.granted:
+            await release_azure_seconds(_db(), reservation)
+        raise
+    if reservation.granted:
+        if result.get("provider") == "azure":
+            await settle_azure_seconds(_db(), reservation, seconds)
+        else:
+            await release_azure_seconds(_db(), reservation)
+    return result
+
+
 def _audio_digest_key(audio_digest_hex: str, reference_text: str, mode: str) -> str:
     return f"{audio_digest_hex}::{reference_text}::{mode}::{LOCALE}::{ASSESSOR_VERSION}"
 
 
 def _audio_cache_key(audio_bytes: bytes, reference_text: str, mode: str) -> str:
     return _audio_digest_key(hashlib.sha256(audio_bytes).hexdigest(), reference_text, mode)
+
+
+def _audio_ms(raw: bytes) -> int | None:
+    """Upload duration from the WAV header; None for any other format."""
+    seconds = wav_duration_seconds(raw)
+    return round(seconds * 1000) if seconds is not None else None
 
 
 def _is_cacheable(result: dict[str, Any]) -> bool:
@@ -271,6 +337,7 @@ async def pronunciation_evaluate(
     mode: str = Form("scripted"),
     coaching: str = Form("none"),
     coaching_request_id: str = Form("", max_length=200),
+    source: str = Form("", max_length=40),
     authorization: str | None = Header(None),
 ) -> PronunciationAssessmentResponse:
     # _faster_whisper_fn is deliberately NOT required: main.py passes None for
@@ -288,6 +355,9 @@ async def pronunciation_evaluate(
     user_id = verify_user_or_guest(authorization, request, lambda a: str(verify_supabase_jwt(a).get("sub") or ""))
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid token")
+    # Before the upload is read: a `pending` (under-13, no guardian
+    # confirmation yet) account's audio never reaches a provider.
+    await require_speaking_consent(_db(), user_id)
 
     # Content-Length is client-supplied and not a real cap — read in bounded
     # chunks and abort before ever writing to disk if the upload exceeds the
@@ -375,16 +445,30 @@ async def pronunciation_evaluate(
             # #6), same as main.py's /api/feedback — a cache hit never calls
             # Azure, so it correctly never charges quota either.
             await consume_ai_quota_or_503(_db(), user_id, "pronunciation", cache_key)
-            result = await assess_with_fallback(
-                audio_bytes=raw,
-                target_text=reference_text,
-                heard_text=heard_text,
-                whisper_words=whisper_words,
-                align_fn=_align_fn,
-                audio_filename=audio.filename or "",
-                mode=mode,
-                run_with_retries=_run_with_retries_fn,
-            )
+            try:
+                result = await _assess_metered(
+                    user_id=user_id,
+                    source=_ledger_source(source, mode, coaching),
+                    raw=raw,
+                    whisper_data=whisper_data,
+                    audio_bytes=raw,
+                    target_text=reference_text,
+                    heard_text=heard_text,
+                    whisper_words=whisper_words,
+                    align_fn=_align_fn,
+                    audio_filename=audio.filename or "",
+                    mode=mode,
+                    run_with_retries=_run_with_retries_fn,
+                )
+            except BaseException:
+                await release_ai_quota_grant(_db(), user_id, "pronunciation", cache_key)
+                raise
+            # Release-on-failure (exam-pronunciation plan §4): the learner got
+            # no assessment and Azure never processed the audio, so nothing
+            # was spent. An Azure couldNotAssess (silence, no match) was
+            # processed and billed, so it stays charged.
+            if result.get("couldNotAssess") and result.get("provider") != "azure":
+                await release_ai_quota_grant(_db(), user_id, "pronunciation", cache_key)
             was_cached = False
             if _is_cacheable(result):
                 await _audio_cache.set(cache_key, result)
@@ -488,7 +572,8 @@ async def pronunciation_evaluate(
             "chunk_count": result.get("chunkCount", 1),
             "chunks_failed": result.get("chunksFailed", 0),
             "mode": mode,
-            "audio_ms": None,
+            "audio_ms": _audio_ms(raw),
+            "azure_budget_exhausted": bool(result.get("azureBudgetExhausted")),
         }
 
         return PronunciationAssessmentResponse(**result)

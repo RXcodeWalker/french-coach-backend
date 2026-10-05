@@ -1163,3 +1163,219 @@ if __name__ == "__main__":
         test_scripted_mode_without_azure_still_uses_align_fn_diff(mp)
         test_azure_scripted_response_populates_phase2_guardrails(mp)
     print("All test_pronunciation tests passed.")
+
+
+# ── Exam-pronunciation plan Batch 1: release-on-failure, ledger, budget ─────
+
+import io
+import wave
+
+import httpx
+
+import routers.pronunciation as _pron_router
+
+
+def _wav_bytes(seconds: float) -> bytes:
+    buf = io.BytesIO()
+    with wave.open(buf, "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(16000)
+        w.writeframes(b"\x00\x00" * int(seconds * 16000))
+    return buf.getvalue()
+
+
+class _LedgerDb:
+    """Fake service-role client for the Azure ledger RPCs."""
+
+    def __init__(self, granted: bool = True):
+        self.granted = granted
+        self.calls: list[tuple[str, dict]] = []
+
+    def rpc(self, name: str, args: dict):
+        self.calls.append((name, args))
+        if name == "reserve_azure_seconds":
+            data = (
+                {"granted": True, "reservation_id": "res-1", "used_seconds": args["p_seconds"], "cap_seconds": None}
+                if self.granted
+                else {"granted": False, "reason": "budget_exhausted", "used_seconds": 18000, "cap_seconds": 18000}
+            )
+            return _FakeRpcCall(data)
+        if name in ("settle_azure_seconds", "release_azure_seconds"):
+            return _FakeRpcCall({"ok": True})
+        raise AssertionError(f"unexpected rpc: {name}")
+
+    def names(self) -> list[str]:
+        return [n for n, _ in self.calls]
+
+
+class _QuotaRecorder:
+    def __init__(self):
+        self.consumed: list[tuple[str, str]] = []
+        self.released: list[tuple[str, str]] = []
+
+    async def consume(self, db, user_id, feature, key):
+        self.consumed.append((feature, key))
+        return {"granted": True, "used": 1, "limit": 30}
+
+    async def release(self, db, user_id, feature, key):
+        self.released.append((feature, key))
+
+
+def _metered_setup(monkeypatch, *, azure: bool, db=None, azure_handler=None):
+    monkeypatch.setattr(lib_auth, "SUPABASE_JWT_SECRET", _VALID_JWT_SECRET)
+    quota = _QuotaRecorder()
+    monkeypatch.setattr(_pron_router, "consume_ai_quota_or_503", quota.consume)
+    monkeypatch.setattr(_pron_router, "release_ai_quota_grant", quota.release)
+    monkeypatch.setattr(_pron_router, "_db", lambda: db)
+    _pron_router._audio_cache._store.clear()
+    azure_calls: list = []
+    if azure:
+        monkeypatch.setenv("AZURE_SPEECH_KEY", "k")
+        monkeypatch.setenv("AZURE_SPEECH_REGION", "westeurope")
+        original = httpx.AsyncClient
+
+        def patched(*args, **kwargs):
+            def handler(request):
+                azure_calls.append(request)
+                return azure_handler(request)
+            kwargs["transport"] = httpx.MockTransport(handler)
+            return original(*args, **kwargs)
+
+        monkeypatch.setattr(httpx, "AsyncClient", patched)
+    else:
+        monkeypatch.delenv("AZURE_SPEECH_KEY", raising=False)
+        monkeypatch.delenv("AZURE_SPEECH_REGION", raising=False)
+    return quota, azure_calls
+
+
+def _azure_ok(request):
+    return httpx.Response(200, json={
+        "RecognitionStatus": "Success",
+        "DisplayText": "Un bon vin blanc.",
+        "NBest": [{"Display": "Un bon vin blanc.", "AccuracyScore": 82.0, "FluencyScore": 90.0,
+                   "CompletenessScore": 100.0, "PronScore": 85.0, "Words": []}],
+    })
+
+
+def _post_wav(client, seconds: float = 2.0, **data):
+    form = {"target_text": "Un bon vin blanc.", **data}
+    return client.post(
+        "/api/pronunciation",
+        data=form,
+        headers={"Authorization": f"Bearer {_fake_jwt(sub='22222222-2222-2222-2222-222222222222')}"},
+        files={"audio": ("recording.wav", _wav_bytes(seconds) + os.urandom(2), "audio/wav")},
+    )
+
+
+def test_quota_released_when_the_assessment_raises(monkeypatch):
+    quota, _ = _metered_setup(monkeypatch, azure=False)
+
+    async def _boom(**kwargs):
+        raise RuntimeError("pipeline bug")
+
+    monkeypatch.setattr(_pron_router, "assess_with_fallback", _boom)
+    client = TestClient(_build_app(), raise_server_exceptions=False)
+    resp = _post_wav(client)
+    assert resp.status_code == 500
+    assert [f for f, _ in quota.consumed] == ["pronunciation"]
+    assert quota.released == quota.consumed
+
+
+def test_quota_released_when_no_assessment_and_azure_never_ran(monkeypatch):
+    quota, _ = _metered_setup(monkeypatch, azure=False)
+    client = TestClient(_build_app())
+    resp = _post_wav(client, mode="freeform")  # heuristic tier can't assess freeform
+    assert resp.status_code == 200
+    assert resp.json()["couldNotAssess"] is True
+    assert quota.released == quota.consumed
+
+
+def test_azure_could_not_assess_stays_charged(monkeypatch):
+    quota, _ = _metered_setup(monkeypatch, azure=False)
+
+    async def _azure_no_match(**kwargs):
+        return {"score": None, "transcript": "", "issues": [], "words": [], "provider": "azure",
+                "subScores": None, "couldNotAssess": True, "couldNotAssessReason": "silence"}
+
+    monkeypatch.setattr(_pron_router, "assess_with_fallback", _azure_no_match)
+    resp = _post_wav(TestClient(_build_app()))
+    assert resp.status_code == 200
+    assert quota.released == []
+
+
+def test_successful_assessment_stays_charged(monkeypatch):
+    quota, _ = _metered_setup(monkeypatch, azure=False)
+    resp = _post_wav(TestClient(_build_app()))
+    assert resp.status_code == 200
+    assert resp.json()["score"] == 70
+    assert quota.released == []
+
+
+def test_ledger_reserves_measured_seconds_and_settles_on_azure(monkeypatch):
+    db = _LedgerDb()
+    quota, azure_calls = _metered_setup(monkeypatch, azure=True, db=db, azure_handler=_azure_ok)
+    resp = _post_wav(TestClient(_build_app()), seconds=2.0, source="learn")
+    assert resp.status_code == 200
+    assert resp.json()["provider"] == "azure"
+    assert resp.json()["azureBudgetExhausted"] is False
+    assert len(azure_calls) == 1
+    assert db.names() == ["reserve_azure_seconds", "settle_azure_seconds"]
+    reserve = db.calls[0][1]
+    assert reserve["p_seconds"] == 2.0
+    assert reserve["p_source"] == "learn"
+    assert reserve["p_user_id"] == "22222222-2222-2222-2222-222222222222"
+    assert db.calls[1][1] == {"p_reservation_id": "res-1", "p_seconds": 2.0}
+
+
+def test_ledger_released_when_azure_fails(monkeypatch):
+    db = _LedgerDb()
+    quota, _ = _metered_setup(monkeypatch, azure=True, db=db, azure_handler=lambda r: httpx.Response(400, text="bad audio"))
+    resp = _post_wav(TestClient(_build_app()))
+    assert resp.status_code == 200
+    assert resp.json()["provider"] == "whisper-heuristic"
+    assert db.names() == ["reserve_azure_seconds", "release_azure_seconds"]
+
+
+def test_budget_exhausted_skips_azure_and_says_so(monkeypatch):
+    db = _LedgerDb(granted=False)
+    quota, azure_calls = _metered_setup(monkeypatch, azure=True, db=db, azure_handler=_azure_ok)
+    resp = _post_wav(TestClient(_build_app()))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert azure_calls == []
+    assert body["provider"] == "whisper-heuristic"
+    assert body["azureBudgetExhausted"] is True
+    assert body["score"] == 70  # the existing whisper-heuristic result
+    assert db.names() == ["reserve_azure_seconds"]
+    assert quota.released == []
+
+
+def test_azure_quota_exceeded_is_reported_as_budget_exhausted(monkeypatch):
+    db = _LedgerDb()
+    _metered_setup(monkeypatch, azure=True, db=db,
+                   azure_handler=lambda r: httpx.Response(403, text="Out of call volume quota."))
+    resp = _post_wav(TestClient(_build_app()))
+    assert resp.status_code == 200
+    assert resp.json()["azureBudgetExhausted"] is True
+    assert db.names() == ["reserve_azure_seconds", "release_azure_seconds"]
+
+
+@pytest.mark.parametrize(("form", "expected"), [
+    ({"source": "shadowing"}, "shadowing"),
+    ({"source": "lab"}, "lab"),
+    ({"source": "exam"}, "lab"),  # not claimable on this route
+    ({"mode": "freeform"}, "learn"),
+    ({}, "lab"),
+])
+def test_ledger_source_attribution(monkeypatch, form, expected):
+    db = _LedgerDb()
+    _metered_setup(monkeypatch, azure=True, db=db, azure_handler=_azure_ok)
+    resp = _post_wav(TestClient(_build_app()), **form)
+    assert resp.status_code == 200
+    assert db.calls[0][1]["p_source"] == expected
+
+
+def test_audio_ms_comes_from_the_wav_header():
+    assert _pron_router._audio_ms(_wav_bytes(1.25)) == 1250
+    assert _pron_router._audio_ms(b"webm") is None

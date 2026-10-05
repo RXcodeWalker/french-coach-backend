@@ -177,16 +177,22 @@ async def assess_chunked(
     chunk_windows: list[tuple[float, float]],
     assess_one_chunk: Callable[[bytes], Awaitable[dict[str, Any] | None]],
     *,
-    max_concurrent: int = 3,
+    max_concurrent: int | None = None,
 ) -> dict[str, Any]:
     """Fans out `assess_one_chunk` over each audio window bounded by a
-    semaphore (plan §9: fan out with asyncio.gather bounded by a semaphore of
-    3), then merges via aggregate_chunk_results. A chunk whose assessment
-    raises is treated as a failure (None), not a request-ending exception —
-    plan §4's "fail the chunk, not the request." """
+    semaphore, then merges via aggregate_chunk_results. A chunk whose
+    assessment raises is treated as a failure (None), not a request-ending
+    exception — plan §4's "fail the chunk, not the request."
+
+    The fan-out width defaults to AZURE_SPEECH_MAX_CONCURRENCY (default 1,
+    exam-pronunciation plan §4) — the same value as azure_client's
+    process-wide semaphore, which every Azure HTTP call also passes through.
+    It was a fixed 3, which an F0 resource (1 concurrent request) rejects."""
     import asyncio
 
-    semaphore = asyncio.Semaphore(max_concurrent)
+    from services.pronunciation.azure_client import azure_max_concurrency
+
+    semaphore = asyncio.Semaphore(max_concurrent if max_concurrent is not None else azure_max_concurrency())
 
     async def _bounded(audio_bytes: bytes) -> dict[str, Any] | None:
         async with semaphore:

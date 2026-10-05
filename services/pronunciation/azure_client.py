@@ -19,11 +19,14 @@ defensive belt-and-braces measure, not because the nested shape is expected.
 
 from __future__ import annotations
 
+import asyncio
 import base64
 import json
 import logging
 import math
 import os
+import re
+import weakref
 from typing import Any
 
 import httpx
@@ -52,12 +55,71 @@ def _finite_float(value: Any) -> float | None:
     return parsed if math.isfinite(parsed) else None
 
 # Azure's own vocabulary — allowed to appear ONLY in this module.
+#
+# Anything not listed maps to None (no verdict), never to "correct". Azure's
+# prosody error types — UnexpectedBreak, MissingBreak, Monotone — describe a
+# pause or the intonation around a word, not whether the word itself was
+# pronounced correctly, so they carry no miscue verdict either way. (fr-FR
+# has no prosody assessment, so they should not occur; before this mapping
+# they were silently reported as "correct".)
 _ERROR_TYPE_MAP: dict[str, str] = {
     "None": "correct",
     "Mispronunciation": "mispronounced",
     "Omission": "skipped",
     "Insertion": "extra",
 }
+_MISCUE_ERROR_TYPES = ("mispronounced", "skipped", "extra")
+
+
+# ── Concurrency (exam-pronunciation plan §4, §1e) ────────────────────────────
+# One process-wide semaphore around every Azure HTTP call. F0 allows exactly
+# one concurrent request, so the default is 1. Correct ONLY while the service
+# runs as a single instance with a single uvicorn worker (main repo
+# docs/systems/topology.md); scaling out needs a cross-process lease instead.
+# Deploy overlap (old + new instance briefly side by side) surfaces as an
+# Azure 429, which _run_with_retries already retries with backoff.
+def azure_max_concurrency() -> int:
+    try:
+        return max(1, int(os.getenv("AZURE_SPEECH_MAX_CONCURRENCY", "1")))
+    except ValueError:
+        return 1
+
+
+# Keyed by event loop: an asyncio.Semaphore binds to the loop it is first
+# contended on, and the test-suite runs many short-lived loops.
+_semaphores: "weakref.WeakKeyDictionary[asyncio.AbstractEventLoop, asyncio.Semaphore]" = weakref.WeakKeyDictionary()
+
+
+def _azure_semaphore() -> asyncio.Semaphore:
+    loop = asyncio.get_running_loop()
+    sem = _semaphores.get(loop)
+    if sem is None:
+        sem = asyncio.Semaphore(azure_max_concurrency())
+        _semaphores[loop] = sem
+    return sem
+
+
+# ── Quota exhaustion (exam-pronunciation plan §4) ────────────────────────────
+class AzureQuotaExceeded(Exception):
+    """Azure refused the request because the resource's quota is used up
+    (the F0 monthly allowance). Not retryable, and not an auth failure:
+    callers map it to budget_exhausted for this request only. There is no
+    process-level flag, because process state is lost on free-plan spin-down.
+
+    ASSUMED response shape (not verified against a live exhausted resource):
+    Cognitive Services answers 403 "Out of call volume quota. Quota will be
+    replenished in …" (sometimes 429). A 429 without quota wording is a rate
+    limit and stays retryable."""
+
+
+_QUOTA_EXCEEDED_RE = re.compile(
+    r"out of call volume quota|quota will be replenished|quota (?:has been |is )?exceeded|exceeded (?:the |your )?quota",
+    re.IGNORECASE,
+)
+
+
+def _is_quota_exceeded(status_code: int, body: str) -> bool:
+    return status_code in (403, 429) and bool(_QUOTA_EXCEEDED_RE.search(body or ""))
 
 # Placeholder threshold — tune once real data exists.
 _LOW_ACCURACY_THRESHOLD = 60.0
@@ -92,6 +154,11 @@ def _is_configured() -> tuple[str, str] | None:
     if not key or not region:
         return None
     return key, region
+
+
+def is_configured() -> bool:
+    """True when an Azure call would actually be made (callers meter only then)."""
+    return _is_configured() is not None
 
 
 def _severity_for(error_type: str, accuracy_score: float | None) -> str:
@@ -227,7 +294,7 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
             continue
         w_assessment = _pron_assessment(w)
         azure_error = w_assessment.get("ErrorType", "None")
-        error_type = _ERROR_TYPE_MAP.get(azure_error, "correct")
+        error_type = _ERROR_TYPE_MAP.get(azure_error)
         accuracy_score = _finite_float(w_assessment.get("AccuracyScore"))
 
         phonemes_raw = w.get("Phonemes") or []
@@ -260,7 +327,7 @@ def _normalize_azure_response(raw_json: dict[str, Any], target_text: str) -> dic
             "nearChunkBoundary": None,
         })
 
-        needs_issue = error_type != "correct" or (
+        needs_issue = error_type in _MISCUE_ERROR_TYPES or (
             accuracy_score is not None and accuracy_score < _LOW_ACCURACY_THRESHOLD
         )
         if needs_issue:
@@ -333,9 +400,13 @@ async def _post_to_azure(
         "Pronunciation-Assessment": header_value,
     }
 
-    async with httpx.AsyncClient(timeout=20.0) as client:
-        response = await client.post(url, params=params, headers=headers, content=audio_bytes)
+    async with _azure_semaphore():
+        async with httpx.AsyncClient(timeout=20.0) as client:
+            response = await client.post(url, params=params, headers=headers, content=audio_bytes)
 
+    if _is_quota_exceeded(response.status_code, response.text):
+        log.warning("Azure Speech quota exhausted (%s): %s", response.status_code, response.text[:200])
+        raise AzureQuotaExceeded(f"Azure Speech quota exhausted: {response.status_code}")
     if response.status_code in (401, 403):
         # Non-retryable: a bad key should fail straight to fallback.
         raise PermissionError(f"Azure Speech auth failed: {response.status_code}")

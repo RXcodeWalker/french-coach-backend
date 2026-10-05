@@ -118,6 +118,46 @@ def test_content_type_header_matches_uploaded_extension(monkeypatch):
     assert captured["headers"]["Content-Type"] == "audio/wav; codecs=audio/pcm; samplerate=16000"
 
 
+
+def test_request_never_asks_azure_to_store_audio(monkeypatch):
+    """Exam-pronunciation plan §5: real-time STT audio is not retained by
+    Azure unless logging is switched on — `storeAudio=true` on this URL, a
+    custom endpoint, or the SDK option. The request must stay on the base
+    model's REST endpoint with only `language` and `format`."""
+    monkeypatch.setenv("AZURE_SPEECH_KEY", "fake-key")
+    monkeypatch.setenv("AZURE_SPEECH_REGION", "westeurope")
+
+    captured: dict = {}
+    original_async_client = httpx.AsyncClient
+
+    def patched_async_client(*args, **kwargs):
+        transport = _capture_request_transport(captured)
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            captured["url"] = request.url
+            return transport.handler(request)
+
+        kwargs["transport"] = httpx.MockTransport(handler)
+        return original_async_client(*args, **kwargs)
+
+    monkeypatch.setattr(httpx, "AsyncClient", patched_async_client)
+
+    import asyncio
+
+    asyncio.run(
+        assess_pronunciation(
+            b"fake-wav-bytes", "Un bon vin blanc.",
+            audio_filename="clip.wav", mode="freeform",
+        )
+    )
+
+    url = captured["url"]
+    assert url.host == "westeurope.stt.speech.microsoft.com"
+    assert url.path == "/speech/recognition/conversation/cognitiveservices/v1"
+    assert dict(url.params) == {"language": "fr-FR", "format": "detailed"}
+    assert "storeaudio" not in str(url).lower()
+    assert "cid" not in {k.lower() for k in url.params}  # no custom endpoint id
+
 if __name__ == "__main__":
     import asyncio
 

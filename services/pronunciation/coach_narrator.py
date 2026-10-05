@@ -24,8 +24,10 @@ fails the gate. `grounded=False` marks a template fallback.
 i-am-implementing-phase-sunny-lagoon.md §4) is a separate function added
 alongside `generate_coaching`, not a variant of it: `generate_coaching`,
 `_build_prompt`, `_apply_gate`, `_template_fallback`, and `findings_hash`
-stay exactly as they were so /api/repair (main.py) keeps its current
-behaviour including Gemini. The shadowing path takes no `call_gemini`
+stay exactly as they were. (Their only route caller, /api/repair, was
+deleted in exam-pronunciation plan Batch 1 — an unauthenticated, unmetered
+Azure spend path with no frontend caller; `generate_coaching` remains, with
+its own tests, but no route reaches it today.) The shadowing path takes no `call_gemini`
 parameter at all, by signature, so Gemini can never be reintroduced into it.
 """
 
@@ -358,7 +360,7 @@ async def generate_shadowing_coaching(
 
     No `call_gemini` parameter at all, by signature — Gemini cannot be
     reintroduced into this path by a future wiring change. generate_coaching
-    (used by /api/repair) is untouched.
+    is untouched.
 
     `context` is the shape _build_shadowing_context (routers/pronunciation.py)
     produces: {targetText, score, subScores, prosodyMetrics,

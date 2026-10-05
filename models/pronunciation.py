@@ -132,3 +132,8 @@ class PronunciationAssessmentResponse(BaseModel):
     confidence: PronunciationConfidence | None = None
     coaching: PronunciationCoaching | None = None
     coachingQuota: PronunciationCoachingQuota | None = None
+    # True when Azure was skipped because the Azure Speech budget is spent —
+    # the project's monthly cap (lib/azure_budget.py) or Azure's own quota.
+    # The result is then the whisper-heuristic tier's (exam-pronunciation
+    # plan §4).
+    azureBudgetExhausted: bool = False

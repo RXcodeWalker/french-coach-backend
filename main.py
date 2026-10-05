@@ -5156,6 +5156,22 @@ _configure_pronunciation_coaching(_call_groq_coach, _call_gemini_coach)
 app.include_router(_pronunciation_router)
 _set_pronunciation_rate_limiter(rate_limit, app)
 
+# ── Exam pronunciation evidence (exam-pronunciation plan, Batch 4) ──────────
+# Feedback-only, never a mark; off unless EXAM_PRONUNCIATION_ACCESS is
+# admin/all. Same Whisper/retry DI seam as /api/pronunciation above.
+from routers.exam_pronunciation import (
+    router as _exam_pronunciation_router,
+    configure as _configure_exam_pronunciation,
+)
+
+_configure_exam_pronunciation(
+    _groq_whisper,
+    _faster_whisper if LOCAL_WHISPER_ENABLED else None,
+    lambda: bool(GROQ_API_KEY),
+    _run_with_retries,
+)
+app.include_router(_exam_pronunciation_router)
+
 
 # ── One-time admin bootstrap ──────────────────────────────────────────────────
 # Grants the admin role via service-role app_metadata. This is a break-glass

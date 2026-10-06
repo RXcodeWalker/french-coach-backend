@@ -162,7 +162,9 @@ async def _main(args: argparse.Namespace) -> int:
         except Exception as e:  # keep going; a failed clip is reported, not silently dropped
             failed += 1
             print(f"FAILED {entry['clipId']}: {e}", file=sys.stderr)
-            if "budget exhausted" in str(e) or e.__class__.__name__ == "AzureQuotaExceeded":
+            # Budget, Azure quota and bad credentials fail every later clip the same way.
+            if isinstance(e, PermissionError) or "budget exhausted" in str(e) \
+                    or e.__class__.__name__ == "AzureQuotaExceeded":
                 break
             continue
         out.parent.mkdir(parents=True, exist_ok=True)

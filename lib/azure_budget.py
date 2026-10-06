@@ -42,7 +42,7 @@ from lib.guest import is_guest
 
 log = logging.getLogger("uvicorn.error")
 
-AZURE_SPEECH_SOURCES = ("learn", "exam", "repair", "lab", "shadowing")
+AZURE_SPEECH_SOURCES = ("learn", "exam", "repair", "lab", "shadowing", "probe")
 
 # Azure's REST short-audio endpoint rejects anything longer, so no single
 # request can bill more than this. Used only when the duration is unknown.

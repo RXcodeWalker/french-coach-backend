@@ -44,7 +44,11 @@ from lib.azure_budget import (
     wav_duration_seconds,
 )
 
-MIGRATION = Path(__file__).resolve().parents[1] / "supabase" / "migrations" / "20261005090000_azure_speech_usage_and_budget.sql"
+_MIGRATIONS_DIR = Path(__file__).resolve().parents[1] / "supabase" / "migrations"
+MIGRATIONS = [
+    _MIGRATIONS_DIR / "20261005090000_azure_speech_usage_and_budget.sql",
+    _MIGRATIONS_DIR / "20261006090000_azure_speech_probe_source.sql",
+]
 
 
 def _wav(seconds: float, rate: int = 16000) -> bytes:
@@ -165,7 +169,7 @@ def test_settle_and_release_never_raise():
 
 def test_unknown_source_is_a_programming_error():
     with pytest.raises(ValueError):
-        asyncio.run(reserve_azure_seconds(_FakeDb(), user_id="u", source="probe", seconds=1.0))
+        asyncio.run(reserve_azure_seconds(_FakeDb(), user_id="u", source="bogus", seconds=1.0))
 
 
 def test_every_ledger_event_logs_one_structured_line(caplog):
@@ -253,7 +257,8 @@ def pg():
     db = _Pg(bin_dir, prefix, sock, port)
     try:
         db.psql(_STUB_SCHEMA)
-        db.psql(MIGRATION.read_text())
+        for migration in MIGRATIONS:
+            db.psql(migration.read_text())
         yield db
     finally:
         subprocess.run([*prefix, os.path.join(bin_dir, "pg_ctl"), "-D", data, "-m", "immediate", "stop"],
@@ -321,6 +326,11 @@ def test_sql_month_rollover_ignores_last_month(ledger):
     assert _reserve(ledger, 100)["granted"] is True
 
 
+def test_sql_probe_source_is_metered(ledger):
+    assert _reserve(ledger, 4, source="probe")["granted"] is True
+    assert ledger.json("SELECT public.azure_speech_usage_summary()")["by_source"] == {"probe": 4}
+
+
 def test_sql_user_attribution_survives_account_deletion(ledger):
     user = str(uuid.uuid4())
     ledger.psql(f"INSERT INTO public.profiles (id) VALUES ('{user}')")
@@ -338,7 +348,7 @@ def test_sql_unknown_profile_is_recorded_as_null_not_an_error(ledger):
 
 def test_sql_rejects_unknown_source_and_negative_seconds(ledger):
     with pytest.raises(subprocess.CalledProcessError):
-        _reserve(ledger, 1, source="probe")
+        _reserve(ledger, 1, source="bogus")
     with pytest.raises(subprocess.CalledProcessError):
         _reserve(ledger, -1)
 

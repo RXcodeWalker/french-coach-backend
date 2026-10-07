@@ -12,9 +12,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your typical lunch — what, where, with whom. Include a past example.",
+        "sufficientAnswer": "Describe your usual lunch with at least three details, such as what you eat, where and with whom.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -23,16 +23,16 @@
     {
       "questionId": "foo_02",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss healthy habits — diet, exercise, sleep, screen time. Be honest!",
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you look after your health and explain how, with at least two habits such as diet, exercise or sleep.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -46,11 +46,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your favourite dish, its ingredients, whether you can cook it.",
+        "sufficientAnswer": "Name your favourite dish with at least two ingredients and say whether you can cook it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -61,15 +61,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "past"
         ],
-        "structures": [],
-        "responseLoad": "short",
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your dinner from last night using the past tense.",
+        "sufficientAnswer": "Describe what you ate last night in the past tense, with at least two items.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -83,11 +84,12 @@
           "present"
         ],
         "structures": [
-          "comparison"
+          "comparison",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare eating at home and dining out, giving reasons for your preference.",
+        "sufficientAnswer": "Say whether you prefer eating at home or in a restaurant and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -98,16 +100,16 @@
     {
       "questionId": "foo_06",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [],
-        "responseLoad": "short",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on fast food — convenience vs. health concerns.",
+        "sufficientAnswer": "Give your opinion on fast food, with at least one advantage such as speed and one drawback such as health.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -116,16 +118,18 @@
     {
       "questionId": "foo_07",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
-        "responseLoad": "short",
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss whether cooking should be a mandatory subject in school.",
+        "sufficientAnswer": "Say whether learning to cook at school is important and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -141,11 +145,11 @@
         "structures": [
           "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss foods you dislike — taste, texture, or health reasons.",
+        "sufficientAnswer": "Name at least one food you dislike and give a reason such as taste, texture or health.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.75
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -154,16 +158,18 @@
     {
       "questionId": "foo_09",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss organic food — health benefits, cost, and environment.",
+        "sufficientAnswer": "Say whether you often eat organic food and give at least one reason, such as health, cost or the environment.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -179,9 +185,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about French pastries or desserts you enjoy.",
+        "sufficientAnswer": "Name your favourite French dessert and say at least two things about it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -192,14 +198,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "past"
         ],
-        "structures": [],
+        "structures": [
+          "perfect"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a special meal — celebration, restaurant, or home-cooked (past tense).",
+        "sufficientAnswer": "Describe a recent special meal in the past tense, with at least three details such as where, who and what you ate.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -208,16 +216,18 @@
     {
       "questionId": "foo_12",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss your hydration habits and why water is important.",
+        "sufficientAnswer": "Say whether you drink enough water and explain why water is important, with at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -233,9 +243,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe what you eat and drink in the morning.",
+        "sufficientAnswer": "Describe your favourite breakfast with at least two things you eat or drink.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -249,11 +259,12 @@
           "present"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Evaluate the nutritional value of your school lunches.",
+        "sufficientAnswer": "Say whether school canteen meals are balanced and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -264,19 +275,18 @@
     {
       "questionId": "foo_15",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
           "past"
         ],
         "structures": [
-          "comparison"
+          "perfect"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your experience or opinion on meat-free diets.",
+        "sufficientAnswer": "Say whether you have tried a vegetarian or vegan diet and describe what it was like, with at least one detail.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -292,9 +302,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Explain the steps and ingredients of a dish you can cook.",
+        "sufficientAnswer": "Describe a recipe you can make alone, with at least two ingredients and two steps.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -310,9 +320,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your snacking habits and if they are healthy.",
+        "sufficientAnswer": "Say whether you snack between meals, name at least two snacks and say whether they are healthy.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -323,15 +333,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "past"
         ],
-        "structures": [],
+        "structures": [
+          "perfect"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a food experience that was unusual or surprising (past tense).",
+        "sufficientAnswer": "Describe the strangest dish you have tasted, in the past tense, with at least two details.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -349,9 +360,9 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the benefits of conversation and social bonding during meals.",
+        "sufficientAnswer": "Explain why eating together without screens matters, with at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.65
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -365,11 +376,12 @@
           "present"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss if shows like Top Chef or Masterchef inspire people to cook.",
+        "sufficientAnswer": "Say whether cooking shows on TV are useful and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -386,10 +398,10 @@
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss solutions like better planning, donating leftovers, or buying 'ugly' fruit.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain at least two ways to reduce food waste, such as planning meals or giving away leftovers.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -403,11 +415,12 @@
           "present"
         ],
         "structures": [
-          "comparison"
+          "comparison",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "A complete answer should: Compare quick takeaway food with home-cooked meals.",
+        "sufficientAnswer": "Say whether you prefer fast food or home-cooked meals and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -424,10 +437,10 @@
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss beverage culture and social habits around coffee/tea.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say what role coffee and tea play in your culture, with at least two details.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -436,16 +449,19 @@
     {
       "questionId": "foo_24",
       "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "compare",
         "timeFrames": [
+          "past",
           "present"
         ],
-        "structures": [],
-        "responseLoad": "short",
+        "structures": [
+          "imperfect"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare what you ate as a child with your diet now.",
+        "sufficientAnswer": "Compare what you ate as a child with what you eat now, with at least two differences.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -459,14 +475,13 @@
           "present"
         ],
         "structures": [
-          "justification",
-          "comparison"
+          "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare supermarkets and local markets for food shopping.",
+        "sufficientAnswer": "Say where you prefer to buy food and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.75
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -482,9 +497,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your favorite non-alcoholic drink and when you enjoy it.",
+        "sufficientAnswer": "Name your favourite drink and say when you drink it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -497,14 +512,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss traditional or festive meals in your culture or family.",
+        "sufficientAnswer": "Name at least two special dishes you prepare for celebrations and say what is in them.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -522,7 +535,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on street food — variety, speed, and quality.",
+        "sufficientAnswer": "Give your opinion on street food and food trucks, with at least one advantage and one drawback.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -535,15 +548,17 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
-          "past"
+          "past",
+          "present"
         ],
-        "structures": [],
-        "responseLoad": "short",
+        "structures": [
+          "imperfect"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about a childhood favorite dish that you still enjoy today.",
+        "sufficientAnswer": "Name a dish you loved as a child and still like, and say why, using the imperfect for the past.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -556,14 +571,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
-        "responseLoad": "short",
+        "structures": [],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Identify one specific ingredient you love using when you cook.",
+        "sufficientAnswer": "Name your favourite ingredient or spice and say how you use it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -580,8 +593,8 @@
           "opinion"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss modern food technology and its ethical or environmental benefits.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on lab-grown meat and the future of food, with at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -597,11 +610,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about hosting friends and what you like to cook for them.",
+        "sufficientAnswer": "Say whether you like inviting friends to dinner and name at least two things you prepare.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -619,9 +632,9 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the benefits of eating fruits and vegetables that are currently in season.",
+        "sufficientAnswer": "Explain why eating seasonal food matters, with at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.65
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -635,11 +648,12 @@
           "present"
         ],
         "structures": [
-          "comparison"
+          "comparison",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss your preference for local food vs. food from other countries.",
+        "sufficientAnswer": "Say whether you prefer local or imported food and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -659,7 +673,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the convenience versus the cost and health impact of delivery apps.",
+        "sufficientAnswer": "Give your opinion on food delivery apps, with at least one advantage and one drawback.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -670,18 +684,18 @@
     {
       "questionId": "foo_36",
       "demands": {
-        "cognitiveDemand": "justify",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
           "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your tolerance for spicy food and any specific dishes you like.",
+        "sufficientAnswer": "Say whether you like spicy food, give a reason and name at least one dish.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.75
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -692,15 +706,14 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
-          "future"
+          "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe an outdoor eating experience, the food you take, and the location.",
+        "sufficientAnswer": "Say whether you like picnics, where you go and what you take.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -713,14 +726,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss learning to cook from family members and sharing traditional recipes.",
+        "sufficientAnswer": "Say whether you cook with parents or grandparents and name at least two dishes you make together.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -734,11 +745,12 @@
           "present"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss the health risks of processed foods and hidden additives.",
+        "sufficientAnswer": "Say whether there is too much sugar and salt in our food and give at least two reasons or examples.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -754,11 +766,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about food intolerances or allergies and how they affect daily life.",
+        "sufficientAnswer": "Say whether you know someone with a food allergy and explain how they manage, with at least two details.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -772,11 +784,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss fruits that aren't native to your area and their availability.",
+        "sufficientAnswer": "Say whether you like exotic fruit and name at least two.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -792,9 +804,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Explain the ingredients and preparation of a culturally significant dish.",
+        "sufficientAnswer": "Describe a traditional dish from your country to a foreigner, with at least two ingredients and one step.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -810,9 +822,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a special morning meal for a birthday or holiday.",
+        "sufficientAnswer": "Describe a festive breakfast, with at least two things you would eat or drink.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -826,11 +838,12 @@
           "present"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss hygiene and safety measures when preparing food.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether safety in the kitchen is important and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -849,8 +862,8 @@
           "opinion"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss how Instagram or TikTok affect what and where people eat.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give your opinion on how social media influences food choices, with at least one example.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -869,11 +882,11 @@
         "structures": [
           "conditional"
         ],
-        "responseLoad": "extended",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the fusion of science and cooking (foams, spheres, etc.).",
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you know molecular cooking and whether you would taste it, with at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -882,16 +895,16 @@
     {
       "questionId": "foo_47",
       "demands": {
-        "cognitiveDemand": "justify",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "opinion"
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the possibility of printing meals and its benefits.",
+        "sufficientAnswer": "Say whether you buy ready meals and give at least two reasons, such as speed, price or health.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -907,11 +920,12 @@
           "present"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare school lunches globally (e.g., France vs. USA vs. Japan).",
+        "sufficientAnswer": "Say whether school meals are better in some countries and give at least two reasons or examples.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -930,8 +944,8 @@
           "opinion"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss the health risks of caffeine and sugar for students.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on energy drinks among young people, with at least two risks or reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -942,18 +956,18 @@
     {
       "questionId": "foo_50",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the ethics and safety of genetically modified food.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you are for or against GM food and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -964,15 +978,14 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
-          "past"
+          "present"
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss food festivals and their role in celebrating culture.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you know the French Gastronomy Festival and describe one food festival in your country.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -986,11 +999,12 @@
           "present"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss cooking as a creative and relaxing hobby.",
+        "sufficientAnswer": "Say whether cooking can reduce stress and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -1010,7 +1024,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the ethics of marketing junk food to minors.",
+        "sufficientAnswer": "Give your opinion on food adverts aimed at children, with at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -1023,17 +1037,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "past"
         ],
         "structures": [
-          "comparison"
+          "perfect"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss foraging for wild food and the risks/benefits.",
+        "sufficientAnswer": "Say whether you have picked wild fruit or mushrooms and say where and with whom.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1047,11 +1060,12 @@
           "present"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "A complete answer should: Discuss government measures to reduce obesity.",
+        "sufficientAnswer": "Say whether a sugar tax is a good idea and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -1067,11 +1081,12 @@
           "present"
         ],
         "structures": [
-          "comparison"
+          "comparison",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare packed lunches from home with school-provided meals.",
+        "sufficientAnswer": "Say whether you prefer a packed lunch or the canteen and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -1084,17 +1099,14 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
-          "past"
+          "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss nutrient-dense foods and their popularity.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you know about superfoods and name at least one you eat.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1108,12 +1120,11 @@
           "present"
         ],
         "structures": [
-          "opinion",
-          "comparison"
+          "opinion"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss foods with probiotics and their impact on digestion.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on fermented foods such as yoghurt or kimchi, with at least one reason.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -1129,14 +1140,13 @@
           "present"
         ],
         "structures": [
-          "justification",
-          "comparison"
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the 'third space' concept and working in public.",
+        "sufficientAnswer": "Explain why cafés are popular for working or studying, with at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.65
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1145,16 +1155,19 @@
     {
       "questionId": "foo_60",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
-          "present"
+          "conditional"
         ],
-        "structures": [],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss food tourism and the importance of gastronomy in travel.",
+        "sufficientAnswer": "Say whether you would travel to a country just for its food and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1163,16 +1176,16 @@
     {
       "questionId": "foo_61",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the pros and cons of all-you-can-eat restaurants.",
+        "sufficientAnswer": "Give your opinion on all-you-can-eat restaurants, with at least one advantage and one drawback.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1181,16 +1194,16 @@
     {
       "questionId": "foo_62",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss food charity and helping people in need.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you know what food banks do and explain how they help people, with at least two points.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1199,16 +1212,18 @@
     {
       "questionId": "foo_63",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss shows like MasterChef or Great British Bake Off.",
+        "sufficientAnswer": "Say whether you like watching cooking competitions on TV and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1247,10 +1262,10 @@
           "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss the cultural history and importance of French bread.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain why the baguette is a symbol of France, with at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.65
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1259,16 +1274,18 @@
     {
       "questionId": "foo_66",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss nutritional labeling and making healthy choices.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you check the Nutri-Score before buying and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1285,8 +1302,8 @@
           "opinion"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss urban agriculture and local production.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on vertical farms in city centres, with at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -1302,11 +1319,12 @@
           "present"
         ],
         "structures": [
-          "comparison"
+          "comparison",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare home-made snacks like cookies with store-bought ones.",
+        "sufficientAnswer": "Say whether you prefer home-made or shop-bought snacks and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -1325,8 +1343,8 @@
           "opinion"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss alternatives to dairy and why people choose them.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on plant-based milks, with at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -1345,10 +1363,10 @@
           "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss overfishing and ocean conservation.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain why sustainable fishing matters, with at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.65
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1357,17 +1375,16 @@
     {
       "questionId": "foo_71",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
-          "past"
+          "present"
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the philosophy of eating slowly and valuing local traditions.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you know the Slow Food movement and describe what it stands for, with at least two ideas.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1381,11 +1398,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "short",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "A complete answer should: Discuss how rising temperatures threaten certain crops.",
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how climate change affects chocolate and coffee, with at least two effects.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1398,14 +1415,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss the link between food and memory (like Proust's Madeleine).",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether a smell or taste reminds you of a childhood memory, and describe it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1414,16 +1429,16 @@
     {
       "questionId": "foo_74",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [],
-        "responseLoad": "short",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss how the French stay healthy despite a rich diet.",
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you know the French paradox and explain it, with at least two possible reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"

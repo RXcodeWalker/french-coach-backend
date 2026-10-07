@@ -1,0 +1,607 @@
+{
+  "schemaVersion": "learn-demands-v1",
+  "topicKey": "clothes",
+  "entries": [
+    {
+      "questionId": "clo_01",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe what you are wearing today with at least three items and their colours.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_02",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your favourite item of clothing with at least two details and say why you like wearing it.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_03",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say what you wear to school, with at least three items.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_04",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you prefer casual or smart clothes and say when you wear each.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_05",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name where you buy clothes, in shops or online, and give at least one reason for your choice.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_06",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe a family member's style with at least three details such as colours, items or occasions.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_07",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe what you wear when it is cold, with at least three items or layers.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_08",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you follow fashion trends and say where you find your ideas, with at least one example.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_09",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether fashion is important to you and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_10",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe an outfit you wore to a special occasion in the past tense, with at least three details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_11",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on fast fashion, with at least one advantage and one drawback.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_12",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how you choose your clothes in the morning, with at least two things you think about.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_13",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you have bought something you regretted and explain why, in the past tense.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_14",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether schools should require uniforms and give at least two reasons or one pro and one con.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_15",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you buy second-hand clothes and give at least one reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_16",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "near-future"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how fashion will change in the future, with at least two predictions.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_17",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say how far clothes show who we are, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_18",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain at least two environmental problems of the fashion industry, such as pollution, waste or water use.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_19",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe the clothing line you would create, with at least three features such as style, materials or prices.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_20",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether fashion adverts give an unrealistic body image and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_21",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe what you wear to do sport, with at least three items.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_22",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you lend your clothes, say to whom, and give at least one reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_23",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare young people's style with adults' style, with at least two differences.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_24",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you have given clothes as a gift and say who to and when, in the past tense.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_25",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Compare traditional clothes with modern clothes, with at least two differences.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_26",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether men and women should be able to wear the same clothes and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_27",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you have been to or taken part in a fashion show and describe it, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_28",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain what role celebrities play in fashion trends, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_29",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name the five clothes you would keep for a year and give a reason for at least two of them.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "clo_30",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how fashion has changed over recent decades, with at least two changes.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 {
   "schemaVersion": "learn-demands-v1",
-  "topicKey": "environment",
+  "topicKey": "animals",
   "entries": [
     {
-      "questionId": "env_01",
+      "questionId": "ani_01",
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
@@ -11,8 +11,8 @@
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Describe at least two things you do to protect the environment, at home, at school or in your community.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you have a pet and describe it, with its name and at least two details about how it looks or behaves.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -22,47 +22,9 @@
       }
     },
     {
-      "questionId": "env_02",
+      "questionId": "ani_02",
       "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Say whether technology plays an important role in your life and explain how, with at least two examples.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_03",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Name at least two big environmental problems today, such as climate change, pollution or deforestation, and say why they matter.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_04",
-      "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
@@ -71,7 +33,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Say how often you use public transport and give at least one reason.",
+        "sufficientAnswer": "Name your favourite animal and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -81,18 +43,19 @@
       }
     },
     {
-      "questionId": "env_05",
+      "questionId": "ani_03",
       "demands": {
-        "cognitiveDemand": "justify",
+        "cognitiveDemand": "compare",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "opinion"
+          "comparison",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on recycling, say what you recycle and give at least one reason it matters.",
+        "sufficientAnswer": "Say whether you prefer cats or dogs and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -102,28 +65,7 @@
       }
     },
     {
-      "questionId": "env_06",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on electric cars, with at least one advantage and one drawback.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_07",
+      "questionId": "ani_04",
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
@@ -132,7 +74,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether your school is eco-friendly and name at least two things it does.",
+        "sufficientAnswer": "Name at least three animals you can see in a zoo and describe one of them.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -142,88 +84,7 @@
       }
     },
     {
-      "questionId": "env_08",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Suggest at least two practical ways to save water at home.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_09",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether there is a lot of litter in your town and give at least one reason why.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_10",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion",
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether plastic bags should be banned and give at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_11",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Suggest at least two ways to protect endangered animals, such as protecting habitats or reducing pollution.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_12",
+      "questionId": "ani_05",
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
@@ -234,7 +95,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a green project you took part in, using the past tense, with at least two details.",
+        "sufficientAnswer": "Describe the last animal you saw, in the past tense, with at least two details such as where and what it did.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -244,40 +105,19 @@
       }
     },
     {
-      "questionId": "env_13",
+      "questionId": "ani_06",
       "demands": {
-        "cognitiveDemand": "justify",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present"
+          "conditional"
         ],
         "structures": [
-          "opinion",
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Say whether global warming is the biggest threat to humanity and give at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_14",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
+          "conditional",
           "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether ethical fashion matters and give at least two reasons, such as pollution or working conditions.",
+        "sufficientAnswer": "Say whether you would like an exotic pet and give at least one reason, naming an animal if you can.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -287,7 +127,88 @@
       }
     },
     {
-      "questionId": "env_15",
+      "questionId": "ani_07",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain why protecting endangered species matters, with at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_08",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you have adopted an animal from a shelter and say why adoption is or is not a good idea.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_09",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare a pet and a wild animal, with at least two differences.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_10",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you are afraid of some animals and name which, with one reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_11",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
@@ -296,7 +217,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "topical",
-        "sufficientAnswer": "Explain at least two effects of tourism on the environment, such as flights, waste or damage to natural sites.",
+        "sufficientAnswer": "Explain how animals help people in daily life, with at least two examples such as guide dogs or farm animals.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -306,48 +227,7 @@
       }
     },
     {
-      "questionId": "env_16",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion",
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Say whether renewable energy is the solution and give at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_17",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Suggest at least two ways to encourage people to recycle more, such as education or more bins.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_18",
+      "questionId": "ani_12",
       "demands": {
         "cognitiveDemand": "hypothesize",
         "timeFrames": [
@@ -357,50 +237,8 @@
           "conditional"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Use conditional to describe a bold environmental policy.",
-        "provenance": "reviewed"
-      },
-      "review": {
-        "status": "approved",
-        "reviewedBy": "stage9-review",
-        "reviewedAt": "2026-08-19"
-      }
-    },
-    {
-      "questionId": "env_19",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why protecting the oceans matters, with at least two reasons such as marine life, plastic or climate.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_20",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on planting more trees and parks in cities, with at least two reasons.",
+        "sufficientAnswer": "Say what you would do if you found an injured animal, with at least two actions.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -410,268 +248,7 @@
       }
     },
     {
-      "questionId": "env_21",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain at least two things you do to reduce your carbon footprint, such as transport, food or shopping.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_22",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why bees and insects matter, with at least two reasons such as pollination or the food chain.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_23",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on noise and light pollution in cities, with at least one effect on people or animals.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_24",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "past"
-        ],
-        "structures": [
-          "perfect"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether you have taken part in an environmental campaign and describe it in the past tense, with at least two details.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_25",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Describe the air quality where you live and name at least one cause of pollution.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_26",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Suggest at least two ways to use less paper in the digital age, such as tablets or online reading.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_27",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe an ideal eco-friendly house with at least three features, such as solar panels or good insulation.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_28",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Explain at least two ways to encourage friends to be greener, such as setting an example.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_29",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on whether the sharing economy helps the planet, with at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_30",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why national parks are important, with at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_31",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on repairing instead of replacing, with at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_32",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on excess packaging in supermarkets, with at least one example and one reason.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_33",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether you compost at home and give at least one reason why or why not.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_34",
+      "questionId": "ani_13",
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
@@ -683,7 +260,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether a zero-waste lifestyle is possible and give at least two reasons.",
+        "sufficientAnswer": "Say whether people should eat less meat to protect animals and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -693,7 +270,7 @@
       }
     },
     {
-      "questionId": "env_35",
+      "questionId": "ani_14",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
@@ -702,7 +279,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "topical",
-        "sufficientAnswer": "Say whether you hear about eco-anxiety and explain it, with at least two reasons why young people feel it.",
+        "sufficientAnswer": "Explain at least two ways climate change affects wild animals.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -712,18 +289,40 @@
       }
     },
     {
-      "questionId": "env_36",
+      "questionId": "ani_15",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you have visited a farm and describe the visit in the past tense, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_16",
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on the internet's carbon footprint, with at least one example such as streaming or data centres.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether circuses should use animals and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -733,7 +332,126 @@
       }
     },
     {
-      "questionId": "env_37",
+      "questionId": "ani_17",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain the role of bees in nature, with at least two points such as pollination or food.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_18",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name the animal you would become for a day and say at least two things you would do.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_19",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name at least two wild animals near where you live and say where you can see them.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_20",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how animals communicate, with at least two methods such as sounds or movements.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_21",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you are allergic to any animals and say which and what happens.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_22",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether animal testing should be banned and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_23",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
@@ -743,8 +461,8 @@
           "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why protecting forests matters, with at least two reasons such as CO2 or animal habitats.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name the animal that best represents your personality and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -754,49 +472,7 @@
       }
     },
     {
-      "questionId": "env_38",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on pesticides in farming, with at least two effects on nature or health.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_39",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on vertical gardens and urban farms, with at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_40",
+      "questionId": "ani_24",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
@@ -805,7 +481,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "topical",
-        "sufficientAnswer": "Explain what fast fashion is and describe at least two effects on the environment.",
+        "sufficientAnswer": "Explain how deforestation affects forest animals, with at least two effects.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -815,18 +491,119 @@
       }
     },
     {
-      "questionId": "env_41",
+      "questionId": "ani_25",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you have volunteered to help animals and describe it in the past tense, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_26",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give at least two advantages and one drawback of having a pet.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_27",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
         "structures": [
+          "opinion",
           "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "topical",
-        "sufficientAnswer": "Say whether it is easy to install renewable energy at home and give at least two reasons such as cost or space.",
+        "sufficientAnswer": "Give your opinion on whether modern zoos help conservation, with at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_28",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "opinion",
+          "simple-future"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say how you think the relationship between humans and animals will change, with at least two predictions.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_29",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain the role of animals in your country's culture, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "ani_30",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say how far we are responsible for protecting wildlife and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },

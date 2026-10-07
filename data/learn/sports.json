@@ -1,9 +1,9 @@
 {
   "schemaVersion": "learn-demands-v1",
-  "topicKey": "environment",
+  "topicKey": "sports",
   "entries": [
     {
-      "questionId": "env_01",
+      "questionId": "spo_01",
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
@@ -11,8 +11,8 @@
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Describe at least two things you do to protect the environment, at home, at school or in your community.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name your favourite sport and say why you like it, with at least one reason.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -22,26 +22,7 @@
       }
     },
     {
-      "questionId": "env_02",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Say whether technology plays an important role in your life and explain how, with at least two examples.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_03",
+      "questionId": "spo_02",
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
@@ -49,8 +30,8 @@
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Name at least two big environmental problems today, such as climate change, pollution or deforestation, and say why they matter.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you do sport regularly and name at least one sport and how often.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -60,9 +41,28 @@
       }
     },
     {
-      "questionId": "env_04",
+      "questionId": "spo_03",
       "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you belong to a team or club and give at least two details such as the sport, training days or teammates.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_04",
+      "demands": {
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
@@ -71,7 +71,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Say how often you use public transport and give at least one reason.",
+        "sufficientAnswer": "Name a sport you do not like and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -81,149 +81,7 @@
       }
     },
     {
-      "questionId": "env_05",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on recycling, say what you recycle and give at least one reason it matters.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_06",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on electric cars, with at least one advantage and one drawback.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_07",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether your school is eco-friendly and name at least two things it does.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_08",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Suggest at least two practical ways to save water at home.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_09",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether there is a lot of litter in your town and give at least one reason why.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_10",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion",
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether plastic bags should be banned and give at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_11",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Suggest at least two ways to protect endangered animals, such as protecting habitats or reducing pollution.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_12",
+      "questionId": "spo_05",
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
@@ -234,7 +92,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a green project you took part in, using the past tense, with at least two details.",
+        "sufficientAnswer": "Describe the last time you did sport, in the past tense, with at least three details.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -244,19 +102,80 @@
       }
     },
     {
-      "questionId": "env_13",
+      "questionId": "spo_06",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you watch matches on TV, name at least one sport and say who with.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_07",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain why sport matters, with at least two benefits such as health or friendship.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_08",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you prefer individual or team sports and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_09",
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "opinion",
-          "justification"
+          "opinion"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Say whether global warming is the biggest threat to humanity and give at least two reasons.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give your opinion on professional athletes' high salaries, with at least one reason for and one against.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -266,7 +185,90 @@
       }
     },
     {
-      "questionId": "env_14",
+      "questionId": "spo_10",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how sport brings people and cultures together, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_11",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you have taken part in a competition and describe it in the past tense, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_12",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect",
+          "imperfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your best sporting memory in the past tense, with at least three details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_13",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "simple-future"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say how you see your relationship with sport in ten years, using the future tense, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_14",
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
@@ -277,7 +279,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether ethical fashion matters and give at least two reasons, such as pollution or working conditions.",
+        "sufficientAnswer": "Say whether school sport should be compulsory and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -287,7 +289,7 @@
       }
     },
     {
-      "questionId": "env_15",
+      "questionId": "spo_15",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
@@ -296,7 +298,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "topical",
-        "sufficientAnswer": "Explain at least two effects of tourism on the environment, such as flights, waste or damage to natural sites.",
+        "sufficientAnswer": "Explain at least two dangers of high-level sport for young athletes, such as injuries or pressure.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -306,19 +308,18 @@
       }
     },
     {
-      "questionId": "env_16",
+      "questionId": "spo_16",
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "opinion",
           "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Say whether renewable energy is the solution and give at least two reasons.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether doping is a major problem in sport and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -328,7 +329,90 @@
       }
     },
     {
-      "questionId": "env_17",
+      "questionId": "spo_17",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say how far big sporting events help host cities and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_18",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "past",
+          "present"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how technology has changed playing and watching sport, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_19",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether professional sport cares enough about athletes' mental health and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_20",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether there should be more equality between men's and women's sport and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_21",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
@@ -337,7 +421,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Suggest at least two ways to encourage people to recycle more, such as education or more bins.",
+        "sufficientAnswer": "Explain the role of coaches in an athlete's success, with at least two points.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -347,7 +431,26 @@
       }
     },
     {
-      "questionId": "env_18",
+      "questionId": "spo_22",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how you deal with disappointment after a defeat, with at least two strategies.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_23",
       "demands": {
         "cognitiveDemand": "hypothesize",
         "timeFrames": [
@@ -357,29 +460,8 @@
           "conditional"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Use conditional to describe a bold environmental policy.",
-        "provenance": "reviewed"
-      },
-      "review": {
-        "status": "approved",
-        "reviewedBy": "stage9-review",
-        "reviewedAt": "2026-08-19"
-      }
-    },
-    {
-      "questionId": "env_19",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why protecting the oceans matters, with at least two reasons such as marine life, plastic or climate.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name a sport you would like to try and say at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -389,7 +471,26 @@
       }
     },
     {
-      "questionId": "env_20",
+      "questionId": "spo_24",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how sport helps people with disabilities, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_25",
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
@@ -400,7 +501,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on planting more trees and parks in cities, with at least two reasons.",
+        "sufficientAnswer": "Say whether young people do enough sport today and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -410,7 +511,7 @@
       }
     },
     {
-      "questionId": "env_21",
+      "questionId": "spo_26",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
@@ -418,8 +519,8 @@
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain at least two things you do to reduce your carbon footprint, such as transport, food or shopping.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say how you feel before an important competition and how you manage it, with at least one strategy.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -429,230 +530,9 @@
       }
     },
     {
-      "questionId": "env_22",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why bees and insects matter, with at least two reasons such as pollination or the food chain.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_23",
+      "questionId": "spo_27",
       "demands": {
         "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on noise and light pollution in cities, with at least one effect on people or animals.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_24",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "past"
-        ],
-        "structures": [
-          "perfect"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether you have taken part in an environmental campaign and describe it in the past tense, with at least two details.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_25",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Describe the air quality where you live and name at least one cause of pollution.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_26",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Suggest at least two ways to use less paper in the digital age, such as tablets or online reading.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_27",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe an ideal eco-friendly house with at least three features, such as solar panels or good insulation.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_28",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Explain at least two ways to encourage friends to be greener, such as setting an example.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_29",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on whether the sharing economy helps the planet, with at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_30",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why national parks are important, with at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_31",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on repairing instead of replacing, with at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_32",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on excess packaging in supermarkets, with at least one example and one reason.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_33",
-      "demands": {
-        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
@@ -661,7 +541,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether you compost at home and give at least one reason why or why not.",
+        "sufficientAnswer": "Say whether school sport prepares young people for an active life and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -671,19 +551,40 @@
       }
     },
     {
-      "questionId": "env_34",
+      "questionId": "spo_28",
       "demands": {
-        "cognitiveDemand": "justify",
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe the new sports competition you would create, with at least three features.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "spo_29",
+      "demands": {
+        "cognitiveDemand": "compare",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "opinion",
+          "comparison",
           "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether a zero-waste lifestyle is possible and give at least two reasons.",
+        "sufficientAnswer": "Say whether success in sport depends more on talent or on hard work and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -693,140 +594,16 @@
       }
     },
     {
-      "questionId": "env_35",
+      "questionId": "spo_30",
       "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "topical",
-        "sufficientAnswer": "Say whether you hear about eco-anxiety and explain it, with at least two reasons why young people feel it.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_36",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on the internet's carbon footprint, with at least one example such as streaming or data centres.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_37",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why protecting forests matters, with at least two reasons such as CO2 or animal habitats.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_38",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on pesticides in farming, with at least two effects on nature or health.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_39",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on vertical gardens and urban farms, with at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_40",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain what fast fashion is and describe at least two effects on the environment.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_41",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Say whether it is easy to install renewable energy at home and give at least two reasons such as cost or space.",
+        "sufficientAnswer": "Say how far sport reflects a society's values and give at least two examples.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },

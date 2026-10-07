@@ -1,129 +1,9 @@
 {
   "schemaVersion": "learn-demands-v1",
-  "topicKey": "environment",
+  "topicKey": "arts",
   "entries": [
     {
-      "questionId": "env_01",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Describe at least two things you do to protect the environment, at home, at school or in your community.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_02",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Say whether technology plays an important role in your life and explain how, with at least two examples.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_03",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Name at least two big environmental problems today, such as climate change, pollution or deforestation, and say why they matter.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_04",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say how often you use public transport and give at least one reason.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_05",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on recycling, say what you recycle and give at least one reason it matters.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_06",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on electric cars, with at least one advantage and one drawback.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_07",
+      "questionId": "arv_01",
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
@@ -132,7 +12,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether your school is eco-friendly and name at least two things it does.",
+        "sufficientAnswer": "Name your favourite music genre and say why you like it, with at least one reason.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -142,7 +22,7 @@
       }
     },
     {
-      "questionId": "env_08",
+      "questionId": "arv_02",
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
@@ -151,7 +31,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Suggest at least two practical ways to save water at home.",
+        "sufficientAnswer": "Say whether you like going to the cinema and name at least one type of film you prefer.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -161,59 +41,16 @@
       }
     },
     {
-      "questionId": "env_09",
+      "questionId": "arv_03",
       "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether there is a lot of litter in your town and give at least one reason why.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_10",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion",
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether plastic bags should be banned and give at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_11",
-      "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "describe",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Suggest at least two ways to protect endangered animals, such as protecting habitats or reducing pollution.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you read a lot and name the kind of books you prefer.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -223,7 +60,26 @@
       }
     },
     {
-      "questionId": "env_12",
+      "questionId": "arv_04",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you can draw or paint and say when you do it, with at least one detail.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_05",
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
@@ -234,7 +90,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a green project you took part in, using the past tense, with at least two details.",
+        "sufficientAnswer": "Say whether you have visited an art museum and describe the visit in the past tense, with at least two details.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -244,29 +100,7 @@
       }
     },
     {
-      "questionId": "env_13",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion",
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Say whether global warming is the biggest threat to humanity and give at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_14",
+      "questionId": "arv_06",
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
@@ -277,7 +111,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether ethical fashion matters and give at least two reasons, such as pollution or working conditions.",
+        "sufficientAnswer": "Name your favourite film and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -287,7 +121,241 @@
       }
     },
     {
-      "questionId": "env_15",
+      "questionId": "arv_07",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether art is important for society and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_08",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you prefer live or recorded music and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_09",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "past",
+          "present"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how streaming has changed the way people watch films and listen to music, with at least two changes.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_10",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name a book that affected you and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_11",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether video games can be art and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_12",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on censorship in art, with at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_13",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "past",
+          "present"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how technology has changed the way art is made, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_14",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say how far music reflects the concerns of a generation, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_15",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether traditional art should be preserved in the digital age and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_16",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you have written a story or poem and describe it in the past tense, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_17",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say which you prefer among theatre, dance and opera and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_18",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
@@ -296,7 +364,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "topical",
-        "sufficientAnswer": "Explain at least two effects of tourism on the environment, such as flights, waste or damage to natural sites.",
+        "sufficientAnswer": "Explain how film can raise awareness of social problems, with at least two examples.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -306,7 +374,7 @@
       }
     },
     {
-      "questionId": "env_16",
+      "questionId": "arv_19",
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
@@ -317,8 +385,8 @@
           "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Say whether renewable energy is the solution and give at least two reasons.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether access to art and culture is equal for everyone and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -328,26 +396,7 @@
       }
     },
     {
-      "questionId": "env_17",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Suggest at least two ways to encourage people to recycle more, such as education or more bins.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_18",
+      "questionId": "arv_20",
       "demands": {
         "cognitiveDemand": "hypothesize",
         "timeFrames": [
@@ -357,50 +406,8 @@
           "conditional"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Use conditional to describe a bold environmental policy.",
-        "provenance": "reviewed"
-      },
-      "review": {
-        "status": "approved",
-        "reviewedBy": "stage9-review",
-        "reviewedAt": "2026-08-19"
-      }
-    },
-    {
-      "questionId": "env_19",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why protecting the oceans matters, with at least two reasons such as marine life, plastic or climate.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_20",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on planting more trees and parks in cities, with at least two reasons.",
+        "sufficientAnswer": "Say which famous artist or writer you would meet and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -410,146 +417,7 @@
       }
     },
     {
-      "questionId": "env_21",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain at least two things you do to reduce your carbon footprint, such as transport, food or shopping.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_22",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why bees and insects matter, with at least two reasons such as pollination or the food chain.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_23",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on noise and light pollution in cities, with at least one effect on people or animals.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_24",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "past"
-        ],
-        "structures": [
-          "perfect"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether you have taken part in an environmental campaign and describe it in the past tense, with at least two details.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_25",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Describe the air quality where you live and name at least one cause of pollution.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_26",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Suggest at least two ways to use less paper in the digital age, such as tablets or online reading.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_27",
-      "demands": {
-        "cognitiveDemand": "describe",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe an ideal eco-friendly house with at least three features, such as solar panels or good insulation.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_28",
+      "questionId": "arv_21",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
@@ -558,7 +426,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Explain at least two ways to encourage friends to be greener, such as setting an example.",
+        "sufficientAnswer": "Explain the role music plays in your daily life, with at least two examples.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -568,110 +436,7 @@
       }
     },
     {
-      "questionId": "env_29",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on whether the sharing economy helps the planet, with at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_30",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why national parks are important, with at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_31",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on repairing instead of replacing, with at least two reasons.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_32",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on excess packaging in supermarkets, with at least one example and one reason.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_33",
-      "demands": {
-        "cognitiveDemand": "explain",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "justification"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether you compost at home and give at least one reason why or why not.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_34",
+      "questionId": "arv_22",
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
@@ -682,8 +447,27 @@
           "justification"
         ],
         "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether celebrities have an artistic responsibility to their audience and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_23",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Say whether a zero-waste lifestyle is possible and give at least two reasons.",
+        "sufficientAnswer": "Describe your personal taste in art or design, with at least two details.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -693,16 +477,16 @@
       }
     },
     {
-      "questionId": "env_35",
+      "questionId": "arv_24",
       "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "compare",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "topical",
-        "sufficientAnswer": "Say whether you hear about eco-anxiety and explain it, with at least two reasons why young people feel it.",
+        "sufficientAnswer": "Say whether abstract art is as valuable as figurative art and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -712,28 +496,7 @@
       }
     },
     {
-      "questionId": "env_36",
-      "demands": {
-        "cognitiveDemand": "justify",
-        "timeFrames": [
-          "present"
-        ],
-        "structures": [
-          "opinion"
-        ],
-        "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on the internet's carbon footprint, with at least one example such as streaming or data centres.",
-        "provenance": "inferred",
-        "inferenceConfidence": 0.8
-      },
-      "review": {
-        "status": "draft",
-        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
-      }
-    },
-    {
-      "questionId": "env_37",
+      "questionId": "arv_25",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
@@ -743,8 +506,8 @@
           "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Explain why protecting forests matters, with at least two reasons such as CO2 or animal habitats.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you like street art and give at least two reasons, saying whether you see it as art or vandalism.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -754,18 +517,18 @@
       }
     },
     {
-      "questionId": "env_38",
+      "questionId": "arv_26",
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "opinion"
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on pesticides in farming, with at least two effects on nature or health.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether learning art history at school is important and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -775,18 +538,18 @@
       }
     },
     {
-      "questionId": "env_39",
+      "questionId": "arv_27",
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "opinion"
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "topical",
-        "sufficientAnswer": "Give your opinion on vertical gardens and urban farms, with at least two reasons.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether film adaptations of books are usually successful and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -796,7 +559,7 @@
       }
     },
     {
-      "questionId": "env_40",
+      "questionId": "arv_28",
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
@@ -805,7 +568,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "topical",
-        "sufficientAnswer": "Explain what fast fashion is and describe at least two effects on the environment.",
+        "sufficientAnswer": "Explain how art can help people heal or cope with difficult experiences, with at least two examples.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -815,18 +578,35 @@
       }
     },
     {
-      "questionId": "env_41",
+      "questionId": "arv_29",
       "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "justification"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "topical",
-        "sufficientAnswer": "Say whether it is easy to install renewable energy at home and give at least two reasons such as cost or space.",
+        "sufficientAnswer": "Say whether the contemporary art market reflects the real value of artworks and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "arv_30",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say how far art can cause lasting social change and give at least two examples.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },

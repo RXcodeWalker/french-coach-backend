@@ -12,9 +12,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe 2-3 hobbies in detail — how often, who with, why you enjoy them.",
+        "sufficientAnswer": "Name at least two things you do in your free time and say how often or with whom.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -30,11 +30,11 @@
         "structures": [
           "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about sports you play or watch. Include how often and where.",
+        "sufficientAnswer": "Say which sport you prefer, give a reason, and say how often or where you do it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.75
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -47,14 +47,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
-        "responseLoad": "extended",
+        "structures": [],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss any musical activity — playing, singing, concerts, favourite music genres.",
+        "sufficientAnswer": "Say whether you play an instrument or sing, how long you have done it, and one detail about the music you like.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -68,11 +66,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your reading habits, favourite genres, specific books or authors.",
+        "sufficientAnswer": "Say how much you read and name at least one kind of book or author you like.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -85,14 +83,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
-        "responseLoad": "extended",
+        "structures": [],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss screen time habits — TV shows, YouTube, streaming, how much time per day.",
+        "sufficientAnswer": "Say how much TV or online video you watch and give at least two details, such as channels, shows or time per day.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -103,15 +99,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "past"
         ],
-        "structures": [],
-        "responseLoad": "short",
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your recent weekend activities using the past tense (passé composé).",
+        "sufficientAnswer": "Describe at least two things you did last weekend to relax, using the past tense.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -122,15 +119,14 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "future"
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Talk about a new hobby or sport you want to try, explain why it interests you.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name one activity you would like to try in the future and give at least one reason why it interests you.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -146,9 +142,9 @@
         "structures": [
           "comparison"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare individual and team sports, giving advantages and disadvantages of each.",
+        "sufficientAnswer": "Say whether you prefer individual or team sports, with one advantage of your choice and one drawback of the other.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -159,16 +155,18 @@
     {
       "questionId": "hob_09",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the impact of technology and social media on young people's leisure time.",
+        "sufficientAnswer": "Give your opinion on whether young people spend too long on screens, with at least two reasons or examples.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -179,15 +177,17 @@
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
           "past"
         ],
-        "structures": [],
-        "responseLoad": "extended",
+        "structures": [
+          "perfect",
+          "imperfect"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a recent movie experience — plot, opinion, and actors.",
+        "sufficientAnswer": "Name the last film you saw and say what it was like, with at least two details such as plot, actors or your opinion.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -203,11 +203,11 @@
         "structures": [
           "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss your gaming habits or why you don't enjoy gaming.",
+        "sufficientAnswer": "Say whether you play video games and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.65
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -221,12 +221,12 @@
           "present"
         ],
         "structures": [
-          "justification",
-          "comparison"
+          "comparison",
+          "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare reading and watching films, giving your preference.",
+        "sufficientAnswer": "Say whether you prefer reading a book or watching a film and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -244,9 +244,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your evening routine and leisure activities after school.",
+        "sufficientAnswer": "Describe what you do on a typical evening after school, with at least three activities.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -264,7 +264,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare online shopping with going to physical stores.",
+        "sufficientAnswer": "Say whether you prefer shopping online or in shops, with one advantage of your choice and one drawback of the other.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -277,7 +277,6 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "conditional"
         ],
         "structures": [
@@ -285,9 +284,9 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about an actor, singer, or athlete you admire.",
+        "sufficientAnswer": "Name a famous person you would like to meet and give at least two reasons or things you would ask them.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -298,16 +297,17 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "present",
+          "past"
         ],
         "structures": [
-          "comparison"
+          "perfect"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss your interest in culture and exhibitions.",
+        "sufficientAnswer": "Say whether you like museums or galleries and describe the last one you visited, with at least one detail.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -324,10 +324,10 @@
           "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss how hobbies help reduce stress and improve well-being.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain why hobbies matter for mental health, giving at least two reasons such as less stress or more confidence.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.65
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -340,14 +340,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "negation"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about indoor activities like reading, watching movies, or games.",
+        "sufficientAnswer": "Say what you do indoors when it rains, with at least two activities.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -361,11 +359,12 @@
           "present"
         ],
         "structures": [
-          "comparison"
+          "comparison",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "A complete answer should: Compare hobbies like reading/drawing with sports/dancing.",
+        "sufficientAnswer": "Say whether you prefer calm or active hobbies and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -381,11 +380,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about any collections you have — stamps, coins, posters, digital items.",
+        "sufficientAnswer": "Say whether you like collecting things and name at least one thing you collect or used to collect.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -401,11 +400,11 @@
         "structures": [
           "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss your musical tastes and how they make you feel.",
+        "sufficientAnswer": "Name your favourite music genre and give at least two reasons, such as how it makes you feel.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.75
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -414,16 +413,18 @@
     {
       "questionId": "hob_22",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "opinion"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the benefits of volunteering for others and for oneself.",
+        "sufficientAnswer": "Give your opinion on volunteering as a hobby, with at least one benefit for others and one for yourself.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -432,16 +433,19 @@
     {
       "questionId": "hob_23",
       "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "compare",
         "timeFrames": [
+          "past",
           "present"
         ],
-        "structures": [],
-        "responseLoad": "short",
+        "structures": [
+          "imperfect"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare your childhood activities with your current hobbies.",
+        "sufficientAnswer": "Compare what you did in your free time as a child with what you do now, with at least two differences.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -450,16 +454,18 @@
     {
       "questionId": "hob_24",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
-        "responseLoad": "extended",
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss your use of TikTok, Instagram, etc., as a leisure activity.",
+        "sufficientAnswer": "Say whether you see social media as a hobby and give at least one reason, naming an app you use.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -468,18 +474,18 @@
     {
       "questionId": "hob_25",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about making things, crafts, or DIY projects.",
+        "sufficientAnswer": "Say whether you enjoy DIY and crafts and give at least one reason, with an example of something you made or would make.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -488,9 +494,8 @@
     {
       "questionId": "hob_26",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
           "conditional"
         ],
         "structures": [
@@ -498,9 +503,9 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss activities like skydiving, bungee jumping, or rock climbing.",
+        "sufficientAnswer": "Say whether you would try an extreme sport, name one, and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -518,7 +523,7 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Contrast watching matches with participating in physical activities.",
+        "sufficientAnswer": "Say whether you prefer watching or playing sport, with one advantage of your choice and one drawback of the other.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -536,9 +541,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about taking photos, your equipment, and what you like to capture.",
+        "sufficientAnswer": "Say whether you like photography and name at least two things you photograph or the equipment you use.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -551,14 +556,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss cooking as a hobby, your favorite recipes, and who you cook for.",
+        "sufficientAnswer": "Say whether you like cooking or baking in your free time and name one dish you make.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -572,11 +575,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe local youth facilities and the activities they offer.",
+        "sufficientAnswer": "Say whether there is a youth centre in your town and name at least two activities you can do there.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -589,14 +592,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your creative arts hobbies and your favorite style.",
+        "sufficientAnswer": "Say whether you are good at drawing or painting and say where you find your inspiration.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -609,14 +610,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
-        "responseLoad": "extended",
+        "structures": [],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss dancing as a hobby, whether you take lessons or dance for fun.",
+        "sufficientAnswer": "Say whether you like dancing and name the style you prefer, with one reason or detail.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -632,9 +631,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about gardening, plants, or spending time in the garden.",
+        "sufficientAnswer": "Say whether you help your parents with gardening and name at least two jobs you do.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -650,9 +649,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss looking after pets as a daily commitment and hobby.",
+        "sufficientAnswer": "Name at least two responsibilities of owning a pet, such as feeding, walking or visits to the vet.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -668,11 +667,11 @@
         "structures": [
           "justification"
         ],
-        "responseLoad": "short",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the mental health benefits of having hobbies outside of school.",
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain why hobbies help reduce stress, giving at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.65
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -681,18 +680,18 @@
     {
       "questionId": "hob_36",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about acting, watching plays, or participating in drama workshops.",
+        "sufficientAnswer": "Say whether you are interested in theatre or drama and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -703,17 +702,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "past"
         ],
         "structures": [
-          "comparison"
+          "perfect"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss wellness activities and how they affect your physical/mental state.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you have tried yoga or meditation and describe what it was like, with at least one detail.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -722,18 +720,18 @@
     {
       "questionId": "hob_38",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about technology-based hobbies and creating software or machines.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you are interested in coding or robotics and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -742,16 +740,18 @@
     {
       "questionId": "hob_39",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss fashion as a creative outlet, sewing, or following trends.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you are interested in fashion or making clothes and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -760,18 +760,18 @@
     {
       "questionId": "hob_40",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about space, planets, and using a telescope.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you like stargazing or astronomy and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -780,16 +780,18 @@
     {
       "questionId": "hob_41",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about helping others, charity work, or local community events.",
+        "sufficientAnswer": "Say whether you do volunteering and give at least one reason, with an example if you do.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -800,16 +802,17 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "present",
+          "past"
         ],
         "structures": [
-          "comparison"
+          "perfect"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about cultural trips, museums, and historical interests.",
+        "sufficientAnswer": "Say whether you like visiting historic sites and describe the last one you visited, with at least one detail.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -839,16 +842,18 @@
     {
       "questionId": "hob_44",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
-        "responseLoad": "short",
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the atmosphere of live sports vs. watching on TV.",
+        "sufficientAnswer": "Say whether you like watching live sport at the stadium and give at least one reason, such as the atmosphere.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -861,14 +866,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about learning unique skills or talents for entertainment.",
+        "sufficientAnswer": "Say whether you have a special talent or can do magic tricks, and describe it with at least one detail.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -881,14 +884,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss walking in nature, equipment, and how it makes you feel.",
+        "sufficientAnswer": "Say whether you like hiking or forest walks and say where you go and who you go with.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -901,14 +902,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss modern ways of consuming stories or information.",
+        "sufficientAnswer": "Say whether you listen to podcasts or audiobooks and name at least one that you like.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -921,14 +920,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about DIY projects, making things at home, or fixing things.",
+        "sufficientAnswer": "Say whether you like making things with your hands and describe your favourite project.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -942,11 +939,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss growing plants, flowers, or vegetables in a garden or on a balcony.",
+        "sufficientAnswer": "Say whether you like gardening and name at least two plants or vegetables you like.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -955,18 +952,18 @@
     {
       "questionId": "hob_50",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Talk about coding, making websites, or game development as a hobby.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you do programming or coding as a hobby and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -982,9 +979,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss baking cakes, cookies, or bread.",
+        "sufficientAnswer": "Say whether you like baking at the weekend and name the cake or bread you make most often.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -993,18 +990,18 @@
     {
       "questionId": "hob_52",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about creative writing, journaling, or writing poems.",
+        "sufficientAnswer": "Say whether you write stories or poems in your free time and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1015,17 +1012,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "past"
         ],
         "structures": [
-          "comparison"
+          "perfect"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss making pottery, working with clay, or taking art classes.",
+        "sufficientAnswer": "Say whether you have tried pottery or ceramics and describe what it was like, with at least one detail.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1038,14 +1034,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
-        "responseLoad": "extended",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Talk about yoga, stretching, mindfulness, or meditation practices.",
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you do yoga or meditation to relax and describe how you relax, with at least one detail.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1058,14 +1052,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss board games, strategy games, or family game nights.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you like board games and name your favourite one, with who you play with.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1076,15 +1068,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "past"
         ],
-        "structures": [],
+        "structures": [
+          "perfect"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about escape rooms, solving puzzles, and teamwork.",
+        "sufficientAnswer": "Say whether you have done an escape room and describe what it was like, with at least one detail.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1093,18 +1086,18 @@
     {
       "questionId": "hob_57",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss learning magic tricks, card tricks, and entertaining others.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you are interested in magic tricks and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1113,16 +1106,18 @@
     {
       "questionId": "hob_58",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about stargazing, telescopes, and learning about space.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you do astronomy by watching the stars and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1131,16 +1126,18 @@
     {
       "questionId": "hob_59",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss flying drones, taking aerial photos, or racing drones.",
+        "sufficientAnswer": "Say whether you like flying a drone and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1154,11 +1151,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about skateboarding, skateparks, learning tricks, and skate culture.",
+        "sufficientAnswer": "Say whether you skateboard and say where you go and who you go with.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1167,18 +1164,18 @@
     {
       "questionId": "hob_61",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss sewing, making clothes, fashion, or upcycling fabrics.",
+        "sufficientAnswer": "Say whether you like sewing or making your own clothes and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1187,16 +1184,18 @@
     {
       "questionId": "hob_62",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about tabletop RPGs, creating characters, and storytelling.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you play tabletop role-playing games and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1209,14 +1208,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss volunteering, helping charities, or community service.",
+        "sufficientAnswer": "Say whether you do volunteering or help charities and name at least one organisation or activity.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1232,9 +1229,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about language learning apps, motivation, and which languages you study.",
+        "sufficientAnswer": "Say whether you are learning another foreign language and name it, with how you learn it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1243,18 +1240,18 @@
     {
       "questionId": "hob_65",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss acting, drama club, stage fright, and performances.",
+        "sufficientAnswer": "Say whether you do theatre or comedy and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1263,18 +1260,18 @@
     {
       "questionId": "hob_66",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about DIY upcycling, restoring old furniture, or transforming clothes.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you like upcycling old objects and give at least one reason, with an example.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1283,18 +1280,18 @@
     {
       "questionId": "hob_67",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
-        "responseLoad": "extended",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss juggling, circus skills, acrobatics, and coordination.",
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you can juggle or do circus skills and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1308,11 +1305,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about martial arts, belts, discipline, and physical fitness.",
+        "sufficientAnswer": "Say whether you do martial arts and name which one, with at least one detail about training.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1321,18 +1318,18 @@
     {
       "questionId": "hob_69",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss painting, drawing, watercolors, and artistic expression.",
+        "sufficientAnswer": "Say whether you like painting or creative drawing and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1341,16 +1338,18 @@
     {
       "questionId": "hob_70",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about collecting items, finding rare pieces, and organizing the collection.",
+        "sufficientAnswer": "Say whether you collect anything and give at least one reason why or why not, naming what you collect.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1359,16 +1358,18 @@
     {
       "questionId": "hob_71",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
-        "responseLoad": "extended",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss bird watching, nature walks, binoculars, and identifying species.",
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you are interested in bird watching and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1377,16 +1378,18 @@
     {
       "questionId": "hob_72",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
-        "responseLoad": "extended",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about competitive gaming, e-sports, team communication, and practice.",
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you take part in e-sports tournaments and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1397,15 +1400,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "past"
         ],
-        "structures": [],
-        "responseLoad": "extended",
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss geocaching, outdoor treasure hunts, using a phone GPS, and hiding small items.",
+        "sufficientAnswer": "Say whether you have tried geocaching and describe what it was like, with at least one detail.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1414,18 +1418,18 @@
     {
       "questionId": "hob_74",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
-        "responseLoad": "extended",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about beautiful handwriting, calligraphy pens, ink, and artistic writing.",
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you practise calligraphy or hand lettering and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1434,16 +1438,18 @@
     {
       "questionId": "hob_75",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
-        "responseLoad": "extended",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss making memory albums, photos, decorating pages, and crafting.",
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you like scrapbooking and give at least one reason, such as keeping memories.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1456,14 +1462,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
-        "responseLoad": "extended",
+        "structures": [],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about surfing, beach holidays, water sports, and waves.",
+        "sufficientAnswer": "Say whether you surf or do water sports on holiday, and say where and when you do it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -1472,16 +1476,18 @@
     {
       "questionId": "hob_77",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
-        "responseLoad": "extended",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss origami, paper folding, patience, and Japanese culture.",
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether you do origami and give at least one reason why or why not.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"

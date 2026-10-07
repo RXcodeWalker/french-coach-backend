@@ -10,11 +10,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe rooms, size, location, what you like or dislike about it.",
+        "sufficientAnswer": "Describe your home with at least three details, such as the rooms, its size, where it is and what you like about it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -23,18 +23,16 @@
     {
       "questionId": "hom_02",
       "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "describe",
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
-        "responseLoad": "extended",
+        "structures": [],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your area — facilities, atmosphere, pros and cons for young people.",
+        "sufficientAnswer": "Describe your town or village with at least three details, such as facilities, atmosphere or pros and cons for young people.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -50,9 +48,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about leisure options — what's available, what's missing, what you'd add.",
+        "sufficientAnswer": "Name at least two things young people can do in your area and say what is missing.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -61,16 +59,16 @@
     {
       "questionId": "hom_04",
       "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "describe",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Use conditional tense to describe your dream bedroom — furniture, colors, technology.",
+        "sufficientAnswer": "Describe your ideal bedroom with at least three details, such as furniture, colours or technology.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -81,18 +79,17 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "future",
           "conditional"
         ],
         "structures": [
           "conditional"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your future home location — city, countryside, abroad — and give reasons.",
+        "sufficientAnswer": "Say where you would like to live later and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -103,15 +100,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "past"
         ],
-        "structures": [],
-        "responseLoad": "short",
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your recent activities in your local area using the past tense.",
+        "sufficientAnswer": "Describe at least two things you did in your town last weekend, using the past tense.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -125,12 +123,12 @@
           "present"
         ],
         "structures": [
-          "justification",
-          "comparison"
+          "comparison",
+          "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare houses and apartments, giving your preference and reasons.",
+        "sufficientAnswer": "Say whether you prefer a house or an apartment and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -148,9 +146,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe local tourist attractions and why they are worth visiting.",
+        "sufficientAnswer": "Name at least two attractions for tourists in your town and say why each is worth visiting.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -159,16 +157,16 @@
     {
       "questionId": "hom_09",
       "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "describe",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe the colors, furniture, and personal touches in your room.",
+        "sufficientAnswer": "Describe your bedroom and how you decorated it, with at least three details such as colours, furniture or posters.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -204,11 +202,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe local green spaces and how you use them.",
+        "sufficientAnswer": "Say whether there is a park near you and how often you go, with at least one thing you do there.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -224,9 +222,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss improvements like transport, facilities, or environment.",
+        "sufficientAnswer": "Name at least two things you would change in your town, such as transport, facilities or the environment.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -242,9 +240,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about the people living next door and your relationship with them.",
+        "sufficientAnswer": "Say how well you know your neighbours and describe them, with at least two details.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -260,9 +258,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe the kitchen's look and its role in family life.",
+        "sufficientAnswer": "Describe your kitchen and say whether it is an important place at home, with at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -278,7 +276,7 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "A complete answer should: Compare country life with city life.",
+        "sufficientAnswer": "Give at least two advantages of village life compared with city life.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -291,15 +289,17 @@
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
-          "past"
+          "past",
+          "present"
         ],
-        "structures": [],
+        "structures": [
+          "imperfect"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about new buildings, shops, or changes in transport.",
+        "sufficientAnswer": "Explain how your town has changed in recent years, with at least two changes.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -315,9 +315,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a specific street, mall, or market you like.",
+        "sufficientAnswer": "Say where your favourite place to shop is and describe it, with at least two details.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -326,16 +326,18 @@
     {
       "questionId": "hom_18",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the safety and security of your area at night.",
+        "sufficientAnswer": "Say whether your town is safe in the evening and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -344,16 +346,16 @@
     {
       "questionId": "hom_19",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare old and new styles of buildings in your area.",
+        "sufficientAnswer": "Give your opinion on your town's architecture, with at least one example of an old and a new building.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -367,11 +369,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss cinemas, theatres, festivals, and other cultural events.",
+        "sufficientAnswer": "Say whether there are enough cultural activities and name at least two, such as cinemas, theatres or festivals.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -385,11 +387,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss who does the cooking, cleaning, laundry, etc.",
+        "sufficientAnswer": "Explain how housework is shared at home, with at least two tasks and who does them.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -403,11 +405,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "short",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Use the conditional to talk about your dream home.",
+        "sufficientAnswer": "Describe your ideal house with at least three details, such as location, size, rooms or garden.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -421,11 +423,12 @@
           "present"
         ],
         "structures": [
-          "comparison"
+          "comparison",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Contrast living in a flat/apartment with a detached/semi-detached house.",
+        "sufficientAnswer": "Say whether you prefer a flat or a house and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -443,9 +446,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about open-air markets and what they sell.",
+        "sufficientAnswer": "Say whether there are local markets, when they are held and what they sell.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -459,11 +462,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about parks, forests, lakes, or mountains nearby.",
+        "sufficientAnswer": "Name at least two interesting places for nature lovers in your region and say what you can do there.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -477,11 +480,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "What can you see? Buildings, trees, people, the street?",
+        "sufficientAnswer": "Describe the view from your bedroom window with at least three details.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -494,14 +497,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Specific chores like watering plants, mowing the lawn, or cleaning.",
+        "sufficientAnswer": "Explain how you help look after the house or garden, naming at least two jobs.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -515,11 +516,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Mention at least two of: Air quality, noise, litter, or water pollution.",
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Name at least two pollution problems in your town, such as air, noise or litter, and say what causes them.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -528,16 +529,16 @@
     {
       "questionId": "hom_29",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "compare",
         "timeFrames": [
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Space, noise, safety, cost, access to shops.",
+        "sufficientAnswer": "Give at least two advantages of living in the suburbs compared with the city centre.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -551,11 +552,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Carnival, music festival, market, or fair.",
+        "sufficientAnswer": "Describe a local festival or event with at least three details, such as when, what happens and who goes.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -564,16 +565,16 @@
     {
       "questionId": "hom_31",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Better lighting, more parks, slower cars, security.",
+        "sufficientAnswer": "Name at least two changes that would make your area safer for children and say why each helps.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -582,16 +583,18 @@
     {
       "questionId": "hom_32",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
-        "responseLoad": "extended",
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Industries, local businesses, unemployment, opportunities for young people.",
+        "sufficientAnswer": "Say whether it is easy to find a job in your town and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -605,11 +608,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Narrow/wide, busy/quiet, trees, neighbors, shops.",
+        "sufficientAnswer": "Describe your street with at least three details, such as busy or quiet, trees, neighbours or shops.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -620,15 +623,14 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
-          "future"
+          "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "A quiet park, library, café, or a bench somewhere.",
+        "sufficientAnswer": "Say where you go to be alone in your town and say what you like about it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -644,9 +646,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your relationship with neighbors — do you say hello, help each other, or are they strangers?",
+        "sufficientAnswer": "Say how well you know your neighbours and say when you talk or help each other.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -655,18 +657,16 @@
     {
       "questionId": "hom_36",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
-        "responseLoad": "extended",
+        "structures": [],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe the noise levels in your area — traffic, nature, people — and how it affects you.",
+        "sufficientAnswer": "Say whether your area is noisy or quiet and explain how it affects you.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -680,11 +680,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about parks, forests, or gardens nearby and what you do there.",
+        "sufficientAnswer": "Name at least two green spaces near you and say what you do there.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -697,14 +697,12 @@
         "timeFrames": [
           "present"
         ],
-        "structures": [
-          "comparison"
-        ],
+        "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss any historical facts, old buildings, or how the area has changed over time.",
+        "sufficientAnswer": "Say whether you know your area's history and give at least two facts, such as old buildings or past events.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -718,11 +716,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Identify a local shop (bakery, pharmacy, etc.) and explain why it's important for residents.",
+        "sufficientAnswer": "Name the most useful shop in your area and say why it matters to local people.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -731,16 +729,16 @@
     {
       "questionId": "hom_40",
       "demands": {
-        "cognitiveDemand": "explain",
+        "cognitiveDemand": "describe",
         "timeFrames": [
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe how your town looks in winter vs. summer (flowers, snow, lights, atmosphere).",
+        "sufficientAnswer": "Describe how your town looks in at least two seasons, such as in winter and in summer.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -754,11 +752,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about wildlife (birds, foxes, squirrels) or domestic pets you see around.",
+        "sufficientAnswer": "Name at least two animals you can see in your area and say where.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -772,11 +770,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a possession that means a lot to you (an heirloom, a gift, a device) and explain why.",
+        "sufficientAnswer": "Name the most precious object in your home and explain why it matters to you.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -790,11 +788,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss what people do at night — restaurants, cinemas, clubs, or quiet walks.",
+        "sufficientAnswer": "Name at least two evening activities in your town and say which one you prefer.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -805,14 +803,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "past"
         ],
-        "structures": [],
+        "structures": [
+          "imperfect"
+        ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Reflect on activities or events that happened at home when you were younger.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe at least two childhood memories linked to your home, using the imperfect or past tense.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"

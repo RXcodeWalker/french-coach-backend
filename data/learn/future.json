@@ -7,14 +7,14 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "future"
         ],
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss future career or study plans. Use future tense and conditional.",
+        "sufficientAnswer": "Say what you want to do in the future, with at least two details about your career or study plans.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -25,17 +25,17 @@
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
-          "present"
+          "conditional"
         ],
         "structures": [
-          "justification",
-          "comparison"
+          "conditional",
+          "justification"
         ],
-        "responseLoad": "extended",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Give a clear opinion on university with pros/cons and alternatives.",
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you would like to go to university and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.75
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -46,7 +46,6 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "future",
           "conditional"
         ],
@@ -55,9 +54,9 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your dream job, why it appeals, what skills are needed.",
+        "sufficientAnswer": "Name the job you would like to do later and give at least two reasons or skills it needs.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -68,15 +67,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "future"
         ],
-        "structures": [],
+        "structures": [
+          "near-future"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your immediate post-exam plans — holidays, summer job, next year's studies.",
+        "sufficientAnswer": "Say what you are going to do after your exams next year, with at least two plans.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -85,16 +85,19 @@
     {
       "questionId": "fut_05",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present"
+          "conditional"
         ],
-        "structures": [],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the pros and cons of working in another country, mention a specific place if you have one in mind.",
+        "sufficientAnswer": "Say whether you would like to work abroad one day and give at least one reason, naming a place if you can.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -110,11 +113,11 @@
         "structures": [
           "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your ideal job, what you'd do daily, and why it's your dream.",
+        "sufficientAnswer": "Name your dream job and give at least two reasons, such as what you would do each day.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.75
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -123,17 +126,18 @@
     {
       "questionId": "fut_07",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
           "future"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the pros and cons of being an entrepreneur vs. an employee.",
+        "sufficientAnswer": "Say whether you want your own business later and give at least one advantage and one drawback.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -147,14 +151,13 @@
           "present"
         ],
         "structures": [
-          "justification",
-          "negation"
+          "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Identify a job you dislike and explain the reasons (stress, boredom, danger).",
+        "sufficientAnswer": "Name a job you would never do and give at least two reasons, such as stress, boredom or danger.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.75
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -165,15 +168,16 @@
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
           "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Use future tense to describe your personal and professional situation in 10 years.",
+        "sufficientAnswer": "Describe your life in ten years using the future tense, with at least two details such as job, home or family.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -184,14 +188,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "conditional"
         ],
-        "structures": [],
+        "structures": [
+          "conditional"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your creative ambitions and what you'd write about.",
+        "sufficientAnswer": "Say whether you would like to write a book one day and what it would be about.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -200,18 +206,19 @@
     {
       "questionId": "fut_11",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "compare",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "comparison",
+          "justification"
         ],
-        "responseLoad": "short",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "A complete answer should: Discuss your priorities for your future career.",
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether job satisfaction or money matters more to you and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -220,17 +227,18 @@
     {
       "questionId": "fut_12",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
           "future"
         ],
-        "structures": [],
-        "responseLoad": "short",
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your family plans for the future.",
+        "sufficientAnswer": "Say whether you want children later and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -241,15 +249,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "future"
         ],
-        "structures": [],
-        "responseLoad": "short",
+        "structures": [
+          "simple-future"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your ideal living situation in the distant future.",
+        "sufficientAnswer": "Say where you see yourself living in twenty years, with at least two details about your home or surroundings.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -258,16 +267,18 @@
     {
       "questionId": "fut_14",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present"
+          "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss the role of AI and automation in your chosen field.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how artificial intelligence may affect your future career, with at least two points.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -278,15 +289,16 @@
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
-          "present",
           "future"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification",
+          "simple-future"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the role of automation in our daily home lives.",
+        "sufficientAnswer": "Say whether robots will do all the housework in the future and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -299,14 +311,16 @@
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
-          "present"
+          "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Think about faster transport, virtual reality, or space travel.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how technology will change the way we travel, with at least two examples.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -317,14 +331,14 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "future"
         ],
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about a personal goal or obstacle you want to overcome.",
+        "sufficientAnswer": "Name your biggest challenge for the future and say how you plan to face it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -335,15 +349,16 @@
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
-          "present",
           "future"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification",
+          "simple-future"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Discuss environmental, social, and technological progress.",
+        "sufficientAnswer": "Say whether the world will be better in fifty years and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -385,9 +400,9 @@
         "structures": [
           "opinion"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss your views on traditional marriage vs. other forms of commitment.",
+        "sufficientAnswer": "Give your opinion on marriage and say whether it matters to you, with at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -400,14 +415,16 @@
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
-          "present"
+          "future"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification",
+          "simple-future"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss space colonization and living on Mars or the Moon.",
+        "sufficientAnswer": "Say whether humans will live on other planets in fifty years and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -418,16 +435,18 @@
     {
       "questionId": "fut_22",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
-          "present"
+          "future"
         ],
-        "structures": [],
-        "responseLoad": "short",
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the modern idea of career mobility vs. having one job for life.",
+        "sufficientAnswer": "Say whether you expect to change careers several times and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -438,14 +457,16 @@
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
-          "present"
+          "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your plans for your late years (travel, relaxation, hobbies).",
+        "sufficientAnswer": "Describe how you imagine your retirement, with at least two things you will do.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -463,9 +484,9 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: International travel, communication, competitive advantage.",
+        "sufficientAnswer": "Explain why learning languages matters for your future career, with at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.65
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -474,19 +495,19 @@
     {
       "questionId": "fut_25",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "compare",
         "timeFrames": [
-          "present",
           "future"
         ],
         "structures": [
-          "comparison"
+          "comparison",
+          "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Pros and cons: flexibility, socialization, distraction, concentration.",
+        "sufficientAnswer": "Say whether you would prefer to work from home or in an office and give at least one pro and one con of each.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -495,16 +516,19 @@
     {
       "questionId": "fut_26",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
-          "present"
+          "conditional"
         ],
-        "structures": [],
-        "responseLoad": "extended",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Mention at least two of: Traveling, volunteering, working, maturing.",
+        "structures": [
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you would take a gap year before university and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -513,19 +537,18 @@
     {
       "questionId": "fut_27",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
           "future"
         ],
         "structures": [
-          "comparison"
+          "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Helping others, causes you care about (environment, animals, poverty).",
+        "sufficientAnswer": "Say whether you plan to do charity or volunteer work later and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -534,16 +557,18 @@
     {
       "questionId": "fut_28",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present"
+          "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "New careers, digital marketing, the importance of online presence.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how social media will affect future jobs, with at least two examples.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -554,14 +579,15 @@
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
-          "present"
+          "future"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "simple-future"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Environmental impact of food, synthetic products, local consumption.",
+        "sufficientAnswer": "Say how you think we will eat in fifty years and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -574,15 +600,14 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "future"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Adaptability, creativity, technical skills, languages.",
+        "sufficientAnswer": "Name at least three skills that will matter for success in the future and say why one matters.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -591,20 +616,20 @@
     {
       "questionId": "fut_31",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
-          "future",
-          "conditional"
+          "conditional",
+          "future"
         ],
         "structures": [
-          "conditional"
+          "conditional",
+          "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Automation, energy saving, security, privacy.",
+        "sufficientAnswer": "Say whether you would like to live in a smart home in the future and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -613,16 +638,19 @@
     {
       "questionId": "fut_32",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
-          "present"
+          "future"
         ],
-        "structures": [],
+        "structures": [
+          "justification",
+          "simple-future"
+        ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Mention at least two of: Sustainable energy, ecology, social responsibility.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether the environment will influence your career choice and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -633,15 +661,16 @@
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
           "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Mention at least two of: Working hours, leisure time, priorities.",
+        "sufficientAnswer": "Explain how you imagine balancing work and family later, with at least two priorities.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -652,14 +681,15 @@
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
-          "present"
+          "future"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "simple-future"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss future transportation methods — flying cars, high-speed trains, electric planes.",
+        "sufficientAnswer": "Say how you think we will travel in twenty years and give at least two examples.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -672,14 +702,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Imagine future classrooms — technology, subjects, or if schools will even exist physically.",
+        "sufficientAnswer": "Describe what school will look like in fifty years, with at least two changes.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -688,19 +720,19 @@
     {
       "questionId": "fut_36",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
           "conditional"
         ],
         "structures": [
-          "conditional"
+          "conditional",
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss the possibility of visiting the Moon or Mars as a tourist.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you would like space tourism one day and give at least one reason.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -711,14 +743,16 @@
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
-          "present"
+          "future"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification",
+          "simple-future"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare digital reading with traditional books and predict which will survive.",
+        "sufficientAnswer": "Say whether paper books will disappear in fifty years and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -729,16 +763,19 @@
     {
       "questionId": "fut_38",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
-          "present"
+          "conditional"
         ],
-        "structures": [],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about robots helping with daily life or providing company.",
+        "sufficientAnswer": "Say whether you would like a robot companion at home and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -751,12 +788,14 @@
         "timeFrames": [
           "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Predict future hobbies — eSports, virtual reality games, or new sports.",
+        "sufficientAnswer": "Predict at least two hobbies young people will have in 50 years.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -767,15 +806,16 @@
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
           "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss medical advances — living longer, curing diseases, nanotechnology.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how medicine will change our lives, with at least two advances.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -786,14 +826,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Imagine smart clothing — self-cleaning, temperature-controlled, or eco-friendly materials.",
+        "sufficientAnswer": "Describe how clothes will look in fifty years, with at least two features.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -804,14 +846,16 @@
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
-          "present"
+          "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the future of shopping — drones, no physical stores, virtual fitting rooms.",
+        "sufficientAnswer": "Explain how we will shop in twenty years, with at least two changes.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -822,14 +866,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "future"
         ],
-        "structures": [],
+        "structures": [
+          "simple-future"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss AI-generated art, virtual concerts, and if human creativity will still be valued.",
+        "sufficientAnswer": "Describe the role of art and music in fifty years, with at least two predictions.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"

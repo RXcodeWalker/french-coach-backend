@@ -10,11 +10,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe family members — their appearance, personality, job, and your relationship.",
+        "sufficientAnswer": "Describe at least three family members, giving for each one a detail such as appearance, personality or job.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -29,10 +29,10 @@
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Explain how you get along — what you do together, any conflicts, how they support you.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say how you get on with your parents, with at least two details such as what you do together or how they support you.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -46,11 +46,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe their appearance, personality, how you met, what you do together.",
+        "sufficientAnswer": "Describe your best friend with at least three details, such as appearance, personality, how you met or what you do together.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -66,9 +66,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about typical weekend activities with friends — where you go, what you do.",
+        "sufficientAnswer": "Say what you do with friends at the weekend, with at least two activities and where you go.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -82,11 +82,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe your pet (or one you would like), its name, appearance, and personality.",
+        "sufficientAnswer": "Say whether you have a pet and describe it, with its name and at least two details about appearance or personality.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -100,11 +100,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "short",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about household chores you do to help your family.",
+        "sufficientAnswer": "Say how you help your parents at home, naming at least two household jobs.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -115,15 +115,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present",
           "past"
         ],
-        "structures": [],
+        "structures": [
+          "perfect"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a recent family outing or activity using the past tense.",
+        "sufficientAnswer": "Describe something you did with your family recently, using the past tense, with at least two details.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -132,18 +133,19 @@
     {
       "questionId": "fam_08",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "compare",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "comparison",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Express and justify your opinion on friendship, quality vs quantity.",
+        "sufficientAnswer": "Say whether you prefer many friends or a few close ones and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -181,9 +183,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss common hobbies or differences between you and your parents.",
+        "sufficientAnswer": "Say whether you share interests with your parents and name at least one activity you do together or one difference.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -194,14 +196,16 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "past"
         ],
-        "structures": [],
+        "structures": [
+          "perfect"
+        ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Describe a family event like a birthday, wedding, or festival using the past tense.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your last family celebration in the past tense, with at least three details such as where, who and what you did.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -217,11 +221,11 @@
         "structures": [
           "justification"
         ],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Explain the importance of family time for relationships and well-being.",
+        "sufficientAnswer": "Say whether family time is important and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.75
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -235,11 +239,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your extended family and your relationship with them.",
+        "sufficientAnswer": "Say how many cousins you have and how often you see them, with at least one detail about them.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -255,9 +259,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Identify the family member or friend you trust most.",
+        "sufficientAnswer": "Say who you talk to when you have a problem and give one reason you trust them.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -266,18 +270,19 @@
     {
       "questionId": "fam_15",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "compare",
         "timeFrames": [
           "present"
         ],
         "structures": [
-          "comparison"
+          "comparison",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Compare the two situations and give your opinion.",
+        "sufficientAnswer": "Say whether it is better to be an only child or to have siblings and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -293,9 +298,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Walk through your family's Sunday routine — meals, activities, relaxation.",
+        "sufficientAnswer": "Describe a typical Sunday with your family, with at least three activities such as meals or outings.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -309,11 +314,12 @@
           "present"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the value of elderly people's experience and wisdom.",
+        "sufficientAnswer": "Give your opinion on whether young people should listen more to their grandparents, with at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -331,9 +337,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe what your family usually does for Christmas, Eid, or other celebrations.",
+        "sufficientAnswer": "Say whether your family has special traditions for celebrations and describe at least one, such as what you eat or do.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -349,9 +355,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about rules regarding bedtime or returning home in the evening.",
+        "sufficientAnswer": "Say whether your parents are strict about times and describe at least one rule and what happens if you break it.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -367,9 +373,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a relative who lives far away or you haven't visited recently.",
+        "sufficientAnswer": "Describe a relative you have not seen for a long time, with at least three details such as where they live and what they are like.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -383,11 +389,12 @@
           "present"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the balance between authority and friendship in family relationships.",
+        "sufficientAnswer": "Give your opinion on whether parents and teenagers can be friends, with at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -403,11 +410,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss traits like patience, support, honesty, and listening.",
+        "sufficientAnswer": "Name at least three qualities of a good parent and give a reason for one of them.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -423,9 +430,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your pets and how they are treated like family members.",
+        "sufficientAnswer": "Say what role pets play in your family, with at least two details such as who looks after them or how they are treated.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -441,9 +448,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss house rules, punishments, and how your parents maintain order.",
+        "sufficientAnswer": "Describe the rules at home and explain how your parents keep order, with at least two examples.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -454,14 +461,15 @@
       "demands": {
         "cognitiveDemand": "justify",
         "timeFrames": [
-          "present"
+          "future"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss the emotional and practical aspects of moving away from home.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you think leaving your family for university will be hard and give at least two reasons.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -472,16 +480,16 @@
     {
       "questionId": "fam_26",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the differences in ideas and values between young people and older relatives.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on the generation gap, with at least one difference in ideas or values between young and old.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -495,11 +503,12 @@
           "present"
         ],
         "structures": [
-          "opinion"
+          "opinion",
+          "justification"
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the impact of social media on family interactions and quality time.",
+        "sufficientAnswer": "Say whether social media harms family life and give at least two reasons or examples.",
         "provenance": "inferred",
         "inferenceConfidence": 0.8
       },
@@ -512,14 +521,17 @@
       "demands": {
         "cognitiveDemand": "describe",
         "timeFrames": [
-          "present"
+          "past"
         ],
-        "structures": [],
-        "responseLoad": "short",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Describe a happy memory from when you were younger involving your family members.",
+        "structures": [
+          "imperfect",
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe one happy childhood memory with your family, using the past tense, with at least three details.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.9
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -528,16 +540,18 @@
     {
       "questionId": "fam_29",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the advantages and disadvantages of having siblings versus being an only child.",
+        "sufficientAnswer": "Say whether it is important to have brothers and sisters and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -546,16 +560,18 @@
     {
       "questionId": "fam_30",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe a family member you look up to and explain why they inspire you.",
+        "sufficientAnswer": "Say whether a family member is a role model for you, name them and explain why.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -571,9 +587,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss multigenerational living and what younger people can learn from older generations.",
+        "sufficientAnswer": "Give at least two advantages of living with grandparents, such as help, stories or company.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -582,16 +598,16 @@
     {
       "questionId": "fam_32",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Explain who in your family gives the best advice and why you trust them.",
+        "sufficientAnswer": "Say who you turn to for advice and explain why you trust them.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -607,9 +623,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about a traditional family dish and its significance to you.",
+        "sufficientAnswer": "Say whether your family has a special recipe and describe it, with at least two details about the dish.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -620,15 +636,17 @@
       "demands": {
         "cognitiveDemand": "explain",
         "timeFrames": [
-          "present",
-          "past"
+          "past",
+          "present"
         ],
-        "structures": [],
+        "structures": [
+          "perfect"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Reflect on how your family dynamics or situation has evolved recently.",
+        "sufficientAnswer": "Explain how your family has changed over the last five years, with at least two changes.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -637,17 +655,18 @@
     {
       "questionId": "fam_35",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
-          "present",
           "future"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Consider the pros and cons of raising a family in another country.",
+        "sufficientAnswer": "Say whether you would like to raise a family abroad later and give at least one advantage and one drawback.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -656,16 +675,16 @@
     {
       "questionId": "fam_36",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
         "structures": [],
-        "responseLoad": "short",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Give your opinion on the most important values for a happy family life.",
+        "sufficientAnswer": "Say what makes a happy family for you, with at least two values or things that matter.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -674,16 +693,16 @@
     {
       "questionId": "fam_37",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss how siblings shape your personality — being responsible, funny, or competitive.",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how your brothers or sisters influence your character, with at least one example.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -699,9 +718,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about common sources of conflict — chores, screen time, or sharing things.",
+        "sufficientAnswer": "Name at least two common causes of arguments in your family, such as chores, screens or sharing.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -717,9 +736,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Describe shared fun activities like hobbies, sports, or games.",
+        "sufficientAnswer": "Name at least two activities you do with your parents for fun and say how often.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -737,9 +756,9 @@
         ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the social and emotional benefits of shared family meals.",
+        "sufficientAnswer": "Explain why eating together as a family matters, with at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.65
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -748,17 +767,18 @@
     {
       "questionId": "fam_41",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
-          "present",
           "future"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Talk about your future family aspirations — marriage, children, lifestyle.",
+        "sufficientAnswer": "Say whether you want to start your own family later and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -772,11 +792,11 @@
           "present"
         ],
         "structures": [],
-        "responseLoad": "extended",
+        "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the pros (company, support) and cons (noise, lack of space) of a big family.",
+        "sufficientAnswer": "Give at least two advantages and one drawback of living in a big family.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -785,16 +805,18 @@
     {
       "questionId": "fam_43",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "justify",
         "timeFrames": [
           "present"
         ],
-        "structures": [],
+        "structures": [
+          "justification"
+        ],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss the importance of heritage, ancestry, and family stories.",
+        "sufficientAnswer": "Say whether it is important to know your family history and give at least two reasons.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.4
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -809,10 +831,10 @@
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Talk about family expectations, support, or pressure regarding your career.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how your family influences your career choices, with at least one example of support or pressure.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -821,16 +843,16 @@
     {
       "questionId": "fam_45",
       "demands": {
-        "cognitiveDemand": "describe",
+        "cognitiveDemand": "explain",
         "timeFrames": [
           "present"
         ],
         "structures": [],
         "responseLoad": "developed",
-        "lexicalReach": "abstract",
-        "sufficientAnswer": "Discuss the evolution of grandparents' roles — childcare, wisdom, or modern connection.",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain the role of grandparents in society today, with at least two examples such as childcare or passing on wisdom.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.7
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"
@@ -846,9 +868,9 @@
         "structures": [],
         "responseLoad": "developed",
         "lexicalReach": "everyday",
-        "sufficientAnswer": "Discuss technology, visits, or letters to stay close with distant relatives.",
+        "sufficientAnswer": "Explain how you keep in touch with relatives who live far away, with at least two ways.",
         "provenance": "inferred",
-        "inferenceConfidence": 0.55
+        "inferenceConfidence": 0.8
       },
       "review": {
         "status": "draft"

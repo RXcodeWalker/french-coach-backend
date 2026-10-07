@@ -22,12 +22,33 @@ os.environ.pop("AZURE_SPEECH_REGION", None)
 
 LEARN_PROMPT_FIXTURE_HASH = "be4eb69fd2f4519f627750a67369721b8cb7bc22c0e01b75241197d07591e286"
 
+# The two tests below pin numbers/prompt bytes derived from ONE demands entry. They used to
+# read fam_01 live from the corpus, so any content edit to fam_01 (Learn Batch 3b re-tagged
+# it: extended -> developed, new sufficientAnswer) broke them without the prompt template
+# having changed. The entry is pinned here instead; the corpus can move freely.
+FAM_01_FIXTURE = {
+    "cognitiveDemand": "describe",
+    "timeFrames": ["present"],
+    "structures": [],
+    "responseLoad": "extended",
+    "lexicalReach": "everyday",
+    "sufficientAnswer": "Describe family members — their appearance, personality, job, and your relationship.",
+    "provenance": "inferred",
+    "inferenceConfidence": 0.9,
+}
+
+
+def _pin_fam_01(monkeypatch):
+    import main
+
+    monkeypatch.setitem(main.LEARN_DEMANDS_BY_QUESTION_ID, "fam_01", FAM_01_FIXTURE)
+
 
 def test_learn_demands_corpus_loaded():
     import main
 
     assert main.LEARN_DEMANDS_VERSION != ""
-    assert len(main.LEARN_DEMANDS_BY_QUESTION_ID) == 428
+    assert len(main.LEARN_DEMANDS_BY_QUESTION_ID) == 668  # every question; mirrors questions.demands.test.ts
     assert "fam_01" in main.LEARN_DEMANDS_BY_QUESTION_ID
 
 
@@ -61,13 +82,14 @@ def test_resolve_learn_demands_missing_args_returns_none():
     assert main.resolve_learn_demands(None, main.LEARN_DEMANDS_VERSION) is None
 
 
-def test_derive_demand_score_matches_ts_fixture():
+def test_derive_demand_score_matches_ts_fixture(monkeypatch):
     """fam_01: describe, timeFrames=[present], responseLoad=extended,
     lexicalReach=everyday -> 2.0 (base) + 0.75 (extended) = 2.75 -> A1.
     Cross-checked against deriveDemandScore/demandScoreToLevel in
     src/domain/learn/demand/deriveDemandLevel.ts for the same input."""
     import main
 
+    _pin_fam_01(monkeypatch)
     demands = main.resolve_learn_demands("fam_01", main.LEARN_DEMANDS_VERSION)
     score = main.derive_demand_score(demands)
     assert score == 2.75
@@ -143,13 +165,14 @@ def test_build_user_prompt_renders_demands_section_when_resolved():
     assert "justification markers: absent" in prompt
 
 
-def test_learn_prompt_version_snapshot():
+def test_learn_prompt_version_snapshot(monkeypatch):
     """Version-drift guard: if build_user_prompt's demands rendering changes,
     this fails loudly — bump LEARN_PROMPT_VERSION and update
     LEARN_PROMPT_FIXTURE_HASH together in the same commit."""
     import hashlib
     import main
 
+    _pin_fam_01(monkeypatch)
     req = main.FeedbackRequest(
         question="Decris ta famille.",
         transcript="Ma famille est grande.",

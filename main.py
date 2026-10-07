@@ -212,16 +212,16 @@ FEEDBACK_DEPTH_ITEM_CAPS: dict[FeedbackDepth, dict[str, int]] = {
 FEEDBACK_DEPTH_PROMPT_RANGES: dict[FeedbackDepth, str] = {
     "brief": (
         "\n\nFEEDBACK DEPTH: brief. Use the lower end of all item ranges "
-        "(2-3 grammar items, 2-3 vocabulary items). Keep explanations to one "
+        "(2-3 vocabulary items). Keep explanations to one "
         "sentence each — this learner's answer was long and largely correct, "
         "so do not manufacture extra items to fill space."
     ),
     "standard": "",
     "deep": (
         "\n\nFEEDBACK DEPTH: deep. Use the upper end of all item ranges "
-        "(5-8 grammar items, 4-7 vocabulary items, 3-5 structure items). "
-        "Go beyond surface corrections — explain WHY each error matters for IGCSE, "
-        "what mark band it affects, and give a corrected model sentence for each grammar issue."
+        "(4-7 vocabulary items, 3-5 structure items). Still at most 2 fixes. "
+        "Go beyond surface corrections — make each fix's one-sentence why teach the rule, "
+        "and give a corrected model sentence for each fix."
     ),
 }
 
@@ -1648,7 +1648,7 @@ JSON schema:
 # DETERMINISTIC SIGNALS rendering changes in a way that changes the rendered
 # prompt — mirrors src/domain/igcse/judgement/version.ts's SCORING_PROMPT_VERSION
 # discipline; paired with a snapshot test in backend/tests/.
-LEARN_PROMPT_VERSION = "learn-prompt-v4"
+LEARN_PROMPT_VERSION = "learn-prompt-v5"
 
 # Tracks the wire *shape* of the /v3 and /stream feedback response — separate
 # from LEARN_PROMPT_VERSION, which tracks prompt text. Bump only when the
@@ -1668,14 +1668,30 @@ LANGUAGE RULE — CRITICAL: ALL feedback text must be in English. The ONLY Frenc
 - Quoting student's exact words inside « … »
 - The followUpQuestion field (must be in French)
 - The upgrade/example/nuance fields in vocabulary
-- The improved_answer, advanced_answer, and rephrase fields (complete French responses)
+- The correction fields of grammar items and corrections[] (complete French phrases)
+- The improved_answer and rephrase fields (complete French responses)
 Do NOT write explanations in French. English only for all analytical text.
+
+TARGET LEVEL — every French correction, improved_answer and rephrase is pitched at
+A2 with elements of B1 (the IGCSE target, Cambridge 0520 Teacher's Notes p.11), or at the
+TARGET LEVEL given below if that is lower. Never above B1: fix the student's own sentence in
+simple, accurate French; do not swap in rarer vocabulary or structures they did not attempt.
+
+AT MOST 2 FIXES — report only the two errors that matter most for this answer, most important
+first: grammar.critical and grammar.polish TOGETHER hold at most 2 items, and corrections[]
+restates the same at most 2 items. Fewer is fine; if the French is correct, report none.
+Each fix: quote the exact student words → the FULL corrected French phrase (the quoted words
+rewritten correctly, e.g. « je suis allé », not just « suis ») → ONE sentence saying why.
+
+ONE STRENGTH — best_moment quotes exactly one phrase the student actually said, in « »,
+and says in one sentence what it shows. Never praise words you also report as an error.
 
 COACHING QUALITY GATE — SELF-VALIDATE before returning. Reject and rewrite any item that:
 • Could apply to almost any student answer
 • Does not quote evidence from THIS student's response
 • Uses banned phrases: "add more detail", "communicated ideas", "complete sentences",
-  "good effort", "clear response", "well structured", "good attempt", "you could expand"
+  "good effort", "clear response", "well structured", "good attempt", "you could expand",
+  "great job", "good job", "keep it up", "keep practising"
 • Fails to explain WHY something was strong or WHY something was wrong
 
 MANDATORY EVIDENCE RULES:
@@ -1708,7 +1724,7 @@ JSON SCHEMA (return exactly this shape, no extra keys):
     "acc": <0-10, holistic practice judgement of accuracy; not a Cambridge mark, not a formula>
   },
 
-  "best_moment": "<1-2 sentences. MUST quote exact student words with <<>>. Explain precisely WHAT it shows. BAD example: 'You communicated clearly.' GOOD example: 'Your use of << parce que j\\'aime >> shows cause-and-effect linking with a connective.'>",
+  "best_moment": "<1 sentence. MUST quote exactly one phrase of the student's words with <<>>. Explain precisely WHAT it shows. BAD example: 'You communicated clearly.' GOOD example: 'Your use of << parce que j\\'aime >> shows cause-and-effect linking with a connective.'>",
 
   "biggest_opportunity": "<1-2 sentences. The SINGLE highest-impact improvement for THIS answer. MUST reference what the student said or specifically omitted. BAD: 'Add more detail.' GOOD: 'Every sentence is in the present tense — adding one past event using the passé composé would immediately show tense range and push the score higher.'>",
 
@@ -1719,8 +1735,8 @@ JSON SCHEMA (return exactly this shape, no extra keys):
         "themeLabel": "<Category: Avoir vs Être | Elision | Gender Agreement | Preposition | Negation | Adjective Agreement | etc.>",
         "themeDesc": "<1-sentence concept explanation for an IGCSE student>",
         "msg": "<Description that QUOTES the exact student error with << >>. E.g. '<< j\\'ai allé >> uses the wrong auxiliary.'>",
-        "diagnostic": "<Explain WHY this is wrong — teach the grammar principle, do not just flag the mistake>",
-        "correction": "<The correct form>",
+        "diagnostic": "<ONE sentence: WHY this is wrong — the grammar principle, not just a flag>",
+        "correction": "<The FULL corrected French phrase for the quoted words, at the target level>",
         "masterTip": "<Memorable rule or mnemonic to prevent this error next time>",
         "severity": "major",
         "quote": "<exact student text that triggered this>",
@@ -1742,8 +1758,8 @@ JSON SCHEMA (return exactly this shape, no extra keys):
       "severity": "major | minor",
       "label": "<short category label, e.g. 'Avoir vs Être'>",
       "description": "<Description that QUOTES the exact student error with « ». E.g. '« j'ai allé » uses the wrong auxiliary.'>",
-      "explanation": "<Explain WHY this is wrong — teach the grammar principle>",
-      "correction": "<The correct form>",
+      "explanation": "<ONE sentence: WHY this is wrong — the grammar principle>",
+      "correction": "<The FULL corrected French phrase for the quoted words, at the target level>",
       "quote": "<exact student text that triggered this, verbatim from the transcript>",
       "quoteContext": "<REQUIRED only if quote is not unique in the transcript — a few surrounding words that identify which occurrence>",
       "tip": "<Memorable rule or mnemonic to prevent this error next time>",
@@ -1765,7 +1781,7 @@ JSON SCHEMA (return exactly this shape, no extra keys):
     "<Specific suggestion tied to this question topic and what the student said or omitted. E.g. 'You mentioned playing tennis — you could add when you started and who you play with.'>"
   ],
 
-  "improved_answer": "<Take the student's exact answer and improve it: fix grammar, add missing articles, correct word order. Preserve ALL their ideas. Should feel like 'your answer, but better.' 30-70 words.>",
+  "improved_answer": "<'Say it better': take the student's exact answer and improve it at the target level (A2 with elements of B1): fix grammar, add missing articles, correct word order. Preserve ALL their ideas. Should feel like 'your answer, but better', not a more advanced answer. 30-70 words.>",
 
   "changes": [
     {
@@ -1775,8 +1791,6 @@ JSON SCHEMA (return exactly this shape, no extra keys):
       "explanation": "<one sentence: why this specific change was made>"
     }
   ],
-
-  "advanced_answer": "<A higher-level model response on the same topic showing a more developed version of the same answer. Richer vocabulary, varied tenses, better connectives. 50-80 words.>",
 
   "rephrase": "<Same content as improved_answer — the corrected version of the student's answer>",
 
@@ -1800,7 +1814,8 @@ JSON SCHEMA (return exactly this shape, no extra keys):
 }
 
 FINAL RULES:
-1. If grammar is perfect, set critical: [] and polish: [] — do NOT invent errors.
+1. If grammar is perfect, set critical: [] and polish: [] — do NOT invent errors. Never more
+   than 2 fixes in total, however many errors the answer has.
 2. fluency >= 8 only if genuinely impressive: 80+ words, multiple tenses, complex structures.
 3. followUpQuestion MUST reference something specific the student mentioned.
 4. vocabulary MUST only reference words the student actually used.
@@ -1864,7 +1879,6 @@ JSON schema (return EXACTLY this, no extra keys):
   "vocabulary": [{"basic": "...", "upgrade": "...", "example": "...", "nuance": "..."}],
   "expansion_ideas": ["<specific idea tied to the question topic and student's answer>"],
   "improved_answer": "<student's answer corrected, grammar fixed, ideas preserved>",
-  "advanced_answer": "<higher-band model answer on the same topic>",
   "rephrase": "<same as improved_answer>",
   "structure": ["<English structure tip>"],
   "pronunciationTips": ["<concise English phonetic tip>"],
@@ -1914,6 +1928,9 @@ _GENERIC_PHRASES = [
     "add more detail", "communicated ideas", "complete sentences",
     "good effort", "clear response", "well structured", "good attempt",
     "you could expand", "overall good", "nice work", "well done",
+    # learn-prompt-v5: empty praise and advice that fits any answer.
+    "great job", "good job", "keep it up", "keep practising", "keep practicing",
+    "great answer", "nice answer",
 ]
 
 _EVIDENCE_MARKER = "«"
@@ -2300,11 +2317,12 @@ def build_user_prompt(req: FeedbackRequest) -> str:
         f"{pron_section}"
         f"{detail_instruction}\n\n"
         f"REMINDER — COACHING QUALITY GATE:\n"
-        f"• best_moment MUST quote exact student words with « »\n"
+        f"• best_moment MUST quote exactly one phrase of the student's words with « »\n"
+        f"• At most 2 fixes: quote → full corrected French phrase (A2 with elements of B1) → one-sentence why\n"
         f"• biggest_opportunity MUST name something specific to THIS answer\n"
         f"• Every grammar item MUST quote the exact student text that triggered it\n"
         f"• expansion_ideas MUST relate to the question topic and this student's answer\n"
-        f"• Banned phrases: 'add more detail', 'good effort', 'communicated clearly', 'complete sentences'\n\n"
+        f"• Banned phrases: 'add more detail', 'good effort', 'communicated clearly', 'complete sentences', 'great job', 'keep it up'\n\n"
         f"Return the JSON feedback now. ALL explanatory text in ENGLISH only."
     )
 

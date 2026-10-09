@@ -110,6 +110,25 @@ def test_ambiguous_non_discriminating_context_fixture_resolves_to_no_span():
     assert payload["quoteSpans"] == []
 
 
+def test_strengths_v3_fixture_matches_the_current_contract_and_passes_the_gate():
+    """learn-prompt-v6: strengths[] is the additive key behind contract v3. The
+    backend gate keeps quoted, non-generic strengths; dropping one that praises
+    a reported error is the frontend's filter (filterCoachFeedback.ts), so all
+    three survive here."""
+    import copy
+    import main
+
+    payload = _load_fixtures()["strengths-v3.json"]
+    assert payload["schemaVersion"] == main.FEEDBACK_CONTRACT_VERSION
+    assert main._build_quote_spans(payload["transcript"], payload["corrections"]) == payload["quoteSpans"]
+
+    gated = main._apply_coaching_quality_gate(copy.deepcopy(payload), payload["transcript"])
+    assert gated["strengths"] == payload["strengths"]
+    assert gated["encouragement"] == payload["encouragement"]
+    for strength in gated["strengths"]:
+        assert strength["quote"] in payload["transcript"]
+
+
 def test_fixture_set_hash_matches_frontend_source_or_this_repo_is_stale():
     """The strongest guarantee this test file can give without cross-repo
     access at test time: fixtures in THIS repo are internally consistent
@@ -129,5 +148,6 @@ if __name__ == "__main__":
     test_repeated_quote_no_context_fixture_resolves_to_no_span()
     test_repeated_quote_with_context_fixture_resolves_the_correct_occurrence()
     test_ambiguous_non_discriminating_context_fixture_resolves_to_no_span()
+    test_strengths_v3_fixture_matches_the_current_contract_and_passes_the_gate()
     test_fixture_set_hash_matches_frontend_source_or_this_repo_is_stale()
     print("All test_feedback_contract_fixtures tests passed.")

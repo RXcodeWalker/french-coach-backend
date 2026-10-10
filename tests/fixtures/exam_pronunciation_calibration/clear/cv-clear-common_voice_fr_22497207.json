@@ -1,0 +1,888 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T04:59:14+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-clear-common_voice_fr_22497207",
+    "set": "clear",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_22497207.mp3",
+      "accents": "Lorrain",
+      "age": "twenties"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Et ils seront des sentiments de joie, s’ils sont vitaux.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 5.112,
+    "trimmedS": 4.18,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.6,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "et ils seront des sentiments de joie s'ils sont vitaux. »",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        4.18
+      ],
+      "referenceText": "et ils seront des sentiments de joie s'ils sont vitaux. »",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1200000,
+        "Duration": 34700000,
+        "DisplayText": "Et ils seront des sentiments de joie s'ils sont vitaux.",
+        "SNR": 26.046003,
+        "NBest": [
+          {
+            "Confidence": 0.9055361,
+            "Lexical": "et ils seront des sentiments de joie s'ils sont vitaux",
+            "ITN": "et ils seront des sentiments de joie s'ils sont vitaux",
+            "MaskedITN": "et ils seront des sentiments de joie s'ils sont vitaux",
+            "Display": "Et ils seront des sentiments de joie s'ils sont vitaux.",
+            "AccuracyScore": 94.0,
+            "FluencyScore": 98.0,
+            "CompletenessScore": 90.0,
+            "PronScore": 92.4,
+            "Words": [
+              {
+                "Word": "et",
+                "Offset": 1200000,
+                "Duration": 1900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "et",
+                    "Offset": 1200000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1200000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.4949219
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "ils",
+                "Offset": 3200000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ils",
+                    "Offset": 3200000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 3200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 4200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.0935674e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.4949219
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "seront",
+                "Offset": 5400000,
+                "Duration": 4500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 59.0,
+                "ErrorType": "Mispronunciation",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "se",
+                    "Offset": 5400000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 86.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ront",
+                    "Offset": 7800000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 64.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 5400000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 71.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7800000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8900000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 27.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.0935674e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.4949219
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "des",
+                "Offset": 10000000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "des",
+                    "Offset": 10000000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 70.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 10000000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 98.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11100000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 41.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.0935674e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.4949219
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "sentiments",
+                "Offset": 12200000,
+                "Duration": 5900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "sen",
+                    "Offset": 12200000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ti",
+                    "Offset": 14200000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ments",
+                    "Offset": 16200000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.0935674e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.4949219
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "de",
+                "Offset": 18200000,
+                "Duration": 1100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "de",
+                    "Offset": 18200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 18200000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.0935674e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.4949219
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "joie",
+                "Offset": 19400000,
+                "Duration": 4900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "joie",
+                    "Offset": 19400000,
+                    "Duration": 4900000,
+                    "AccuracyScore": 80.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 19400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20200000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22000000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 59.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.0935674e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.4949219
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "s'ils",
+                "Offset": 25000000,
+                "Duration": 3800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "s'ils",
+                    "Offset": 25000000,
+                    "Duration": 3800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 25000000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26300000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27600000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.24561408
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 600000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.4949219
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "sont",
+                "Offset": 28900000,
+                "Duration": 1800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "sont",
+                    "Offset": 28900000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 28900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 81.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.0935674e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.4949219
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "vitaux",
+                "Offset": 30800000,
+                "Duration": 5100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vi",
+                    "Offset": 30800000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 78.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "taux",
+                    "Offset": 33400000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 16.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 30800000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32100000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 57.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33400000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 1.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34700000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 30.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.0935674e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.4949219
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Et ils seront des sentiments de joie, s’ils sont vitaux.",
+    "referenceText": "et ils seront des sentiments de joie s'ils sont vitaux. »",
+    "words": [
+      {
+        "word": "et",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 120,
+        "durationMs": 190,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0
+        ],
+        "examWord": "Et",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "ils",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 320,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          94.0,
+          94.0
+        ],
+        "examWord": "ils",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "seront",
+        "accuracyScore": 59.0,
+        "errorType": "mispronounced",
+        "offsetMs": 540,
+        "durationMs": 450,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          71.0,
+          100.0,
+          27.0
+        ],
+        "examWord": "seront",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "des",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1000,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          98.0,
+          41.0
+        ],
+        "examWord": "des",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "sentiments",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1220,
+        "durationMs": 590,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "sentiments",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "de",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1820,
+        "durationMs": 110,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "de",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "joie",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1940,
+        "durationMs": 490,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          59.0
+        ],
+        "examWord": "joie",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "s'ils",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2500,
+        "durationMs": 380,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "s'ils",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "sont",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2890,
+        "durationMs": 180,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          81.0
+        ],
+        "examWord": "sont",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "vitaux",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3080,
+        "durationMs": 510,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          57.0,
+          1.0,
+          30.0
+        ],
+        "examWord": "vitaux",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 26.046003,
+    "azureConfidence": 0.9055361,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 5.112,
+    "trimmedS": 4.18,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.6
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

@@ -1,0 +1,1413 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:01:51+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_22027114",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_22027114.mp3",
+      "accents": "Français de Martinique",
+      "age": "thirties",
+      "group": "overseas"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Cependant, l'existence de budgets annexes porte atteinte à l'intégrité du principe d'unité budgétaire.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 7.584,
+    "trimmedS": 5.86,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.36,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Cependant, l'existence de budgets annexes porte atteinte à l'intégrité du principe d'unité budgétaire.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        5.86
+      ],
+      "referenceText": "Cependant, l'existence de budgets annexes porte atteinte à l'intégrité du principe d'unité budgétaire.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 500000,
+        "Duration": 57800000,
+        "DisplayText": "Cependant, l'existence de budgets annexes porte atteinte à l'intégrité du principe d'unité budgétaire.",
+        "SNR": 27.970592,
+        "NBest": [
+          {
+            "Confidence": 0.9354631,
+            "Lexical": "Cependant l'existence de budgets annexes porte atteinte à l'intégrité du principe d'unité budgétaire",
+            "ITN": "Cependant l'existence de budgets annexes porte atteinte à l'intégrité du principe d'unité budgétaire",
+            "MaskedITN": "cependant l'existence de budgets annexes porte atteinte à l'intégrité du principe d'unité budgétaire",
+            "Display": "Cependant, l'existence de budgets annexes porte atteinte à l'intégrité du principe d'unité budgétaire.",
+            "AccuracyScore": 95.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 97.0,
+            "Words": [
+              {
+                "Word": "Cependant",
+                "Offset": 500000,
+                "Duration": 9700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ce",
+                    "Offset": 500000,
+                    "Duration": 3300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pen",
+                    "Offset": 3900000,
+                    "Duration": 3100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dant",
+                    "Offset": 7100000,
+                    "Duration": 3100000,
+                    "AccuracyScore": 37.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 500000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 2200000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3900000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5500000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7100000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8700000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 74.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "l'existence",
+                "Offset": 10500000,
+                "Duration": 6500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 10500000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 85.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 13300000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 15100000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 96.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 10500000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 75.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12200000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13300000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13800000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 87.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.09705377
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.9514731
+                      },
+                      "BreakLength": 200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "de",
+                "Offset": 17100000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "de",
+                    "Offset": 17100000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 17100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.8526864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "budgets",
+                "Offset": 18500000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "bud",
+                    "Offset": 18500000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "gets",
+                    "Offset": 20500000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 18500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.8526864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "annexes",
+                "Offset": 22300000,
+                "Duration": 4900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "an",
+                    "Offset": 22300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "nexes",
+                    "Offset": 23300000,
+                    "Duration": 3900000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 22300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.8526864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "porte",
+                "Offset": 27300000,
+                "Duration": 2800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "porte",
+                    "Offset": 27300000,
+                    "Duration": 2800000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 27300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29300000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29800000,
+                    "Duration": 300000,
+                    "AccuracyScore": 67.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.8526864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "atteinte",
+                "Offset": 30200000,
+                "Duration": 3400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "at",
+                    "Offset": 30200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "teinte",
+                    "Offset": 30900000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 93.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 30200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 76.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.8526864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "à",
+                "Offset": 33700000,
+                "Duration": 400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "à",
+                    "Offset": 33700000,
+                    "Duration": 400000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 33700000,
+                    "Duration": 400000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.8526864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "l'intégrité",
+                "Offset": 34200000,
+                "Duration": 6600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 34200000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 35700000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 37100000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 39000000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 34200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37100000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38100000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39700000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.8526864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "du",
+                "Offset": 40900000,
+                "Duration": 1500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "du",
+                    "Offset": 40900000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 40900000,
+                    "Duration": 400000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41400000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42100000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.8526864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "principe",
+                "Offset": 42500000,
+                "Duration": 5300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "prin",
+                    "Offset": 42500000,
+                    "Duration": 4500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "cipe",
+                    "Offset": 47100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 42500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 44700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 46500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47100000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47500000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.8526864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "d'unité",
+                "Offset": 47900000,
+                "Duration": 3900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 47900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 49100000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 50700000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 47900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 48300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 49100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 49700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 50700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 51300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.8526864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "budgétaire",
+                "Offset": 51900000,
+                "Duration": 6400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "bud",
+                    "Offset": 51900000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "gé",
+                    "Offset": 53700000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "taire",
+                    "Offset": 55900000,
+                    "Duration": 2400000,
+                    "AccuracyScore": 93.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 51900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 52900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 53700000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 54200000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 54700000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 55900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 56500000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 57900000,
+                    "Duration": 400000,
+                    "AccuracyScore": 66.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.8526864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50820506
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Cependant, l'existence de budgets annexes porte atteinte à l'intégrité du principe d'unité budgétaire.",
+    "referenceText": "Cependant, l'existence de budgets annexes porte atteinte à l'intégrité du principe d'unité budgétaire.",
+    "words": [
+      {
+        "word": "Cependant",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 50,
+        "durationMs": 970,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          0.0,
+          74.0
+        ],
+        "examWord": "Cependant",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "l'existence",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1050,
+        "durationMs": 650,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          75.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          87.0
+        ],
+        "examWord": "l'existence",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "de",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1710,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "de",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "budgets",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1850,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "budgets",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "annexes",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 2230,
+        "durationMs": 490,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          88.0,
+          88.0,
+          88.0,
+          88.0,
+          88.0
+        ],
+        "examWord": "annexes",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "porte",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 2730,
+        "durationMs": 280,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0,
+          100.0,
+          100.0,
+          100.0,
+          67.0
+        ],
+        "examWord": "porte",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "atteinte",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 3020,
+        "durationMs": 340,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          76.0
+        ],
+        "examWord": "atteinte",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "à",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 3370,
+        "durationMs": 40,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          94.0
+        ],
+        "examWord": "à",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "l'intégrité",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3420,
+        "durationMs": 660,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "l'intégrité",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "du",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 4090,
+        "durationMs": 150,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "du",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "principe",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 4250,
+        "durationMs": 530,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "principe",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "d'unité",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 4790,
+        "durationMs": 390,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "d'unité",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "budgétaire",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 5190,
+        "durationMs": 640,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          66.0
+        ],
+        "examWord": "budgétaire",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 27.970592,
+    "azureConfidence": 0.9354631,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 7.584,
+    "trimmedS": 5.86,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.36
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

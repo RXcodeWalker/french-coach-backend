@@ -1,0 +1,1031 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:01:06+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-clear-common_voice_fr_35312339",
+    "set": "clear",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_35312339.mp3",
+      "accents": "Accent de Bourgogne",
+      "age": "sixties"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Ses pizzerias, pâtisseries, cafés et barbiers évoquent une rue turque.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 6.84,
+    "trimmedS": 5.93,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.48,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Ces pizzerias, pâtisseries, cafés et barbiers évoquent une rue turque.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        5.93
+      ],
+      "referenceText": "Ces pizzerias, pâtisseries, cafés et barbiers évoquent une rue turque.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 700000,
+        "Duration": 58300000,
+        "DisplayText": "Ces pizzerias, pâtisseries, cafés et barbiers évoquent une rue turque.",
+        "SNR": 28.66618,
+        "NBest": [
+          {
+            "Confidence": 0.92191315,
+            "Lexical": "Ces pizzerias pâtisseries cafés et barbiers évoquent une rue turque",
+            "ITN": "Ces pizzerias pâtisseries cafés et barbiers évoquent une rue turque",
+            "MaskedITN": "ces pizzerias pâtisseries cafés et barbiers évoquent une rue turque",
+            "Display": "Ces pizzerias, pâtisseries, cafés et barbiers évoquent une rue turque.",
+            "AccuracyScore": 92.0,
+            "FluencyScore": 93.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 93.8,
+            "Words": [
+              {
+                "Word": "Ces",
+                "Offset": 700000,
+                "Duration": 4000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ces",
+                    "Offset": 700000,
+                    "Duration": 4000000,
+                    "AccuracyScore": 80.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 700000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 2800000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 59.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5006371
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "pizzerias",
+                "Offset": 4800000,
+                "Duration": 8900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 4800000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 6800000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 9500000,
+                    "Duration": 4200000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6300000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6800000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11700000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.4862385e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5006371
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "pâtisseries",
+                "Offset": 13800000,
+                "Duration": 9500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 79.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 13800000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 15300000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 17300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 18700000,
+                    "Duration": 4600000,
+                    "AccuracyScore": 92.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 13800000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18300000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19700000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22300000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 66.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.4862385e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5006371
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "cafés",
+                "Offset": 24900000,
+                "Duration": 6100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ca",
+                    "Offset": 24900000,
+                    "Duration": 4100000,
+                    "AccuracyScore": 89.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "fés",
+                    "Offset": 29100000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 24900000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 84.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27700000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.5229358
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 1500000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5006371
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "et",
+                "Offset": 31100000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 31100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 32300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 31100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32300000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32800000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.4862385e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5006371
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "barbiers",
+                "Offset": 33300000,
+                "Duration": 7300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 82.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 33300000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 36100000,
+                    "Duration": 4500000,
+                    "AccuracyScore": 85.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 33300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34300000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35200000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37100000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38500000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 68.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.4862385e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5006371
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "évoquent",
+                "Offset": 43100000,
+                "Duration": 5500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 82.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "é",
+                    "Offset": 43100000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 68.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "voquent",
+                    "Offset": 45100000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 93.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 43100000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 68.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 46300000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 69.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.8366973
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 2400000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5006371
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "une",
+                "Offset": 48700000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "une",
+                    "Offset": 48700000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 48700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 49500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 50100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.4862385e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5006371
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "rue",
+                "Offset": 51100000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "rue",
+                    "Offset": 51100000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 51100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 51900000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.4862385e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5006371
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "turque",
+                "Offset": 53500000,
+                "Duration": 5500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "turque",
+                    "Offset": 53500000,
+                    "Duration": 5500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 53500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 54700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 55500000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 57100000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.4862385e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5006371
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Ses pizzerias, pâtisseries, cafés et barbiers évoquent une rue turque.",
+    "referenceText": "Ces pizzerias, pâtisseries, cafés et barbiers évoquent une rue turque.",
+    "words": [
+      {
+        "word": "Ces",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 70,
+        "durationMs": 400,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          59.0
+        ],
+        "examWord": "Ses",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "pizzerias",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 480,
+        "durationMs": 890,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "pizzerias",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "pâtisseries",
+        "accuracyScore": 79.0,
+        "errorType": "correct",
+        "offsetMs": 1380,
+        "durationMs": 950,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          66.0
+        ],
+        "examWord": "pâtisseries",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "cafés",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2490,
+        "durationMs": 610,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          84.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "cafés",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "et",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3110,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "et",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "barbiers",
+        "accuracyScore": 82.0,
+        "errorType": "correct",
+        "offsetMs": 3330,
+        "durationMs": 730,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          68.0
+        ],
+        "examWord": "barbiers",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "évoquent",
+        "accuracyScore": 82.0,
+        "errorType": "correct",
+        "offsetMs": 4310,
+        "durationMs": 550,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          68.0,
+          100.0,
+          100.0,
+          69.0
+        ],
+        "examWord": "évoquent",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "une",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 4870,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          91.0,
+          91.0,
+          91.0
+        ],
+        "examWord": "une",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "rue",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 5110,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "rue",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "turque",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 5350,
+        "durationMs": 550,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "turque",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 28.66618,
+    "azureConfidence": 0.92191315,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 6.84,
+    "trimmedS": 5.93,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.48
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

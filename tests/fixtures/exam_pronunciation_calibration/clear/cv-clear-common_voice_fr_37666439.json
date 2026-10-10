@@ -1,0 +1,1093 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:00:38+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-clear-common_voice_fr_37666439",
+    "set": "clear",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_37666439.mp3",
+      "accents": "Sud de la France",
+      "age": "fourties"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Des associations lolitas se sont créées depuis quelques années en France.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 5.04,
+    "trimmedS": 3.54,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.08,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Des associations Lolita se sont créées depuis quelques années en France.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        3.54
+      ],
+      "referenceText": "Des associations Lolita se sont créées depuis quelques années en France.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1400000,
+        "Duration": 33700000,
+        "DisplayText": "Des associations Lolita se sont créées depuis quelques années en France.",
+        "SNR": 24.167816,
+        "NBest": [
+          {
+            "Confidence": 0.9178997,
+            "Lexical": "Des associations Lolita se sont créées depuis quelques années en France",
+            "ITN": "Des associations Lolita se sont créées depuis quelques années en France",
+            "MaskedITN": "des associations lolita se sont créées depuis quelques années en france",
+            "Display": "Des associations Lolita se sont créées depuis quelques années en France.",
+            "AccuracyScore": 96.0,
+            "FluencyScore": 99.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 97.4,
+            "Words": [
+              {
+                "Word": "Des",
+                "Offset": 1400000,
+                "Duration": 3300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "des",
+                    "Offset": 1400000,
+                    "Duration": 3300000,
+                    "AccuracyScore": 89.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1400000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3100000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 78.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49778584
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "associations",
+                "Offset": 4800000,
+                "Duration": 6300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "as",
+                    "Offset": 4800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "so",
+                    "Offset": 6000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "cia",
+                    "Offset": 7200000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tions",
+                    "Offset": 9600000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6800000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7200000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8400000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10200000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.952381e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49778584
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Lolita",
+                "Offset": 11200000,
+                "Duration": 4500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "lo",
+                    "Offset": 11200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "li",
+                    "Offset": 12000000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ta",
+                    "Offset": 13400000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 11200000,
+                    "Duration": 200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11500000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13400000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 76.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.952381e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49778584
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "se",
+                "Offset": 16000000,
+                "Duration": 1700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "se",
+                    "Offset": 16000000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 89.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 16000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 76.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.11904768
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.9404762
+                      },
+                      "BreakLength": 200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49778584
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "sont",
+                "Offset": 17800000,
+                "Duration": 1800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "sont",
+                    "Offset": 17800000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 17800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.952381e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49778584
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "créées",
+                "Offset": 19700000,
+                "Duration": 2600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "cré",
+                    "Offset": 19700000,
+                    "Duration": 2200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ées",
+                    "Offset": 22000000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 19700000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20200000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21100000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22000000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.952381e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49778584
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "depuis",
+                "Offset": 22400000,
+                "Duration": 2900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "de",
+                    "Offset": 22400000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "puis",
+                    "Offset": 23400000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 22400000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.952381e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49778584
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "quelques",
+                "Offset": 25400000,
+                "Duration": 2900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "quel",
+                    "Offset": 25400000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 87.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ques",
+                    "Offset": 26800000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 25400000,
+                    "Duration": 300000,
+                    "AccuracyScore": 87.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25800000,
+                    "Duration": 300000,
+                    "AccuracyScore": 87.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 87.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 87.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.952381e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49778584
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "années",
+                "Offset": 28400000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "an",
+                    "Offset": 28400000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 20.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "nées",
+                    "Offset": 29900000,
+                    "Duration": 600000,
+                    "AccuracyScore": 66.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 28400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 42.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 44.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30300000,
+                    "Duration": 200000,
+                    "AccuracyScore": 95.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.952381e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49778584
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "en",
+                "Offset": 30600000,
+                "Duration": 700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "en",
+                    "Offset": 30600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 30600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.952381e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49778584
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "France",
+                "Offset": 31400000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "france",
+                    "Offset": 31400000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 31400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33400000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 80.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.952381e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49778584
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Des associations lolitas se sont créées depuis quelques années en France.",
+    "referenceText": "Des associations Lolita se sont créées depuis quelques années en France.",
+    "words": [
+      {
+        "word": "Des",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 140,
+        "durationMs": 330,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          78.0
+        ],
+        "examWord": "Des",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "associations",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 480,
+        "durationMs": 630,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "associations",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "Lolita",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 1120,
+        "durationMs": 450,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          76.0
+        ],
+        "examWord": "lolitas",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "se",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 1600,
+        "durationMs": 170,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          76.0,
+          100.0
+        ],
+        "examWord": "se",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "sont",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1780,
+        "durationMs": 180,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "sont",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "créées",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1970,
+        "durationMs": 260,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "créées",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "depuis",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2240,
+        "durationMs": 290,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "depuis",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "quelques",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 2540,
+        "durationMs": 290,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          87.0,
+          87.0,
+          87.0,
+          87.0,
+          90.0
+        ],
+        "examWord": "quelques",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "années",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2840,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          0.0,
+          42.0,
+          44.0,
+          95.0
+        ],
+        "examWord": "années",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "en",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3060,
+        "durationMs": 70,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0
+        ],
+        "examWord": "en",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "France",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3140,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          80.0
+        ],
+        "examWord": "France",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 24.167816,
+    "azureConfidence": 0.9178997,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 5.04,
+    "trimmedS": 3.54,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.08
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

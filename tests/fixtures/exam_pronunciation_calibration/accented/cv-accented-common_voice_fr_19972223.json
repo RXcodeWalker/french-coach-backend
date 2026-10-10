@@ -1,0 +1,1404 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:01:42+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_19972223",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_19972223.mp3",
+      "accents": "Français de La Réunion",
+      "age": "thirties",
+      "group": "overseas"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Son successeur, le bénédictin Urbain V, maintient l'excommunication et envoie un légat en Corse.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 7.872,
+    "trimmedS": 6.86,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.12,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Son successeur, le bénédictin Urbain V, maintient l'excommunication et envoie un légat en corse.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        6.86
+      ],
+      "referenceText": "Son successeur, le bénédictin Urbain V, maintient l'excommunication et envoie un légat en corse.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1000000,
+        "Duration": 67300000,
+        "DisplayText": "Son successeur, le bénédictin Urbain V, maintient l'excommunication et envoie un légat en Corse.",
+        "SNR": 40.21167,
+        "NBest": [
+          {
+            "Confidence": 0.92608064,
+            "Lexical": "Son successeur le bénédictin Urbain V maintient l'excommunication et envoie un légat en corse",
+            "ITN": "Son successeur le bénédictin Urbain V maintient l'excommunication et envoie un légat en corse",
+            "MaskedITN": "son successeur le bénédictin urbain v maintient l'excommunication et envoie un légat en corse",
+            "Display": "Son successeur, le bénédictin Urbain V, maintient l'excommunication et envoie un légat en Corse.",
+            "AccuracyScore": 93.0,
+            "FluencyScore": 92.0,
+            "CompletenessScore": 93.0,
+            "PronScore": 92.4,
+            "Words": [
+              {
+                "Word": "Son",
+                "Offset": 1000000,
+                "Duration": 4000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "son",
+                    "Offset": 1000000,
+                    "Duration": 4000000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1000000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3100000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "successeur",
+                "Offset": 5100000,
+                "Duration": 7400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "suc",
+                    "Offset": 5100000,
+                    "Duration": 2400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ces",
+                    "Offset": 7600000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "seur",
+                    "Offset": 9400000,
+                    "Duration": 3100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 5100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9400000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10800000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11900000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.051864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 12600000,
+                "Duration": 1700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 12600000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.051864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "bénédictin",
+                "Offset": 14400000,
+                "Duration": 7900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 14400000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 15600000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 17200000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 20000000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 14400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18000000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19100000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20600000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.051864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Urbain",
+                "Offset": 22400000,
+                "Duration": 6800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ur",
+                    "Offset": 22400000,
+                    "Duration": 3400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "bain",
+                    "Offset": 25900000,
+                    "Duration": 3300000,
+                    "AccuracyScore": 72.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 22400000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24200000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25900000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 44.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27600000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.051864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "V",
+                "Offset": 31300000,
+                "Duration": 700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 50.0,
+                "ErrorType": "Mispronunciation",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "v",
+                    "Offset": 31300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 40.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 31300000,
+                    "Duration": 400000,
+                    "AccuracyScore": 40.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31800000,
+                    "Duration": 200000,
+                    "AccuracyScore": 40.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.8103728
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 2000000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "maintient",
+                "Offset": 35800000,
+                "Duration": 5100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "main",
+                    "Offset": 35800000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tient",
+                    "Offset": 38000000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 35800000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36900000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 40000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 1.4991896
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 3700000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "l'excommunication",
+                "Offset": 41000000,
+                "Duration": 9700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 41000000,
+                    "Duration": 4700000,
+                    "AccuracyScore": 98.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 45800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 47000000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 41000000,
+                    "Duration": 300000,
+                    "AccuracyScore": 76.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42600000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43500000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 44200000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 44600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 46400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 48600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 49400000,
+                    "Duration": 200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 49700000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 50200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.051864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "et",
+                "Offset": 50800000,
+                "Duration": 900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "et",
+                    "Offset": 50800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 50800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 51400000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.051864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "envoie",
+                "Offset": 51800000,
+                "Duration": 3900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "en",
+                    "Offset": 51800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "voie",
+                    "Offset": 52600000,
+                    "Duration": 3100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 51800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 52600000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 54200000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 54700000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.051864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "un",
+                "Offset": 55800000,
+                "Duration": 1700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "un",
+                    "Offset": 55800000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 55800000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.051864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "légat",
+                "Offset": 57600000,
+                "Duration": 3500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 57600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 58800000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 57600000,
+                    "Duration": 300000,
+                    "AccuracyScore": 98.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 58000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 58800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 60000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.051864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "en",
+                "Offset": 61200000,
+                "Duration": 1700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "en",
+                    "Offset": 61200000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 61200000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.051864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "corse",
+                "Offset": 63000000,
+                "Duration": 5300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "corse",
+                    "Offset": 63000000,
+                    "Duration": 5300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 63000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 63800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 64800000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 66400000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.051864e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5097527
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Son successeur, le bénédictin Urbain V, maintient l'excommunication et envoie un légat en Corse.",
+    "referenceText": "Son successeur, le bénédictin Urbain V, maintient l'excommunication et envoie un légat en corse.",
+    "words": [
+      {
+        "word": "Son",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 100,
+        "durationMs": 400,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "Son",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "successeur",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 510,
+        "durationMs": 740,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "successeur",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "le",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 1260,
+        "durationMs": 170,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          91.0,
+          91.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "bénédictin",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1440,
+        "durationMs": 790,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "bénédictin",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "Urbain",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 2240,
+        "durationMs": 680,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          44.0,
+          100.0
+        ],
+        "examWord": "Urbain",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "V",
+        "accuracyScore": 50.0,
+        "errorType": "mispronounced",
+        "offsetMs": 3130,
+        "durationMs": 70,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          40.0,
+          40.0
+        ],
+        "examWord": "V",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "maintient",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3580,
+        "durationMs": 510,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "maintient",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "l'excommunication",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 4100,
+        "durationMs": 970,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          76.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "l'excommunication",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "et",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 5080,
+        "durationMs": 90,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0,
+          100.0
+        ],
+        "examWord": "et",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "envoie",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 5180,
+        "durationMs": 390,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "envoie",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "un",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 5580,
+        "durationMs": 170,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          91.0
+        ],
+        "examWord": "un",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "légat",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 5760,
+        "durationMs": 350,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          98.0,
+          88.0,
+          94.0,
+          100.0
+        ],
+        "examWord": "légat",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "en",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 6120,
+        "durationMs": 170,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0
+        ],
+        "examWord": "en",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "corse",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 6300,
+        "durationMs": 530,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "Corse",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 40.21167,
+    "azureConfidence": 0.92608064,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 7.872,
+    "trimmedS": 6.86,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.12
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

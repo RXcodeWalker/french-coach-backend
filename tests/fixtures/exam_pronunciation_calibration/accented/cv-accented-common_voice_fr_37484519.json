@@ -1,0 +1,1043 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:02:05+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_37484519",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - Canadian French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_37484519.mp3",
+      "accents": "Français du Canada|Québécois",
+      "age": "thirties",
+      "group": "quebec"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Pendant les derniers jours du mois, le temps fut extrêmement mauvais.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 4.86,
+    "trimmedS": 3.64,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.32,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Pendant les derniers jours du mois, le temps fut extrêmement mauvais.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        3.64
+      ],
+      "referenceText": "Pendant les derniers jours du mois, le temps fut extrêmement mauvais.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1500000,
+        "Duration": 34600000,
+        "DisplayText": "Pendant les derniers jours du mois, le temps fut extrêmement mauvais.",
+        "SNR": 32.36982,
+        "NBest": [
+          {
+            "Confidence": 0.9172924,
+            "Lexical": "Pendant les derniers jours du mois le temps fut extrêmement mauvais",
+            "ITN": "Pendant les derniers jours du mois le temps fut extrêmement mauvais",
+            "MaskedITN": "pendant les derniers jours du mois le temps fut extrêmement mauvais",
+            "Display": "Pendant les derniers jours du mois, le temps fut extrêmement mauvais.",
+            "AccuracyScore": 96.0,
+            "FluencyScore": 95.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 96.2,
+            "Words": [
+              {
+                "Word": "Pendant",
+                "Offset": 1500000,
+                "Duration": 3400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pen",
+                    "Offset": 1500000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dant",
+                    "Offset": 3400000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1500000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 2800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3400000,
+                    "Duration": 900000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 4400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5112333
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "les",
+                "Offset": 5000000,
+                "Duration": 2200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "les",
+                    "Offset": 5000000,
+                    "Duration": 2200000,
+                    "AccuracyScore": 96.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 5000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6200000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.151515e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5112333
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "derniers",
+                "Offset": 7300000,
+                "Duration": 3900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "der",
+                    "Offset": 7300000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "niers",
+                    "Offset": 9000000,
+                    "Duration": 2200000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 7300000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8500000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9000000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10100000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10600000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.151515e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5112333
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "jours",
+                "Offset": 11300000,
+                "Duration": 2000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "jours",
+                    "Offset": 11300000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 96.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 11300000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 95.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.151515e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5112333
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "du",
+                "Offset": 13400000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "du",
+                    "Offset": 13400000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 96.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 13400000,
+                    "Duration": 200000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14500000,
+                    "Duration": 200000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.151515e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5112333
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "mois",
+                "Offset": 14800000,
+                "Duration": 2800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mois",
+                    "Offset": 14800000,
+                    "Duration": 2800000,
+                    "AccuracyScore": 92.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 14800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 73.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.151515e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5112333
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 19400000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 19400000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 89.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 19400000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.87575763
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 1700000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5112333
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "temps",
+                "Offset": 21800000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "temps",
+                    "Offset": 21800000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 21800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.151515e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5112333
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "fut",
+                "Offset": 24200000,
+                "Duration": 2000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "fut",
+                    "Offset": 24200000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 24200000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 93.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.151515e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5112333
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "extrêmement",
+                "Offset": 26300000,
+                "Duration": 6100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ex",
+                    "Offset": 26300000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "trê",
+                    "Offset": 28300000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 99.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "me",
+                    "Offset": 30100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 86.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ment",
+                    "Offset": 31300000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 98.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 26300000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 72.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 95.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.151515e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5112333
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "mauvais",
+                "Offset": 32500000,
+                "Duration": 3600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mau",
+                    "Offset": 32500000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vais",
+                    "Offset": 34400000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 32500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33500000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34400000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35300000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.151515e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5112333
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Pendant les derniers jours du mois, le temps fut extrêmement mauvais.",
+    "referenceText": "Pendant les derniers jours du mois, le temps fut extrêmement mauvais.",
+    "words": [
+      {
+        "word": "Pendant",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 150,
+        "durationMs": 340,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          88.0,
+          88.0,
+          88.0,
+          88.0
+        ],
+        "examWord": "Pendant",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "les",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 500,
+        "durationMs": 220,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          91.0
+        ],
+        "examWord": "les",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "derniers",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 730,
+        "durationMs": 390,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "derniers",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "jours",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1130,
+        "durationMs": 200,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          95.0,
+          94.0
+        ],
+        "examWord": "jours",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "du",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1340,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "du",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "mois",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 1480,
+        "durationMs": 280,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          73.0
+        ],
+        "examWord": "mois",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "le",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 1940,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          82.0,
+          100.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "temps",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2180,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "temps",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "fut",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2420,
+        "durationMs": 200,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          93.0
+        ],
+        "examWord": "fut",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "extrêmement",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2630,
+        "durationMs": 610,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          97.0,
+          100.0,
+          100.0,
+          72.0,
+          95.0,
+          100.0
+        ],
+        "examWord": "extrêmement",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "mauvais",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3250,
+        "durationMs": 360,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "mauvais",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 32.36982,
+    "azureConfidence": 0.9172924,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 4.86,
+    "trimmedS": 3.64,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.32
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

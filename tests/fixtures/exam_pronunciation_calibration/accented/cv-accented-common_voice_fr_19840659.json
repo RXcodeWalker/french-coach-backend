@@ -1,0 +1,725 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:01:35+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_19840659",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_19840659.mp3",
+      "accents": "Français de Nouvelle-Calédonie",
+      "age": "twenties",
+      "group": "overseas"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "la route sera bétonné la semaine prochaine",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 3.744,
+    "trimmedS": 2.64,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.2,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "la route sera bétonnée la semaine prochaine",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        2.64
+      ],
+      "referenceText": "la route sera bétonnée la semaine prochaine",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1400000,
+        "Duration": 24000000,
+        "DisplayText": "La route sera bétonnée la semaine prochaine.",
+        "SNR": 17.162653,
+        "NBest": [
+          {
+            "Confidence": 0.91320926,
+            "Lexical": "la route sera bétonnée la semaine prochaine",
+            "ITN": "la route sera bétonnée la semaine prochaine",
+            "MaskedITN": "la route sera bétonnée la semaine prochaine",
+            "Display": "La route sera bétonnée la semaine prochaine.",
+            "AccuracyScore": 94.0,
+            "FluencyScore": 97.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 95.8,
+            "Words": [
+              {
+                "Word": "la",
+                "Offset": 1400000,
+                "Duration": 2500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "la",
+                    "Offset": 1400000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1400000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.51043844
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "route",
+                "Offset": 4000000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 85.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 4000000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 5800000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5800000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 71.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.1502145e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.51043844
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "sera",
+                "Offset": 8600000,
+                "Duration": 4100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "se",
+                    "Offset": 8600000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 86.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ra",
+                    "Offset": 11600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 8600000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 81.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.41201723
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 800000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.51043844
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "bétonnée",
+                "Offset": 12800000,
+                "Duration": 4600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 12800000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 14200000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 15600000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16600000,
+                    "Duration": 800000,
+                    "AccuracyScore": 81.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.1502145e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.51043844
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "la",
+                "Offset": 17500000,
+                "Duration": 1000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "la",
+                    "Offset": 17500000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 95.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 17500000,
+                    "Duration": 200000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.1502145e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.51043844
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "semaine",
+                "Offset": 18600000,
+                "Duration": 2000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 85.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "semaine",
+                    "Offset": 18600000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 18600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19200000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19600000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 71.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.1502145e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.51043844
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "prochaine",
+                "Offset": 20700000,
+                "Duration": 4700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pro",
+                    "Offset": 20700000,
+                    "Duration": 3400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "chaine",
+                    "Offset": 24200000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 73.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 20700000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21200000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25000000,
+                    "Duration": 400000,
+                    "AccuracyScore": 29.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.1502145e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.51043844
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "la route sera bétonné la semaine prochaine",
+    "referenceText": "la route sera bétonnée la semaine prochaine",
+    "words": [
+      {
+        "word": "la",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 140,
+        "durationMs": 250,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "la",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "route",
+        "accuracyScore": 85.0,
+        "errorType": "correct",
+        "offsetMs": 400,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          71.0
+        ],
+        "examWord": "route",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "sera",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 860,
+        "durationMs": 410,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          81.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "sera",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "bétonnée",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1280,
+        "durationMs": 460,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          81.0
+        ],
+        "examWord": "bétonné",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "la",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1750,
+        "durationMs": 100,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0,
+          100.0
+        ],
+        "examWord": "la",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "semaine",
+        "accuracyScore": 85.0,
+        "errorType": "correct",
+        "offsetMs": 1860,
+        "durationMs": 200,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          71.0
+        ],
+        "examWord": "semaine",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "prochaine",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2070,
+        "durationMs": 470,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          29.0
+        ],
+        "examWord": "prochaine",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 17.162653,
+    "azureConfidence": 0.91320926,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 3.744,
+    "trimmedS": 2.64,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.2
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

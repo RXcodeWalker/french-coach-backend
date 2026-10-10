@@ -1,0 +1,1189 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:02:18+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_19768468",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - Canadian French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_19768468.mp3",
+      "accents": "Français du Canada",
+      "age": "fifties",
+      "group": "canada"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Le ballet théâtral est créé à l'Opéra de Paris le pour trois représentations.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 7.584,
+    "trimmedS": 4.92,
+    "pausesOver2s": 0,
+    "longestPauseS": 1.34,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Le ballet théâtral est créé à l'Opéra de Paris pour trois représentations.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        4.92
+      ],
+      "referenceText": "Le ballet théâtral est créé à l'Opéra de Paris pour trois représentations.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1300000,
+        "Duration": 47600000,
+        "DisplayText": "Le ballet théâtral est créé à l'Opéra de Paris pour 3 représentations.",
+        "SNR": 27.660172,
+        "NBest": [
+          {
+            "Confidence": 0.9202843,
+            "Lexical": "Le ballet théâtral est créé à l'Opéra de Paris pour trois représentations",
+            "ITN": "Le ballet théâtral est créé à l'Opéra de Paris pour 3 représentations",
+            "MaskedITN": "le ballet théâtral est créé à l'opéra de paris pour 3 représentations",
+            "Display": "Le ballet théâtral est créé à l'Opéra de Paris pour 3 représentations.",
+            "AccuracyScore": 96.0,
+            "FluencyScore": 91.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 93.8,
+            "Words": [
+              {
+                "Word": "Le",
+                "Offset": 1300000,
+                "Duration": 2500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 1300000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1300000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "ballet",
+                "Offset": 3900000,
+                "Duration": 3300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "bal",
+                    "Offset": 3900000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "let",
+                    "Offset": 5700000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 3900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 4800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 87.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.0458713e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "théâtral",
+                "Offset": 7300000,
+                "Duration": 7300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 7300000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 8900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 10100000,
+                    "Duration": 4500000,
+                    "AccuracyScore": 95.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 7300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10700000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11900000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 76.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.0458713e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "est",
+                "Offset": 14900000,
+                "Duration": 1900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "est",
+                    "Offset": 14900000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 14900000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.10091747
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.9495413
+                      },
+                      "BreakLength": 200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "créé",
+                "Offset": 16900000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "créé",
+                    "Offset": 16900000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 16900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18700000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.0458713e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "à",
+                "Offset": 20700000,
+                "Duration": 700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "à",
+                    "Offset": 20700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 20700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.0458713e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "l'Opéra",
+                "Offset": 21500000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "l'o",
+                    "Offset": 21500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pé",
+                    "Offset": 22700000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ra",
+                    "Offset": 23900000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 21500000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22700000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.0458713e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "de",
+                "Offset": 25300000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "de",
+                    "Offset": 25300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 25300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.0458713e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Paris",
+                "Offset": 26700000,
+                "Duration": 4000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pa",
+                    "Offset": 26700000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ris",
+                    "Offset": 27900000,
+                    "Duration": 2800000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 26700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27900000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29000000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 71.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.0458713e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "pour",
+                "Offset": 34700000,
+                "Duration": 3300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pour",
+                    "Offset": 34700000,
+                    "Duration": 3300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 34700000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36500000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 1.9678899
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 3900000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "trois",
+                "Offset": 38100000,
+                "Duration": 2500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "trois",
+                    "Offset": 38100000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 38100000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39200000,
+                    "Duration": 100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39400000,
+                    "Duration": 100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39600000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.0458713e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "représentations",
+                "Offset": 40700000,
+                "Duration": 8200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "re",
+                    "Offset": 40700000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pré",
+                    "Offset": 42100000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 55.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "sen",
+                    "Offset": 44200000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ta",
+                    "Offset": 45600000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 50.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tions",
+                    "Offset": 47000000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 40700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41400000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 92.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42800000,
+                    "Duration": 600000,
+                    "AccuracyScore": 73.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43500000,
+                    "Duration": 600000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 44200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 44900000,
+                    "Duration": 600000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45600000,
+                    "Duration": 600000,
+                    "AccuracyScore": 1.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 46300000,
+                    "Duration": 600000,
+                    "AccuracyScore": 99.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 48400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.0458713e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50086254
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Le ballet théâtral est créé à l'Opéra de Paris le pour trois représentations.",
+    "referenceText": "Le ballet théâtral est créé à l'Opéra de Paris pour trois représentations.",
+    "words": [
+      {
+        "word": "Le",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 130,
+        "durationMs": 250,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "Le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "ballet",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 390,
+        "durationMs": 330,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          87.0
+        ],
+        "examWord": "ballet",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "théâtral",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 730,
+        "durationMs": 730,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          76.0
+        ],
+        "examWord": "théâtral",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "est",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 1490,
+        "durationMs": 190,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          88.0
+        ],
+        "examWord": "est",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "créé",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1690,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "créé",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "à",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2070,
+        "durationMs": 70,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0
+        ],
+        "examWord": "à",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "l'Opéra",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2150,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "l'Opéra",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "de",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2530,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "de",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "Paris",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2670,
+        "durationMs": 400,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          71.0
+        ],
+        "examWord": "Paris",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "pour",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3470,
+        "durationMs": 330,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          91.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "pour",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "trois",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3810,
+        "durationMs": 250,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "trois",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "représentations",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 4070,
+        "durationMs": 820,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          92.0,
+          73.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          99.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "représentations",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 27.660172,
+    "azureConfidence": 0.9202843,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 7.584,
+    "trimmedS": 4.92,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 1.34
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

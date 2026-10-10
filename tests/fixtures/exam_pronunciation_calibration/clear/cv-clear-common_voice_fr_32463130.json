@@ -1,0 +1,1434 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:00:36+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-clear-common_voice_fr_32463130",
+    "set": "clear",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_32463130.mp3",
+      "accents": "Marseille",
+      "age": "twenties"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Cependant malgré ces gisements de phosphates, la population locale vit dans une extrême pauvreté.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 6.876,
+    "trimmedS": 6.0,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.4,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Cependant, malgré ces gissements de phosphate, la population locale vit dans une extrême pauvreté.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        6.0
+      ],
+      "referenceText": "Cependant, malgré ces gissements de phosphate, la population locale vit dans une extrême pauvreté.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 900000,
+        "Duration": 58600000,
+        "DisplayText": "Cependant, malgré ces gissements de phosphate, la population locale vit dans une extrême pauvreté.",
+        "SNR": 28.322617,
+        "NBest": [
+          {
+            "Confidence": 0.9300329,
+            "Lexical": "Cependant malgré ces gissements de phosphate la population locale vit dans une extrême pauvreté",
+            "ITN": "Cependant malgré ces gissements de phosphate la population locale vit dans une extrême pauvreté",
+            "MaskedITN": "cependant malgré ces gissements de phosphate la population locale vit dans une extrême pauvreté",
+            "Display": "Cependant, malgré ces gissements de phosphate, la population locale vit dans une extrême pauvreté.",
+            "AccuracyScore": 97.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 98.2,
+            "Words": [
+              {
+                "Word": "Cependant",
+                "Offset": 900000,
+                "Duration": 10300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ce",
+                    "Offset": 900000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 50.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pen",
+                    "Offset": 4500000,
+                    "Duration": 3300000,
+                    "AccuracyScore": 96.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dant",
+                    "Offset": 7900000,
+                    "Duration": 3300000,
+                    "AccuracyScore": 76.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 900000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 2700000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 4500000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 93.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6200000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7900000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9600000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 53.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "malgré",
+                "Offset": 11300000,
+                "Duration": 5300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mal",
+                    "Offset": 11300000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "gré",
+                    "Offset": 14300000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 11300000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14300000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "ces",
+                "Offset": 16700000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ces",
+                    "Offset": 16700000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 16700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "gissements",
+                "Offset": 18100000,
+                "Duration": 4100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 85.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 18100000,
+                    "Duration": 4100000,
+                    "AccuracyScore": 59.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 18100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 12.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 61.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "de",
+                "Offset": 22300000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "de",
+                    "Offset": 22300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 22300000,
+                    "Duration": 300000,
+                    "AccuracyScore": 90.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "phosphate",
+                "Offset": 23700000,
+                "Duration": 6700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "phos",
+                    "Offset": 23700000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "phate",
+                    "Offset": 26100000,
+                    "Duration": 4300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 23700000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26700000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28300000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "la",
+                "Offset": 30700000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "la",
+                    "Offset": 30700000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 30700000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.088888936
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.95555556
+                      },
+                      "BreakLength": 200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "population",
+                "Offset": 32900000,
+                "Duration": 6200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "po",
+                    "Offset": 32900000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pu",
+                    "Offset": 34300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "la",
+                    "Offset": 35700000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tion",
+                    "Offset": 37100000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 32900000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33600000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34300000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36400000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37800000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38500000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "locale",
+                "Offset": 39200000,
+                "Duration": 5000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "lo",
+                    "Offset": 39200000,
+                    "Duration": 3600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "cale",
+                    "Offset": 42900000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 39200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 40900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42900000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43600000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "vit",
+                "Offset": 44300000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vit",
+                    "Offset": 44300000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 44300000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45400000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "dans",
+                "Offset": 46500000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dans",
+                    "Offset": 46500000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 92.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 46500000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 85.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "une",
+                "Offset": 47900000,
+                "Duration": 1500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "une",
+                    "Offset": 47900000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 93.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 47900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 48500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 81.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 49100000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "extrême",
+                "Offset": 49500000,
+                "Duration": 4900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 49500000,
+                    "Duration": 800000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 50400000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 53100000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 49500000,
+                    "Duration": 300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 49900000,
+                    "Duration": 400000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 50400000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 51100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 51700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 52300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 53100000,
+                    "Duration": 300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 53500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "pauvreté",
+                "Offset": 54500000,
+                "Duration": 5000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pau",
+                    "Offset": 54500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vre",
+                    "Offset": 55700000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "té",
+                    "Offset": 58100000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 83.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 54500000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 55000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 55700000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 56100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 57300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 58100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 58700000,
+                    "Duration": 800000,
+                    "AccuracyScore": 72.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4444445e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50980645
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Cependant malgré ces gisements de phosphates, la population locale vit dans une extrême pauvreté.",
+    "referenceText": "Cependant, malgré ces gissements de phosphate, la population locale vit dans une extrême pauvreté.",
+    "words": [
+      {
+        "word": "Cependant",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 90,
+        "durationMs": 1030,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          0.0,
+          93.0,
+          100.0,
+          100.0,
+          53.0
+        ],
+        "examWord": "Cependant",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "malgré",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1130,
+        "durationMs": 530,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "malgré",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "ces",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1670,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "ces",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "gissements",
+        "accuracyScore": 85.0,
+        "errorType": "correct",
+        "offsetMs": 1810,
+        "durationMs": 410,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          12.0,
+          0.0,
+          61.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "gisements",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "de",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2230,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          90.0,
+          100.0
+        ],
+        "examWord": "de",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "phosphate",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2370,
+        "durationMs": 670,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "phosphates",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "la",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3070,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "la",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "population",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3290,
+        "durationMs": 620,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "population",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "locale",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3920,
+        "durationMs": 500,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "locale",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "vit",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 4430,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "vit",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "dans",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 4650,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          85.0
+        ],
+        "examWord": "dans",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "une",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 4790,
+        "durationMs": 150,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          81.0,
+          100.0
+        ],
+        "examWord": "une",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "extrême",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 4950,
+        "durationMs": 490,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "extrême",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "pauvreté",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 5450,
+        "durationMs": 500,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          72.0
+        ],
+        "examWord": "pauvreté",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 28.322617,
+    "azureConfidence": 0.9300329,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 6.876,
+    "trimmedS": 6.0,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.4
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

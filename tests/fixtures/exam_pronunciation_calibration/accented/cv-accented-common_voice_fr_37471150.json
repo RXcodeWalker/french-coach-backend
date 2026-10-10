@@ -1,0 +1,1174 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:02:08+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_37471150",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - Canadian French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_37471150.mp3",
+      "accents": "Français du Québec",
+      "age": "fourties",
+      "group": "quebec"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "La station est entourée d'une cédraie qui s'entend jusqu'à la province Khénifra.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 7.776,
+    "trimmedS": 6.23,
+    "pausesOver2s": 0,
+    "longestPauseS": 1.02,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "La station est entourée d'une cèdreille qui s'entend jusqu'à la province Kénifra.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        6.23
+      ],
+      "referenceText": "La station est entourée d'une cèdreille qui s'entend jusqu'à la province Kénifra.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 6100000,
+        "Duration": 55900000,
+        "DisplayText": "La station est entourée d'une cèdreille qui s'entend jusqu'à la province Kénifra.",
+        "SNR": 34.347706,
+        "NBest": [
+          {
+            "Confidence": 0.9133752,
+            "Lexical": "La station est entourée d'une cèdreille qui s'entend jusqu'à la province Kénifra",
+            "ITN": "La station est entourée d'une cèdreille qui s'entend jusqu'à la province Kénifra",
+            "MaskedITN": "la station est entourée d'une cèdreille qui s'entend jusqu'à la province kénifra",
+            "Display": "La station est entourée d'une cèdreille qui s'entend jusqu'à la province Kénifra.",
+            "AccuracyScore": 95.0,
+            "FluencyScore": 94.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 95.4,
+            "Words": [
+              {
+                "Word": "La",
+                "Offset": 6100000,
+                "Duration": 3600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "la",
+                    "Offset": 6100000,
+                    "Duration": 3600000,
+                    "AccuracyScore": 85.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 6100000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 81.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "station",
+                "Offset": 9800000,
+                "Duration": 5600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "sta",
+                    "Offset": 9800000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tion",
+                    "Offset": 12800000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 9800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13700000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14600000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7950663e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "est",
+                "Offset": 15500000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "est",
+                    "Offset": 15500000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 15500000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7950663e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "entourée",
+                "Offset": 17900000,
+                "Duration": 4700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "en",
+                    "Offset": 17900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tou",
+                    "Offset": 18300000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "rée",
+                    "Offset": 20100000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 17900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7950663e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "d'une",
+                "Offset": 22700000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "d'une",
+                    "Offset": 22700000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 96.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 22700000,
+                    "Duration": 300000,
+                    "AccuracyScore": 73.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7950663e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "cèdreille",
+                "Offset": 25100000,
+                "Duration": 5100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 85.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 25100000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 27000000,
+                    "Duration": 3200000,
+                    "AccuracyScore": 76.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 25100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 99.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26300000,
+                    "Duration": 600000,
+                    "AccuracyScore": 53.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27000000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29100000,
+                    "Duration": 800000,
+                    "AccuracyScore": 47.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30000000,
+                    "Duration": 200000,
+                    "AccuracyScore": 0.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7950663e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "qui",
+                "Offset": 32500000,
+                "Duration": 2500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "qui",
+                    "Offset": 32500000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 32500000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.8349147
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 2200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "s'entend",
+                "Offset": 35100000,
+                "Duration": 7000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 35100000,
+                    "Duration": 7000000,
+                    "AccuracyScore": 98.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 35100000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38100000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39700000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41500000,
+                    "Duration": 600000,
+                    "AccuracyScore": 76.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7950663e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "jusqu'à",
+                "Offset": 43300000,
+                "Duration": 4500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "jus",
+                    "Offset": 43300000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "qu'à",
+                    "Offset": 46900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 43300000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 46900000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47400000,
+                    "Duration": 400000,
+                    "AccuracyScore": 81.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.41745734
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 1100000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "la",
+                "Offset": 47900000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "la",
+                    "Offset": 47900000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 47900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 48500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7950663e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "province",
+                "Offset": 49300000,
+                "Duration": 6100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pro",
+                    "Offset": 49300000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vince",
+                    "Offset": 51300000,
+                    "Duration": 4100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 49300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 50100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 50700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 51300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 52100000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 54100000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7950663e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Kénifra",
+                "Offset": 55500000,
+                "Duration": 6500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 55500000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 95.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 57100000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 58900000,
+                    "Duration": 3100000,
+                    "AccuracyScore": 96.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 55500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 92.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 56500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 57100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 57900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 58900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 59700000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 61100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 87.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7950663e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.506908
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "La station est entourée d'une cédraie qui s'entend jusqu'à la province Khénifra.",
+    "referenceText": "La station est entourée d'une cèdreille qui s'entend jusqu'à la province Kénifra.",
+    "words": [
+      {
+        "word": "La",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 610,
+        "durationMs": 360,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          81.0,
+          100.0
+        ],
+        "examWord": "La",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "station",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 980,
+        "durationMs": 560,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "station",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "est",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 1550,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          88.0
+        ],
+        "examWord": "est",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "entourée",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1790,
+        "durationMs": 470,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "entourée",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "d'une",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 2270,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          73.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "d'une",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "cèdreille",
+        "accuracyScore": 85.0,
+        "errorType": "correct",
+        "offsetMs": 2510,
+        "durationMs": 510,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          99.0,
+          53.0,
+          100.0,
+          100.0,
+          47.0,
+          0.0
+        ],
+        "examWord": "cédraie",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "qui",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3250,
+        "durationMs": 250,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "qui",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "s'entend",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 3510,
+        "durationMs": 700,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          76.0
+        ],
+        "examWord": "s'entend",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "jusqu'à",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 4330,
+        "durationMs": 450,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          81.0
+        ],
+        "examWord": "jusqu'à",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "la",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 4790,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "la",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "province",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 4930,
+        "durationMs": 610,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "province",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "Kénifra",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 5550,
+        "durationMs": 650,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          92.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          87.0
+        ],
+        "examWord": "Khénifra",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 34.347706,
+    "azureConfidence": 0.9133752,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 7.776,
+    "trimmedS": 6.23,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 1.02
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

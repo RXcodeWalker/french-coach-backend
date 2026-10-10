@@ -1,0 +1,1287 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:01:20+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-clear-common_voice_fr_39578293",
+    "set": "clear",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_39578293.mp3",
+      "accents": "Français du Sud-Ouest de la France",
+      "age": "sixties"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Son principal instrument est le violon mais il pratique également le saxophone alto.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 6.696,
+    "trimmedS": 4.44,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.1,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Son principal instrument est le violon, mais il pratique également le saxophone alto.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        4.44
+      ],
+      "referenceText": "Son principal instrument est le violon, mais il pratique également le saxophone alto.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1000000,
+        "Duration": 43100000,
+        "DisplayText": "Son principal instrument est le violon, mais il pratique également le Saxophone Alto.",
+        "SNR": 19.374868,
+        "NBest": [
+          {
+            "Confidence": 0.9236986,
+            "Lexical": "Son principal instrument est le violon mais il pratique également le saxophone alto",
+            "ITN": "Son principal instrument est le violon mais il pratique également le saxophone alto",
+            "MaskedITN": "son principal instrument est le violon mais il pratique également le saxophone alto",
+            "Display": "Son principal instrument est le violon, mais il pratique également le Saxophone Alto.",
+            "AccuracyScore": 98.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 98.8,
+            "Words": [
+              {
+                "Word": "Son",
+                "Offset": 1000000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "son",
+                    "Offset": 1000000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1000000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 2900000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "principal",
+                "Offset": 4800000,
+                "Duration": 4700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "prin",
+                    "Offset": 4800000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ci",
+                    "Offset": 6600000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pal",
+                    "Offset": 7900000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4800000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8500000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "instrument",
+                "Offset": 9600000,
+                "Duration": 5100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ins",
+                    "Offset": 9600000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tru",
+                    "Offset": 11100000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ment",
+                    "Offset": 12800000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 9600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10400000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11100000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11600000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12300000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "est",
+                "Offset": 14800000,
+                "Duration": 900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "est",
+                    "Offset": 14800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 14800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 15800000,
+                "Duration": 1000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 15800000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 15800000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "violon",
+                "Offset": 16900000,
+                "Duration": 4400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vio",
+                    "Offset": 16900000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 89.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "lon",
+                    "Offset": 19600000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 33.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 16900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18700000,
+                    "Duration": 800000,
+                    "AccuracyScore": 66.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19600000,
+                    "Duration": 800000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20500000,
+                    "Duration": 800000,
+                    "AccuracyScore": 66.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "mais",
+                "Offset": 21400000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mais",
+                    "Offset": 21400000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 89.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 21400000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 78.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "il",
+                "Offset": 23800000,
+                "Duration": 900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "il",
+                    "Offset": 23800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 78.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 23800000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24300000,
+                    "Duration": 400000,
+                    "AccuracyScore": 57.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "pratique",
+                "Offset": 24800000,
+                "Duration": 3900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pra",
+                    "Offset": 24800000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 93.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tique",
+                    "Offset": 26400000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 24800000,
+                    "Duration": 200000,
+                    "AccuracyScore": 61.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 82.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "également",
+                "Offset": 28800000,
+                "Duration": 4500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "éga",
+                    "Offset": 28800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 29600000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ment",
+                    "Offset": 32000000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 28800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 93.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 71.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 33400000,
+                "Duration": 1500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 33400000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 33400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "saxophone",
+                "Offset": 35000000,
+                "Duration": 5600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 35000000,
+                    "Duration": 4900000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 40000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 35000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35600000,
+                    "Duration": 400000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 40000000,
+                    "Duration": 300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 40400000,
+                    "Duration": 200000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "alto",
+                "Offset": 40700000,
+                "Duration": 3400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "al",
+                    "Offset": 40700000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "to",
+                    "Offset": 42200000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 40700000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3240743e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50064975
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Son principal instrument est le violon mais il pratique également le saxophone alto.",
+    "referenceText": "Son principal instrument est le violon, mais il pratique également le saxophone alto.",
+    "words": [
+      {
+        "word": "Son",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 100,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "Son",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "principal",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 480,
+        "durationMs": 470,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "principal",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "instrument",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 960,
+        "durationMs": 510,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "instrument",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "est",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1480,
+        "durationMs": 90,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0
+        ],
+        "examWord": "est",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "le",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1580,
+        "durationMs": 100,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "violon",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 1690,
+        "durationMs": 440,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          66.0,
+          0.0,
+          66.0
+        ],
+        "examWord": "violon",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "mais",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 2140,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          78.0
+        ],
+        "examWord": "mais",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "il",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2380,
+        "durationMs": 90,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          57.0
+        ],
+        "examWord": "il",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "pratique",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2480,
+        "durationMs": 390,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          61.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          82.0
+        ],
+        "examWord": "pratique",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "également",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 2880,
+        "durationMs": 450,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          93.0,
+          71.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "également",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "le",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3340,
+        "durationMs": 150,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "saxophone",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3500,
+        "durationMs": 560,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "saxophone",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "alto",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 4070,
+        "durationMs": 340,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "alto",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 19.374868,
+    "azureConfidence": 0.9236986,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 6.696,
+    "trimmedS": 4.44,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.1
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

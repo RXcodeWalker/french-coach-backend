@@ -1,0 +1,586 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:02:29+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_18492436",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - Canadian French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_18492436.mp3",
+      "accents": "Français du Canada",
+      "age": "twenties",
+      "group": "canada"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Nous leur avons montré le chemin.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 3.264,
+    "trimmedS": 2.33,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.54,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Nous leur avons montré le chemin.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        2.33
+      ],
+      "referenceText": "Nous leur avons montré le chemin.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 6500000,
+        "Duration": 16500000,
+        "DisplayText": "Nous leur avons montré le chemin.",
+        "SNR": 27.057417,
+        "NBest": [
+          {
+            "Confidence": 0.90503705,
+            "Lexical": "Nous leur avons montré le chemin",
+            "ITN": "Nous leur avons montré le chemin",
+            "MaskedITN": "nous leur avons montré le chemin",
+            "Display": "Nous leur avons montré le chemin.",
+            "AccuracyScore": 93.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 95.8,
+            "Words": [
+              {
+                "Word": "Nous",
+                "Offset": 6500000,
+                "Duration": 2500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "nous",
+                    "Offset": 6500000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 6500000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49785507
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "leur",
+                "Offset": 9100000,
+                "Duration": 1900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "leur",
+                    "Offset": 9100000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 9100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.421687e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49785507
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "avons",
+                "Offset": 11100000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 76.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "a",
+                    "Offset": 11100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vons",
+                    "Offset": 11900000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 82.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 11100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 63.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.421687e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49785507
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "montré",
+                "Offset": 13500000,
+                "Duration": 3900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 82.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mon",
+                    "Offset": 13500000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tré",
+                    "Offset": 15300000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 82.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 13500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 82.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.421687e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49785507
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 17500000,
+                "Duration": 1700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 17500000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 17500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.421687e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49785507
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "chemin",
+                "Offset": 19300000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "che",
+                    "Offset": 19300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "min",
+                    "Offset": 20700000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 19300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20700000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21100000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.421687e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49785507
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Nous leur avons montré le chemin.",
+    "referenceText": "Nous leur avons montré le chemin.",
+    "words": [
+      {
+        "word": "Nous",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 650,
+        "durationMs": 250,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "Nous",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "leur",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 910,
+        "durationMs": 190,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "leur",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "avons",
+        "accuracyScore": 76.0,
+        "errorType": "correct",
+        "offsetMs": 1110,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          63.0
+        ],
+        "examWord": "avons",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "montré",
+        "accuracyScore": 82.0,
+        "errorType": "correct",
+        "offsetMs": 1350,
+        "durationMs": 390,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          82.0,
+          82.0,
+          82.0,
+          82.0,
+          82.0
+        ],
+        "examWord": "montré",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "le",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1750,
+        "durationMs": 170,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "chemin",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1930,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "chemin",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 27.057417,
+    "azureConfidence": 0.90503705,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 3.264,
+    "trimmedS": 2.33,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.54
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

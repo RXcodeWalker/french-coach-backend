@@ -1,0 +1,1124 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:00:29+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-clear-common_voice_fr_32213090",
+    "set": "clear",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_32213090.mp3",
+      "accents": "Parisian",
+      "age": "twenties"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Un fort orage menace le bateau et le capitaine perd tout espoir.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 4.716,
+    "trimmedS": 3.66,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.2,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Un fort orage menace le bateau et le capitaine perd tout espoir.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        3.66
+      ],
+      "referenceText": "Un fort orage menace le bateau et le capitaine perd tout espoir.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1500000,
+        "Duration": 34800000,
+        "DisplayText": "Un fort orage menace le bateau et le capitaine perd tout espoir.",
+        "SNR": 25.846214,
+        "NBest": [
+          {
+            "Confidence": 0.9132379,
+            "Lexical": "Un fort orage menace le bateau et le capitaine perd tout espoir",
+            "ITN": "Un fort orage menace le bateau et le capitaine perd tout espoir",
+            "MaskedITN": "un fort orage menace le bateau et le capitaine perd tout espoir",
+            "Display": "Un fort orage menace le bateau et le capitaine perd tout espoir.",
+            "AccuracyScore": 91.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 94.6,
+            "Words": [
+              {
+                "Word": "Un",
+                "Offset": 1500000,
+                "Duration": 2500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 80.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "un",
+                    "Offset": 1500000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 80.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1500000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 80.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "fort",
+                "Offset": 4100000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 64.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "fort",
+                    "Offset": 4100000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 64.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 64.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 4900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 64.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 64.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.730659e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "orage",
+                "Offset": 6300000,
+                "Duration": 4300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "o",
+                    "Offset": 6300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "rage",
+                    "Offset": 7100000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 6300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8100000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.730659e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "menace",
+                "Offset": 10700000,
+                "Duration": 4300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "me",
+                    "Offset": 10700000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "nace",
+                    "Offset": 12100000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 10700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.730659e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 15100000,
+                "Duration": 700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 15100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 15100000,
+                    "Duration": 300000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15500000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.730659e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "bateau",
+                "Offset": 15900000,
+                "Duration": 3300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ba",
+                    "Offset": 15900000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "teau",
+                    "Offset": 17400000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 15900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16500000,
+                    "Duration": 800000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17400000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.730659e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "et",
+                "Offset": 19300000,
+                "Duration": 2200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 19300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 81.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 20700000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 19300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 81.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20700000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21100000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.730659e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 21600000,
+                "Duration": 1200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 21600000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 21600000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.730659e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "capitaine",
+                "Offset": 22900000,
+                "Duration": 5700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 22900000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 24300000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 25500000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 27500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 22900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26100000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 81.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.730659e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "perd",
+                "Offset": 28700000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 82.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "perd",
+                    "Offset": 28700000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 82.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 28700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29400000,
+                    "Duration": 400000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 82.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.730659e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "tout",
+                "Offset": 30900000,
+                "Duration": 1900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tout",
+                    "Offset": 30900000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 96.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 30900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 92.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.730659e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "espoir",
+                "Offset": 32900000,
+                "Duration": 3400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 85.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "es",
+                    "Offset": 32900000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "poir",
+                    "Offset": 34700000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 80.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 32900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35300000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35800000,
+                    "Duration": 200000,
+                    "AccuracyScore": 78.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36100000,
+                    "Duration": 200000,
+                    "AccuracyScore": 10.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.730659e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5089753
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Un fort orage menace le bateau et le capitaine perd tout espoir.",
+    "referenceText": "Un fort orage menace le bateau et le capitaine perd tout espoir.",
+    "words": [
+      {
+        "word": "Un",
+        "accuracyScore": 80.0,
+        "errorType": "correct",
+        "offsetMs": 150,
+        "durationMs": 250,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0
+        ],
+        "examWord": "Un",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "fort",
+        "accuracyScore": 64.0,
+        "errorType": "correct",
+        "offsetMs": 410,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          64.0,
+          64.0,
+          64.0
+        ],
+        "examWord": "fort",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "orage",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 630,
+        "durationMs": 430,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "orage",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "menace",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1070,
+        "durationMs": 430,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "menace",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "le",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1510,
+        "durationMs": 70,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0,
+          100.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "bateau",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 1590,
+        "durationMs": 330,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          94.0,
+          94.0,
+          94.0,
+          94.0
+        ],
+        "examWord": "bateau",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "et",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1930,
+        "durationMs": 220,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          81.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "et",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "le",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2160,
+        "durationMs": 120,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "capitaine",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2290,
+        "durationMs": 570,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          81.0
+        ],
+        "examWord": "capitaine",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "perd",
+        "accuracyScore": 82.0,
+        "errorType": "correct",
+        "offsetMs": 2870,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          82.0,
+          82.0,
+          82.0
+        ],
+        "examWord": "perd",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "tout",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3090,
+        "durationMs": 190,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          92.0
+        ],
+        "examWord": "tout",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "espoir",
+        "accuracyScore": 85.0,
+        "errorType": "correct",
+        "offsetMs": 3290,
+        "durationMs": 340,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          78.0,
+          10.0
+        ],
+        "examWord": "espoir",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 25.846214,
+    "azureConfidence": 0.9132379,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 4.716,
+    "trimmedS": 3.66,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.2
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

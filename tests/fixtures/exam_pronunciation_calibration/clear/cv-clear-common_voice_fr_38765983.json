@@ -1,0 +1,773 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:01:15+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-clear-common_voice_fr_38765983",
+    "set": "clear",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_38765983.mp3",
+      "accents": "Standard avec parfois un accent du sud de la Fance",
+      "age": "seventies"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Aux temps barbares, des Danois envahissent la Grande-Bretagne.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 5.472,
+    "trimmedS": 3.34,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.18,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "« Autant barbares, des Danois envahissent la Grande-Bretagne. »",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        3.34
+      ],
+      "referenceText": "« Autant barbares, des Danois envahissent la Grande-Bretagne. »",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 800000,
+        "Duration": 31900000,
+        "DisplayText": "Autant barbares, des Danois envahissent la Grande-Bretagne.",
+        "SNR": 24.125608,
+        "NBest": [
+          {
+            "Confidence": 0.9282614,
+            "Lexical": "Autant barbares des Danois envahissent la Grande-Bretagne",
+            "ITN": "Autant barbares des Danois envahissent la Grande-Bretagne",
+            "MaskedITN": "autant barbares des danois envahissent la grande-bretagne",
+            "Display": "Autant barbares, des Danois envahissent la Grande-Bretagne.",
+            "AccuracyScore": 97.0,
+            "FluencyScore": 99.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 98.0,
+            "Words": [
+              {
+                "Word": "Autant",
+                "Offset": 800000,
+                "Duration": 4100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "au",
+                    "Offset": 800000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 81.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tant",
+                    "Offset": 3400000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 800000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 81.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3400000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 4400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50572103
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "barbares",
+                "Offset": 5000000,
+                "Duration": 7300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "bar",
+                    "Offset": 5000000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "bares",
+                    "Offset": 7400000,
+                    "Duration": 4900000,
+                    "AccuracyScore": 85.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 5000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8000000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10400000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 63.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4025157e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50572103
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "des",
+                "Offset": 12600000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "des",
+                    "Offset": 12600000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12600000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13700000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.08805036
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.9559748
+                      },
+                      "BreakLength": 200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50572103
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Danois",
+                "Offset": 14800000,
+                "Duration": 4100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "da",
+                    "Offset": 14800000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "nois",
+                    "Offset": 16600000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 14800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15700000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4025157e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50572103
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "envahissent",
+                "Offset": 19000000,
+                "Duration": 4500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "en",
+                    "Offset": 19000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "va",
+                    "Offset": 20000000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 98.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "hissent",
+                    "Offset": 21800000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 79.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 19000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20000000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 95.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22700000,
+                    "Duration": 800000,
+                    "AccuracyScore": 58.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4025157e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50572103
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "la",
+                "Offset": 23600000,
+                "Duration": 900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "la",
+                    "Offset": 23600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 23600000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24100000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4025157e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50572103
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Grande-Bretagne",
+                "Offset": 24600000,
+                "Duration": 8100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 24600000,
+                    "Duration": 3900000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 28600000,
+                    "Duration": 3100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 31800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 77.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 24600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25200000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25700000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26200000,
+                    "Duration": 400000,
+                    "AccuracyScore": 53.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 99.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27400000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29200000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 77.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.4025157e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50572103
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Aux temps barbares, des Danois envahissent la Grande-Bretagne.",
+    "referenceText": "« Autant barbares, des Danois envahissent la Grande-Bretagne. »",
+    "words": [
+      {
+        "word": "Autant",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 80,
+        "durationMs": 410,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          81.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "Aux",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "barbares",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 500,
+        "durationMs": 730,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          63.0
+        ],
+        "examWord": "barbares",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "des",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1260,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          88.0
+        ],
+        "examWord": "des",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "Danois",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1480,
+        "durationMs": 410,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "Danois",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "envahissent",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1900,
+        "durationMs": 450,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          95.0,
+          100.0,
+          58.0
+        ],
+        "examWord": "envahissent",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "la",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2360,
+        "durationMs": 90,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "la",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "Grande-Bretagne",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 2460,
+        "durationMs": 810,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          53.0,
+          99.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          77.0
+        ],
+        "examWord": "Grande-Bretagne",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 24.125608,
+    "azureConfidence": 0.9282614,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 5.472,
+    "trimmedS": 3.34,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.18
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

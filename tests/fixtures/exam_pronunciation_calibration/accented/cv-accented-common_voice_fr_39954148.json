@@ -1,0 +1,964 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:02:02+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_39954148",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - Canadian French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_39954148.mp3",
+      "accents": "Québécois",
+      "age": "fifties",
+      "group": "quebec"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Le Moiré polaire se nomme Arctic Woodland Ringlet en anglais.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 6.12,
+    "trimmedS": 4.58,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.26,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Le moiré polaire se nomme Arctic Woodlands Ringlet en anglais.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        4.58
+      ],
+      "referenceText": "Le moiré polaire se nomme Arctic Woodlands Ringlet en anglais.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 800000,
+        "Duration": 44700000,
+        "DisplayText": "Le Moiré polaire se nomme Arctic Woodlands, Ringlet en anglais.",
+        "SNR": 27.15702,
+        "NBest": [
+          {
+            "Confidence": 0.890136,
+            "Lexical": "Le moiré polaire se nomme Arctic Woodlands Ringlet en anglais",
+            "ITN": "Le moiré polaire se nomme Arctic Woodlands Ringlet en anglais",
+            "MaskedITN": "le moiré polaire se nomme arctic woodlands ringlet en anglais",
+            "Display": "Le Moiré polaire se nomme Arctic Woodlands, Ringlet en anglais.",
+            "AccuracyScore": 87.0,
+            "FluencyScore": 96.0,
+            "CompletenessScore": 90.0,
+            "PronScore": 89.4,
+            "Words": [
+              {
+                "Word": "Le",
+                "Offset": 800000,
+                "Duration": 3500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 800000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 800000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 92.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5106554
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "moiré",
+                "Offset": 4400000,
+                "Duration": 4700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 4400000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 7400000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 45.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4400000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6400000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7400000,
+                    "Duration": 900000,
+                    "AccuracyScore": 69.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 16.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.271028e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5106554
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "polaire",
+                "Offset": 9200000,
+                "Duration": 6500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "po",
+                    "Offset": 9200000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 77.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "laire",
+                    "Offset": 11000000,
+                    "Duration": 4700000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 9200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 58.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12200000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 54.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.271028e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5106554
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "se",
+                "Offset": 15800000,
+                "Duration": 1700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "se",
+                    "Offset": 15800000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 15800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.271028e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5106554
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "nomme",
+                "Offset": 17600000,
+                "Duration": 3500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "nomme",
+                    "Offset": 17600000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 17600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 81.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.271028e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5106554
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Arctic",
+                "Offset": 21200000,
+                "Duration": 5900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 46.0,
+                "ErrorType": "Mispronunciation",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 21200000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 75.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 23600000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 33.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 21200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22000000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 63.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 6.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 34.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25800000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 51.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.271028e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5106554
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Woodlands",
+                "Offset": 27200000,
+                "Duration": 4100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 27200000,
+                    "Duration": 4100000,
+                    "AccuracyScore": 82.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 27200000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27600000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28500000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 36.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.271028e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5106554
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Ringlet",
+                "Offset": 32400000,
+                "Duration": 6100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 61.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 32400000,
+                    "Duration": 6100000,
+                    "AccuracyScore": 68.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 32400000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 54.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 61.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36400000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37300000,
+                    "Duration": 400000,
+                    "AccuracyScore": 54.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 34.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.32710284
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 1000000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5106554
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "en",
+                "Offset": 39600000,
+                "Duration": 2700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "en",
+                    "Offset": 39600000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 39600000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.32710284
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 1000000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5106554
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "anglais",
+                "Offset": 42400000,
+                "Duration": 3100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "an",
+                    "Offset": 42400000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "glais",
+                    "Offset": 43800000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 42400000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 44400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.271028e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5106554
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Le Moiré polaire se nomme Arctic Woodland Ringlet en anglais.",
+    "referenceText": "Le moiré polaire se nomme Arctic Woodlands Ringlet en anglais.",
+    "words": [
+      {
+        "word": "Le",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 80,
+        "durationMs": 350,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          92.0,
+          100.0
+        ],
+        "examWord": "Le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "moiré",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 440,
+        "durationMs": 470,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          69.0,
+          16.0
+        ],
+        "examWord": "Moiré",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "polaire",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 920,
+        "durationMs": 650,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          58.0,
+          100.0,
+          100.0,
+          100.0,
+          54.0
+        ],
+        "examWord": "polaire",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "se",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 1580,
+        "durationMs": 170,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0,
+          100.0
+        ],
+        "examWord": "se",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "nomme",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1760,
+        "durationMs": 350,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          81.0
+        ],
+        "examWord": "nomme",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "Arctic",
+        "accuracyScore": 46.0,
+        "errorType": "mispronounced",
+        "offsetMs": 2120,
+        "durationMs": 590,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          63.0,
+          6.0,
+          34.0,
+          51.0
+        ],
+        "examWord": "Arctic",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "Woodlands",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 2720,
+        "durationMs": 410,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          36.0
+        ],
+        "examWord": "Woodland",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "Ringlet",
+        "accuracyScore": 61.0,
+        "errorType": "correct",
+        "offsetMs": 3240,
+        "durationMs": 610,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          54.0,
+          61.0,
+          100.0,
+          100.0,
+          54.0,
+          34.0
+        ],
+        "examWord": "Ringlet",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "en",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3960,
+        "durationMs": 270,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0
+        ],
+        "examWord": "en",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "anglais",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 4240,
+        "durationMs": 310,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "anglais",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 27.15702,
+    "azureConfidence": 0.890136,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 6.12,
+    "trimmedS": 4.58,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.26
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

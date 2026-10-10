@@ -1,0 +1,968 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:01:48+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_37364314",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_37364314.mp3",
+      "accents": "Français de La Réunion",
+      "age": "twenties",
+      "group": "overseas"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Il est gardien pour les Växjö Lakers de l'Elitserien.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 5.976,
+    "trimmedS": 4.16,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.46,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Il est gardien pour les Vaxjoe, Lakers, de l'élite sérienne.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        4.16
+      ],
+      "referenceText": "Il est gardien pour les Vaxjoe, Lakers, de l'élite sérienne.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1100000,
+        "Duration": 40200000,
+        "DisplayText": "Il est gardien pour les Vaxjoe Lakers de l'élite sérienne.",
+        "SNR": 20.786812,
+        "NBest": [
+          {
+            "Confidence": 0.90655273,
+            "Lexical": "Il est gardien pour les Vaxjoe Lakers de l'élite sérienne",
+            "ITN": "Il est gardien pour les Vaxjoe Lakers de l'élite sérienne",
+            "MaskedITN": "il est gardien pour les vaxjoe lakers de l'élite sérienne",
+            "Display": "Il est gardien pour les Vaxjoe Lakers de l'élite sérienne.",
+            "AccuracyScore": 95.0,
+            "FluencyScore": 93.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 94.8,
+            "Words": [
+              {
+                "Word": "Il",
+                "Offset": 1100000,
+                "Duration": 2600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "il",
+                    "Offset": 1100000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1100000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 2900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5052003
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "est",
+                "Offset": 3800000,
+                "Duration": 800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "est",
+                    "Offset": 3800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 3800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.021448e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5052003
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "gardien",
+                "Offset": 4700000,
+                "Duration": 4500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "gar",
+                    "Offset": 4700000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dien",
+                    "Offset": 7100000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 52.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 96.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7900000,
+                    "Duration": 600000,
+                    "AccuracyScore": 2.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8600000,
+                    "Duration": 600000,
+                    "AccuracyScore": 53.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.021448e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5052003
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "pour",
+                "Offset": 9300000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pour",
+                    "Offset": 9300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 9300000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9700000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.021448e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5052003
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "les",
+                "Offset": 10700000,
+                "Duration": 1900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 80.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "les",
+                    "Offset": 10700000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 51.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 10700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 2.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.021448e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5052003
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Vaxjoe",
+                "Offset": 12700000,
+                "Duration": 6000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 12700000,
+                    "Duration": 3100000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 15900000,
+                    "Duration": 2800000,
+                    "AccuracyScore": 83.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16500000,
+                    "Duration": 2200000,
+                    "AccuracyScore": 79.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.021448e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5052003
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Lakers",
+                "Offset": 19300000,
+                "Duration": 7400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "la",
+                    "Offset": 19300000,
+                    "Duration": 3100000,
+                    "AccuracyScore": 70.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "kers",
+                    "Offset": 22500000,
+                    "Duration": 4200000,
+                    "AccuracyScore": 52.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 19300000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 68.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 75.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22500000,
+                    "Duration": 600000,
+                    "AccuracyScore": 40.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23200000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 70.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 21.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 47.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.20107244
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 500000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5052003
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "de",
+                "Offset": 29300000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "de",
+                    "Offset": 29300000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 29300000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 92.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 1.005362
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 2500000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5052003
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "l'élite",
+                "Offset": 31700000,
+                "Duration": 5900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "l'é",
+                    "Offset": 31700000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "lite",
+                    "Offset": 34700000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 31700000,
+                    "Duration": 2200000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.021448e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5052003
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "sérienne",
+                "Offset": 37700000,
+                "Duration": 3600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 37700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 63.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 38700000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 99.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 37700000,
+                    "Duration": 300000,
+                    "AccuracyScore": 61.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 64.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 40300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41100000,
+                    "Duration": 200000,
+                    "AccuracyScore": 93.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.021448e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5052003
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Il est gardien pour les Växjö Lakers de l'Elitserien.",
+    "referenceText": "Il est gardien pour les Vaxjoe, Lakers, de l'élite sérienne.",
+    "words": [
+      {
+        "word": "Il",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 110,
+        "durationMs": 260,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "Il",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "est",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 380,
+        "durationMs": 80,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0
+        ],
+        "examWord": "est",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "gardien",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 470,
+        "durationMs": 450,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          96.0,
+          2.0,
+          53.0
+        ],
+        "examWord": "gardien",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "pour",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 930,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "pour",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "les",
+        "accuracyScore": 80.0,
+        "errorType": "correct",
+        "offsetMs": 1070,
+        "durationMs": 190,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          2.0
+        ],
+        "examWord": "les",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "Vaxjoe",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 1270,
+        "durationMs": 600,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          82.0,
+          100.0,
+          100.0,
+          79.0
+        ],
+        "examWord": "Växjö",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "Lakers",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 1930,
+        "durationMs": 740,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          68.0,
+          75.0,
+          40.0,
+          70.0,
+          21.0,
+          47.0
+        ],
+        "examWord": "Lakers",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "de",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2930,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          92.0,
+          100.0
+        ],
+        "examWord": "de",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "l'élite",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3170,
+        "durationMs": 590,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "l'Elitserien",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "sérienne",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3770,
+        "durationMs": 360,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          61.0,
+          64.0,
+          100.0,
+          100.0,
+          100.0,
+          93.0
+        ],
+        "examWord": null,
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 20.786812,
+    "azureConfidence": 0.90655273,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 5.976,
+    "trimmedS": 4.16,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.46
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

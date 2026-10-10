@@ -1,0 +1,964 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:01:12+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-clear-common_voice_fr_35068182",
+    "set": "clear",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_35068182.mp3",
+      "accents": "Toulousain",
+      "age": "fourties"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Ce sont quelques-uns de ces actes, quelques-unes de ces aventures",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 5.94,
+    "trimmedS": 3.88,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.52,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Ce sont quelques-uns de ses actes, quelques-unes de ses aventures.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        3.88
+      ],
+      "referenceText": "Ce sont quelques-uns de ses actes, quelques-unes de ses aventures.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1000000,
+        "Duration": 37500000,
+        "DisplayText": "Ce sont quelques-uns de ses actes, quelques-unes de ses aventures.",
+        "SNR": 39.926033,
+        "NBest": [
+          {
+            "Confidence": 0.9138586,
+            "Lexical": "Ce sont quelques-uns de ses actes quelques-unes de ses aventures",
+            "ITN": "Ce sont quelques-uns de ses actes quelques-unes de ses aventures",
+            "MaskedITN": "ce sont quelques-uns de ses actes quelques-unes de ses aventures",
+            "Display": "Ce sont quelques-uns de ses actes, quelques-unes de ses aventures.",
+            "AccuracyScore": 96.0,
+            "FluencyScore": 99.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 97.4,
+            "Words": [
+              {
+                "Word": "Ce",
+                "Offset": 1000000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ce",
+                    "Offset": 1000000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1000000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3400000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50065047
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "sont",
+                "Offset": 4800000,
+                "Duration": 2500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "sont",
+                    "Offset": 4800000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4800000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6100000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7433153e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50065047
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "quelques-uns",
+                "Offset": 7400000,
+                "Duration": 5600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 7400000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 9400000,
+                    "Duration": 3600000,
+                    "AccuracyScore": 77.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 7400000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8400000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 49.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11200000,
+                    "Duration": 400000,
+                    "AccuracyScore": 35.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12400000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7433153e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50065047
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "de",
+                "Offset": 13100000,
+                "Duration": 1000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "de",
+                    "Offset": 13100000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 95.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 13100000,
+                    "Duration": 200000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7433153e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50065047
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "ses",
+                "Offset": 14200000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ses",
+                    "Offset": 14200000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 14200000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15300000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7433153e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50065047
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "actes",
+                "Offset": 16400000,
+                "Duration": 6300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "actes",
+                    "Offset": 16400000,
+                    "Duration": 6300000,
+                    "AccuracyScore": 17.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 16400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 17.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 8.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19200000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 23.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7433153e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50065047
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "quelques-unes",
+                "Offset": 23000000,
+                "Duration": 8100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 82.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 23000000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 26600000,
+                    "Duration": 4500000,
+                    "AccuracyScore": 70.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 23000000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 90.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 89.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 47.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28400000,
+                    "Duration": 300000,
+                    "AccuracyScore": 18.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 70.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.07486635
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.96256685
+                      },
+                      "BreakLength": 200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50065047
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "de",
+                "Offset": 31200000,
+                "Duration": 900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "de",
+                    "Offset": 31200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 31200000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7433153e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50065047
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "ses",
+                "Offset": 32200000,
+                "Duration": 1700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ses",
+                    "Offset": 32200000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 32200000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33100000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7433153e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50065047
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "aventures",
+                "Offset": 34000000,
+                "Duration": 4500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 34000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 35000000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 37200000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 84.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 34000000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34500000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35800000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37800000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38300000,
+                    "Duration": 200000,
+                    "AccuracyScore": 23.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7433153e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50065047
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Ce sont quelques-uns de ces actes, quelques-unes de ces aventures",
+    "referenceText": "Ce sont quelques-uns de ses actes, quelques-unes de ses aventures.",
+    "words": [
+      {
+        "word": "Ce",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 100,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "Ce",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "sont",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 480,
+        "durationMs": 250,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "sont",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "quelques-uns",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 740,
+        "durationMs": 560,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          49.0,
+          35.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "quelques-uns",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "de",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1310,
+        "durationMs": 100,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0,
+          100.0
+        ],
+        "examWord": "de",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "ses",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1420,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "ces",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "actes",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1640,
+        "durationMs": 630,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          0.0,
+          17.0,
+          8.0,
+          23.0
+        ],
+        "examWord": "actes",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "quelques-unes",
+        "accuracyScore": 82.0,
+        "errorType": "correct",
+        "offsetMs": 2300,
+        "durationMs": 810,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          90.0,
+          100.0,
+          100.0,
+          89.0,
+          47.0,
+          18.0,
+          70.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "quelques-unes",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "de",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3120,
+        "durationMs": 90,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "de",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "ses",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3220,
+        "durationMs": 170,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "ces",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "aventures",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 3400,
+        "durationMs": 450,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          23.0
+        ],
+        "examWord": "aventures",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 39.926033,
+    "azureConfidence": 0.9138586,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 5.94,
+    "trimmedS": 3.88,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.52
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

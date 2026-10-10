@@ -1,0 +1,1357 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:00:49+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-clear-common_voice_fr_32244664",
+    "set": "clear",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_32244664.mp3",
+      "accents": "Franche-Comté",
+      "age": "thirties"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Aujourd'hui, les Assemblées de Dieu sont la plus grande dénomination pentecôtiste dans le monde.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 6.156,
+    "trimmedS": 5.09,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.4,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Aujourd'hui les assemblées de Dieu sont la plus grande dénomination pentecôtiste dans le monde.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        5.09
+      ],
+      "referenceText": "Aujourd'hui les assemblées de Dieu sont la plus grande dénomination pentecôtiste dans le monde.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 4700000,
+        "Duration": 45900000,
+        "DisplayText": "Aujourd'hui, les assemblées de Dieu sont la plus grande dénomination pentecôtiste dans le monde.",
+        "SNR": 21.618597,
+        "NBest": [
+          {
+            "Confidence": 0.9302366,
+            "Lexical": "Aujourd'hui les assemblées de Dieu sont la plus grande dénomination pentecôtiste dans le monde",
+            "ITN": "Aujourd'hui les assemblées de Dieu sont la plus grande dénomination pentecôtiste dans le monde",
+            "MaskedITN": "aujourd'hui les assemblées de dieu sont la plus grande dénomination pentecôtiste dans le monde",
+            "Display": "Aujourd'hui, les assemblées de Dieu sont la plus grande dénomination pentecôtiste dans le monde.",
+            "AccuracyScore": 96.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 97.6,
+            "Words": [
+              {
+                "Word": "Aujourd'hui",
+                "Offset": 4700000,
+                "Duration": 7500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "au",
+                    "Offset": 4700000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 87.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "jour",
+                    "Offset": 6700000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "d'hui",
+                    "Offset": 8800000,
+                    "Duration": 3400000,
+                    "AccuracyScore": 85.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4700000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 87.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7500000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8800000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10500000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 70.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "les",
+                "Offset": 12500000,
+                "Duration": 2700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "les",
+                    "Offset": 12500000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12500000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13900000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.100436725
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.94978166
+                      },
+                      "BreakLength": 200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "assemblées",
+                "Offset": 15300000,
+                "Duration": 4500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "as",
+                    "Offset": 15300000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 8.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "sem",
+                    "Offset": 17300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 1.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "blées",
+                    "Offset": 18300000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 32.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 15300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 1.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 14.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17300000,
+                    "Duration": 300000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 1.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 71.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 13.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19500000,
+                    "Duration": 300000,
+                    "AccuracyScore": 0.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "de",
+                "Offset": 19900000,
+                "Duration": 1100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "de",
+                    "Offset": 19900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 19900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Dieu",
+                "Offset": 21100000,
+                "Duration": 2700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dieu",
+                    "Offset": 21100000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 21100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22500000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "sont",
+                "Offset": 23900000,
+                "Duration": 1200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "sont",
+                    "Offset": 23900000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 23900000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "la",
+                "Offset": 25200000,
+                "Duration": 800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "la",
+                    "Offset": 25200000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 25200000,
+                    "Duration": 200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "plus",
+                "Offset": 26100000,
+                "Duration": 1800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "plus",
+                    "Offset": 26100000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 26100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "grande",
+                "Offset": 28000000,
+                "Duration": 2800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "grande",
+                    "Offset": 28000000,
+                    "Duration": 2800000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 28000000,
+                    "Duration": 200000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "dénomination",
+                "Offset": 30900000,
+                "Duration": 7500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dé",
+                    "Offset": 30900000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 59.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "no",
+                    "Offset": 32300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 85.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mi",
+                    "Offset": 33700000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "na",
+                    "Offset": 35100000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 1.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tion",
+                    "Offset": 36500000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 59.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 30900000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31600000,
+                    "Duration": 600000,
+                    "AccuracyScore": 18.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32300000,
+                    "Duration": 600000,
+                    "AccuracyScore": 95.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 75.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 1.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34400000,
+                    "Duration": 600000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35800000,
+                    "Duration": 600000,
+                    "AccuracyScore": 2.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36500000,
+                    "Duration": 600000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 75.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 1.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "pentecôtiste",
+                "Offset": 38500000,
+                "Duration": 7800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 38500000,
+                    "Duration": 3900000,
+                    "AccuracyScore": 96.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 42500000,
+                    "Duration": 3800000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 38500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 83.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 40900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 44300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45300000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 68.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "dans",
+                "Offset": 46400000,
+                "Duration": 1400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dans",
+                    "Offset": 46400000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 46400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 47900000,
+                "Duration": 700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 47900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 47900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "monde",
+                "Offset": 48700000,
+                "Duration": 1900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "monde",
+                    "Offset": 48700000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 48700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 49500000,
+                    "Duration": 400000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 50000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.021834e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5167407
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Aujourd'hui, les Assemblées de Dieu sont la plus grande dénomination pentecôtiste dans le monde.",
+    "referenceText": "Aujourd'hui les assemblées de Dieu sont la plus grande dénomination pentecôtiste dans le monde.",
+    "words": [
+      {
+        "word": "Aujourd'hui",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 470,
+        "durationMs": 750,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          87.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          70.0
+        ],
+        "examWord": "Aujourd'hui",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "les",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1250,
+        "durationMs": 270,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "les",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "assemblées",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 1530,
+        "durationMs": 450,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          1.0,
+          14.0,
+          0.0,
+          1.0,
+          71.0,
+          13.0,
+          0.0
+        ],
+        "examWord": "Assemblées",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "de",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1990,
+        "durationMs": 110,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "de",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "Dieu",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2110,
+        "durationMs": 270,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "Dieu",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "sont",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2390,
+        "durationMs": 120,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "sont",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "la",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2520,
+        "durationMs": 80,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "la",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "plus",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2610,
+        "durationMs": 180,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "plus",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "grande",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 2800,
+        "durationMs": 280,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          94.0,
+          94.0,
+          94.0,
+          94.0,
+          94.0
+        ],
+        "examWord": "grande",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "dénomination",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 3090,
+        "durationMs": 750,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          18.0,
+          95.0,
+          75.0,
+          1.0,
+          0.0,
+          0.0,
+          2.0,
+          94.0,
+          75.0,
+          1.0
+        ],
+        "examWord": "dénomination",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "pentecôtiste",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 3850,
+        "durationMs": 780,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          83.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          68.0
+        ],
+        "examWord": "pentecôtiste",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "dans",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 4640,
+        "durationMs": 140,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "dans",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "le",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 4790,
+        "durationMs": 70,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "monde",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 4870,
+        "durationMs": 190,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          91.0,
+          91.0,
+          91.0
+        ],
+        "examWord": "monde",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 21.618597,
+    "azureConfidence": 0.9302366,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 6.156,
+    "trimmedS": 5.09,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.4
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

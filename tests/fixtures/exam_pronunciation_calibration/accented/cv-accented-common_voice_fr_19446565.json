@@ -1,0 +1,1156 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:01:45+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_19446565",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - French of France",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_19446565.mp3",
+      "accents": "Français de La Réunion",
+      "age": "fourties",
+      "group": "overseas"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Les appareils génitaux diffèrent notablement, comme pour les autres espèces vivantes.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 5.616,
+    "trimmedS": 4.97,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.34,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Les appareils géniteux diffèrent notablement, comme pour les autres espèces vivantes.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        4.97
+      ],
+      "referenceText": "Les appareils géniteux diffèrent notablement, comme pour les autres espèces vivantes.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 5400000,
+        "Duration": 44000000,
+        "DisplayText": "Les appareils géniteux diffèrent notablement, comme pour les autres espèces vivantes.",
+        "SNR": 27.40838,
+        "NBest": [
+          {
+            "Confidence": 0.93046635,
+            "Lexical": "Les appareils géniteux diffèrent notablement comme pour les autres espèces vivantes",
+            "ITN": "Les appareils géniteux diffèrent notablement comme pour les autres espèces vivantes",
+            "MaskedITN": "les appareils géniteux diffèrent notablement comme pour les autres espèces vivantes",
+            "Display": "Les appareils géniteux diffèrent notablement, comme pour les autres espèces vivantes.",
+            "AccuracyScore": 95.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 97.0,
+            "Words": [
+              {
+                "Word": "Les",
+                "Offset": 5400000,
+                "Duration": 2900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "les",
+                    "Offset": 5400000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 5400000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6900000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49971014
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "appareils",
+                "Offset": 8400000,
+                "Duration": 4200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ap",
+                    "Offset": 8400000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pa",
+                    "Offset": 10000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "reils",
+                    "Offset": 11000000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 8400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10000000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12200000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.783599e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49971014
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "géniteux",
+                "Offset": 12700000,
+                "Duration": 4700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 12700000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 13800000,
+                    "Duration": 3600000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12700000,
+                    "Duration": 400000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14400000,
+                    "Duration": 900000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16800000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.783599e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49971014
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "diffèrent",
+                "Offset": 17500000,
+                "Duration": 4900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 85.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dif",
+                    "Offset": 17500000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "fèrent",
+                    "Offset": 19500000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 17500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 71.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.783599e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49971014
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "notablement",
+                "Offset": 22500000,
+                "Duration": 8000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 85.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "no",
+                    "Offset": 22500000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 96.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ta",
+                    "Offset": 24300000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 36.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ble",
+                    "Offset": 26100000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 8.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ment",
+                    "Offset": 28800000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 23.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 22500000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23400000,
+                    "Duration": 800000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24300000,
+                    "Duration": 800000,
+                    "AccuracyScore": 69.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25200000,
+                    "Duration": 800000,
+                    "AccuracyScore": 2.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26100000,
+                    "Duration": 800000,
+                    "AccuracyScore": 22.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27000000,
+                    "Duration": 800000,
+                    "AccuracyScore": 1.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29700000,
+                    "Duration": 800000,
+                    "AccuracyScore": 46.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.783599e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49971014
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "comme",
+                "Offset": 30800000,
+                "Duration": 2500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "comme",
+                    "Offset": 30800000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 92.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 30800000,
+                    "Duration": 900000,
+                    "AccuracyScore": 78.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32400000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.09567203
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.952164
+                      },
+                      "BreakLength": 200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49971014
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "pour",
+                "Offset": 33400000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pour",
+                    "Offset": 33400000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 33400000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33800000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.783599e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49971014
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "les",
+                "Offset": 34800000,
+                "Duration": 1700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "les",
+                    "Offset": 34800000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 34800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35700000,
+                    "Duration": 800000,
+                    "AccuracyScore": 81.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.783599e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49971014
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "autres",
+                "Offset": 36600000,
+                "Duration": 3500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 36600000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 6.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 38400000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 1.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 36600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 1.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 13.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38400000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 4.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.783599e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49971014
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "espèces",
+                "Offset": 40200000,
+                "Duration": 3900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "es",
+                    "Offset": 40200000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pèces",
+                    "Offset": 42400000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 26.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 40200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 1.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42400000,
+                    "Duration": 600000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43100000,
+                    "Duration": 400000,
+                    "AccuracyScore": 75.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 17.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.783599e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49971014
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "vivantes",
+                "Offset": 44200000,
+                "Duration": 5200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vi",
+                    "Offset": 44200000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 78.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vantes",
+                    "Offset": 46400000,
+                    "Duration": 3000000,
+                    "AccuracyScore": 37.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 44200000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45300000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 57.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 46400000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 15.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 48500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.783599e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49971014
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Les appareils génitaux diffèrent notablement, comme pour les autres espèces vivantes.",
+    "referenceText": "Les appareils géniteux diffèrent notablement, comme pour les autres espèces vivantes.",
+    "words": [
+      {
+        "word": "Les",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 540,
+        "durationMs": 290,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "Les",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "appareils",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 840,
+        "durationMs": 420,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "appareils",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "géniteux",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1270,
+        "durationMs": 470,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "génitaux",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "diffèrent",
+        "accuracyScore": 85.0,
+        "errorType": "correct",
+        "offsetMs": 1750,
+        "durationMs": 490,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          71.0
+        ],
+        "examWord": "diffèrent",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "notablement",
+        "accuracyScore": 85.0,
+        "errorType": "correct",
+        "offsetMs": 2250,
+        "durationMs": 800,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          91.0,
+          69.0,
+          2.0,
+          22.0,
+          1.0,
+          0.0,
+          0.0,
+          46.0
+        ],
+        "examWord": "notablement",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "comme",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 3080,
+        "durationMs": 250,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          78.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "comme",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "pour",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3340,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "pour",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "les",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3480,
+        "durationMs": 170,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          81.0
+        ],
+        "examWord": "les",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "autres",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 3660,
+        "durationMs": 350,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          1.0,
+          13.0,
+          0.0,
+          4.0
+        ],
+        "examWord": "autres",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "espèces",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 4020,
+        "durationMs": 390,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          75.0,
+          17.0
+        ],
+        "examWord": "espèces",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "vivantes",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 4420,
+        "durationMs": 520,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          57.0,
+          0.0,
+          15.0,
+          100.0
+        ],
+        "examWord": "vivantes",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 27.40838,
+    "azureConfidence": 0.93046635,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 5.616,
+    "trimmedS": 4.97,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.34
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

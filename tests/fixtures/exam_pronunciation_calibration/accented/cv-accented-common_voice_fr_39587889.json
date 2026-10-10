@@ -1,0 +1,981 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:01:30+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_39587889",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 26.0 - Canadian French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_39587889.mp3",
+      "accents": "Français du Canada|Français Anglophone",
+      "age": "twenties",
+      "group": "learners"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Elle retrouve en Tom son premier mari tué à la guerre.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 4.284,
+    "trimmedS": 3.16,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.1,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Elle retrouve en temps son premier mari tué à la guerre.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        3.16
+      ],
+      "referenceText": "Elle retrouve en temps son premier mari tué à la guerre.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1300000,
+        "Duration": 30000000,
+        "DisplayText": "Elle retrouve en temps son premier mari tué à la guerre.",
+        "SNR": 30.403631,
+        "NBest": [
+          {
+            "Confidence": 0.8968547,
+            "Lexical": "Elle retrouve en temps son premier mari tué à la guerre",
+            "ITN": "Elle retrouve en temps son premier mari tué à la guerre",
+            "MaskedITN": "elle retrouve en temps son premier mari tué à la guerre",
+            "Display": "Elle retrouve en temps son premier mari tué à la guerre.",
+            "AccuracyScore": 93.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 91.0,
+            "PronScore": 93.2,
+            "Words": [
+              {
+                "Word": "Elle",
+                "Offset": 1300000,
+                "Duration": 1900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "elle",
+                    "Offset": 1300000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1300000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 2900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5155553
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "retrouve",
+                "Offset": 3300000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 3300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 4700000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 5900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 3300000,
+                    "Duration": 600000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 4000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 4700000,
+                    "Duration": 300000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5100000,
+                    "Duration": 200000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5400000,
+                    "Duration": 400000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5900000,
+                    "Duration": 500000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3156146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5155553
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "en",
+                "Offset": 7100000,
+                "Duration": 1200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "en",
+                    "Offset": 7100000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 7100000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3156146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5155553
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "temps",
+                "Offset": 8400000,
+                "Duration": 4000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 51.0,
+                "ErrorType": "Mispronunciation",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "temps",
+                    "Offset": 8400000,
+                    "Duration": 4000000,
+                    "AccuracyScore": 72.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 8400000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10500000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 42.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3156146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5155553
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "son",
+                "Offset": 12500000,
+                "Duration": 2400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "son",
+                    "Offset": 12500000,
+                    "Duration": 2400000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12500000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 81.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3156146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5155553
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "premier",
+                "Offset": 15000000,
+                "Duration": 3600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pre",
+                    "Offset": 15000000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mier",
+                    "Offset": 16700000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 15000000,
+                    "Duration": 400000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16300000,
+                    "Duration": 300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17400000,
+                    "Duration": 400000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3156146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5155553
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "mari",
+                "Offset": 18700000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ma",
+                    "Offset": 18700000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ri",
+                    "Offset": 20300000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 18700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21300000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 78.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3156146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5155553
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "tué",
+                "Offset": 22500000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tu",
+                    "Offset": 22500000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 85.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "é",
+                    "Offset": 24600000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 22500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 73.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23700000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24600000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3156146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5155553
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "à",
+                "Offset": 26300000,
+                "Duration": 700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "à",
+                    "Offset": 26300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 26300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3156146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5155553
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "la",
+                "Offset": 27100000,
+                "Duration": 1500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "la",
+                    "Offset": 27100000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 27100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3156146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5155553
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "guerre",
+                "Offset": 28700000,
+                "Duration": 2600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "guerre",
+                    "Offset": 28700000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 28700000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30900000,
+                    "Duration": 400000,
+                    "AccuracyScore": 66.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.3156146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5155553
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Elle retrouve en Tom son premier mari tué à la guerre.",
+    "referenceText": "Elle retrouve en temps son premier mari tué à la guerre.",
+    "words": [
+      {
+        "word": "Elle",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 130,
+        "durationMs": 190,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "Elle",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "retrouve",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 330,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          94.0,
+          94.0,
+          94.0,
+          94.0,
+          94.0,
+          94.0,
+          94.0
+        ],
+        "examWord": "retrouve",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "en",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 710,
+        "durationMs": 120,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0
+        ],
+        "examWord": "en",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "temps",
+        "accuracyScore": 51.0,
+        "errorType": "mispronounced",
+        "offsetMs": 840,
+        "durationMs": 400,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          42.0
+        ],
+        "examWord": "Tom",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "son",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1250,
+        "durationMs": 240,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          81.0
+        ],
+        "examWord": "son",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "premier",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1500,
+        "durationMs": 360,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "premier",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "mari",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 1870,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          78.0
+        ],
+        "examWord": "mari",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "tué",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2250,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          73.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "tué",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "à",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2630,
+        "durationMs": 70,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0
+        ],
+        "examWord": "à",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "la",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2710,
+        "durationMs": 150,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "la",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "guerre",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2870,
+        "durationMs": 260,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          66.0
+        ],
+        "examWord": "guerre",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 30.403631,
+    "azureConfidence": 0.8968547,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 4.284,
+    "trimmedS": 3.16,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.1
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

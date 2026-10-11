@@ -14,7 +14,7 @@ import os
 from typing import Any
 
 GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b").strip()
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash").strip()
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash").strip()
 # "" when GROQ_MODEL is a non-reasoning model, which would reject the parameter.
 GROQ_REASONING_EFFORT = os.getenv("GROQ_REASONING_EFFORT", "low").strip()
 GROQ_REASONING_TOKEN_RESERVE = int(os.getenv("GROQ_REASONING_TOKEN_RESERVE", "512"))

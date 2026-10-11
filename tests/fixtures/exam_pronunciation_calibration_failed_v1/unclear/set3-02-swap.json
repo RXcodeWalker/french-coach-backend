@@ -1,0 +1,437 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-11T11:10:46+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "set3-02-swap",
+    "set": "unclear",
+    "reading": "swap",
+    "source": {
+      "corpus": "owner-recorded-set3",
+      "line": "02",
+      "instruction": "say “vous” as “vu”"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Vous aimez le chocolat ?",
+    "expectedReported": [
+      "vous"
+    ],
+    "knownMisreadings": [],
+    "rawS": 2.816,
+    "trimmedS": 2.06,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.4,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Vous aimez le chocolat ?",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        2.06
+      ],
+      "referenceText": "Vous aimez le chocolat ?",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 6300000,
+        "Duration": 14000000,
+        "DisplayText": "Vous aimez le chocolat ?",
+        "SNR": 19.35439,
+        "NBest": [
+          {
+            "Confidence": 0.90845335,
+            "Lexical": "Vous aimez le chocolat",
+            "ITN": "Vous aimez le chocolat",
+            "MaskedITN": "vous aimez le chocolat ",
+            "Display": "Vous aimez le chocolat ?",
+            "AccuracyScore": 98.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 98.8,
+            "Words": [
+              {
+                "Word": "Vous",
+                "Offset": 6300000,
+                "Duration": 3200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vous",
+                    "Offset": 6300000,
+                    "Duration": 3200000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 6300000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8500000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49871287
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "aimez",
+                "Offset": 9600000,
+                "Duration": 3400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ai",
+                    "Offset": 9600000,
+                    "Duration": 2200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mez",
+                    "Offset": 11900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 9600000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12700000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.964539e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49871287
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 13100000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 13100000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 13100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13800000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.964539e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49871287
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "chocolat",
+                "Offset": 14500000,
+                "Duration": 5800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "cho",
+                    "Offset": 14500000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "co",
+                    "Offset": 16500000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 49.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "lat",
+                    "Offset": 18500000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 34.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 14500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 98.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19500000,
+                    "Duration": 800000,
+                    "AccuracyScore": 72.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.964539e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49871287
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Vous aimez le chocolat ?",
+    "referenceText": "Vous aimez le chocolat ?",
+    "words": [
+      {
+        "word": "Vous",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 630,
+        "durationMs": 320,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "Vous",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "aimez",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 960,
+        "durationMs": 340,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "aimez",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "le",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1310,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "chocolat",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1450,
+        "durationMs": 580,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          98.0,
+          0.0,
+          0.0,
+          72.0
+        ],
+        "examWord": "chocolat",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 19.35439,
+    "azureConfidence": 0.90845335,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 2.816,
+    "trimmedS": 2.06,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.4
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

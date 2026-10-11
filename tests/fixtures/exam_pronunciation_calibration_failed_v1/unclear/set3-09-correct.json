@@ -1,0 +1,479 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-11T11:11:14+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "set3-09-correct",
+    "set": "unclear",
+    "reading": "correct",
+    "source": {
+      "corpus": "owner-recorded-set3",
+      "line": "09",
+      "instruction": "read normally"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Il boit du vin blanc.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 2.773,
+    "trimmedS": 1.98,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.14,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Il boit du vin blanc.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        1.98
+      ],
+      "referenceText": "Il boit du vin blanc.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 900000,
+        "Duration": 18100000,
+        "DisplayText": "Il boit du vin blanc.",
+        "SNR": 17.90526,
+        "NBest": [
+          {
+            "Confidence": 0.89866847,
+            "Lexical": "Il boit du vin blanc",
+            "ITN": "Il boit du vin blanc",
+            "MaskedITN": "il boit du vin blanc",
+            "Display": "Il boit du vin blanc.",
+            "AccuracyScore": 95.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 97.0,
+            "Words": [
+              {
+                "Word": "Il",
+                "Offset": 900000,
+                "Duration": 3000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "il",
+                    "Offset": 900000,
+                    "Duration": 3000000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 900000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3100000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5016419
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "boit",
+                "Offset": 4000000,
+                "Duration": 5800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "boit",
+                    "Offset": 4000000,
+                    "Duration": 5800000,
+                    "AccuracyScore": 54.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4000000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6000000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 57.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8000000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 1.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 2.7472527e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5016419
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "du",
+                "Offset": 9900000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "du",
+                    "Offset": 9900000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 9900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 2.7472527e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5016419
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "vin",
+                "Offset": 12100000,
+                "Duration": 2800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vin",
+                    "Offset": 12100000,
+                    "Duration": 2800000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12700000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14100000,
+                    "Duration": 800000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 2.7472527e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5016419
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "blanc",
+                "Offset": 15000000,
+                "Duration": 4000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 82.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "blanc",
+                    "Offset": 15000000,
+                    "Duration": 4000000,
+                    "AccuracyScore": 86.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 15000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17300000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 68.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 2.7472527e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5016419
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Il boit du vin blanc.",
+    "referenceText": "Il boit du vin blanc.",
+    "words": [
+      {
+        "word": "Il",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 90,
+        "durationMs": 300,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "Il",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "boit",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 400,
+        "durationMs": 580,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          57.0,
+          1.0
+        ],
+        "examWord": "boit",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "du",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 990,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "du",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "vin",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1210,
+        "durationMs": 280,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "vin",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "blanc",
+        "accuracyScore": 82.0,
+        "errorType": "correct",
+        "offsetMs": 1500,
+        "durationMs": 400,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          68.0
+        ],
+        "examWord": "blanc",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 17.90526,
+    "azureConfidence": 0.89866847,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 2.773,
+    "trimmedS": 1.98,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.14
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

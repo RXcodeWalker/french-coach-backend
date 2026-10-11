@@ -1,0 +1,484 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:39:02+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_23380823",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 27.0 - French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_23380823.mp3",
+      "accents": "Français des États-Unis",
+      "age": "twenties",
+      "group": "english"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Il est enterré à Thionne.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 2.64,
+    "trimmedS": 1.56,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.14,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Il est enterré à Thion.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        1.56
+      ],
+      "referenceText": "Il est enterré à Thion.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 800000,
+        "Duration": 14500000,
+        "DisplayText": "Il est enterré à Thion.",
+        "SNR": 29.098877,
+        "NBest": [
+          {
+            "Confidence": 0.8691774,
+            "Lexical": "Il est enterré à Thion",
+            "ITN": "Il est enterré à Thion",
+            "MaskedITN": "il est enterré à thion",
+            "Display": "Il est enterré à Thion.",
+            "AccuracyScore": 96.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 97.6,
+            "Words": [
+              {
+                "Word": "Il",
+                "Offset": 800000,
+                "Duration": 2700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "il",
+                    "Offset": 800000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 800000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50085884
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "est",
+                "Offset": 3600000,
+                "Duration": 900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "est",
+                    "Offset": 3600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 3600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.7945203e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50085884
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "enterré",
+                "Offset": 4600000,
+                "Duration": 5100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "en",
+                    "Offset": 4600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 70.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ter",
+                    "Offset": 5600000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 92.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ré",
+                    "Offset": 7200000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 70.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 87.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6600000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8400000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.7945203e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50085884
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "à",
+                "Offset": 9800000,
+                "Duration": 1100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "à",
+                    "Offset": 9800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 9800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.7945203e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50085884
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Thion",
+                "Offset": 11000000,
+                "Duration": 4300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 11000000,
+                    "Duration": 4300000,
+                    "AccuracyScore": 49.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 11000000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 65.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 41.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13900000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 39.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15000000,
+                    "Duration": 300000,
+                    "AccuracyScore": 17.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.7945203e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50085884
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Il est enterré à Thionne.",
+    "referenceText": "Il est enterré à Thion.",
+    "words": [
+      {
+        "word": "Il",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 80,
+        "durationMs": 270,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "Il",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "est",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 360,
+        "durationMs": 90,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0
+        ],
+        "examWord": "est",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "enterré",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 460,
+        "durationMs": 510,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          70.0,
+          87.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "enterré",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "à",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 980,
+        "durationMs": 110,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0
+        ],
+        "examWord": "à",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "Thion",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 1100,
+        "durationMs": 430,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          65.0,
+          41.0,
+          39.0,
+          17.0
+        ],
+        "examWord": "Thionne",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 29.098877,
+    "azureConfidence": 0.8691774,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 2.64,
+    "trimmedS": 1.56,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.14
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

@@ -1,0 +1,868 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:39:10+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_20286767",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 27.0 - French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_20286767.mp3",
+      "accents": "Français de Roumanie",
+      "age": "thirties",
+      "group": "other"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Elle n'est pas encore apparue dans le dessin animé.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 4.224,
+    "trimmedS": 3.44,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.26,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Elle n'est pas encore apparue dans le dessin animé.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        3.44
+      ],
+      "referenceText": "Elle n'est pas encore apparue dans le dessin animé.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 6200000,
+        "Duration": 26100000,
+        "DisplayText": "Elle n'est pas encore apparue dans le dessin animé.",
+        "SNR": 27.810022,
+        "NBest": [
+          {
+            "Confidence": 0.9111466,
+            "Lexical": "Elle n'est pas encore apparue dans le dessin animé",
+            "ITN": "Elle n'est pas encore apparue dans le dessin animé",
+            "MaskedITN": "elle n'est pas encore apparue dans le dessin animé",
+            "Display": "Elle n'est pas encore apparue dans le dessin animé.",
+            "AccuracyScore": 98.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 98.8,
+            "Words": [
+              {
+                "Word": "Elle",
+                "Offset": 6200000,
+                "Duration": 3200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 6200000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 90.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 8600000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 6200000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 90.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8600000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9100000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49251208
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "n'est",
+                "Offset": 9500000,
+                "Duration": 1200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "n'est",
+                    "Offset": 9500000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 73.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 9500000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 41.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 6.1068704e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.99999994
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49251208
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "pas",
+                "Offset": 10800000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pas",
+                    "Offset": 10800000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 10800000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 6.1068704e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.99999994
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49251208
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "encore",
+                "Offset": 12200000,
+                "Duration": 3300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "en",
+                    "Offset": 12200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "core",
+                    "Offset": 13400000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13400000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14300000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 6.1068704e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.99999994
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49251208
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "apparue",
+                "Offset": 15600000,
+                "Duration": 4500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ap",
+                    "Offset": 15600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pa",
+                    "Offset": 16400000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "rue",
+                    "Offset": 17600000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 15600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17200000,
+                    "Duration": 300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18600000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 6.1068704e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.99999994
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49251208
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "dans",
+                "Offset": 20200000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dans",
+                    "Offset": 20200000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 20200000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21300000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 6.1068704e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.99999994
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49251208
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 22400000,
+                "Duration": 1500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 22400000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 22400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 6.1068704e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.99999994
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49251208
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "dessin",
+                "Offset": 24000000,
+                "Duration": 4100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "des",
+                    "Offset": 24000000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 54.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "sin",
+                    "Offset": 26200000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 96.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 24000000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25100000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 8.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27200000,
+                    "Duration": 900000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 6.1068704e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.99999994
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49251208
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "animé",
+                "Offset": 28200000,
+                "Duration": 4100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "a",
+                    "Offset": 28200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ni",
+                    "Offset": 28800000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mé",
+                    "Offset": 30200000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 28200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30800000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 6.1068704e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.99999994
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49251208
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Elle n'est pas encore apparue dans le dessin animé.",
+    "referenceText": "Elle n'est pas encore apparue dans le dessin animé.",
+    "words": [
+      {
+        "word": "Elle",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 620,
+        "durationMs": 320,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          90.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "Elle",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "n'est",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 950,
+        "durationMs": 120,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          41.0
+        ],
+        "examWord": "n'est",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "pas",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1080,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "pas",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "encore",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1220,
+        "durationMs": 330,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "encore",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "apparue",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1560,
+        "durationMs": 450,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "apparue",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "dans",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 2020,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          94.0,
+          94.0
+        ],
+        "examWord": "dans",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "le",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2240,
+        "durationMs": 150,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "dessin",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2400,
+        "durationMs": 410,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          8.0,
+          100.0,
+          91.0
+        ],
+        "examWord": "dessin",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "animé",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 2820,
+        "durationMs": 410,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "animé",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 27.810022,
+    "azureConfidence": 0.9111466,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 4.224,
+    "trimmedS": 3.44,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.26
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

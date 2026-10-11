@@ -1,0 +1,1243 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:38:45+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_23498182",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 27.0 - French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_23498182.mp3",
+      "accents": "Français du Royaume-Uni",
+      "age": "twenties",
+      "group": "english"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Les champs géothermiques sont associés avec un volcanisme rhyolitique jeune et actif.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 8.725,
+    "trimmedS": 6.98,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.44,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Les champs géothermiques sont associés avec un volcanisme réolithique jeune et actif.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        6.98
+      ],
+      "referenceText": "Les champs géothermiques sont associés avec un volcanisme réolithique jeune et actif.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 4000000,
+        "Duration": 65500000,
+        "DisplayText": "Les champs géothermiques sont associés avec un volcanisme réolithique jeune et actif.",
+        "SNR": 19.479782,
+        "NBest": [
+          {
+            "Confidence": 0.9196632,
+            "Lexical": "Les champs géothermiques sont associés avec un volcanisme réolithique jeune et actif",
+            "ITN": "Les champs géothermiques sont associés avec un volcanisme réolithique jeune et actif",
+            "MaskedITN": "les champs géothermiques sont associés avec un volcanisme réolithique jeune et actif",
+            "Display": "Les champs géothermiques sont associés avec un volcanisme réolithique jeune et actif.",
+            "AccuracyScore": 91.0,
+            "FluencyScore": 97.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 94.0,
+            "Words": [
+              {
+                "Word": "Les",
+                "Offset": 4000000,
+                "Duration": 3600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "les",
+                    "Offset": 4000000,
+                    "Duration": 3600000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4000000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5900000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 82.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "champs",
+                "Offset": 7700000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "champs",
+                    "Offset": 7700000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 7700000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9600000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 81.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7854893e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "géothermiques",
+                "Offset": 12100000,
+                "Duration": 10300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 76.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 12100000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 55.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 14500000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 17300000,
+                    "Duration": 5100000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 24.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 51.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 96.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18100000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20700000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 83.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.22712938
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 600000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "sont",
+                "Offset": 22700000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "sont",
+                    "Offset": 22700000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 22700000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24600000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 81.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.07570982
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.9621451
+                      },
+                      "BreakLength": 200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "associés",
+                "Offset": 26500000,
+                "Duration": 7900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "as",
+                    "Offset": 26500000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 50.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "so",
+                    "Offset": 28100000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 33.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ciés",
+                    "Offset": 30300000,
+                    "Duration": 4100000,
+                    "AccuracyScore": 31.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 26500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 1.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 59.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 2.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 44.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32100000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 39.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7854893e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "avec",
+                "Offset": 34700000,
+                "Duration": 3300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "a",
+                    "Offset": 34700000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vec",
+                    "Offset": 36500000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 34700000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37100000,
+                    "Duration": 400000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37600000,
+                    "Duration": 400000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.07570982
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.9621451
+                      },
+                      "BreakLength": 200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "un",
+                "Offset": 38100000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 80.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "un",
+                    "Offset": 38100000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 80.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 38100000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 80.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7854893e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "volcanisme",
+                "Offset": 39500000,
+                "Duration": 8500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 39500000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 41500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 42700000,
+                    "Duration": 5300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 39500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 40100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 40700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43300000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 44500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45300000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7854893e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "réolithique",
+                "Offset": 49300000,
+                "Duration": 9300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 49300000,
+                    "Duration": 2400000,
+                    "AccuracyScore": 93.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 51800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 52600000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 96.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 54500000,
+                    "Duration": 4100000,
+                    "AccuracyScore": 76.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 49300000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 90.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 51100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 51800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 52600000,
+                    "Duration": 600000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 53300000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 54500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 55100000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 56700000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 50.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.45425874
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 1200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "jeune",
+                "Offset": 58700000,
+                "Duration": 3900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 76.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "jeune",
+                    "Offset": 58700000,
+                    "Duration": 3900000,
+                    "AccuracyScore": 87.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 58700000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 84.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 60300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 61700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 90.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 62400000,
+                    "Duration": 200000,
+                    "AccuracyScore": 30.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7854893e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "et",
+                "Offset": 62700000,
+                "Duration": 2200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 62700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 63700000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 62700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 63700000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 64100000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7854893e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "actif",
+                "Offset": 65000000,
+                "Duration": 4500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ac",
+                    "Offset": 65000000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tif",
+                    "Offset": 66900000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 62.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 65000000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 65900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 66900000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 68000000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 41.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 69300000,
+                    "Duration": 200000,
+                    "AccuracyScore": 10.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7854893e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5133242
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Les champs géothermiques sont associés avec un volcanisme rhyolitique jeune et actif.",
+    "referenceText": "Les champs géothermiques sont associés avec un volcanisme réolithique jeune et actif.",
+    "words": [
+      {
+        "word": "Les",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 400,
+        "durationMs": 360,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          82.0
+        ],
+        "examWord": "Les",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "champs",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 770,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          81.0
+        ],
+        "examWord": "champs",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "géothermiques",
+        "accuracyScore": 76.0,
+        "errorType": "correct",
+        "offsetMs": 1210,
+        "durationMs": 1030,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          24.0,
+          51.0,
+          96.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          83.0
+        ],
+        "examWord": "géothermiques",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "sont",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 2270,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          81.0
+        ],
+        "examWord": "sont",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "associés",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 2650,
+        "durationMs": 790,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          0.0,
+          80.0,
+          1.0,
+          59.0,
+          2.0,
+          44.0,
+          39.0
+        ],
+        "examWord": "associés",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "avec",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3470,
+        "durationMs": 330,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "avec",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "un",
+        "accuracyScore": 80.0,
+        "errorType": "correct",
+        "offsetMs": 3810,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0
+        ],
+        "examWord": "un",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "volcanisme",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 3950,
+        "durationMs": 850,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "volcanisme",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "réolithique",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 4930,
+        "durationMs": 930,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          90.0,
+          100.0,
+          100.0,
+          88.0,
+          100.0,
+          100.0,
+          100.0,
+          50.0
+        ],
+        "examWord": "rhyolitique",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "jeune",
+        "accuracyScore": 76.0,
+        "errorType": "correct",
+        "offsetMs": 5870,
+        "durationMs": 390,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          84.0,
+          100.0,
+          90.0,
+          30.0
+        ],
+        "examWord": "jeune",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "et",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 6270,
+        "durationMs": 220,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "et",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "actif",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 6500,
+        "durationMs": 450,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          41.0,
+          10.0
+        ],
+        "examWord": "actif",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 19.479782,
+    "azureConfidence": 0.9196632,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 8.725,
+    "trimmedS": 6.98,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.44
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

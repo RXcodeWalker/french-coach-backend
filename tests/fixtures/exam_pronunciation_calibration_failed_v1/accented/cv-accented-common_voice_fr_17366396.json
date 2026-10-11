@@ -1,0 +1,572 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:39:21+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_17366396",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 27.0 - French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_17366396.mp3",
+      "accents": "Français des Pays-Bas",
+      "age": "fourties",
+      "group": "other"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "il viendra probablement plus tard.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 3.816,
+    "trimmedS": 2.28,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.14,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Il viendra probablement plus tard.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        2.28
+      ],
+      "referenceText": "Il viendra probablement plus tard.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1000000,
+        "Duration": 21500000,
+        "DisplayText": "Il viendra probablement plus tard.",
+        "SNR": 27.86151,
+        "NBest": [
+          {
+            "Confidence": 0.9141857,
+            "Lexical": "Il viendra probablement plus tard",
+            "ITN": "Il viendra probablement plus tard",
+            "MaskedITN": "il viendra probablement plus tard",
+            "Display": "Il viendra probablement plus tard.",
+            "AccuracyScore": 96.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 97.6,
+            "Words": [
+              {
+                "Word": "Il",
+                "Offset": 1000000,
+                "Duration": 2700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "il",
+                    "Offset": 1000000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1000000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50755626
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "viendra",
+                "Offset": 3800000,
+                "Duration": 4300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "vien",
+                    "Offset": 3800000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dra",
+                    "Offset": 5500000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 3800000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 4500000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5000000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5500000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.1666667e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50755626
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "probablement",
+                "Offset": 8200000,
+                "Duration": 6700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pro",
+                    "Offset": 8200000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ba",
+                    "Offset": 10300000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 42.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ble",
+                    "Offset": 11700000,
+                    "Duration": 2000000,
+                    "AccuracyScore": 11.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ment",
+                    "Offset": 13800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 2.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 8200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8900000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9600000,
+                    "Duration": 600000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10300000,
+                    "Duration": 600000,
+                    "AccuracyScore": 33.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11000000,
+                    "Duration": 600000,
+                    "AccuracyScore": 50.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11700000,
+                    "Duration": 600000,
+                    "AccuracyScore": 29.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12400000,
+                    "Duration": 600000,
+                    "AccuracyScore": 4.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14400000,
+                    "Duration": 500000,
+                    "AccuracyScore": 5.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.1666667e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50755626
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "plus",
+                "Offset": 15000000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "plus",
+                    "Offset": 15000000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 15000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.1666667e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50755626
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "tard",
+                "Offset": 17400000,
+                "Duration": 5100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tard",
+                    "Offset": 17400000,
+                    "Duration": 5100000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 17400000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18200000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20600000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 74.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.1666667e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50755626
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "il viendra probablement plus tard.",
+    "referenceText": "Il viendra probablement plus tard.",
+    "words": [
+      {
+        "word": "Il",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 100,
+        "durationMs": 270,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "il",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "viendra",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 380,
+        "durationMs": 430,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "viendra",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "probablement",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 820,
+        "durationMs": 670,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          82.0,
+          33.0,
+          50.0,
+          29.0,
+          4.0,
+          0.0,
+          0.0,
+          5.0
+        ],
+        "examWord": "probablement",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "plus",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1500,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0,
+          97.0
+        ],
+        "examWord": "plus",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "tard",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 1740,
+        "durationMs": 510,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          74.0
+        ],
+        "examWord": "tard",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 27.86151,
+    "azureConfidence": 0.9141857,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 3.816,
+    "trimmedS": 2.28,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.14
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

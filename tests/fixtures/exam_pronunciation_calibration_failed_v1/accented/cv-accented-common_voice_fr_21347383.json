@@ -1,0 +1,1081 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:38:35+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_21347383",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 27.0 - French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_21347383.mp3",
+      "accents": "Français du Royaume-Uni",
+      "age": "thirties",
+      "group": "english"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Il est le beau-père d'Étienne Marcel, prévôt des marchands de Paris.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 6.216,
+    "trimmedS": 4.78,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.32,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Il est le beau-père d'Étienne Marcelle, prévôt des marchands de Paris.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        4.78
+      ],
+      "referenceText": "Il est le beau-père d'Étienne Marcelle, prévôt des marchands de Paris.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 600000,
+        "Duration": 46900000,
+        "DisplayText": "Il est le beau-père d'Étienne Marcelle, prévôt des marchands de Paris.",
+        "SNR": 35.93047,
+        "NBest": [
+          {
+            "Confidence": 0.9114636,
+            "Lexical": "Il est le beau-père d'Étienne Marcelle prévôt des marchands de Paris",
+            "ITN": "Il est le beau-père d'Étienne Marcelle prévôt des marchands de Paris",
+            "MaskedITN": "il est le beau-père d'étienne marcelle prévôt des marchands de paris",
+            "Display": "Il est le beau-père d'Étienne Marcelle, prévôt des marchands de Paris.",
+            "AccuracyScore": 89.0,
+            "FluencyScore": 97.0,
+            "CompletenessScore": 91.0,
+            "PronScore": 91.0,
+            "Words": [
+              {
+                "Word": "Il",
+                "Offset": 600000,
+                "Duration": 3200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "il",
+                    "Offset": 600000,
+                    "Duration": 3200000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 600000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3000000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48977566
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "est",
+                "Offset": 3900000,
+                "Duration": 900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "est",
+                    "Offset": 3900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 3900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.930131e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48977566
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 4900000,
+                "Duration": 1600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 4900000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.930131e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48977566
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "beau-père",
+                "Offset": 6600000,
+                "Duration": 5300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 6600000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 8800000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 11200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 81.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 6600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7400000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9600000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11200000,
+                    "Duration": 300000,
+                    "AccuracyScore": 77.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11600000,
+                    "Duration": 300000,
+                    "AccuracyScore": 85.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.930131e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48977566
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "d'Étienne",
+                "Offset": 12000000,
+                "Duration": 6600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 12000000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 92.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 14000000,
+                    "Duration": 4600000,
+                    "AccuracyScore": 85.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16000000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 60.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.930131e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48977566
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Marcelle",
+                "Offset": 18700000,
+                "Duration": 9200000,
+                "Confidence": 0.0,
+                "AccuracyScore": 85.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 18700000,
+                    "Duration": 3800000,
+                    "AccuracyScore": 64.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 22600000,
+                    "Duration": 5300000,
+                    "AccuracyScore": 80.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 18700000,
+                    "Duration": 2200000,
+                    "AccuracyScore": 63.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 75.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21600000,
+                    "Duration": 900000,
+                    "AccuracyScore": 59.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23400000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24800000,
+                    "Duration": 3100000,
+                    "AccuracyScore": 66.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.930131e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48977566
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "prévôt",
+                "Offset": 29200000,
+                "Duration": 6300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 29200000,
+                    "Duration": 3400000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 32700000,
+                    "Duration": 2800000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 29200000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 32700000,
+                    "Duration": 800000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34800000,
+                    "Duration": 700000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.47161576
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 1200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48977566
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "des",
+                "Offset": 35600000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "des",
+                    "Offset": 35600000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 42.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 35600000,
+                    "Duration": 300000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 20.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.930131e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48977566
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "marchands",
+                "Offset": 37000000,
+                "Duration": 4900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 30.0,
+                "ErrorType": "Mispronunciation",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mar",
+                    "Offset": 37000000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "chands",
+                    "Offset": 40000000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 18.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 37000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 39000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 39.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 40000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 36.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 41000000,
+                    "Duration": 900000,
+                    "AccuracyScore": 0.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.930131e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48977566
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "de",
+                "Offset": 42000000,
+                "Duration": 1400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "de",
+                    "Offset": 42000000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 93.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 42000000,
+                    "Duration": 500000,
+                    "AccuracyScore": 82.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42600000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43000000,
+                    "Duration": 400000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.930131e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48977566
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Paris",
+                "Offset": 43500000,
+                "Duration": 4000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pa",
+                    "Offset": 43500000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ris",
+                    "Offset": 44800000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 43500000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 44200000,
+                    "Duration": 500000,
+                    "AccuracyScore": 86.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 44800000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 46400000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.930131e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [
+                        "Monotone"
+                      ],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48977566
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Il est le beau-père d'Étienne Marcel, prévôt des marchands de Paris.",
+    "referenceText": "Il est le beau-père d'Étienne Marcelle, prévôt des marchands de Paris.",
+    "words": [
+      {
+        "word": "Il",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 60,
+        "durationMs": 320,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "Il",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "est",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 390,
+        "durationMs": 90,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0
+        ],
+        "examWord": "est",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "le",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 490,
+        "durationMs": 160,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "beau-père",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 660,
+        "durationMs": 530,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          77.0,
+          85.0
+        ],
+        "examWord": "beau-père",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "d'Étienne",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 1200,
+        "durationMs": 660,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0,
+          100.0,
+          100.0,
+          100.0,
+          80.0,
+          60.0
+        ],
+        "examWord": "d'Étienne",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "Marcelle",
+        "accuracyScore": 85.0,
+        "errorType": "correct",
+        "offsetMs": 1870,
+        "durationMs": 920,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          63.0,
+          75.0,
+          59.0,
+          100.0,
+          100.0,
+          66.0
+        ],
+        "examWord": "Marcel",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "prévôt",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 2920,
+        "durationMs": 630,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          88.0,
+          88.0,
+          88.0,
+          88.0,
+          88.0,
+          88.0
+        ],
+        "examWord": "prévôt",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "des",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 3560,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          20.0
+        ],
+        "examWord": "des",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "marchands",
+        "accuracyScore": 30.0,
+        "errorType": "mispronounced",
+        "offsetMs": 3700,
+        "durationMs": 490,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          39.0,
+          36.0,
+          0.0
+        ],
+        "examWord": "marchands",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "de",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 4200,
+        "durationMs": 140,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          82.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "de",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "Paris",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 4350,
+        "durationMs": 400,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          86.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "Paris",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 35.93047,
+    "azureConfidence": 0.9114636,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 6.216,
+    "trimmedS": 4.78,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.32
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

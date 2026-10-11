@@ -1,0 +1,1033 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:39:00+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_25073780",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 27.0 - French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_25073780.mp3",
+      "accents": "Français du Royaume-Uni",
+      "age": "twenties",
+      "group": "english"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Toutefois, Aboulafia ne prêche pas une négation complète du corps.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 8.748,
+    "trimmedS": 6.62,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.9,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Toutefois, Boulashia ne prêche pas une négation complète du corps.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        6.62
+      ],
+      "referenceText": "Toutefois, Boulashia ne prêche pas une négation complète du corps.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 500000,
+        "Duration": 65400000,
+        "DisplayText": "Toutefois, Boulashia ne prêche pas une négation complète du corps.",
+        "SNR": 31.90728,
+        "NBest": [
+          {
+            "Confidence": 0.9144353,
+            "Lexical": "Toutefois Boulashia ne prêche pas une négation complète du corps",
+            "ITN": "Toutefois Boulashia ne prêche pas une négation complète du corps",
+            "MaskedITN": "toutefois boulashia ne prêche pas une négation complète du corps",
+            "Display": "Toutefois, Boulashia ne prêche pas une négation complète du corps.",
+            "AccuracyScore": 89.0,
+            "FluencyScore": 91.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 91.6,
+            "Words": [
+              {
+                "Word": "Toutefois",
+                "Offset": 500000,
+                "Duration": 8900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 85.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tou",
+                    "Offset": 500000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 86.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "te",
+                    "Offset": 3100000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "fois",
+                    "Offset": 5700000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 500000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 1800000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 71.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3100000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 4400000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5700000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7000000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8300000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49440104
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Boulashia",
+                "Offset": 14700000,
+                "Duration": 12100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 73.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 14700000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 32.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 16900000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 90.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 19900000,
+                    "Duration": 6900000,
+                    "AccuracyScore": 58.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 14700000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 27.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 40.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16900000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18500000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 78.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19900000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 67.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22300000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 46.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24300000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 60.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 1.5784148
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 5200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49440104
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "ne",
+                "Offset": 27700000,
+                "Duration": 2900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ne",
+                    "Offset": 27700000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 27700000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29700000,
+                    "Duration": 900000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.24283308
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 800000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49440104
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "prêche",
+                "Offset": 30700000,
+                "Duration": 5300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 85.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 30700000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 88.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 33700000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 30700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31500000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 77.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33100000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 33700000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 65.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.035413e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49440104
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "pas",
+                "Offset": 36100000,
+                "Duration": 4700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "pas",
+                    "Offset": 36100000,
+                    "Duration": 4700000,
+                    "AccuracyScore": 89.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 36100000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 78.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 38500000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.035413e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49440104
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "une",
+                "Offset": 40900000,
+                "Duration": 3000000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "une",
+                    "Offset": 40900000,
+                    "Duration": 3000000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 40900000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 42500000,
+                    "Duration": 500000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 43100000,
+                    "Duration": 800000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.035413e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49440104
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "négation",
+                "Offset": 44000000,
+                "Duration": 8800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "né",
+                    "Offset": 44000000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ga",
+                    "Offset": 46600000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 10.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tion",
+                    "Offset": 49200000,
+                    "Duration": 3600000,
+                    "AccuracyScore": 40.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 44000000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 45300000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 87.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 46600000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 47900000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 21.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 49200000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 50500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 51700000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 15.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.035413e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49440104
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "complète",
+                "Offset": 53100000,
+                "Duration": 7300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "com",
+                    "Offset": 53100000,
+                    "Duration": 5500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "plète",
+                    "Offset": 58700000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 86.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 53100000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 54900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 56100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 56900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 57900000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 58700000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 59500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 74.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.06070829
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.96964586
+                      },
+                      "BreakLength": 200000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49440104
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "du",
+                "Offset": 60500000,
+                "Duration": 1800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "du",
+                    "Offset": 60500000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 60500000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 60900000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 61600000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.035413e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49440104
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "corps",
+                "Offset": 62400000,
+                "Duration": 3500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 70.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "corps",
+                    "Offset": 62400000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 70.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 62400000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 70.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 63600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 70.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 64800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 70.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.035413e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49440104
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Toutefois, Aboulafia ne prêche pas une négation complète du corps.",
+    "referenceText": "Toutefois, Boulashia ne prêche pas une négation complète du corps.",
+    "words": [
+      {
+        "word": "Toutefois",
+        "accuracyScore": 85.0,
+        "errorType": "correct",
+        "offsetMs": 50,
+        "durationMs": 890,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          71.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "Toutefois",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "Boulashia",
+        "accuracyScore": 73.0,
+        "errorType": "correct",
+        "offsetMs": 1470,
+        "durationMs": 1210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          27.0,
+          40.0,
+          100.0,
+          78.0,
+          67.0,
+          46.0,
+          60.0
+        ],
+        "examWord": "Aboulafia",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "ne",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 2770,
+        "durationMs": 290,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          94.0,
+          94.0
+        ],
+        "examWord": "ne",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "prêche",
+        "accuracyScore": 85.0,
+        "errorType": "correct",
+        "offsetMs": 3070,
+        "durationMs": 530,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          77.0,
+          100.0,
+          100.0,
+          65.0
+        ],
+        "examWord": "prêche",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "pas",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 3610,
+        "durationMs": 470,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          78.0,
+          100.0
+        ],
+        "examWord": "pas",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "une",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 4090,
+        "durationMs": 300,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          91.0,
+          91.0,
+          91.0
+        ],
+        "examWord": "une",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "négation",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 4400,
+        "durationMs": 880,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          87.0,
+          0.0,
+          21.0,
+          100.0,
+          0.0,
+          15.0
+        ],
+        "examWord": "négation",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "complète",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 5310,
+        "durationMs": 730,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          74.0
+        ],
+        "examWord": "complète",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "du",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 6050,
+        "durationMs": 180,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "du",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "corps",
+        "accuracyScore": 70.0,
+        "errorType": "correct",
+        "offsetMs": 6240,
+        "durationMs": 350,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          70.0,
+          70.0,
+          70.0
+        ],
+        "examWord": "corps",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 31.90728,
+    "azureConfidence": 0.9144353,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 8.748,
+    "trimmedS": 6.62,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.9
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

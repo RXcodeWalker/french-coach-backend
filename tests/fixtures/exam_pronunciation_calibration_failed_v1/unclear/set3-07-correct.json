@@ -1,0 +1,352 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-11T11:11:05+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "set3-07-correct",
+    "set": "unclear",
+    "reading": "correct",
+    "source": {
+      "corpus": "owner-recorded-set3",
+      "line": "07",
+      "instruction": "read normally"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Elle a les clés.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 1.92,
+    "trimmedS": 1.02,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.06,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "et la L'Eclair",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        1.02
+      ],
+      "referenceText": "et la L'Eclair",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 900000,
+        "Duration": 8200000,
+        "DisplayText": "Et la L'Eclair ?",
+        "SNR": 21.128767,
+        "NBest": [
+          {
+            "Confidence": 0.8608566,
+            "Lexical": "et la L'Eclair",
+            "ITN": "et la L'Eclair",
+            "MaskedITN": "et la l'eclair ",
+            "Display": "Et la L'Eclair ?",
+            "AccuracyScore": 93.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 95.8,
+            "Words": [
+              {
+                "Word": "et",
+                "Offset": 900000,
+                "Duration": 1800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 2100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 95.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 2100000,
+                    "Duration": 300000,
+                    "AccuracyScore": 96.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 2500000,
+                    "Duration": 200000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49622232
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "la",
+                "Offset": 2800000,
+                "Duration": 2400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 2800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 3400000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 73.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 2800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3400000,
+                    "Duration": 400000,
+                    "AccuracyScore": 54.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3900000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 80.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 6.0240964e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.99999994
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49622232
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "L'Eclair",
+                "Offset": 5300000,
+                "Duration": 3800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 88.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 5300000,
+                    "Duration": 3800000,
+                    "AccuracyScore": 56.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 5300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 18.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 72.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7300000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8600000,
+                    "Duration": 200000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8900000,
+                    "Duration": 200000,
+                    "AccuracyScore": 0.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 6.0240964e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.99999994
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49622232
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Elle a les clés.",
+    "referenceText": "et la L'Eclair",
+    "words": [
+      {
+        "word": "et",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 90,
+        "durationMs": 180,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0,
+          96.0,
+          94.0
+        ],
+        "examWord": "Elle",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement",
+          "short_word"
+        ]
+      },
+      {
+        "word": "la",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 280,
+        "durationMs": 240,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          80.0,
+          54.0,
+          80.0
+        ],
+        "examWord": "a",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement",
+          "short_word"
+        ]
+      },
+      {
+        "word": "L'Eclair",
+        "accuracyScore": 88.0,
+        "errorType": "correct",
+        "offsetMs": 530,
+        "durationMs": 380,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          18.0,
+          72.0,
+          100.0,
+          0.0,
+          0.0
+        ],
+        "examWord": "les",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 21.128767,
+    "azureConfidence": 0.8608566,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 1.92,
+    "trimmedS": 1.02,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.06
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

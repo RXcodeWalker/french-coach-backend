@@ -1,0 +1,394 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-11T11:11:07+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "set3-07-swap",
+    "set": "unclear",
+    "reading": "swap",
+    "source": {
+      "corpus": "owner-recorded-set3",
+      "line": "07",
+      "instruction": "say “les” as “le”"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Elle a les clés.",
+    "expectedReported": [
+      "les"
+    ],
+    "knownMisreadings": [],
+    "rawS": 2.176,
+    "trimmedS": 1.12,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.1,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Elle a l'airc les",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        1.12
+      ],
+      "referenceText": "Elle a l'airc les",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1200000,
+        "Duration": 9700000,
+        "DisplayText": "Elle a l'airc les.",
+        "SNR": 21.981441,
+        "NBest": [
+          {
+            "Confidence": 0.8845018,
+            "Lexical": "Elle a l'airc les",
+            "ITN": "Elle a l'airc les",
+            "MaskedITN": "elle a l'airc les",
+            "Display": "Elle a l'airc les.",
+            "AccuracyScore": 90.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 94.0,
+            "Words": [
+              {
+                "Word": "Elle",
+                "Offset": 1200000,
+                "Duration": 2800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 1200000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 3000000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1200000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3000000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3800000,
+                    "Duration": 200000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5123862
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "a",
+                "Offset": 4100000,
+                "Duration": 1600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "a",
+                    "Offset": 4100000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4100000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.102041e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5123862
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "l'airc",
+                "Offset": 5800000,
+                "Duration": 2900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 70.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 5800000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 57.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 5800000,
+                    "Duration": 300000,
+                    "AccuracyScore": 83.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6200000,
+                    "Duration": 800000,
+                    "AccuracyScore": 39.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7100000,
+                    "Duration": 300000,
+                    "AccuracyScore": 8.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7500000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 76.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.102041e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5123862
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "les",
+                "Offset": 8800000,
+                "Duration": 2100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "les",
+                    "Offset": 8800000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 65.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 8800000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9900000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 30.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 5.102041e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5123862
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Elle a les clés.",
+    "referenceText": "Elle a l'airc les",
+    "words": [
+      {
+        "word": "Elle",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 120,
+        "durationMs": 280,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "Elle",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "a",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 410,
+        "durationMs": 160,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0
+        ],
+        "examWord": "a",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "l'airc",
+        "accuracyScore": 70.0,
+        "errorType": "correct",
+        "offsetMs": 580,
+        "durationMs": 290,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          83.0,
+          39.0,
+          8.0,
+          76.0
+        ],
+        "examWord": null,
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "les",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 880,
+        "durationMs": 210,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          30.0
+        ],
+        "examWord": "les",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 21.981441,
+    "azureConfidence": 0.8845018,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 2.176,
+    "trimmedS": 1.12,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.1
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

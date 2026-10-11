@@ -1,0 +1,477 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:39:18+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_18208416",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 27.0 - French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_18208416.mp3",
+      "accents": "Français d’Allemagne",
+      "age": "fifties",
+      "group": "other"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "On sonne, il se lève.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 3.288,
+    "trimmedS": 2.18,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.62,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "En sonne, il se lève.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        2.18
+      ],
+      "referenceText": "En sonne, il se lève.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1500000,
+        "Duration": 13700000,
+        "DisplayText": "En sonne, il se lève.",
+        "SNR": 28.974167,
+        "NBest": [
+          {
+            "Confidence": 0.8767693,
+            "Lexical": "En sonne il se lève",
+            "ITN": "En sonne il se lève",
+            "MaskedITN": "en sonne il se lève",
+            "Display": "En sonne, il se lève.",
+            "AccuracyScore": 92.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 95.2,
+            "Words": [
+              {
+                "Word": "En",
+                "Offset": 1500000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "en",
+                    "Offset": 1500000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1500000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5054482
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "sonne",
+                "Offset": 3900000,
+                "Duration": 4100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 73.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "sonne",
+                    "Offset": 3900000,
+                    "Duration": 4100000,
+                    "AccuracyScore": 74.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 3900000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 76.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5500000,
+                    "Duration": 900000,
+                    "AccuracyScore": 57.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6500000,
+                    "Duration": 600000,
+                    "AccuracyScore": 65.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7200000,
+                    "Duration": 800000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.3478263e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5054482
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "il",
+                "Offset": 8100000,
+                "Duration": 1900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "il",
+                    "Offset": 8100000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 8100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.3478263e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5054482
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "se",
+                "Offset": 10100000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "se",
+                    "Offset": 10100000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 10100000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10800000,
+                    "Duration": 600000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.3478263e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5054482
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "lève",
+                "Offset": 11500000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 11500000,
+                    "Duration": 2200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 13800000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 84.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 11500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12700000,
+                    "Duration": 1000000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 61.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 4.3478263e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5054482
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "On sonne, il se lève.",
+    "referenceText": "En sonne, il se lève.",
+    "words": [
+      {
+        "word": "En",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 150,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          91.0
+        ],
+        "examWord": "On",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement",
+          "short_word"
+        ]
+      },
+      {
+        "word": "sonne",
+        "accuracyScore": 73.0,
+        "errorType": "correct",
+        "offsetMs": 390,
+        "durationMs": 410,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          76.0,
+          57.0,
+          65.0,
+          94.0
+        ],
+        "examWord": "sonne",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "il",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 810,
+        "durationMs": 190,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "il",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "se",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1010,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0,
+          97.0
+        ],
+        "examWord": "se",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "lève",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1150,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          61.0
+        ],
+        "examWord": "lève",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 28.974167,
+    "azureConfidence": 0.8767693,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 3.288,
+    "trimmedS": 2.18,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.62
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

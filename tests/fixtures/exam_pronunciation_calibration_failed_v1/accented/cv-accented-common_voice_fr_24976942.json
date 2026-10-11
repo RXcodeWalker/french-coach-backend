@@ -1,0 +1,547 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:38:47+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_24976942",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 27.0 - French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_24976942.mp3",
+      "accents": "Français des États-Unis",
+      "age": "twenties",
+      "group": "english"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Il grandit à Dearborn, Michigan.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 4.536,
+    "trimmedS": 2.78,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.34,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Il grandit à d'yobon, Michigan.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        2.78
+      ],
+      "referenceText": "Il grandit à d'yobon, Michigan.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 600000,
+        "Duration": 26900000,
+        "DisplayText": "Il grandit à d'Yobon, Michigan.",
+        "SNR": 29.478277,
+        "NBest": [
+          {
+            "Confidence": 0.8973986,
+            "Lexical": "Il grandit à d'yobon Michigan",
+            "ITN": "Il grandit à d'yobon Michigan",
+            "MaskedITN": "il grandit à d'yobon michigan",
+            "Display": "Il grandit à d'Yobon, Michigan.",
+            "AccuracyScore": 75.0,
+            "FluencyScore": 99.0,
+            "CompletenessScore": 60.0,
+            "PronScore": 70.8,
+            "Words": [
+              {
+                "Word": "Il",
+                "Offset": 600000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "il",
+                    "Offset": 600000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 600000,
+                    "Duration": 3100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3800000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50611234
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "grandit",
+                "Offset": 4400000,
+                "Duration": 6100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "gran",
+                    "Offset": 4400000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 83.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "dit",
+                    "Offset": 8200000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 58.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4400000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 69.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5700000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 81.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8200000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 80.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9400000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 35.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.007519e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50611234
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "à",
+                "Offset": 10600000,
+                "Duration": 1300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "à",
+                    "Offset": 10600000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 10600000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.007519e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50611234
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "d'yobon",
+                "Offset": 12000000,
+                "Duration": 7500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 55.0,
+                "ErrorType": "Mispronunciation",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 12000000,
+                    "Duration": 7500000,
+                    "AccuracyScore": 70.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 12000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 64.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13200000,
+                    "Duration": 300000,
+                    "AccuracyScore": 16.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13600000,
+                    "Duration": 300000,
+                    "AccuracyScore": 6.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 14000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 68.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15200000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 16600000,
+                    "Duration": 2900000,
+                    "AccuracyScore": 75.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.007519e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50611234
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "Michigan",
+                "Offset": 20000000,
+                "Duration": 7500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 30.0,
+                "ErrorType": "Mispronunciation",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mi",
+                    "Offset": 20000000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 95.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "chi",
+                    "Offset": 22000000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 72.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "gan",
+                    "Offset": 24800000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 27.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 20000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21200000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22000000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 93.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23600000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 44.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24800000,
+                    "Duration": 300000,
+                    "AccuracyScore": 6.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 28.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25900000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 31.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.120300785
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.9398496
+                      },
+                      "BreakLength": 400000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50611234
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Il grandit à Dearborn, Michigan.",
+    "referenceText": "Il grandit à d'yobon, Michigan.",
+    "words": [
+      {
+        "word": "Il",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 60,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0
+        ],
+        "examWord": "Il",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "grandit",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 440,
+        "durationMs": 610,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          69.0,
+          100.0,
+          81.0,
+          80.0,
+          35.0
+        ],
+        "examWord": "grandit",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "à",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 1060,
+        "durationMs": 130,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          91.0
+        ],
+        "examWord": "à",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "d'yobon",
+        "accuracyScore": 55.0,
+        "errorType": "mispronounced",
+        "offsetMs": 1200,
+        "durationMs": 750,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          64.0,
+          16.0,
+          6.0,
+          68.0,
+          100.0,
+          75.0
+        ],
+        "examWord": "Dearborn",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "Michigan",
+        "accuracyScore": 30.0,
+        "errorType": "mispronounced",
+        "offsetMs": 2000,
+        "durationMs": 750,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          91.0,
+          100.0,
+          93.0,
+          44.0,
+          6.0,
+          28.0,
+          31.0
+        ],
+        "examWord": "Michigan",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 29.478277,
+    "azureConfidence": 0.8973986,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 4.536,
+    "trimmedS": 2.78,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.34
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

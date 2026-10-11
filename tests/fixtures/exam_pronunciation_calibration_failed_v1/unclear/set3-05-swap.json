@@ -1,0 +1,263 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-11T11:10:59+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "set3-05-swap",
+    "set": "unclear",
+    "reading": "swap",
+    "source": {
+      "corpus": "owner-recorded-set3",
+      "line": "05",
+      "instruction": "say “ils ont” as “ils sont” (s, not z)"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Ils ont un chien.",
+    "expectedReported": [
+      "ont"
+    ],
+    "knownMisreadings": [],
+    "rawS": 2.432,
+    "trimmedS": 1.48,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.06,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "il s'enchaîne",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        1.48
+      ],
+      "referenceText": "il s'enchaîne",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 700000,
+        "Duration": 12400000,
+        "DisplayText": "Il s'enchaîne.",
+        "SNR": 14.7139635,
+        "NBest": [
+          {
+            "Confidence": 0.49023145,
+            "Lexical": "il s'enchaîne",
+            "ITN": "il s'enchaîne",
+            "MaskedITN": "il s'enchaîne",
+            "Display": "Il s'enchaîne.",
+            "AccuracyScore": 86.0,
+            "FluencyScore": 29.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 54.6,
+            "Words": [
+              {
+                "Word": "il",
+                "Offset": 700000,
+                "Duration": 3500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "il",
+                    "Offset": 700000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 93.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 700000,
+                    "Duration": 2100000,
+                    "AccuracyScore": 89.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 2900000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.52020085
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "s'enchaîne",
+                "Offset": 4300000,
+                "Duration": 8800000,
+                "Confidence": 0.0,
+                "AccuracyScore": 76.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 4300000,
+                    "Duration": 6400000,
+                    "AccuracyScore": 51.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 10800000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 25.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4300000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6300000,
+                    "Duration": 4400000,
+                    "AccuracyScore": 29.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10800000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 40.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 0.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12900000,
+                    "Duration": 200000,
+                    "AccuracyScore": 0.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 2.4e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.52020085
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Ils ont un chien.",
+    "referenceText": "il s'enchaîne",
+    "words": [
+      {
+        "word": "il",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 70,
+        "durationMs": 350,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          89.0,
+          100.0
+        ],
+        "examWord": "Ils",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement",
+          "short_word"
+        ]
+      },
+      {
+        "word": "s'enchaîne",
+        "accuracyScore": 76.0,
+        "errorType": "correct",
+        "offsetMs": 430,
+        "durationMs": 880,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          29.0,
+          40.0,
+          0.0,
+          0.0
+        ],
+        "examWord": "ont",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 14.7139635,
+    "azureConfidence": 0.49023145,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 2.432,
+    "trimmedS": 1.48,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.06
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

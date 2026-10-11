@@ -1,0 +1,801 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:38:51+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_39750945",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 27.0 - French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_39750945.mp3",
+      "accents": "Français du Royaume-Uni",
+      "age": "twenties",
+      "group": "english"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Un single portant le même nom existe également.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 5.616,
+    "trimmedS": 3.9,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.42,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Un sangle apportant le même nom existe également.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        3.9
+      ],
+      "referenceText": "Un sangle apportant le même nom existe également.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1100000,
+        "Duration": 37600000,
+        "DisplayText": "Un sangle apportant le même nom existe également.",
+        "SNR": 41.798664,
+        "NBest": [
+          {
+            "Confidence": 0.9146269,
+            "Lexical": "Un sangle apportant le même nom existe également",
+            "ITN": "Un sangle apportant le même nom existe également",
+            "MaskedITN": "un sangle apportant le même nom existe également",
+            "Display": "Un sangle apportant le même nom existe également.",
+            "AccuracyScore": 84.0,
+            "FluencyScore": 92.0,
+            "CompletenessScore": 88.0,
+            "PronScore": 86.4,
+            "Words": [
+              {
+                "Word": "Un",
+                "Offset": 1100000,
+                "Duration": 3700000,
+                "Confidence": 0.0,
+                "AccuracyScore": 79.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "un",
+                    "Offset": 1100000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 79.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1100000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 79.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5043358
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "sangle",
+                "Offset": 4900000,
+                "Duration": 3900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 4900000,
+                    "Duration": 3900000,
+                    "AccuracyScore": 92.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 84.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 5900000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8300000,
+                    "Duration": 200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8600000,
+                    "Duration": 200000,
+                    "AccuracyScore": 52.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7463977e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5043358
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "apportant",
+                "Offset": 8900000,
+                "Duration": 5500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ap",
+                    "Offset": 8900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 4.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "por",
+                    "Offset": 9900000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 52.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tant",
+                    "Offset": 12700000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 98.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 8900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 4.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9900000,
+                    "Duration": 900000,
+                    "AccuracyScore": 85.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 11.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11800000,
+                    "Duration": 800000,
+                    "AccuracyScore": 57.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12700000,
+                    "Duration": 800000,
+                    "AccuracyScore": 96.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13600000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7463977e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5043358
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "le",
+                "Offset": 14500000,
+                "Duration": 1500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 14500000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 14500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 15300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7463977e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5043358
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "même",
+                "Offset": 16100000,
+                "Duration": 3100000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "même",
+                    "Offset": 16100000,
+                    "Duration": 3100000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 16100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7463977e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5043358
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "nom",
+                "Offset": 19300000,
+                "Duration": 3400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "nom",
+                    "Offset": 19300000,
+                    "Duration": 3400000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 19300000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 21100000,
+                    "Duration": 1600000,
+                    "AccuracyScore": 81.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7463977e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5043358
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "existe",
+                "Offset": 25300000,
+                "Duration": 7400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 28.0,
+                "ErrorType": "Mispronunciation",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "exis",
+                    "Offset": 25300000,
+                    "Duration": 2700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "te",
+                    "Offset": 28100000,
+                    "Duration": 4600000,
+                    "AccuracyScore": 75.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 25300000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 27300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 28100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 29100000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 30100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 31300000,
+                    "Duration": 1400000,
+                    "AccuracyScore": 23.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.9365995
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.0
+                      },
+                      "BreakLength": 2500000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5043358
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "également",
+                "Offset": 33300000,
+                "Duration": 5400000,
+                "Confidence": 0.0,
+                "AccuracyScore": 85.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "éga",
+                    "Offset": 33300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "le",
+                    "Offset": 34300000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ment",
+                    "Offset": 37000000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 86.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 33300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 34300000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 35200000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 36100000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37000000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 37900000,
+                    "Duration": 800000,
+                    "AccuracyScore": 71.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.18731992
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.90634006
+                      },
+                      "BreakLength": 500000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.5043358
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Un single portant le même nom existe également.",
+    "referenceText": "Un sangle apportant le même nom existe également.",
+    "words": [
+      {
+        "word": "Un",
+        "accuracyScore": 79.0,
+        "errorType": "correct",
+        "offsetMs": 110,
+        "durationMs": 370,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          79.0
+        ],
+        "examWord": "Un",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "sangle",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 490,
+        "durationMs": 390,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          84.0,
+          100.0,
+          100.0,
+          100.0,
+          52.0
+        ],
+        "examWord": "single",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "apportant",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 890,
+        "durationMs": 550,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          4.0,
+          85.0,
+          11.0,
+          57.0,
+          96.0,
+          100.0
+        ],
+        "examWord": "portant",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "le",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 1450,
+        "durationMs": 150,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          94.0,
+          94.0
+        ],
+        "examWord": "le",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "même",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1610,
+        "durationMs": 310,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "même",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "nom",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1930,
+        "durationMs": 340,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          81.0
+        ],
+        "examWord": "nom",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "existe",
+        "accuracyScore": 28.0,
+        "errorType": "mispronounced",
+        "offsetMs": 2530,
+        "durationMs": 740,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          23.0
+        ],
+        "examWord": "existe",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "également",
+        "accuracyScore": 85.0,
+        "errorType": "correct",
+        "offsetMs": 3330,
+        "durationMs": 540,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          71.0
+        ],
+        "examWord": "également",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 41.798664,
+    "azureConfidence": 0.9146269,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 5.616,
+    "trimmedS": 3.9,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.42
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

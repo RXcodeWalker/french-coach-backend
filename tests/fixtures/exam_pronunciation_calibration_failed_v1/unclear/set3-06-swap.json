@@ -1,0 +1,411 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-11T11:11:03+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "set3-06-swap",
+    "set": "unclear",
+    "reading": "swap",
+    "source": {
+      "corpus": "owner-recorded-set3",
+      "line": "06",
+      "instruction": "pronounce the ending: “man-jent”"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Ils mangent à midi.",
+    "expectedReported": [
+      "mangent"
+    ],
+    "knownMisreadings": [],
+    "rawS": 2.859,
+    "trimmedS": 2.2,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.18,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "Ils mangeant à midi.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        2.2
+      ],
+      "referenceText": "Ils mangeant à midi.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 4500000,
+        "Duration": 17100000,
+        "DisplayText": "Ils mangeant à 12h00.",
+        "SNR": 11.009461,
+        "NBest": [
+          {
+            "Confidence": 0.89990747,
+            "Lexical": "Ils mangeant à midi",
+            "ITN": "Ils mangeant à 12h00",
+            "MaskedITN": "ils mangeant à 12h00",
+            "Display": "Ils mangeant à 12h00.",
+            "AccuracyScore": 98.0,
+            "FluencyScore": 97.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 97.8,
+            "Words": [
+              {
+                "Word": "Ils",
+                "Offset": 4500000,
+                "Duration": 3300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ils",
+                    "Offset": 4500000,
+                    "Duration": 3300000,
+                    "AccuracyScore": 89.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 4500000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 81.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 6500000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50479496
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "mangeant",
+                "Offset": 7900000,
+                "Duration": 7600000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "man",
+                    "Offset": 7900000,
+                    "Duration": 3800000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "geant",
+                    "Offset": 11800000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 7900000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9900000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 11800000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 94.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13700000,
+                    "Duration": 1800000,
+                    "AccuracyScore": 94.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.5928146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50479496
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "à",
+                "Offset": 16100000,
+                "Duration": 1500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "à",
+                    "Offset": 16100000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 16100000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 0.17964076
+                      },
+                      "MissingBreak": {
+                        "Confidence": 0.9101796
+                      },
+                      "BreakLength": 500000
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50479496
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "midi",
+                "Offset": 17700000,
+                "Duration": 3900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mi",
+                    "Offset": 17700000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "di",
+                    "Offset": 19300000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 17700000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19900000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.5928146e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.50479496
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Ils mangent à midi.",
+    "referenceText": "Ils mangeant à midi.",
+    "words": [
+      {
+        "word": "Ils",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 450,
+        "durationMs": 330,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          81.0,
+          100.0
+        ],
+        "examWord": "Ils",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "mangeant",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 790,
+        "durationMs": 760,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          94.0,
+          94.0,
+          94.0,
+          94.0
+        ],
+        "examWord": "mangent",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "à",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1610,
+        "durationMs": 150,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0
+        ],
+        "examWord": "à",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "midi",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1770,
+        "durationMs": 390,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "midi",
+        "recognizersAgree": true,
+        "suppressed": []
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 11.009461,
+    "azureConfidence": 0.89990747,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 2.859,
+    "trimmedS": 2.2,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.18
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

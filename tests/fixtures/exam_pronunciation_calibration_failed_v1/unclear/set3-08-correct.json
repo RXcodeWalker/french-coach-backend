@@ -1,0 +1,303 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-11T11:11:09+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "set3-08-correct",
+    "set": "unclear",
+    "reading": "correct",
+    "source": {
+      "corpus": "owner-recorded-set3",
+      "line": "08",
+      "instruction": "read normally"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "J'ai deux chats.",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 1.835,
+    "trimmedS": 1.18,
+    "pausesOver2s": 0,
+    "longestPauseS": 0,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "j'ai deux ça",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        1.18
+      ],
+      "referenceText": "j'ai deux ça",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1400000,
+        "Duration": 10100000,
+        "DisplayText": "J'ai 2 ça.",
+        "SNR": 20.884624,
+        "NBest": [
+          {
+            "Confidence": 0.7989022,
+            "Lexical": "j'ai deux ça",
+            "ITN": "j'ai 2 ça",
+            "MaskedITN": "j'ai 2 ça",
+            "Display": "J'ai 2 ça.",
+            "AccuracyScore": 80.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 67.0,
+            "PronScore": 76.2,
+            "Words": [
+              {
+                "Word": "j'ai",
+                "Offset": 1400000,
+                "Duration": 4300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "j'ai",
+                    "Offset": 1400000,
+                    "Duration": 4300000,
+                    "AccuracyScore": 69.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1400000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 64.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 4000000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 77.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48663604
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "deux",
+                "Offset": 5800000,
+                "Duration": 2300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 91.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "deux",
+                    "Offset": 5800000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 91.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 5800000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 92.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7000000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 90.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 2.9411765e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48663604
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "ça",
+                "Offset": 8200000,
+                "Duration": 3300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 52.0,
+                "ErrorType": "Mispronunciation",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ça",
+                    "Offset": 8200000,
+                    "Duration": 3300000,
+                    "AccuracyScore": 48.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 8200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 32.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 8900000,
+                    "Duration": 2600000,
+                    "AccuracyScore": 52.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 2.9411765e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.48663604
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "J'ai deux chats.",
+    "referenceText": "j'ai deux ça",
+    "words": [
+      {
+        "word": "j'ai",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 140,
+        "durationMs": 430,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          64.0,
+          77.0
+        ],
+        "examWord": "J'ai",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "deux",
+        "accuracyScore": 91.0,
+        "errorType": "correct",
+        "offsetMs": 580,
+        "durationMs": 230,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          92.0,
+          90.0
+        ],
+        "examWord": "deux",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "ça",
+        "accuracyScore": 52.0,
+        "errorType": "mispronounced",
+        "offsetMs": 820,
+        "durationMs": 330,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          32.0,
+          52.0
+        ],
+        "examWord": "chats",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement",
+          "short_word"
+        ]
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 20.884624,
+    "azureConfidence": 0.7989022,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 1.835,
+    "trimmedS": 1.18,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.0
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

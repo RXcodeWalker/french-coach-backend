@@ -1,0 +1,625 @@
+{
+  "fixtureFormat": 1,
+  "recordedAt": "2026-10-10T05:39:16+00:00",
+  "assessorVersion": "exam-pronunciation-v1",
+  "fairnessVersion": "exam-pronunciation-fairness-v1",
+  "azureRegion": "centralindia",
+  "clip": {
+    "clipId": "cv-accented-common_voice_fr_18289496",
+    "set": "accented",
+    "reading": null,
+    "source": {
+      "corpus": "common-voice",
+      "dataset": "Common Voice Scripted Speech 27.0 - French",
+      "license": "CC0-1.0",
+      "path": "common_voice_fr_18289496.mp3",
+      "accents": "Français d’Allemagne",
+      "age": "fourties",
+      "group": "other"
+    },
+    "recognizer": "webspeech",
+    "examTranscript": "Rue des Metiers au numéro vingt-trois",
+    "expectedReported": [],
+    "knownMisreadings": [],
+    "rawS": 4.2,
+    "trimmedS": 3.26,
+    "pausesOver2s": 0,
+    "longestPauseS": 0.46,
+    "clippedRatio": 0
+  },
+  "whisper": {
+    "text": "rue des métiers au numéro 23.",
+    "language": "fr",
+    "segments": [
+      {
+        "start": null,
+        "end": null,
+        "text": ""
+      }
+    ],
+    "words": [],
+    "source": "groq-whisper"
+  },
+  "chunks": [
+    {
+      "window": [
+        0.0,
+        3.26
+      ],
+      "referenceText": "rue des métiers au numéro 23.",
+      "azureRaw": {
+        "RecognitionStatus": "Success",
+        "Offset": 1300000,
+        "Duration": 26900000,
+        "DisplayText": "Rue des métiers, au numéro 23.",
+        "SNR": 20.169842,
+        "NBest": [
+          {
+            "Confidence": 0.91098434,
+            "Lexical": "rue des métiers au numéro 23",
+            "ITN": "rue des métiers au numéro 23",
+            "MaskedITN": "rue des métiers au numéro 23",
+            "Display": "Rue des métiers, au numéro 23.",
+            "AccuracyScore": 94.0,
+            "FluencyScore": 100.0,
+            "CompletenessScore": 100.0,
+            "PronScore": 96.4,
+            "Words": [
+              {
+                "Word": "rue",
+                "Offset": 1300000,
+                "Duration": 4900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 94.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "rue",
+                    "Offset": 1300000,
+                    "Duration": 4900000,
+                    "AccuracyScore": 88.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 1300000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 3900000,
+                    "Duration": 2300000,
+                    "AccuracyScore": 76.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49873415
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "des",
+                "Offset": 6300000,
+                "Duration": 1900000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "des",
+                    "Offset": 6300000,
+                    "Duration": 1900000,
+                    "AccuracyScore": 59.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 6300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 7300000,
+                    "Duration": 900000,
+                    "AccuracyScore": 27.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7037037e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49873415
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "métiers",
+                "Offset": 8300000,
+                "Duration": 6300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mé",
+                    "Offset": 8300000,
+                    "Duration": 2500000,
+                    "AccuracyScore": 76.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "tiers",
+                    "Offset": 10900000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 95.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 8300000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 9600000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 53.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 10900000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 12200000,
+                    "Duration": 1200000,
+                    "AccuracyScore": 92.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 13500000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 92.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7037037e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49873415
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "au",
+                "Offset": 14700000,
+                "Duration": 1500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 97.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "au",
+                    "Offset": 14700000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 14700000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 97.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7037037e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49873415
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "numéro",
+                "Offset": 16300000,
+                "Duration": 4500000,
+                "Confidence": 0.0,
+                "AccuracyScore": 100.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Grapheme": "nu",
+                    "Offset": 16300000,
+                    "Duration": 1500000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "mé",
+                    "Offset": 17900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Grapheme": "ro",
+                    "Offset": 19100000,
+                    "Duration": 1700000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 16300000,
+                    "Duration": 800000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17200000,
+                    "Duration": 600000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 17900000,
+                    "Duration": 300000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 18300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 19100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 20300000,
+                    "Duration": 500000,
+                    "AccuracyScore": 100.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7037037e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49873415
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "Word": "23",
+                "Offset": 20900000,
+                "Duration": 7300000,
+                "Confidence": 0.0,
+                "AccuracyScore": 79.0,
+                "ErrorType": "None",
+                "Syllables": [
+                  {
+                    "Syllable": "",
+                    "Offset": 20900000,
+                    "Duration": 3500000,
+                    "AccuracyScore": 91.0
+                  },
+                  {
+                    "Syllable": "",
+                    "Offset": 24500000,
+                    "Duration": 3700000,
+                    "AccuracyScore": 85.0
+                  }
+                ],
+                "Phonemes": [
+                  {
+                    "Phoneme": "",
+                    "Offset": 20900000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 22100000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 23300000,
+                    "Duration": 1100000,
+                    "AccuracyScore": 72.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 24500000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 25300000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26100000,
+                    "Duration": 700000,
+                    "AccuracyScore": 100.0
+                  },
+                  {
+                    "Phoneme": "",
+                    "Offset": 26900000,
+                    "Duration": 1300000,
+                    "AccuracyScore": 59.0
+                  }
+                ],
+                "Feedback": {
+                  "Prosody": {
+                    "Break": {
+                      "ErrorTypes": [
+                        "None"
+                      ],
+                      "UnexpectedBreak": {
+                        "Confidence": 3.7037037e-08
+                      },
+                      "MissingBreak": {
+                        "Confidence": 1.0
+                      },
+                      "BreakLength": 0
+                    },
+                    "Intonation": {
+                      "ErrorTypes": [],
+                      "Monotone": {
+                        "Confidence": 0.0,
+                        "WordPitchSlopeConfidence": 0.0,
+                        "SyllablePitchDeltaConfidence": 0.49873415
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": {
+    "sessionId": "calibration",
+    "part": "topic1",
+    "turnKey": "1",
+    "assessorVersion": "exam-pronunciation-v1",
+    "fairnessVersion": "exam-pronunciation-fairness-v1",
+    "examTranscript": "Rue des Metiers au numéro vingt-trois",
+    "referenceText": "rue des métiers au numéro 23.",
+    "words": [
+      {
+        "word": "rue",
+        "accuracyScore": 94.0,
+        "errorType": "correct",
+        "offsetMs": 130,
+        "durationMs": 490,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          76.0
+        ],
+        "examWord": "Rue",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "des",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 630,
+        "durationMs": 190,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          91.0,
+          27.0
+        ],
+        "examWord": "des",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "métiers",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 830,
+        "durationMs": 630,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          53.0,
+          100.0,
+          92.0,
+          92.0
+        ],
+        "examWord": "Metiers",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement"
+        ]
+      },
+      {
+        "word": "au",
+        "accuracyScore": 97.0,
+        "errorType": "correct",
+        "offsetMs": 1470,
+        "durationMs": 150,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          97.0
+        ],
+        "examWord": "au",
+        "recognizersAgree": true,
+        "suppressed": [
+          "short_word"
+        ]
+      },
+      {
+        "word": "numéro",
+        "accuracyScore": 100.0,
+        "errorType": "correct",
+        "offsetMs": 1630,
+        "durationMs": 450,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0,
+          100.0
+        ],
+        "examWord": "numéro",
+        "recognizersAgree": true,
+        "suppressed": []
+      },
+      {
+        "word": "23",
+        "accuracyScore": 79.0,
+        "errorType": "correct",
+        "offsetMs": 2090,
+        "durationMs": 730,
+        "nearChunkBoundary": false,
+        "phonemeScores": [
+          100.0,
+          100.0,
+          72.0,
+          100.0,
+          100.0,
+          100.0,
+          59.0
+        ],
+        "examWord": "vingt-trois",
+        "recognizersAgree": false,
+        "suppressed": [
+          "asr_disagreement",
+          "short_word",
+          "number"
+        ]
+      }
+    ],
+    "couldNotAssess": false,
+    "couldNotAssessReason": null,
+    "singleRecognizer": false,
+    "snrDb": 20.169842,
+    "azureConfidence": 0.91098434,
+    "chunkCount": 1,
+    "chunksFailed": 0,
+    "rawS": 4.2,
+    "trimmedS": 3.26,
+    "pauseStats": {
+      "pausesOver2s": 0,
+      "longestPauseS": 0.46
+    },
+    "clippedRatio": 0.0,
+    "createdAt": null
+  }
+}

@@ -58,16 +58,25 @@ def test_every_charged_feature_is_seeded():
     import main
 
     literals, unresolved = _charged_features()
-    # The one non-literal call site (the examiner route) names its features
-    # through _EXAMINER_QUOTA_FEATURE. A new non-literal call site fails here
-    # until this test learns where its feature names come from.
-    assert len(unresolved) == 1 and unresolved[0].startswith("main.py:") and unresolved[0].endswith("(feature)"), unresolved
-    features = literals | set(main._EXAMINER_QUOTA_FEATURE.values()) | {"exam_pronunciation"}
+    # The two non-literal call sites (the examiner route and /api/transcribe)
+    # name their features through _EXAMINER_QUOTA_FEATURE and
+    # _TRANSCRIBE_QUOTA_FEATURE. A new non-literal call site fails here until
+    # this test learns where its feature names come from.
+    assert len(unresolved) == 2 and all(
+        u.startswith("main.py:") and u.endswith("(feature)") for u in unresolved
+    ), unresolved
+    features = (
+        literals
+        | set(main._EXAMINER_QUOTA_FEATURE.values())
+        | set(main._TRANSCRIBE_QUOTA_FEATURE.values())
+        | {"exam_pronunciation"}
+    )
     missing = features - _seeded_features()
     assert not missing, f"quota features with no ai_quota_limits row in any migration: {sorted(missing)}"
     assert {"pronunciation", "transcribe", "feedback", "roleplay_turn", "exam_turn_feedback"} <= features
+    assert {"learn_transcribe", "exam_turn_transcribe"} <= features
 
 
 def test_the_collector_sees_real_call_sites():
     literals, _ = _charged_features()
-    assert {"pronunciation", "transcribe"} <= literals
+    assert {"pronunciation"} <= literals

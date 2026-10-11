@@ -97,6 +97,7 @@ GEMINI_API_KEY      = os.getenv("GEMINI_API_KEY", "").strip()
 # retires the 2.x line. gemini-3.6-flash is the current callable default (3.5-flash is deprecated and only auto-redirects);
 # override via env if Google moves the goalposts again.
 GEMINI_MODEL        = _model_config.GEMINI_MODEL
+GROQ_WHISPER_MODEL  = _model_config.GROQ_WHISPER_MODEL
 # Groq retired the Llama chat line: llama-3.3-70b-versatile now 404s with
 # model_not_found for this key, which took every Groq path down at once
 # (feedback, streaming, examiner, IGCSE, roleplay, pronunciation coach) and left
@@ -4234,28 +4235,78 @@ def _align_pronunciation(
 
 # ── /api/transcribe ───────────────────────────────────────────────────────────
 
-async def _groq_whisper(tmp_path: str, language: str) -> dict[str, Any]:
-    """Transcribe via Groq's hosted Whisper (fast, free-tier, no local model)."""
+# Groq rejects a Whisper prompt over 224 tokens. There is no tokenizer here, so
+# the cap is a conservative character budget (French with accents runs about 3
+# characters per token, so 224 tokens is about 670 characters).
+_WHISPER_PROMPT_MAX_CHARS = 640
+
+
+def truncate_whisper_prompt(prompt: str | None, max_chars: int = _WHISPER_PROMPT_MAX_CHARS) -> str | None:
+    """Deterministically fit a context prompt into Groq's 224-token limit.
+
+    Convention: the first line is the question text, any later lines are
+    earlier answers in the session, oldest first. The question is kept first
+    (cut at a word boundary only if it alone is too long); the most recent
+    context fills what is left, dropping the oldest words. Returns None for a
+    blank prompt.
+    """
+    text = (prompt or "").strip()
+    if not text:
+        return None
+    if len(text) <= max_chars:
+        return text
+    question, _, context = text.partition("\n")
+    question = question.strip()
+    context = " ".join(context.split())
+    if len(question) >= max_chars:
+        cut = question[:max_chars]
+        return (cut.rsplit(" ", 1)[0] if " " in cut else cut).strip() or None
+    room = max_chars - len(question) - 1
+    if room <= 0 or not context:
+        return question
+    tail = context[-room:]
+    # Drop a leading partial word so we never feed Whisper a fragment.
+    if len(context) > room and not context[-room - 1].isspace():
+        tail = tail.split(" ", 1)[1] if " " in tail else ""
+    tail = tail.strip()
+    return f"{question} {tail}" if tail else question
+
+
+async def _groq_whisper(tmp_path: str, language: str, prompt: str | None = None) -> dict[str, Any]:
+    """Transcribe via Groq's hosted Whisper (fast, free-tier, no local model).
+
+    `prompt` is context only (the question, earlier answers) and is cut to the
+    224-token limit here, so every caller is safe. Segments keep Whisper's own
+    confidence signals: avgLogprob, noSpeechProb and compressionRatio.
+    """
     groq = get_groq()
     if not groq:
         raise RuntimeError("Groq not configured")
     with open(tmp_path, "rb") as f:
         content = f.read()
     filename = os.path.basename(tmp_path)
+    kwargs: dict[str, Any] = {}
+    fitted = truncate_whisper_prompt(prompt)
+    if fitted:
+        kwargs["prompt"] = fitted
     transcription = await groq.audio.transcriptions.create(
         file=(filename, content),
-        model="whisper-large-v3-turbo",
+        model=GROQ_WHISPER_MODEL,
         language=language,
         response_format="verbose_json",
+        **kwargs,
     )
     text = (transcription.text or "").strip()
     segments_out = []
     if hasattr(transcription, "segments") and transcription.segments:
         for seg in transcription.segments:
             segments_out.append({
-                "start": getattr(seg, "start", None),
-                "end": getattr(seg, "end", None),
-                "text": (getattr(seg, "text", "") or "").strip(),
+                "start": _seg_field(seg, "start"),
+                "end": _seg_field(seg, "end"),
+                "text": (_seg_field(seg, "text") or "").strip(),
+                "avgLogprob": _seg_field(seg, "avg_logprob"),
+                "noSpeechProb": _seg_field(seg, "no_speech_prob"),
+                "compressionRatio": _seg_field(seg, "compression_ratio"),
             })
     return {
         "text": text,
@@ -4263,7 +4314,15 @@ async def _groq_whisper(tmp_path: str, language: str) -> dict[str, Any]:
         "segments": segments_out,
         "words": [],        # Groq verbose_json doesn't include word probabilities
         "source": "groq-whisper",
+        "model": GROQ_WHISPER_MODEL,
     }
+
+
+def _seg_field(seg: Any, name: str) -> Any:
+    """Read a verbose_json segment field whether the SDK gave an object or a dict."""
+    if isinstance(seg, dict):
+        return seg.get(name)
+    return getattr(seg, name, None)
 
 
 async def _faster_whisper(tmp_path: str, language: str) -> dict[str, Any]:
@@ -4315,6 +4374,7 @@ async def _faster_whisper(tmp_path: str, language: str) -> dict[str, Any]:
             "clarity_score": round(avg_prob * 10, 1)
         },
         "source": "faster-whisper-phonetic",
+        "model": WHISPER_MODEL,
     }
 
 
@@ -4322,15 +4382,35 @@ _TRANSCRIBE_MAX_BYTES = 15 * 1024 * 1024  # generous headroom — a single exam 
 _TRANSCRIBE_READ_CHUNK_BYTES = 1 * 1024 * 1024
 
 
+# `purpose` picks which daily cap a transcription is charged to. A Learn answer
+# or an exam turn fires once per answer, so each gets its own row in
+# ai_quota_limits (seeded by migration 20261011090000) instead of draining the
+# 30/day `transcribe` cap. A feature must exist in that table before use (FK).
+_TRANSCRIBE_QUOTA_FEATURE = {
+    "transcribe": "transcribe",
+    "learn": "learn_transcribe",
+    "exam_turn": "exam_turn_transcribe",
+}
+
+
 @app.post("/api/transcribe", response_model=None)
 async def transcribe(
     request: Request,
     audio: Annotated[UploadFile, File(...)],
     language: str = Form("fr", max_length=10),
+    prompt: str | None = Form(None, max_length=1200),
+    purpose: str = Form("transcribe", max_length=32),
     authorization: str | None = Header(None),
 ) -> dict[str, Any]:
-    """Transcribe uploaded audio. Tries Groq Whisper first, falls back to faster-whisper."""
+    """Transcribe uploaded audio. Tries Groq Whisper first, falls back to faster-whisper.
+
+    `prompt` is optional context (question text, earlier answers) passed to
+    Groq Whisper only, never the expected answer or a vocabulary list.
+    """
     user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
+    feature = _TRANSCRIBE_QUOTA_FEATURE.get(purpose)
+    if feature is None:
+        raise HTTPException(status_code=422, detail="Unknown purpose")
     # Before the upload is read: a `pending` (under-13, no guardian
     # confirmation yet) account's audio never reaches a provider.
     await require_speaking_consent(get_supabase(), user_id)
@@ -4353,7 +4433,7 @@ async def transcribe(
         chunks.append(chunk)
         digest.update(chunk)
 
-    await consume_ai_quota_or_503(get_supabase(), user_id, "transcribe", digest.hexdigest())
+    await consume_ai_quota_or_503(get_supabase(), user_id, feature, digest.hexdigest())
 
     suffix = os.path.splitext(audio.filename or "")[1] or ".webm"
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
@@ -4364,7 +4444,7 @@ async def transcribe(
     try:
         if GROQ_API_KEY:
             try:
-                return await _groq_whisper(tmp_path, language)
+                return await _groq_whisper(tmp_path, language, prompt)
             except Exception as e:
                 _log_provider_failure("groq-whisper", e)
         try:

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 3,
+  "transcript": "Je suis allé au parc avec mes amis parce que c'est drôle. J'ai mangé un glace.",
+  "transcriptHash": "fixture-strengths-v3",
+  "scores": {
+    "comm": 6.5,
+    "know": 6.0,
+    "acc": 6.0
+  },
+  "cefrLevel": "A2",
+  "grammar": {
+    "critical": [],
+    "polish": []
+  },
+  "corrections": [
+    {
+      "id": "gender_glace",
+      "severity": "major",
+      "label": "Gender Agreement",
+      "description": "« un glace » uses the masculine article, but glace is feminine.",
+      "explanation": "You said « un glace », but glace is a feminine noun, so it takes une.",
+      "correction": "une glace",
+      "quote": "un glace",
+      "tip": "Learn every noun with its article: une glace.",
+      "priority": 2,
+      "lesson": null
+    }
+  ],
+  "quoteSpans": [
+    {
+      "correctionId": "gender_glace",
+      "start": 69,
+      "end": 77
+    }
+  ],
+  "vocabulary": [],
+  "expansion_ideas": [],
+  "encouragement": "You did really well with « parce que c'est drôle » — here's where you could improve.",
+  "strengths": [
+    {
+      "quote": "parce que c'est drôle",
+      "why": "You gave a reason for your opinion, which is what the question asks for."
+    },
+    {
+      "quote": "Je suis allé au parc",
+      "why": "You used the passé composé with être correctly."
+    },
+    {
+      "quote": "un glace",
+      "why": "You added what you ate."
+    }
+  ],
+  "best_moment": "Your « parce que c'est drôle » links your opinion to a reason.",
+  "biggest_opportunity": "You could say when you went, e.g. « samedi dernier », to anchor the past tense.",
+  "improved_answer": "Je suis allé au parc avec mes amis parce que c'est drôle. J'ai mangé une glace.",
+  "advanced_answer": "",
+  "wordCount": 16
+}

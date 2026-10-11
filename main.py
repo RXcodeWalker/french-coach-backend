@@ -204,24 +204,24 @@ FEEDBACK_DEPTH_ANSWER_TOKENS: dict[FeedbackDepth, int] = {
 }
 
 FEEDBACK_DEPTH_ITEM_CAPS: dict[FeedbackDepth, dict[str, int]] = {
-    "brief":    {"grammar": 3, "vocabulary": 3, "corrections": 3},
-    "standard": {"grammar": 5, "vocabulary": 5, "corrections": 5},
-    "deep":     {"grammar": 8, "vocabulary": 7, "corrections": 8},
+    "brief":    {"grammar": 3, "vocabulary": 3, "corrections": 3, "strengths": 4},
+    "standard": {"grammar": 5, "vocabulary": 5, "corrections": 5, "strengths": 4},
+    "deep":     {"grammar": 8, "vocabulary": 7, "corrections": 8, "strengths": 4},
 }
 
 FEEDBACK_DEPTH_PROMPT_RANGES: dict[FeedbackDepth, str] = {
     "brief": (
         "\n\nFEEDBACK DEPTH: brief. Use the lower end of all item ranges "
-        "(2-3 grammar items, 2-3 vocabulary items). Keep explanations to one "
+        "(2-3 vocabulary items). Keep explanations to one "
         "sentence each — this learner's answer was long and largely correct, "
         "so do not manufacture extra items to fill space."
     ),
     "standard": "",
     "deep": (
         "\n\nFEEDBACK DEPTH: deep. Use the upper end of all item ranges "
-        "(5-8 grammar items, 4-7 vocabulary items, 3-5 structure items). "
-        "Go beyond surface corrections — explain WHY each error matters for IGCSE, "
-        "what mark band it affects, and give a corrected model sentence for each grammar issue."
+        "(4-7 vocabulary items, 3-5 structure items). Still report only real errors. "
+        "Go beyond surface corrections — make each fix's one-sentence why teach the rule, "
+        "and give a corrected model sentence for each fix."
     ),
 }
 
@@ -258,6 +258,10 @@ def _apply_depth_item_caps(fb: dict[str, Any], depth: FeedbackDepth) -> dict[str
     corrections = fb.get("corrections")
     if isinstance(corrections, list) and len(corrections) > caps["corrections"]:
         fb["corrections"] = corrections[: caps["corrections"]]
+
+    strengths = fb.get("strengths")
+    if isinstance(strengths, list) and len(strengths) > caps["strengths"]:
+        fb["strengths"] = strengths[: caps["strengths"]]
 
     return fb
 
@@ -1648,14 +1652,14 @@ JSON schema:
 # DETERMINISTIC SIGNALS rendering changes in a way that changes the rendered
 # prompt — mirrors src/domain/igcse/judgement/version.ts's SCORING_PROMPT_VERSION
 # discipline; paired with a snapshot test in backend/tests/.
-LEARN_PROMPT_VERSION = "learn-prompt-v4"
+LEARN_PROMPT_VERSION = "learn-prompt-v6"
 
 # Tracks the wire *shape* of the /v3 and /stream feedback response — separate
 # from LEARN_PROMPT_VERSION, which tracks prompt text. Bump only when the
 # transport contract itself changes (new/renamed top-level fields), not when
 # prompt wording changes. Read by the frontend's mergeV2Fields to decide
 # whether the rich coaching fields are safe to trust.
-FEEDBACK_CONTRACT_VERSION = 2
+FEEDBACK_CONTRACT_VERSION = 3  # 3: optional strengths[] (learn-prompt-v6)
 
 SYSTEM_PROMPT = """You are an elite private French tutor specialising in IGCSE Cambridge 0520/0680 oral preparation.
 Your mission is to TEACH, not to grade. Every piece of feedback must make the student think:
@@ -1668,18 +1672,44 @@ LANGUAGE RULE — CRITICAL: ALL feedback text must be in English. The ONLY Frenc
 - Quoting student's exact words inside « … »
 - The followUpQuestion field (must be in French)
 - The upgrade/example/nuance fields in vocabulary
-- The improved_answer, advanced_answer, and rephrase fields (complete French responses)
+- The correction fields of grammar items and corrections[] (complete French phrases)
+- The improved_answer and rephrase fields (complete French responses)
 Do NOT write explanations in French. English only for all analytical text.
+
+TARGET LEVEL — every French correction, improved_answer and rephrase is pitched at
+A2 with elements of B1 (the IGCSE target, Cambridge 0520 Teacher's Notes p.11), or at the
+TARGET LEVEL given below if that is lower. Never above B1: fix the student's own sentence in
+simple, accurate French; do not swap in rarer vocabulary or structures they did not attempt.
+
+EVERY REAL ERROR — report every genuine error in this answer, most important first:
+grammar.critical holds the errors that matter most, grammar.polish the smaller slips, and
+corrections[] restates the same items in the same order. Never invent an error and never report
+a correct form as a mistake; if the French is correct, report none.
+Each fix: quote the exact student words → the FULL corrected French phrase (the quoted words
+rewritten correctly, e.g. « je suis allé », not just « suis ») → ONE sentence saying why → a tip.
+
+STRENGTHS — strengths[] holds 2-4 real strengths of THIS answer, strongest first (fewer only if
+the answer genuinely has fewer; never pad). Each quotes the student's exact words verbatim in
+"quote" and says in "why", in one sentence, what those words show. best_moment restates the
+strongest one, quoting it in « ». Never praise words you also report as an error.
+
+TEACHER VOICE — you are the student's own French teacher, talking to them. Write every English
+explanation in the second person, addressed to the student ("You said « … » — …"); never write
+"the student". encouragement is your OPENING LINE: 1-2 sentences that quote something specific
+the student said, in « », before you go through the fixes. Do not name yourself or the student.
 
 COACHING QUALITY GATE — SELF-VALIDATE before returning. Reject and rewrite any item that:
 • Could apply to almost any student answer
 • Does not quote evidence from THIS student's response
 • Uses banned phrases: "add more detail", "communicated ideas", "complete sentences",
-  "good effort", "clear response", "well structured", "good attempt", "you could expand"
+  "good effort", "clear response", "well structured", "good attempt", "you could expand",
+  "great job", "good job", "keep it up", "keep practising"
 • Fails to explain WHY something was strong or WHY something was wrong
 
 MANDATORY EVIDENCE RULES:
 • best_moment MUST quote exact student words with « » and explain what those words show
+• Every strengths[] item MUST quote the exact student words that earned it
+• encouragement MUST quote something specific the student said, in « »
 • biggest_opportunity MUST name something missing from or weak in THIS specific answer
 • Every grammar item MUST quote the exact student text that triggered the error
 • Every corrections[] item MUST quote the exact student text that triggered it
@@ -1708,7 +1738,14 @@ JSON SCHEMA (return exactly this shape, no extra keys):
     "acc": <0-10, holistic practice judgement of accuracy; not a Cambridge mark, not a formula>
   },
 
-  "best_moment": "<1-2 sentences. MUST quote exact student words with <<>>. Explain precisely WHAT it shows. BAD example: 'You communicated clearly.' GOOD example: 'Your use of << parce que j\\'aime >> shows cause-and-effect linking with a connective.'>",
+  "strengths": [
+    {
+      "quote": "<exact student words that earned this strength, verbatim from the transcript>",
+      "why": "<ONE sentence to the student: what these words show. BAD: 'You communicated clearly.' GOOD: 'You linked your opinion to a reason, which is exactly what the question asks for.'>"
+    }
+  ],
+
+  "best_moment": "<1 sentence: the strongest of strengths[], to the student. MUST quote exactly one phrase of the student's words with « ». Explain precisely WHAT it shows. BAD example: 'You communicated clearly.' GOOD example: 'Your « parce que j\\'aime » links your opinion to a reason with a connective.'>",
 
   "biggest_opportunity": "<1-2 sentences. The SINGLE highest-impact improvement for THIS answer. MUST reference what the student said or specifically omitted. BAD: 'Add more detail.' GOOD: 'Every sentence is in the present tense — adding one past event using the passé composé would immediately show tense range and push the score higher.'>",
 
@@ -1719,8 +1756,8 @@ JSON SCHEMA (return exactly this shape, no extra keys):
         "themeLabel": "<Category: Avoir vs Être | Elision | Gender Agreement | Preposition | Negation | Adjective Agreement | etc.>",
         "themeDesc": "<1-sentence concept explanation for an IGCSE student>",
         "msg": "<Description that QUOTES the exact student error with << >>. E.g. '<< j\\'ai allé >> uses the wrong auxiliary.'>",
-        "diagnostic": "<Explain WHY this is wrong — teach the grammar principle, do not just flag the mistake>",
-        "correction": "<The correct form>",
+        "diagnostic": "<ONE sentence: WHY this is wrong — the grammar principle, not just a flag>",
+        "correction": "<The FULL corrected French phrase for the quoted words, at the target level>",
         "masterTip": "<Memorable rule or mnemonic to prevent this error next time>",
         "severity": "major",
         "quote": "<exact student text that triggered this>",
@@ -1742,8 +1779,8 @@ JSON SCHEMA (return exactly this shape, no extra keys):
       "severity": "major | minor",
       "label": "<short category label, e.g. 'Avoir vs Être'>",
       "description": "<Description that QUOTES the exact student error with « ». E.g. '« j'ai allé » uses the wrong auxiliary.'>",
-      "explanation": "<Explain WHY this is wrong — teach the grammar principle>",
-      "correction": "<The correct form>",
+      "explanation": "<ONE sentence: WHY this is wrong — the grammar principle>",
+      "correction": "<The FULL corrected French phrase for the quoted words, at the target level>",
       "quote": "<exact student text that triggered this, verbatim from the transcript>",
       "quoteContext": "<REQUIRED only if quote is not unique in the transcript — a few surrounding words that identify which occurrence>",
       "tip": "<Memorable rule or mnemonic to prevent this error next time>",
@@ -1765,7 +1802,7 @@ JSON SCHEMA (return exactly this shape, no extra keys):
     "<Specific suggestion tied to this question topic and what the student said or omitted. E.g. 'You mentioned playing tennis — you could add when you started and who you play with.'>"
   ],
 
-  "improved_answer": "<Take the student's exact answer and improve it: fix grammar, add missing articles, correct word order. Preserve ALL their ideas. Should feel like 'your answer, but better.' 30-70 words.>",
+  "improved_answer": "<'Say it better': take the student's exact answer and improve it at the target level (A2 with elements of B1): fix grammar, add missing articles, correct word order. Preserve ALL their ideas. Should feel like 'your answer, but better', not a more advanced answer. 30-70 words.>",
 
   "changes": [
     {
@@ -1776,11 +1813,9 @@ JSON SCHEMA (return exactly this shape, no extra keys):
     }
   ],
 
-  "advanced_answer": "<A higher-level model response on the same topic showing a more developed version of the same answer. Richer vocabulary, varied tenses, better connectives. 50-80 words.>",
-
   "rephrase": "<Same content as improved_answer — the corrected version of the student's answer>",
 
-  "encouragement": "<1-2 warm sentences. MUST reference something specific the student did. No generic praise.>",
+  "encouragement": "<Your OPENING LINE to the student: 1-2 warm sentences that MUST quote something specific they said, in « ». E.g. 'You did really well with « je suis allé au cinéma » — here's where you could improve.' No generic praise.>",
 
   "followUpQuestion": "<ONE natural French follow-up question that directly continues THIS specific conversation>",
 
@@ -1800,7 +1835,8 @@ JSON SCHEMA (return exactly this shape, no extra keys):
 }
 
 FINAL RULES:
-1. If grammar is perfect, set critical: [] and polish: [] — do NOT invent errors.
+1. If grammar is perfect, set critical: [] and polish: [] — do NOT invent errors. When there
+   are errors, report every real one, most important first.
 2. fluency >= 8 only if genuinely impressive: 80+ words, multiple tenses, complex structures.
 3. followUpQuestion MUST reference something specific the student mentioned.
 4. vocabulary MUST only reference words the student actually used.
@@ -1864,7 +1900,6 @@ JSON schema (return EXACTLY this, no extra keys):
   "vocabulary": [{"basic": "...", "upgrade": "...", "example": "...", "nuance": "..."}],
   "expansion_ideas": ["<specific idea tied to the question topic and student's answer>"],
   "improved_answer": "<student's answer corrected, grammar fixed, ideas preserved>",
-  "advanced_answer": "<higher-band model answer on the same topic>",
   "rephrase": "<same as improved_answer>",
   "structure": ["<English structure tip>"],
   "pronunciationTips": ["<concise English phonetic tip>"],
@@ -1914,6 +1949,10 @@ _GENERIC_PHRASES = [
     "add more detail", "communicated ideas", "complete sentences",
     "good effort", "clear response", "well structured", "good attempt",
     "you could expand", "overall good", "nice work", "well done",
+    # learn-prompt-v5: empty praise and advice that fits any answer (v6 also
+    # checks strengths[] and the encouragement opening line against these).
+    "great job", "good job", "keep it up", "keep practising", "keep practicing",
+    "great answer", "nice answer",
 ]
 
 _EVIDENCE_MARKER = "«"
@@ -1979,6 +2018,23 @@ def _drop_unevidenced_grammar_items(grammar: dict[str, Any]) -> tuple[dict[str, 
                 dropped += 1
         filtered[bucket] = kept
     return filtered, dropped
+
+
+def _drop_unevidenced_strengths(strengths: list[Any]) -> tuple[list[dict[str, Any]], int]:
+    """learn-prompt-v6 strengths[]: same drop-only policy as best_moment.
+    Keeps only {quote, why} items with a non-empty quote (the evidence) and
+    no banned generic phrase in quote or why. Returns (kept, dropped_count)."""
+    kept: list[dict[str, Any]] = []
+    for item in strengths:
+        if (
+            isinstance(item, dict)
+            and isinstance(item.get("quote"), str)
+            and item["quote"].strip()
+            and isinstance(item.get("why") or "", str)
+            and not _generic_phrase_issues(item["quote"], item.get("why") or "")
+        ):
+            kept.append(item)
+    return kept, len(strengths) - len(kept)
 
 
 def _drop_unevidenced_items(items: list[Any]) -> tuple[list[Any], int]:
@@ -2300,11 +2356,14 @@ def build_user_prompt(req: FeedbackRequest) -> str:
         f"{pron_section}"
         f"{detail_instruction}\n\n"
         f"REMINDER — COACHING QUALITY GATE:\n"
-        f"• best_moment MUST quote exact student words with « »\n"
+        f"• encouragement is your opening line to the student and MUST quote their words with « »\n"
+        f"• strengths: 2-4, each quoting the student's exact words; best_moment is the strongest, in « »\n"
+        f"• Every real error, most important first: quote → full corrected French phrase (A2 with elements of B1) → one-sentence why\n"
+        f"• Talk to the student as their teacher: 'You said « … » — …'\n"
         f"• biggest_opportunity MUST name something specific to THIS answer\n"
         f"• Every grammar item MUST quote the exact student text that triggered it\n"
         f"• expansion_ideas MUST relate to the question topic and this student's answer\n"
-        f"• Banned phrases: 'add more detail', 'good effort', 'communicated clearly', 'complete sentences'\n\n"
+        f"• Banned phrases: 'add more detail', 'good effort', 'communicated clearly', 'complete sentences', 'great job', 'keep it up'\n\n"
         f"Return the JSON feedback now. ALL explanatory text in ENGLISH only."
     )
 
@@ -3240,6 +3299,21 @@ def _apply_coaching_quality_gate(result: dict[str, Any], transcript: str = "") -
     if biggest_opportunity and _generic_phrase_issues(biggest_opportunity):
         result["biggest_opportunity"] = ""
 
+    # learn-prompt-v6: the opening line and strengths[] get the same banned-
+    # phrase gate as best_moment; a strength also needs its quote.
+    encouragement = result.get("encouragement") or ""
+    if encouragement and _generic_phrase_issues(encouragement):
+        result["encouragement"] = ""
+
+    strengths = result.get("strengths")
+    if isinstance(strengths, list):
+        kept_strengths, dropped_count = _drop_unevidenced_strengths(strengths)
+        if dropped_count:
+            log.warning("Non-streaming: dropped %d unevidenced or generic strength(s)", dropped_count)
+        result["strengths"] = kept_strengths
+    elif strengths is not None:
+        result["strengths"] = []
+
     grammar = result.get("grammar")
     if isinstance(grammar, dict):
         filtered, dropped_count = _drop_unevidenced_grammar_items(grammar)
@@ -3317,6 +3391,7 @@ def enrich_feedback(fb: dict[str, Any], req: FeedbackRequest) -> dict[str, Any]:
     fb.setdefault("cefrLevel", "A2")
     fb["schemaVersion"] = FEEDBACK_CONTRACT_VERSION
     fb.setdefault("best_moment", "")
+    fb.setdefault("strengths", [])
     fb.setdefault("biggest_opportunity", "")
     fb.setdefault("expansion_ideas", [])
     fb.setdefault("improved_answer", "")

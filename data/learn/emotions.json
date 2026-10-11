@@ -1,0 +1,601 @@
+{
+  "schemaVersion": "learn-demands-v1",
+  "topicKey": "emotions",
+  "entries": [
+    {
+      "questionId": "emo_01",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe how you feel today and give at least one reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_02",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name at least two things that make you happy, such as people, activities or moments.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_03",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say what makes you angry and how you react, with at least one example.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_04",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you were frightened recently and describe it in the past tense, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_05",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how you tell your friends about your feelings, with at least two ways.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_06",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether school makes you stressed and explain how you cope, with at least one strategy.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_07",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how you manage everyday stress, with at least two strategies.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_08",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether it is important to talk about emotions and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_09",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe a moment of great joy in the past tense, with at least three details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_10",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how you comfort a sad friend, with at least two things you do or say.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_11",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether social media affects your emotions and explain how, with at least one example.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_12",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "past",
+          "present"
+        ],
+        "structures": [
+          "imperfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare how you handled emotions when younger with how you do now, with at least two differences.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_13",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether boys and girls express emotions differently and give at least two reasons or examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_14",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain the link between emotions and physical health, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_15",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether emotional intelligence should be taught at school and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_16",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you have felt nostalgia and describe it in the past tense, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_17",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how you cope with disappointment, with at least two strategies.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_18",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether people should always smile and look happy, and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_19",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how empathy affects relationships, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_20",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say how far emotions influence important decisions and give at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_21",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name at least two things that make you anxious and say how you feel.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_22",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how you can tell that someone is sad without being told, with at least two signs.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_23",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you are more optimistic or pessimistic and give at least two reasons or examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_24",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how you handle jealousy, with at least two strategies.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_25",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain what gratitude means to you, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_26",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you cry easily and say when it happens, with at least one example.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_27",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how music helps you manage your emotions, with at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_28",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how you make peace after an argument, with at least two steps.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_29",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you prefer to talk about feelings face to face or by message and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    },
+    {
+      "questionId": "emo_30",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say how far we should let emotions guide our actions and give at least two examples.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
+      }
+    }
+  ]
+}

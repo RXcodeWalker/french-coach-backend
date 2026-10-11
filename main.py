@@ -115,9 +115,10 @@ GROQ_REASONING_EFFORT = _model_config.GROQ_REASONING_EFFORT
 # call site asking for 300 tokens could otherwise have all 300 eaten by the
 # thinking phase and return empty. Every budget is topped up by this much.
 GROQ_REASONING_TOKEN_RESERVE = _model_config.GROQ_REASONING_TOKEN_RESERVE
-# Measured ~23s for a full feedback prompt against gemini-3.5-flash; the health
-# probe sends a trivial one but still pays the model's thinking latency.
-GEMINI_PROBE_TIMEOUT_SEC = float(os.getenv("GEMINI_PROBE_TIMEOUT_SEC", "12"))
+# Measured ~13s for a full feedback prompt against gemini-3.6-flash (~23s on 3.5);
+# the health probe sends a trivial one but still pays the thinking latency, and a
+# cold-started free-tier instance adds more, so the timeout sits well above 12s.
+GEMINI_PROBE_TIMEOUT_SEC = float(os.getenv("GEMINI_PROBE_TIMEOUT_SEC", "20"))
 SUPABASE_URL        = os.getenv("SUPABASE_URL", "").strip()
 SUPABASE_KEY        = os.getenv("SUPABASE_SERVICE_KEY", "").strip()
 SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "").strip()

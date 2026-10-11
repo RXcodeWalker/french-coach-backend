@@ -94,7 +94,7 @@ GEMINI_API_KEY      = os.getenv("GEMINI_API_KEY", "").strip()
 # The free tier returns 429 with `limit: 0` for gemini-2.0-flash / -flash-lite
 # (not available to new keys), and gemini-1.5-flash / gemini-2.5-flash-lite /
 # gemini-2.5-flash now 404 ("no longer available to new users") as Google
-# retires the 2.x line. gemini-3.5-flash is the current callable default;
+# retires the 2.x line. gemini-3.6-flash is the current callable default (3.5-flash is deprecated and only auto-redirects);
 # override via env if Google moves the goalposts again.
 GEMINI_MODEL        = _model_config.GEMINI_MODEL
 # Groq retired the Llama chat line: llama-3.3-70b-versatile now 404s with

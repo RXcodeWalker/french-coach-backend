@@ -200,7 +200,8 @@ def _post_audio(**data):
 
 @pytest.mark.parametrize(
     "purpose,feature",
-    [(None, "transcribe"), ("learn", "learn_transcribe"), ("exam_turn", "exam_turn_transcribe")],
+    [(None, "transcribe"), ("learn", "learn_transcribe"), ("exam_turn", "exam_turn_transcribe"),
+     ("junior", "junior_transcribe")],
 )
 def test_purpose_selects_the_quota_feature(_routed, purpose, feature):
     charged, _ = _routed

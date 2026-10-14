@@ -21,6 +21,6 @@ that references it. The main repo's git history is no safety net here.
   default there, nowhere else): `GROQ_WHISPER_MODEL` (default `whisper-large-v3`) is what
   `main._groq_whisper` sends, so never put a literal model string in a call site. `/api/transcribe`
   charges a quota feature chosen by its `purpose` form field (`learn` → `learn_transcribe`,
-  `exam_turn` → `exam_turn_transcribe`, default `transcribe`); any new feature must be seeded in
+  `exam_turn` → `exam_turn_transcribe`, `junior` → `junior_transcribe`, default `transcribe`); any new feature must be seeded in
   `ai_quota_limits` by a migration first (FK), and `lib/guest.py`'s `_AUDIO_FEATURES` must list it so
   guests keep the audio backstop.

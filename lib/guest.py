@@ -36,7 +36,7 @@ from lib.auth import verify_supabase_jwt
 GUEST_PREFIX = "guest:"
 _DEFAULT_LIMIT = 5
 _DEFAULT_AUDIO_LIMIT = 8
-_AUDIO_FEATURES = {"transcribe", "learn_transcribe", "exam_turn_transcribe", "pronunciation"}
+_AUDIO_FEATURES = {"transcribe", "learn_transcribe", "exam_turn_transcribe", "junior_transcribe", "pronunciation"}
 _MAX_TRACKED = 50_000  # hard bound on memory if someone sprays IPs
 
 _lock = threading.Lock()

@@ -4390,6 +4390,8 @@ _TRANSCRIBE_QUOTA_FEATURE = {
     "transcribe": "transcribe",
     "learn": "learn_transcribe",
     "exam_turn": "exam_turn_transcribe",
+    # Junior track (junior-track §2): seeded by migration 20261014090000.
+    "junior": "junior_transcribe",
 }
 
 

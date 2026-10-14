@@ -74,7 +74,7 @@ def test_every_charged_feature_is_seeded():
     missing = features - _seeded_features()
     assert not missing, f"quota features with no ai_quota_limits row in any migration: {sorted(missing)}"
     assert {"pronunciation", "transcribe", "feedback", "roleplay_turn", "exam_turn_feedback"} <= features
-    assert {"learn_transcribe", "exam_turn_transcribe"} <= features
+    assert {"learn_transcribe", "exam_turn_transcribe", "junior_transcribe"} <= features
 
 
 def test_the_collector_sees_real_call_sites():

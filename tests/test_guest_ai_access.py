@@ -62,6 +62,12 @@ def test_guest_quota_caps_per_feature_and_replays_are_free(monkeypatch):
         run("t2", "pronunciation")
 
 
+def test_every_transcribe_purpose_gets_the_guest_audio_backstop():
+    # A guest's Whisper call (Learn, exam turn, Junior) is capped by
+    # GUEST_AI_AUDIO_LIMIT, not the looser text limit.
+    assert set(main._TRANSCRIBE_QUOTA_FEATURE.values()) <= guest._AUDIO_FEATURES
+
+
 def test_guest_never_touches_supabase():
     # db=None would 503 for a real user; a guest must not care.
     assert asyncio.run(consume_ai_quota_or_503(None, "guest:9.9.9.9", "feedback", "k"))["granted"]

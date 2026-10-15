@@ -149,6 +149,126 @@ def test_feedback_cache_key_differs_across_difficulty_tiers():
     assert beginner_key != no_tier_key
 
 
+
+# ── learn-prompt-v7: the marking level is real (Learn two dials, Batch 1) ────
+
+_TIER_TARGETS = {"beginner": "A1", "intermediate": "A2", "advanced": "B1", "expert": "B2"}
+
+_DESCRIBE_FAMILY = {
+    "cognitiveDemand": "describe",
+    "timeFrames": ["present"],
+    "structures": [],
+    "responseLoad": "extended",
+    "lexicalReach": "everyday",
+    "sufficientAnswer": "Describe family members.",
+}
+
+
+def _build_req_with_demands(monkeypatch, difficulty_context=None):
+    import main
+
+    monkeypatch.setitem(main.LEARN_DEMANDS_BY_QUESTION_ID, "fam_01", _DESCRIBE_FAMILY)
+    return main.FeedbackRequest(
+        question="Décris ta famille.",
+        transcript="Ma famille est grande.",
+        question_id="fam_01",
+        demands_version=main.LEARN_DEMANDS_VERSION,
+        difficulty_context=difficulty_context,
+    )
+
+
+def test_each_tier_renders_its_target_in_the_target_marking_and_reminder_lines(monkeypatch):
+    import main
+
+    for tier, target in _TIER_TARGETS.items():
+        prompt = main.build_user_prompt(_build_req_with_demands(monkeypatch, {"tier": tier}))
+        assert f"TARGET LEVEL: CEFR {target}." in prompt, tier
+        assert f"Marking level: {target}" in prompt, tier
+        assert f"full corrected French phrase ({target}) → one-sentence why" in prompt, tier
+        assert main._TIER_PROMPTS[tier]["coachingTone"] in prompt, tier
+        assert main._TIER_PROMPTS[tier]["coachingRubric"] in prompt, tier
+
+
+def test_improved_answer_schema_line_names_the_target_level_not_a_fixed_one():
+    import main
+
+    line = next(l for l in main.SYSTEM_PROMPT.splitlines() if '"improved_answer":' in l)
+    assert "at the TARGET LEVEL" in line
+    assert "A2" not in line and "B1" not in line
+
+
+def test_no_default_target_leaks_into_an_expert_prompt(monkeypatch):
+    import main
+
+    for req in (_build_req({"tier": "expert"}), _build_req_with_demands(monkeypatch, {"tier": "expert"})):
+        prompt = main.build_user_prompt(req)
+        assert "A2 with elements of B1" not in prompt
+        assert "elements of B1" not in prompt
+
+
+def test_default_prompt_is_unchanged_in_meaning(monkeypatch):
+    """Exam standard (no tier — what every current client sends) still marks at A2 with
+    elements of B1, with no invented tone or rubric. The only v6 → v7 change in the
+    rendered default prompt is the demands line's label (session target → Marking level)."""
+    import main
+
+    prompt = main.build_user_prompt(_build_req(None))
+    assert "TARGET LEVEL: CEFR A2 with elements of B1." in prompt
+    assert "full corrected French phrase (A2 with elements of B1) → one-sentence why" in prompt
+    assert "Coaching tone" not in prompt
+    assert "Mark against" not in prompt
+
+    with_demands = main.build_user_prompt(_build_req_with_demands(monkeypatch, None))
+    assert "Demand level: A1   |   Marking level: A2 with elements of B1" in with_demands
+
+
+def test_tier_rubrics_are_level_relative_and_carry_no_word_count():
+    import re
+    import main
+
+    for tier, target in _TIER_TARGETS.items():
+        rubric = main._TIER_PROMPTS[tier]["coachingRubric"]
+        assert rubric.startswith(f"Mark against {target} (CEFR: "), tier
+        assert f"A strong {target} answer" in rubric, tier
+        assert "Scores measure the answer against this TARGET LEVEL" in rubric, tier
+        assert not re.search(r"\d+\s*words", rubric), tier
+        assert "Penalise" not in rubric, tier
+        assert main._TIER_PROMPTS[tier]["cefrTarget"] == target
+    assert main._DEFAULT_DIFFICULTY_PROMPT == {"cefrTarget": "A2 with elements of B1"}
+
+
+# Shared with deriveDemandLevel.test.ts (Learn two dials, Batch 2): the same inputs,
+# scores and levels, so the Python port and the TS original apply the same describe
+# floor (past/future describe → at least 3.0, A2).
+DESCRIBE_FLOOR_CASES = [
+    # (cognitiveDemand, timeFrames, responseLoad, lexicalReach, structures) -> (score, level)
+    (("describe", ["past"], "developed", "everyday", []), (3.0, "A2")),
+    (("describe", ["future"], "short", "everyday", []), (3.0, "A2")),
+    (("describe", ["present", "past"], "extended", "everyday", []), (3.0, "A2")),
+    (("describe", ["present", "past", "future"], "extended", "abstract", []), (3.5, "A2")),
+    (("describe", ["present"], "extended", "everyday", []), (2.75, "A1")),
+    (("describe", ["present"], "short", "everyday", []), (1.25, "A1")),
+    (("explain", ["past"], "short", "everyday", []), (3.25, "A2")),
+    (("hypothesize", ["conditional"], "extended", "abstract", ["conditional"]), (10.0, "B2")),
+]
+
+
+def test_python_describe_floor_matches_the_ts_cases():
+    import main
+
+    for (demand, frames, load, reach, structures), (score, level) in DESCRIBE_FLOOR_CASES:
+        demands = {
+            "cognitiveDemand": demand,
+            "timeFrames": frames,
+            "responseLoad": load,
+            "lexicalReach": reach,
+            "structures": structures,
+        }
+        actual = main.derive_demand_score(demands)
+        assert actual == score, (demands, actual)
+        assert main.demand_score_to_level(actual) == level, demands
+    assert main._DESCRIBE_PAST_FUTURE_FLOOR == 3.0
+
 if __name__ == "__main__":
     test_build_user_prompt_byte_identical_when_difficulty_context_is_none()
     test_build_user_prompt_differs_beginner_vs_expert()
@@ -157,4 +277,7 @@ if __name__ == "__main__":
     test_known_tier_parses_and_absent_context_is_none()
     test_multipart_with_question_field_still_extracts_skill_and_difficulty_context()
     test_feedback_cache_key_differs_across_difficulty_tiers()
-    print("All test_difficulty_context tests passed.")
+    test_improved_answer_schema_line_names_the_target_level_not_a_fixed_one()
+    test_tier_rubrics_are_level_relative_and_carry_no_word_count()
+    test_python_describe_floor_matches_the_ts_cases()
+    print("All test_difficulty_context tests passed (run under pytest for the monkeypatch tests).")

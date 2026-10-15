@@ -8,6 +8,13 @@ capped at 4. FEEDBACK_CONTRACT_VERSION is 3 for the additive strengths[] key.
 advanced_answer still ships as "" and cefrLevel is still requested, because the
 frontend's zod schema requires it (src/services/api/feedbackSchema.ts).
 
+learn-prompt-v7 (Learn two dials, Batch 1) keeps all of the above and makes the
+marking level real: corrections, improved_answer and rephrase are pitched at the
+TARGET LEVEL the user prompt names (default A2 with elements of B1; above B1 only
+at B2), the level never changes which errors are reported or the demand verdicts,
+and the fluency rule is relative to the level instead of a fixed word count. The
+file keeps its v6 name because CLAUDE.md points at it.
+
 Run: pytest backend/tests/test_learn_prompt_v6.py
 """
 
@@ -27,11 +34,11 @@ import main
 # SYSTEM_PROMPT is half of what LEARN_PROMPT_VERSION versions; the user-prompt
 # half is pinned in test_learn_demands.py. Bump LEARN_PROMPT_VERSION and this
 # hash together.
-SYSTEM_PROMPT_HASH = "5f73d750bd22cb2098151dcc551df1194e123fe52caee18b9cce3510b709a243"
+SYSTEM_PROMPT_HASH = "6e95a99070b40211171d5e4cde4442921697becd4cddad185848c7b54a706057"
 
 
-def test_prompt_version_is_v6():
-    assert main.LEARN_PROMPT_VERSION == "learn-prompt-v6"
+def test_prompt_version_is_v7():
+    assert main.LEARN_PROMPT_VERSION == "learn-prompt-v7"
 
 
 def test_system_prompt_snapshot():
@@ -53,8 +60,31 @@ def test_system_prompt_asks_for_every_real_error_at_the_igcse_target():
     assert "Never invent an error" in p
     assert "A2 with elements of B1" in p
     assert "Teacher's Notes p.11" in p
-    assert "Never above B1" in p
+    assert "Never go above B1 unless the TARGET LEVEL is B2" in p
     assert "ONE sentence" in p
+
+
+def test_system_prompt_pitches_french_at_the_target_level_not_a_fixed_one():
+    p = main.SYSTEM_PROMPT
+    assert "pitched at the TARGET LEVEL" in p
+    assert "improve it at the TARGET LEVEL: fix grammar" in p
+    # The default is named once, as the default — never as the only level.
+    assert p.count("A2 with elements of B1") == 1
+    assert "by default\nit is A2 with elements of B1" in p
+
+
+def test_system_prompt_keeps_errors_and_demand_verdicts_independent_of_the_level():
+    p = main.SYSTEM_PROMPT
+    assert "MARKING LEVEL" in p
+    assert "report every real error at every TARGET LEVEL" in p
+    assert "none skipped because\n  the level is gentle, none added because it is strict" in p
+    assert "answered_the_question, demands_met and demands_missed: judge these only against the question's\n  own QUESTION DEMANDS, never against the TARGET LEVEL" in p
+
+
+def test_fluency_rule_is_relative_to_the_target_level():
+    p = main.SYSTEM_PROMPT
+    assert "80+ words" not in p
+    assert "2. fluency >= 8 only if genuinely impressive for the TARGET LEVEL" in p
 
 
 def test_no_prompt_caps_fixes_at_two():

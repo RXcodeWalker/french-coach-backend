@@ -631,26 +631,35 @@ class DemandSignals(BaseModel):
 # An unknown tier or any extra key is a 422 (extra="forbid").
 DifficultyTierName = Literal["beginner", "intermediate", "advanced", "expert"]
 
+# The coachingRubric sentences describe a strong answer AT each CEFR level, paraphrased
+# from the Council of Europe's CEFR Companion Volume (2020): the global scale (Common
+# Reference Levels), Overall oral production, Sustained monologue (describing
+# experience; putting a case), Coherence and cohesion, and Grammatical accuracy. They
+# carry no word count: how long an answer should be is the question's own responseLoad
+# (QUESTION DEMANDS), not the marking level. Each says that the scores measure the answer
+# against the TARGET LEVEL, so the same answer can score higher at A1 than at B2 — but
+# the errors reported and the demand verdicts never change with the level (SYSTEM_PROMPT,
+# MARKING LEVEL). The examiner prompt never reads this table.
 _TIER_PROMPTS: dict[str, dict[str, str]] = {
     "beginner": {
         "cefrTarget": "A1",
         "coachingTone": "warm and encouraging — celebrate every correct sentence; frame corrections as simple tips, not failures",
-        "coachingRubric": "Evaluate only against A1 standards. Correct present-tense sentences, basic vocabulary, and attempted communication are sufficient for a strong score. Do not penalise missing tenses or complex structures — these are not expected.",
+        "coachingRubric": "Mark against A1 (CEFR: simple, mainly isolated phrases about people and places, with limited control of a few simple structures). A strong A1 answer gives relevant information about the question in short, simple phrases that can be understood. Scores measure the answer against this TARGET LEVEL: past or future tenses and complex structures are not expected at A1, so their absence does not lower the scores.",
     },
     "intermediate": {
         "cefrTarget": "A2",
         "coachingTone": "constructive and motivating — highlight what was communicated, then offer one or two clear improvements",
-        "coachingRubric": "Evaluate against A2 standards. Reward any attempt at past or future tense. Note repetitive vocabulary and overly short answers as areas to improve, but do not penalise absence of complex structures.",
+        "coachingRubric": "Mark against A2 (CEFR: a simple description of people, routines, likes and dislikes, past activities and plans, as a short series of simple phrases and sentences linked with simple connectors like « et », « mais », « parce que »; simple structures used correctly, with basic mistakes that still leave the meaning clear). A strong A2 answer answers the question in linked simple sentences and refers to the past or future where the question invites it. Scores measure the answer against this TARGET LEVEL: complex structures are not expected at A2, so their absence does not lower the scores.",
     },
     "advanced": {
         "cefrTarget": "B1",
         "coachingTone": "precise and exam-focused — reference IGCSE mark-scheme language; reward sophistication; directly name weak structures",
-        "coachingRubric": "Evaluate against B1 standards. Penalise answers under 40 words, missing tense variety, repetitive vocabulary, and unsupported opinions. Reward connectors, specific vocabulary, and attempts at complex structures.",
+        "coachingRubric": "Mark against B1 (CEFR: a reasonably fluent, straightforward description presented as a linear sequence of points; describes experiences, events, hopes and plans, and briefly gives reasons and explanations for opinions; reasonable accuracy in familiar contexts, with errors that do not hide the meaning). A strong B1 answer is connected, gives opinions with reasons, and moves between time frames where the question invites it. Scores measure the answer against this TARGET LEVEL: an answer that would be strong at A2 is only adequate at B1.",
     },
     "expert": {
         "cefrTarget": "B2",
         "coachingTone": "demanding and examiner-like — challenge vague responses, flag underdeveloped arguments, demand B2-register vocabulary; short answers are unacceptable",
-        "coachingRubric": "Evaluate against B2 standards. Penalise simple sentence structures, absence of subjunctive when prompted, single-perspective answers, shallow justification, and anglicisms. A short or simple answer is a failing response, not a partial one.",
+        "coachingRubric": "Mark against B2 (CEFR: clear, detailed descriptions that expand and support ideas with relevant points and examples; develops an argument, explaining the advantages and disadvantages of options and speculating about hypothetical situations; a relatively high degree of grammatical control, with no errors that cause misunderstanding). A strong B2 answer develops a point of view with supporting detail and examples, using a range of structures with good control. Scores measure the answer against this TARGET LEVEL: an answer that would be strong at B1 is only adequate at B2.",
     },
 }
 
@@ -789,13 +798,20 @@ _DEMAND_BASE_SCORE = {
 _DEMAND_STRUCTURE_BONUS_SET = {"subjunctive", "conditional", "comparison"}
 _DEMAND_STRUCTURE_BONUS_PER_MATCH = 0.25
 _DEMAND_STRUCTURE_BONUS_CAP = 0.75
+# A describe question set in the past or future is at least A2 (3.0): the CEFR Companion
+# Volume (2020) puts "past activities and personal experiences" and "plans and
+# arrangements" at A2 on Sustained monologue: describing experience, so the A1 base
+# score (2.0) under-rates them. Same rule and constant as deriveDemandLevel.ts's
+# describe floor (Learn two-dials Batch 2).
+_DESCRIBE_PAST_FUTURE_FLOOR = 3.0
 
 
 def derive_demand_score(demands: dict[str, Any]) -> float:
     """Python port of src/domain/learn/demand/deriveDemandLevel.ts::deriveDemandScore
-    — kept byte-for-byte equivalent in logic (not importable: TS -> Python).
-    Used only for the prompt's "Demand level" line; the client independently
-    computes and displays the same value."""
+    — kept byte-for-byte equivalent in logic (not importable: TS -> Python),
+    including the past/future describe floor. Used only for the prompt's
+    "Demand level" line; the client independently computes and displays the
+    same value."""
     score = _DEMAND_BASE_SCORE.get(demands.get("cognitiveDemand"), 0.0)
 
     time_frames = demands.get("timeFrames") or []
@@ -816,6 +832,9 @@ def derive_demand_score(demands: dict[str, Any]) -> float:
 
     if demands.get("lexicalReach") == "abstract":
         score += 0.25
+
+    if demands.get("cognitiveDemand") == "describe" and ("past" in time_frames or "future" in time_frames):
+        score = max(score, _DESCRIBE_PAST_FUTURE_FLOOR)
 
     return max(0.0, min(score, 10.0))
 
@@ -1654,7 +1673,7 @@ JSON schema:
 # DETERMINISTIC SIGNALS rendering changes in a way that changes the rendered
 # prompt — mirrors src/domain/igcse/judgement/version.ts's SCORING_PROMPT_VERSION
 # discipline; paired with a snapshot test in backend/tests/.
-LEARN_PROMPT_VERSION = "learn-prompt-v6"
+LEARN_PROMPT_VERSION = "learn-prompt-v7"
 
 # Tracks the wire *shape* of the /v3 and /stream feedback response — separate
 # from LEARN_PROMPT_VERSION, which tracks prompt text. Bump only when the
@@ -1678,10 +1697,18 @@ LANGUAGE RULE — CRITICAL: ALL feedback text must be in English. The ONLY Frenc
 - The improved_answer and rephrase fields (complete French responses)
 Do NOT write explanations in French. English only for all analytical text.
 
-TARGET LEVEL — every French correction, improved_answer and rephrase is pitched at
-A2 with elements of B1 (the IGCSE target, Cambridge 0520 Teacher's Notes p.11), or at the
-TARGET LEVEL given below if that is lower. Never above B1: fix the student's own sentence in
-simple, accurate French; do not swap in rarer vocabulary or structures they did not attempt.
+TARGET LEVEL — the TARGET LEVEL given below is the level this answer is marked at; by default
+it is A2 with elements of B1 (the IGCSE target, Cambridge 0520 Teacher's Notes p.11). Every
+French correction, improved_answer and rephrase is pitched at the TARGET LEVEL: fix the student's
+own sentence in accurate French at that level; never swap in vocabulary or structures far beyond
+what they attempted. Never go above B1 unless the TARGET LEVEL is B2.
+
+MARKING LEVEL — the TARGET LEVEL sets only how high the bar is for the scores and the level of
+the French you write. It never changes:
+• which errors you report: report every real error at every TARGET LEVEL — none skipped because
+  the level is gentle, none added because it is strict;
+• answered_the_question, demands_met and demands_missed: judge these only against the question's
+  own QUESTION DEMANDS, never against the TARGET LEVEL.
 
 EVERY REAL ERROR — report every genuine error in this answer, most important first:
 grammar.critical holds the errors that matter most, grammar.polish the smaller slips, and
@@ -1804,7 +1831,7 @@ JSON SCHEMA (return exactly this shape, no extra keys):
     "<Specific suggestion tied to this question topic and what the student said or omitted. E.g. 'You mentioned playing tennis — you could add when you started and who you play with.'>"
   ],
 
-  "improved_answer": "<'Say it better': take the student's exact answer and improve it at the target level (A2 with elements of B1): fix grammar, add missing articles, correct word order. Preserve ALL their ideas. Should feel like 'your answer, but better', not a more advanced answer. 30-70 words.>",
+  "improved_answer": "<'Say it better': take the student's exact answer and improve it at the TARGET LEVEL: fix grammar, add missing articles, correct word order. Preserve ALL their ideas. Should feel like 'your answer, but better', not a more advanced answer. 30-70 words.>",
 
   "changes": [
     {
@@ -1839,7 +1866,8 @@ JSON SCHEMA (return exactly this shape, no extra keys):
 FINAL RULES:
 1. If grammar is perfect, set critical: [] and polish: [] — do NOT invent errors. When there
    are errors, report every real one, most important first.
-2. fluency >= 8 only if genuinely impressive: 80+ words, multiple tenses, complex structures.
+2. fluency >= 8 only if genuinely impressive for the TARGET LEVEL: developed, linked and
+   controlled well beyond what that level needs — not a fixed word count or tense checklist.
 3. followUpQuestion MUST reference something specific the student mentioned.
 4. vocabulary MUST only reference words the student actually used.
 5. Output raw JSON only — nothing outside the JSON object.
@@ -2322,7 +2350,7 @@ def build_user_prompt(req: FeedbackRequest) -> str:
             f"- Demand level: {demand_level}"
         )
         if target_level:
-            demands_section += f"   |   Learner's session target: {target_level}"
+            demands_section += f"   |   Marking level: {target_level}"
         if sufficient_answer:
             demands_section += f"\n\nA complete answer must: {sufficient_answer}"
 
@@ -2360,7 +2388,7 @@ def build_user_prompt(req: FeedbackRequest) -> str:
         f"REMINDER — COACHING QUALITY GATE:\n"
         f"• encouragement is your opening line to the student and MUST quote their words with « »\n"
         f"• strengths: 2-4, each quoting the student's exact words; best_moment is the strongest, in « »\n"
-        f"• Every real error, most important first: quote → full corrected French phrase (A2 with elements of B1) → one-sentence why\n"
+        f"• Every real error, most important first: quote → full corrected French phrase ({difficulty['cefrTarget']}) → one-sentence why\n"
         f"• Talk to the student as their teacher: 'You said « … » — …'\n"
         f"• biggest_opportunity MUST name something specific to THIS answer\n"
         f"• Every grammar item MUST quote the exact student text that triggered it\n"

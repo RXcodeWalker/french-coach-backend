@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ.pop("AZURE_SPEECH_KEY", None)
 os.environ.pop("AZURE_SPEECH_REGION", None)
 
-LEARN_PROMPT_FIXTURE_HASH = "c0388244f6746f204f1e5bd709ba053eb75d1fedd16beb88b77854c0c69379be"
+LEARN_PROMPT_FIXTURE_HASH = "2b7782c07b1e46898c52dc6782844c16fc6ffb0f104c6795dabe37c9f2f4220a"
 
 # The two tests below pin numbers/prompt bytes derived from ONE demands entry. They used to
 # read fam_01 live from the corpus, so any content edit to fam_01 (Learn Batch 3b re-tagged
@@ -159,7 +159,8 @@ def test_build_user_prompt_renders_demands_section_when_resolved():
     assert "QUESTION DEMANDS" in prompt
     assert "What the learner must do: describe" in prompt
     assert "Demand level: A1" in prompt
-    assert "Learner's session target: A2" in prompt
+    assert "Marking level: A2" in prompt
+    assert "session target" not in prompt
     assert "DETERMINISTIC SIGNALS" in prompt
     assert "word count: 4" in prompt
     assert "justification markers: absent" in prompt

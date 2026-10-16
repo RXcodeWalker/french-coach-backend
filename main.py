@@ -632,34 +632,39 @@ class DemandSignals(BaseModel):
 DifficultyTierName = Literal["beginner", "intermediate", "advanced", "expert"]
 
 # The coachingRubric sentences describe a strong answer AT each CEFR level, paraphrased
-# from the Council of Europe's CEFR Companion Volume (2020): the global scale (Common
-# Reference Levels), Overall oral production, Sustained monologue (describing
-# experience; putting a case), Coherence and cohesion, and Grammatical accuracy. They
+# from the Council of Europe's CEFR scales (2001, carried into the Companion Volume 2020):
+# Overall oral production, Sustained monologue (describing experience; putting a case),
+# and Table 3's accuracy column (qualitative aspects of spoken language use). Checked
+# against the published descriptor wording on 2026-10-16. They
 # carry no word count: how long an answer should be is the question's own responseLoad
 # (QUESTION DEMANDS), not the marking level. Each says that the scores measure the answer
 # against the TARGET LEVEL, so the same answer can score higher at A1 than at B2 — but
 # the errors reported and the demand verdicts never change with the level (SYSTEM_PROMPT,
 # MARKING LEVEL). The examiner prompt never reads this table.
+# The 7-8 / 8.5+ / under-5 anchors are UNVALIDATED practice-score anchors, not Cambridge
+# marks: without them the model kept the SYSTEM_PROMPT's absolute "most answers 4-6" scale
+# and scored a strong answer LOWER at A2 than at B2 (live check, 2026-10-16). Exam standard
+# (no tier) gets no anchor, so its marking is unchanged.
 _TIER_PROMPTS: dict[str, dict[str, str]] = {
     "beginner": {
         "cefrTarget": "A1",
         "coachingTone": "warm and encouraging — celebrate every correct sentence; frame corrections as simple tips, not failures",
-        "coachingRubric": "Mark against A1 (CEFR: simple, mainly isolated phrases about people and places, with limited control of a few simple structures). A strong A1 answer gives relevant information about the question in short, simple phrases that can be understood. Scores measure the answer against this TARGET LEVEL: past or future tenses and complex structures are not expected at A1, so their absence does not lower the scores.",
+        "coachingRubric": "Mark against A1 (CEFR: simple, mainly isolated phrases about people and places, with limited control of a few simple structures). A strong A1 answer gives relevant information about the question in short, simple phrases that can be understood. Scores measure the answer against this TARGET LEVEL, not against an absolute scale: an answer that fully meets A1 for this question scores about 7-8, one clearly beyond A1 scores 8.5 or more, and one well below A1 scores under 5 — so the same answer scores higher at a lower TARGET LEVEL. Complex structures are not expected at A1, so their absence never lowers a score — and when they are used, they push the scores up. A wrong tense is still a reported error (the question decides which time frame is needed), only scored gently.",
     },
     "intermediate": {
         "cefrTarget": "A2",
-        "coachingTone": "constructive and motivating — highlight what was communicated, then offer one or two clear improvements",
-        "coachingRubric": "Mark against A2 (CEFR: a simple description of people, routines, likes and dislikes, past activities and plans, as a short series of simple phrases and sentences linked with simple connectors like « et », « mais », « parce que »; simple structures used correctly, with basic mistakes that still leave the meaning clear). A strong A2 answer answers the question in linked simple sentences and refers to the past or future where the question invites it. Scores measure the answer against this TARGET LEVEL: complex structures are not expected at A2, so their absence does not lower the scores.",
+        "coachingTone": "constructive and motivating — highlight what was communicated, then give clear, simple improvements",
+        "coachingRubric": "Mark against A2 (CEFR: a simple description of people, routines, likes and dislikes, past activities and plans, as a short series of simple phrases and sentences linked with simple connectors like « et », « mais », « parce que »; simple structures used correctly, with basic mistakes that still leave the meaning clear). A strong A2 answer answers the question in linked simple sentences and refers to the past or future where the question invites it. Scores measure the answer against this TARGET LEVEL, not against an absolute scale: an answer that fully meets A2 for this question scores about 7-8, one clearly beyond A2 scores 8.5 or more, and one well below A2 scores under 5 — so the same answer scores higher at a lower TARGET LEVEL. Complex structures are not expected at A2, so their absence never lowers a score — and when they are used, they push the scores up.",
     },
     "advanced": {
         "cefrTarget": "B1",
-        "coachingTone": "precise and exam-focused — reference IGCSE mark-scheme language; reward sophistication; directly name weak structures",
-        "coachingRubric": "Mark against B1 (CEFR: a reasonably fluent, straightforward description presented as a linear sequence of points; describes experiences, events, hopes and plans, and briefly gives reasons and explanations for opinions; reasonable accuracy in familiar contexts, with errors that do not hide the meaning). A strong B1 answer is connected, gives opinions with reasons, and moves between time frames where the question invites it. Scores measure the answer against this TARGET LEVEL: an answer that would be strong at A2 is only adequate at B1.",
+        "coachingTone": "precise and exam-focused — reward connected, justified answers; directly name weak structures",
+        "coachingRubric": "Mark against B1 (CEFR: a reasonably fluent, straightforward description presented as a linear sequence of points; describes experiences, events, hopes and plans, and briefly gives reasons and explanations for opinions; frequently used patterns used reasonably accurately in predictable situations). A strong B1 answer is connected, gives opinions with reasons, and moves between time frames where the question invites it. Scores measure the answer against this TARGET LEVEL, not against an absolute scale: an answer that fully meets B1 for this question scores about 7-8, one clearly beyond B1 scores 8.5 or more, and one well below B1 scores under 5 — so the same answer scores higher at a lower TARGET LEVEL. An answer that would be strong at A2 is only adequate at B1.",
     },
     "expert": {
         "cefrTarget": "B2",
-        "coachingTone": "demanding and examiner-like — challenge vague responses, flag underdeveloped arguments, demand B2-register vocabulary; short answers are unacceptable",
-        "coachingRubric": "Mark against B2 (CEFR: clear, detailed descriptions that expand and support ideas with relevant points and examples; develops an argument, explaining the advantages and disadvantages of options and speculating about hypothetical situations; a relatively high degree of grammatical control, with no errors that cause misunderstanding). A strong B2 answer develops a point of view with supporting detail and examples, using a range of structures with good control. Scores measure the answer against this TARGET LEVEL: an answer that would be strong at B1 is only adequate at B2.",
+        "coachingTone": "demanding and examiner-like — challenge vague responses and underdeveloped points; name where wider vocabulary would sharpen what you said",
+        "coachingRubric": "Mark against B2 (CEFR: clear, detailed descriptions that expand and support ideas with relevant points and examples; develops a clear argument and explains a viewpoint, giving the advantages and disadvantages of options; a relatively high degree of grammatical control, with no errors that cause misunderstanding). A strong B2 answer develops a point of view with supporting detail and examples, using a range of structures with good control. Scores measure the answer against this TARGET LEVEL, not against an absolute scale: an answer that fully meets B2 for this question scores about 7-8, one clearly beyond B2 scores 8.5 or more, and one well below B2 scores under 5 — so the same answer scores higher at a lower TARGET LEVEL. An answer that would be strong at B1 is only adequate at B2.",
     },
 }
 
@@ -1701,10 +1706,15 @@ TARGET LEVEL — the TARGET LEVEL given below is the level this answer is marked
 it is A2 with elements of B1 (the IGCSE target, Cambridge 0520 Teacher's Notes p.11). Every
 French correction, improved_answer and rephrase is pitched at the TARGET LEVEL: fix the student's
 own sentence in accurate French at that level; never swap in vocabulary or structures far beyond
-what they attempted. Never go above B1 unless the TARGET LEVEL is B2.
+what they attempted, and never simplify away a structure they used correctly. Never add ideas,
+events or details the student did not say, at any TARGET LEVEL. Never go above B1 unless the
+TARGET LEVEL is B2.
 
-MARKING LEVEL — the TARGET LEVEL sets only how high the bar is for the scores and the level of
-the French you write. It never changes:
+MARKING LEVEL — the TARGET LEVEL sets only how high the bar is for the scores (fluency, comm,
+know and acc are all measured against it) and the level of the French you write. Apply it to
+what THIS question asks: a strong answer is what a speaker at the TARGET LEVEL would say to this
+question, so never lower a score for something the question does not invite (e.g. an argument
+in answer to a describe question). It never changes:
 • which errors you report: report every real error at every TARGET LEVEL — none skipped because
   the level is gentle, none added because it is strict;
 • answered_the_question, demands_met and demands_missed: judge these only against the question's
@@ -1759,11 +1769,11 @@ Return ONLY a raw JSON object — no prose, no markdown, no code fences.
 
 JSON SCHEMA (return exactly this shape, no extra keys):
 {
-  "fluency": <0.0-10.0 one decimal. Strict: 8+ = genuinely impressive. Most answers 4-6.>,
+  "fluency": <0.0-10.0 one decimal. Strict: 8+ = genuinely impressive for the TARGET LEVEL. Most answers 4-6.>,
 
   "scores": {
     "comm": <0-10, Communication and Content: did the student answer the question with relevant ideas?>,
-    "know": <0-10, Knowledge and Application: tense variety, connectives, complexity, idiomatic range>,
+    "know": <0-10, Knowledge and Application: tense variety, connectives, complexity, idiomatic range — as far as the TARGET LEVEL expects them>,
     "acc": <0-10, holistic practice judgement of accuracy; not a Cambridge mark, not a formula>
   },
 

@@ -34,7 +34,7 @@ import main
 # SYSTEM_PROMPT is half of what LEARN_PROMPT_VERSION versions; the user-prompt
 # half is pinned in test_learn_demands.py. Bump LEARN_PROMPT_VERSION and this
 # hash together.
-SYSTEM_PROMPT_HASH = "6e95a99070b40211171d5e4cde4442921697becd4cddad185848c7b54a706057"
+SYSTEM_PROMPT_HASH = "02408f5eb397a309bd3631bfc989cae4606c502762c21416dafe6052e982ae8b"
 
 
 def test_prompt_version_is_v7():
@@ -60,7 +60,7 @@ def test_system_prompt_asks_for_every_real_error_at_the_igcse_target():
     assert "Never invent an error" in p
     assert "A2 with elements of B1" in p
     assert "Teacher's Notes p.11" in p
-    assert "Never go above B1 unless the TARGET LEVEL is B2" in p
+    assert "Never go above B1 unless the\nTARGET LEVEL is B2" in p
     assert "ONE sentence" in p
 
 
@@ -79,6 +79,16 @@ def test_system_prompt_keeps_errors_and_demand_verdicts_independent_of_the_level
     assert "report every real error at every TARGET LEVEL" in p
     assert "none skipped because\n  the level is gentle, none added because it is strict" in p
     assert "answered_the_question, demands_met and demands_missed: judge these only against the question's\n  own QUESTION DEMANDS, never against the TARGET LEVEL" in p
+
+
+def test_scores_are_measured_against_the_level_as_this_question_asks():
+    p = main.SYSTEM_PROMPT
+    assert "fluency, comm,\nknow and acc are all measured against it" in p
+    assert "never lower a score for something the question does not invite" in p
+    assert "never simplify away a structure they used correctly" in p
+    assert "Never add ideas,\nevents or details the student did not say, at any TARGET LEVEL" in p
+    assert "8+ = genuinely impressive for the TARGET LEVEL" in p
+    assert "as far as the TARGET LEVEL expects them" in p
 
 
 def test_fluency_rule_is_relative_to_the_target_level():

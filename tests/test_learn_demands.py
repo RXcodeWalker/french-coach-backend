@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ.pop("AZURE_SPEECH_KEY", None)
 os.environ.pop("AZURE_SPEECH_REGION", None)
 
-LEARN_PROMPT_FIXTURE_HASH = "2b7782c07b1e46898c52dc6782844c16fc6ffb0f104c6795dabe37c9f2f4220a"
+LEARN_PROMPT_FIXTURE_HASH = "e02c7e570497ee04d760bf3b304a397eec1f93db482ee0672b6384b14690c562"
 
 # The two tests below pin numbers/prompt bytes derived from ONE demands entry. They used to
 # read fam_01 live from the corpus, so any content edit to fam_01 (Learn Batch 3b re-tagged

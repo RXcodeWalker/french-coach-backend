@@ -233,8 +233,25 @@ def test_tier_rubrics_are_level_relative_and_carry_no_word_count():
         assert "Scores measure the answer against this TARGET LEVEL" in rubric, tier
         assert not re.search(r"\d+\s*words", rubric), tier
         assert "Penalise" not in rubric, tier
+        # Level-relative anchors (live check: without them a strong answer scored lower at A2 than B2).
+        assert f"an answer that fully meets {target} for this question scores about 7-8" in rubric, tier
+        assert "the same answer scores higher at a lower TARGET LEVEL" in rubric, tier
         assert main._TIER_PROMPTS[tier]["cefrTarget"] == target
+    # Live check: "past tenses are not expected at A1" made the model stop reporting a wrong tense.
+    assert "A wrong tense is still a reported error" in main._TIER_PROMPTS["beginner"]["coachingRubric"]
     assert main._DEFAULT_DIFFICULTY_PROMPT == {"cefrTarget": "A2 with elements of B1"}
+
+
+def test_tones_do_not_contradict_the_prompt():
+    """Tones may set register only: no cap on fixes (every real error is reported), no
+    length rule (responseLoad sets length), no push to vocabulary the student did not
+    attempt, and no Cambridge mark-scheme claims."""
+    import main
+
+    for tier, cfg in main._TIER_PROMPTS.items():
+        tone = cfg["coachingTone"].lower()
+        for banned in ("one or two", "short answers", "register vocabulary", "mark-scheme", "unacceptable"):
+            assert banned not in tone, (tier, banned)
 
 
 # Shared with deriveDemandLevel.test.ts (Learn two dials, Batch 2): the same inputs,

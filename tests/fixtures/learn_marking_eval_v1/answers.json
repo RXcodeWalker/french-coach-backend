@@ -1,0 +1,2813 @@
+{
+  "fixture": "learn_marking_eval_v1",
+  "status": "draft",
+  "ownerSignOff": null,
+  "about": "Pre-registered test set for the Learn marking-level ladder gate. The level-blind expected rung verdicts are written from the criteria document before any model call. An expectation may change only by a commit that explains why the criteria document says otherwise. Set ownerSignOff to {\"by\": ..., \"date\": ...} in a commit before any tokens are spent; the harness records this file's commit SHA with every run.",
+  "spec": "frenchcoach2.0 docs/systems/learn-marking-levels.md (learn-marking §3-§6), written at frontend commit d07ab95",
+  "protocol": "frenchcoach2.0 docs/guides/learn-marking-test-protocol.md",
+  "demandsVersionAtAuthoring": "3efb9504acfd5f91e03df10f47e1ce058cd0b89982986e809bd10bf928ec1c75",
+  "rungs": [
+    "A1",
+    "A2",
+    "B1",
+    "B2"
+  ],
+  "ladderOrder": [
+    "T",
+    "L",
+    "O",
+    "F",
+    "R",
+    "A"
+  ],
+  "verdictValues": {
+    "y": "rung met",
+    "n": "rung not met",
+    "null": "no requirement (the A1 rung of O and F only); counts as met"
+  },
+  "reachedRule": "learn-marking §6.1: the highest level up to which every rung is met; 'none' when the A1 rung is not met",
+  "wordCountRule": "whitespace-separated tokens that contain a letter or digit (j'ai = 1, the ':' and ';' tokens = 0)",
+  "decidingRungsRule": "G8: on every applicable ladder, the rung at the answer's written level and the one above (null rungs skipped); for the off-topic control, T-A1 only",
+  "profiles": {
+    "simple_a1": {
+      "count": 5,
+      "words": [
+        25,
+        40
+      ],
+      "seededErrors": [
+        0,
+        0
+      ]
+    },
+    "typical_a2": {
+      "count": 5,
+      "words": [
+        40,
+        60
+      ],
+      "seededErrors": [
+        1,
+        2
+      ]
+    },
+    "strong_b1": {
+      "count": 5,
+      "words": [
+        60,
+        90
+      ],
+      "seededErrors": [
+        0,
+        1
+      ]
+    },
+    "weak": {
+      "count": 5,
+      "words": [
+        30,
+        50
+      ],
+      "seededErrors": [
+        3,
+        4
+      ],
+      "soundAlikeSlips": "exactly two of the five carry one"
+    },
+    "control_off_topic": {
+      "count": 1,
+      "questionId": "env_05"
+    },
+    "control_b2": {
+      "count": 1,
+      "questionId": "fut_19"
+    }
+  },
+  "questions": {
+    "fam_01": {
+      "text": "Décris ta famille.",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": []
+      },
+      "applies": [
+        "T",
+        "L",
+        "R",
+        "A"
+      ]
+    },
+    "hol_01": {
+      "text": "Où es-tu allé(e) pendant les dernières vacances ?",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ]
+      },
+      "applies": [
+        "T",
+        "L",
+        "F",
+        "R",
+        "A"
+      ],
+      "fParts": [
+        "past"
+      ]
+    },
+    "sch_03": {
+      "text": "Comment tu vas à l'école chaque matin ?",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": []
+      },
+      "applies": [
+        "T",
+        "L",
+        "R",
+        "A"
+      ]
+    },
+    "env_05": {
+      "text": "Que penses-tu du recyclage ?",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ]
+      },
+      "applies": [
+        "T",
+        "L",
+        "O",
+        "R",
+        "A"
+      ]
+    },
+    "fut_19": {
+      "text": "Aimerais-tu être célèbre plus tard ? Pourquoi ?",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "future",
+          "conditional"
+        ],
+        "structures": [
+          "justification",
+          "conditional"
+        ]
+      },
+      "applies": [
+        "T",
+        "L",
+        "O",
+        "F",
+        "R",
+        "A"
+      ],
+      "fParts": [
+        "future-or-conditional"
+      ]
+    }
+  },
+  "stages": {
+    "smoke": {
+      "protocolStage": 1,
+      "answers": [
+        "fam_01_simple_a1",
+        "fam_01_strong_b1",
+        "fam_01_weak"
+      ]
+    },
+    "stability": {
+      "protocolStage": 3,
+      "extraRuns": 2,
+      "answers": [
+        "sch_03_simple_a1",
+        "env_05_typical_a2",
+        "fut_19_typical_a2",
+        "fam_01_strong_b1",
+        "hol_01_strong_b1",
+        "hol_01_weak",
+        "env_05_off_topic",
+        "fut_19_b2"
+      ],
+      "why": "every one of the six answer types at least once and all five questions; the two extra slots go to the typical-A2 O-ladder answers and the G14 hol_01 answer, where verdicts are most likely to flip"
+    }
+  },
+  "interpretations": [
+    {
+      "id": "T-B1",
+      "rule": "A reason attached to an opinion counts under O (and L-A2), not as T development. T-B1 needs one of the answer's content points extended by a further detail, example or explanation, within a sequence of points. A list of separate one- or two-attribute facts is A2.",
+      "why": "T-B1 and O-B1 would otherwise both be met by the same 'parce que'; CV p.62 contrasts A2's list with B1's linear sequence."
+    },
+    {
+      "id": "R-B1",
+      "rule": "'More than one clause' means a subordinate clause (qui, que, où, quand, si, parce que). Clauses joined by et/mais are L's job, not R's. One formulaic 'je pense que ... parce que' sentence with everyday vocabulary does not meet 'some sentences' plus 'varied topic vocabulary'.",
+      "why": "Every example the criterion lists is a subordinator; it is read as the step up from A1's 'one-clause sentences'."
+    },
+    {
+      "id": "A-B1-B2",
+      "rule": "A-B1 is met with up to two basic errors when the rest of the everyday patterns, including the asked-for tense, are right. Three or four routine errors fail A-B1. A-B2 allows one slip that causes no misunderstanding; two basic everyday-pattern errors fail it.",
+      "why": "CV p.132: B1 'reasonably accurately'; B2 'does not make mistakes which lead to misunderstanding'."
+    },
+    {
+      "id": "tense",
+      "rule": "A present tense where the question asks about the past or an imagined future is an Accuracy error. Where it replaces every past (or future/conditional) form, F-A2 also fails.",
+      "why": "A-B1 names 'the tense the question asks for'; F-A2 needs a past (or future/conditional) form."
+    },
+    {
+      "id": "O-justification",
+      "rule": "On a question tagged 'justification' (fut_19, 'Pourquoi ?'), O-A2 needs an opinion plus a simple reason, so O-A2 and O-B1 nearly coincide. A thin reason ('parce que c'est cool') meets both. Without a justification tag (env_05), O-A2 needs the opinion only, and a reason lifts O to B1.",
+      "why": "learn-marking §3.3 as written."
+    },
+    {
+      "id": "borderline-B2",
+      "rule": "Strong-B1 answers are written so their B2 rungs are not met. Where a B2 rung is borderline (T and O, as in learn-marking §9.1 Ex 3), the expectation is 'n'.",
+      "why": "These are the shakiest verdicts the gate measures (G8 deciding rungs)."
+    },
+    {
+      "id": "off-topic",
+      "rule": "On an off-topic answer, L, R and A are judged on the language that is there. Relevance is handled only by the T-A1 cap (learn-marking §6.4).",
+      "why": "The ladder verdicts are level-blind and topic-blind except T."
+    },
+    {
+      "id": "sound-alike",
+      "rule": "A spelling that sounds the same as the correct form (personne/personnes, cadeau/cadeaux) is never a seeded error and never costs an Accuracy rung. It is listed under soundAlikeSlips, not seededErrors.",
+      "why": "learn-marking §3.6 speech rule."
+    }
+  ],
+  "answers": [
+    {
+      "id": "fam_01_simple_a1",
+      "questionId": "fam_01",
+      "type": "simple_a1",
+      "writtenLevel": "A1",
+      "wordCount": 30,
+      "transcript": "Dans ma famille, il y a quatre personnes : mon père, ma mère, mon frère et moi. Mon père est grand. Ma mère est très gentille. Mon frère a dix ans.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "mon père, ma mère, mon frère et moi",
+          "note": "A list of one-attribute points; nothing developed (B1 deciding)."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "evidence": "mon frère et moi",
+          "note": "Only 'et'; no mais/parce que (A2 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Ma mère est très gentille",
+          "note": "Complete basic sentences; no subordinate clause."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "Mon frère a dix ans",
+          "note": "No errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A1"
+        ],
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "L",
+          "A1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "R",
+          "A1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "A",
+          "A1"
+        ],
+        [
+          "A",
+          "A2"
+        ]
+      ],
+      "seededErrors": [],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true,
+        "note": "Three members, one detail each."
+      },
+      "notes": "learn-marking §9.1 Ex 1, verbatim."
+    },
+    {
+      "id": "fam_01_typical_a2",
+      "questionId": "fam_01",
+      "type": "typical_a2",
+      "writtenLevel": "A2",
+      "wordCount": 52,
+      "transcript": "Dans ma famille, il y a cinq personnes : mes parents, mes deux sœurs et moi. Mon père est professeur et il est grand. Ma mère est très gentil mais elle est stricte. Ma grande sœur a seize ans et elle aime le musique. Ma petite sœur est drôle mais un peu pénible.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Mon père est professeur et il est grand",
+          "note": "One or two attributes per person, listed; no point extended (B1 deciding)."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "drôle mais un peu pénible",
+          "note": "et + mais inside sentences; nothing links across sentences (B1 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Ma petite sœur est drôle mais un peu pénible",
+          "note": "Everyday vocabulary; only coordinated clauses (interpretation R-B1)."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "Mon père est professeur",
+          "note": "Two basic agreement errors; the rest of the everyday patterns are right (interpretation A-B1/B2)."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "A",
+          "A2"
+        ],
+        [
+          "A",
+          "B1"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "très gentil",
+          "correction": "très gentille",
+          "kind": "adjective agreement"
+        },
+        {
+          "quote": "le musique",
+          "correction": "la musique",
+          "kind": "gender (article)"
+        }
+      ],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      }
+    },
+    {
+      "id": "fam_01_strong_b1",
+      "questionId": "fam_01",
+      "type": "strong_b1",
+      "writtenLevel": "B1",
+      "wordCount": 74,
+      "transcript": "Il y a quatre personnes dans ma famille. D'abord, mon père, qui s'appelle Paul, est ingénieur. Il travaille beaucoup, donc il rentre souvent tard le soir. Ensuite, ma mère est infirmière à l'hôpital ; elle est patient et très drôle. J'ai aussi un petit frère de huit ans. Il est parfois pénible parce qu'il prend mes affaires, mais je l'aime bien. Le week-end, quand nous sommes tous ensemble, nous faisons des promenades à la campagne.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "Il travaille beaucoup, donc il rentre souvent tard le soir",
+          "note": "Points in sequence, two developed; not expanded with sub-points and examples throughout (B2 borderline, expected n)."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "D'abord, mon père",
+          "note": "d'abord / ensuite / donc / quand across sentences; no contrast-concession range (B2 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "qui s'appelle Paul",
+          "note": "qui / parce que / quand clauses, varied topic vocabulary; no complex form (B2 deciding)."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "nous faisons des promenades à la campagne",
+          "note": "One slip (patient), which causes no misunderstanding."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "T",
+          "B2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "L",
+          "B2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "R",
+          "B2"
+        ],
+        [
+          "A",
+          "B1"
+        ],
+        [
+          "A",
+          "B2"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "elle est patient",
+          "correction": "elle est patiente",
+          "kind": "adjective agreement",
+          "note": "the one permitted slip"
+        }
+      ],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      }
+    },
+    {
+      "id": "fam_01_weak",
+      "questionId": "fam_01",
+      "type": "weak",
+      "writtenLevel": "A2",
+      "wordCount": 40,
+      "transcript": "Dans mon famille il y a quatre personne. Mon père est grand et il est quarante ans. Ma mère est petit et elle travaille dans un magasin. Mon frère s'appelle Tom et il aime le football. Je aime ma famille.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Mon frère s'appelle Tom et il aime le football",
+          "note": "A list of points."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "evidence": "il aime le football",
+          "note": "Only 'et'."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "elle travaille dans un magasin",
+          "note": "Complete basic sentences, everyday vocabulary."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "il y a quatre",
+          "note": "Meaning is clear; routine patterns (age with avoir, possessive gender, elision, agreement) wrong, so B1 fails."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "A",
+          "A2"
+        ],
+        [
+          "A",
+          "B1"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "mon famille",
+          "correction": "ma famille",
+          "kind": "gender (possessive)"
+        },
+        {
+          "quote": "il est quarante ans",
+          "correction": "il a quarante ans",
+          "kind": "avoir for age"
+        },
+        {
+          "quote": "Ma mère est petit",
+          "correction": "Ma mère est petite",
+          "kind": "adjective agreement"
+        },
+        {
+          "quote": "Je aime",
+          "correction": "J'aime",
+          "kind": "elision"
+        }
+      ],
+      "soundAlikeSlips": [
+        {
+          "quote": "quatre personne",
+          "intended": "quatre personnes",
+          "note": "Plural -s is silent; sounds identical, never an Accuracy error (learn-marking §3.6)."
+        }
+      ],
+      "demandCheck": {
+        "met": true
+      }
+    },
+    {
+      "id": "hol_01_simple_a1",
+      "questionId": "hol_01",
+      "type": "simple_a1",
+      "writtenLevel": "A1",
+      "wordCount": 32,
+      "transcript": "Pendant les dernières vacances, je suis allé en Espagne avec mes parents. Nous avons pris l'avion. J'ai nagé dans la mer et j'ai mangé des glaces. Mon frère a joué au tennis.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "je suis allé en Espagne avec mes parents",
+          "note": "A list; nothing developed."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "evidence": "J'ai nagé dans la mer et j'ai mangé des glaces",
+          "note": "Only 'et'."
+        },
+        "F": {
+          "verdicts": [
+            null,
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "je suis allé en Espagne",
+          "note": "Past part only (the question asks no future). Correct passé composé; no feelings or reactions (B1 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Nous avons pris l'avion",
+          "note": "Complete basic sentences."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "Nous avons pris l'avion",
+          "note": "No errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A1"
+        ],
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "L",
+          "A1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "F",
+          "A2"
+        ],
+        [
+          "R",
+          "A1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "A",
+          "A1"
+        ],
+        [
+          "A",
+          "A2"
+        ]
+      ],
+      "seededErrors": [],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      }
+    },
+    {
+      "id": "hol_01_typical_a2",
+      "questionId": "hol_01",
+      "type": "typical_a2",
+      "writtenLevel": "A2",
+      "wordCount": 50,
+      "transcript": "L'été dernier, je suis allé en Bretagne avec ma famille. Nous avons logé dans une camping près de la mer. J'ai allé à la plage et j'ai fait du vélo. Il a fait beau mais un jour il a plu. Nous avons mangé des crêpes et j'ai acheté un tee-shirt.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "je suis allé en Bretagne avec ma famille",
+          "note": "A list of what happened; no point extended (B1 deciding)."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Il a fait beau mais un jour il a plu",
+          "note": "et + mais; nothing links across sentences (B1 deciding)."
+        },
+        "F": {
+          "verdicts": [
+            null,
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Nous avons mangé des crêpes",
+          "note": "Told in the past; no feelings or reactions (B1 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Nous avons logé dans une camping",
+          "note": "Everyday holiday vocabulary; no subordinate clause."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "Nous avons mangé des crêpes",
+          "note": "Two basic errors; the passé composé is otherwise right."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "F",
+          "A2"
+        ],
+        [
+          "F",
+          "B1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "A",
+          "A2"
+        ],
+        [
+          "A",
+          "B1"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "une camping",
+          "correction": "un camping",
+          "kind": "gender (article)"
+        },
+        {
+          "quote": "J'ai allé",
+          "correction": "Je suis allé",
+          "kind": "auxiliary (être verb)"
+        }
+      ],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      }
+    },
+    {
+      "id": "hol_01_strong_b1",
+      "questionId": "hol_01",
+      "type": "strong_b1",
+      "writtenLevel": "B1",
+      "wordCount": 79,
+      "transcript": "L'été dernier, je suis allée au Portugal avec ma mère et ma tante. D'abord, nous avons passé trois jours à Lisbonne, où nous avons visité les vieux quartiers. Ensuite, nous sommes allées à la plage en Algarve. Un jour, j'ai fait du surf pour la première fois. J'avais un peu peur au début, mais quand j'ai réussi à me lever sur la planche, j'étais vraiment fière. Après, nous avons mangé du poisson grillé au port. C'étaient de super vacances.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "J'avais un peu peur au début, mais quand j'ai réussi à me lever sur la planche, j'étais vraiment fière",
+          "note": "A sequence with the surf episode developed; only one point expanded (B2 deciding)."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "D'abord, nous avons passé trois jours à Lisbonne",
+          "note": "d'abord / ensuite / quand / après; only 'mais' for contrast (B2 deciding)."
+        },
+        "F": {
+          "verdicts": [
+            null,
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "J'avais un peu peur au début",
+          "note": "Past only, with feelings (peur, fière); no explanation of personal significance (B2 deciding). G14's key answer: no present or future is asked for or needed."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "où nous avons visité les vieux quartiers",
+          "note": "où / quand clauses, varied vocabulary, imperfect for feelings; no B2 complex form."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "nous sommes allées à la plage en Algarve",
+          "note": "No errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "T",
+          "B2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "L",
+          "B2"
+        ],
+        [
+          "F",
+          "B1"
+        ],
+        [
+          "F",
+          "B2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "R",
+          "B2"
+        ],
+        [
+          "A",
+          "B1"
+        ],
+        [
+          "A",
+          "B2"
+        ]
+      ],
+      "seededErrors": [],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      },
+      "notes": "G14: reaches B1 on every applicable ladder with the past tense only."
+    },
+    {
+      "id": "hol_01_weak",
+      "questionId": "hol_01",
+      "type": "weak",
+      "writtenLevel": "A2",
+      "wordCount": 41,
+      "transcript": "L'été dernier je vais en France avec mon famille. Nous avons pris le train et nous avons resté trois jours à Paris. J'ai mangé des croissants et je visite la Tour Eiffel. Mon père a acheté des cadeau pour ma grand-mère.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "J'ai mangé des croissants",
+          "note": "A list."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "evidence": "Nous avons pris le train et nous avons resté",
+          "note": "Only 'et'."
+        },
+        "F": {
+          "verdicts": [
+            null,
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Nous avons pris le train",
+          "note": "Mostly past forms (wrongly formed or missing ones count under Accuracy); no feelings."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Mon père a acheté des cadeau pour ma grand-mère",
+          "note": "Basic sentences."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "J'ai mangé des croissants",
+          "note": "Meaning clear; the asked-for tense and routine patterns wrong in four places, so B1 fails."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "F",
+          "A2"
+        ],
+        [
+          "F",
+          "B1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "A",
+          "A2"
+        ],
+        [
+          "A",
+          "B1"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "je vais en France",
+          "correction": "je suis allé(e) en France",
+          "kind": "tense (present for past)"
+        },
+        {
+          "quote": "mon famille",
+          "correction": "ma famille",
+          "kind": "gender (possessive)"
+        },
+        {
+          "quote": "nous avons resté",
+          "correction": "nous sommes restés",
+          "kind": "auxiliary (être verb)"
+        },
+        {
+          "quote": "je visite la Tour Eiffel",
+          "correction": "j'ai visité la Tour Eiffel",
+          "kind": "tense (present for past)"
+        }
+      ],
+      "soundAlikeSlips": [
+        {
+          "quote": "des cadeau",
+          "intended": "des cadeaux",
+          "note": "Plural -x is silent; sounds identical, never an Accuracy error (learn-marking §3.6)."
+        }
+      ],
+      "demandCheck": {
+        "met": false,
+        "note": "Where they went is told in the present, so 'in the past tense' is only partly met. Not gated (informational)."
+      },
+      "notes": "Replaces §9.1 Ex 2, which at 22 words is under this profile's 30–50 and has more than 4 tense errors once lengthened."
+    },
+    {
+      "id": "sch_03_simple_a1",
+      "questionId": "sch_03",
+      "type": "simple_a1",
+      "writtenLevel": "A1",
+      "wordCount": 30,
+      "transcript": "Je vais à l'école en bus. Le bus passe à sept heures trente. Le trajet dure vingt minutes. Je prends le bus avec mon amie Léa et nous parlons beaucoup.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Le trajet dure vingt minutes",
+          "note": "A list; nothing developed."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "evidence": "avec mon amie Léa et nous parlons beaucoup",
+          "note": "Only 'et' (A2 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Je prends le bus avec mon amie Léa",
+          "note": "Complete basic sentences."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "Je vais à l'école en bus",
+          "note": "No errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A1"
+        ],
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "L",
+          "A1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "R",
+          "A1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "A",
+          "A1"
+        ],
+        [
+          "A",
+          "A2"
+        ]
+      ],
+      "seededErrors": [],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      }
+    },
+    {
+      "id": "sch_03_typical_a2",
+      "questionId": "sch_03",
+      "type": "typical_a2",
+      "writtenLevel": "A2",
+      "wordCount": 48,
+      "transcript": "Normalement, je vais au collège à pied avec mon frère. C'est à un kilomètre de chez moi et le trajet dure quinze minutes. En hiver il fait froid mais j'aime de marcher. Le vendredi, ma mère nous amène en voiture. Je arrive à huit heures moins le quart.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "je vais au collège à pied avec mon frère",
+          "note": "Separate facts about the journey, none extended (B1 deciding)."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "il fait froid mais j'aime de marcher",
+          "note": "et + mais; time phrases frame facts but do not link a sequence (B1 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "le trajet dure quinze minutes",
+          "note": "Everyday vocabulary; no subordinate clause."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "ma mère nous amène en voiture",
+          "note": "Two basic errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "A",
+          "A2"
+        ],
+        [
+          "A",
+          "B1"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "j'aime de marcher",
+          "correction": "j'aime marcher",
+          "kind": "verb + infinitive construction"
+        },
+        {
+          "quote": "Je arrive",
+          "correction": "J'arrive",
+          "kind": "elision"
+        }
+      ],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      }
+    },
+    {
+      "id": "sch_03_strong_b1",
+      "questionId": "sch_03",
+      "type": "strong_b1",
+      "writtenLevel": "B1",
+      "wordCount": 66,
+      "transcript": "Le matin, je prends le bus scolaire qui passe devant chez moi à sept heures vingt. D'abord, je retrouve mes amis à l'arrêt, ensuite nous montons ensemble et nous discute pendant tout le trajet. Ça dure environ vingt-cinq minutes parce que le bus s'arrête dans trois villages. Quand il y a des embouteillages, j'arrive en retard, donc je dois aller au bureau pour signer un papier.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "Ça dure environ vingt-cinq minutes parce que le bus s'arrête dans trois villages",
+          "note": "Sequence with the duration and lateness points developed; not expanded with sub-points and examples (B2 borderline, expected n)."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "D'abord, je retrouve mes amis à l'arrêt, ensuite",
+          "note": "d'abord / ensuite / quand / donc; no contrast-concession range (B2 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "qui passe devant chez moi",
+          "note": "qui / parce que / quand clauses, varied vocabulary (scolaire, arrêt, embouteillages); no B2 complex form."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "je prends le bus scolaire",
+          "note": "One slip (nous discute)."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "T",
+          "B2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "L",
+          "B2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "R",
+          "B2"
+        ],
+        [
+          "A",
+          "B1"
+        ],
+        [
+          "A",
+          "B2"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "nous discute",
+          "correction": "nous discutons",
+          "kind": "verb ending",
+          "note": "the one permitted slip"
+        }
+      ],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      }
+    },
+    {
+      "id": "sch_03_weak",
+      "questionId": "sch_03",
+      "type": "weak",
+      "writtenLevel": "A2",
+      "wordCount": 37,
+      "transcript": "Je va à l'école en bus. Le bus passe à côté de mon maison à huit heures. Je suis dans le bus avec mon ami Paul et nous écoute de la musique. Le trajet est trente minutes.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Je va à l'école en bus",
+          "note": "A list."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "evidence": "avec mon ami Paul et nous écoute de la musique",
+          "note": "Only 'et'."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Le bus passe à côté de mon maison à huit heures",
+          "note": "Basic sentences."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Le bus passe",
+          "note": "Meaning clear; four routine errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "A",
+          "A2"
+        ],
+        [
+          "A",
+          "B1"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "Je va",
+          "correction": "Je vais",
+          "kind": "verb form"
+        },
+        {
+          "quote": "mon maison",
+          "correction": "ma maison",
+          "kind": "gender (possessive)"
+        },
+        {
+          "quote": "nous écoute",
+          "correction": "nous écoutons",
+          "kind": "verb ending"
+        },
+        {
+          "quote": "Le trajet est trente minutes",
+          "correction": "Le trajet dure trente minutes",
+          "kind": "wrong verb"
+        }
+      ],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      }
+    },
+    {
+      "id": "env_05_simple_a1",
+      "questionId": "env_05",
+      "type": "simple_a1",
+      "writtenLevel": "A1",
+      "wordCount": 30,
+      "transcript": "Le recyclage, c'est important. À la maison, je recycle le papier et les bouteilles. Ma mère recycle le verre. Au collège, il y a des poubelles jaunes. J'aime le recyclage.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Le recyclage, c'est important",
+          "note": "A list; nothing developed."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "evidence": "le papier et les bouteilles",
+          "note": "Only 'et'."
+        },
+        "O": {
+          "verdicts": [
+            null,
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "c'est important",
+          "note": "Opinion in simple terms (env_05 has no justification tag, so no reason is needed at A2); no reason, so B1 fails (A2/B1 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Ma mère recycle le verre",
+          "note": "Complete basic sentences."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "je recycle le papier",
+          "note": "No errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A1"
+        ],
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "L",
+          "A1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "O",
+          "A2"
+        ],
+        [
+          "R",
+          "A1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "A",
+          "A1"
+        ],
+        [
+          "A",
+          "A2"
+        ]
+      ],
+      "seededErrors": [],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": false,
+        "note": "No reason given for why recycling matters. Not gated (informational)."
+      }
+    },
+    {
+      "id": "env_05_typical_a2",
+      "questionId": "env_05",
+      "type": "typical_a2",
+      "writtenLevel": "A2",
+      "wordCount": 51,
+      "transcript": "Je pense que le recyclage est important parce que c'est bon pour le planète. Chez moi, nous recyclons le papier, la plastique et le verre. Au collège, il y a des poubelles jaunes mais beaucoup d'élèves ne recyclent pas. C'est dommage. Dans ma ville, il y a un centre de recyclage.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Chez moi, nous recyclons le papier",
+          "note": "Home / school / town listed; the reason belongs to O, not T development (interpretation T-B1) (B1 deciding)."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "parce que c'est bon pour le planète",
+          "note": "et + mais + parce que; nothing links across sentences (B1 deciding)."
+        },
+        "O": {
+          "verdicts": [
+            null,
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "le recyclage est important parce que c'est bon pour le planète",
+          "note": "Opinion plus one reason meets B1; no chain of reasons or pros and cons."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "il y a des poubelles jaunes",
+          "note": "One formulaic 'je pense que … parce que' sentence, everyday vocabulary (interpretation R-B1)."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "nous recyclons le papier",
+          "note": "Two basic gender errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "O",
+          "A2"
+        ],
+        [
+          "O",
+          "B1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "A",
+          "A2"
+        ],
+        [
+          "A",
+          "B1"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "le planète",
+          "correction": "la planète",
+          "kind": "gender (article)"
+        },
+        {
+          "quote": "la plastique",
+          "correction": "le plastique",
+          "kind": "gender (article)"
+        }
+      ],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      },
+      "notes": "A reason after an opinion lifts O to B1 by the criteria's own wording; this answer is still A2 on T, L and R."
+    },
+    {
+      "id": "env_05_strong_b1",
+      "questionId": "env_05",
+      "type": "strong_b1",
+      "writtenLevel": "B1",
+      "wordCount": 63,
+      "transcript": "Je pense que le recyclage est très important parce qu'il protège la planète. Chez moi, on trie le plastique, le verre et le papier, et ma mère apporte les bouteilles au centre de recyclage le samedi. D'abord c'était un peu ennuyeux, mais maintenant c'est une habitude. Par contre, je trouve qu'il y a trop d'emballages dans les supermarchés, donc il faudrait les réduire.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "ma mère apporte les bouteilles au centre de recyclage le samedi",
+          "note": "Developed; B2 borderline, expected n (§9.1 Ex 3)."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "Par contre, je trouve qu'il y a trop d'emballages",
+          "note": "par contre / donc / d'abord … maintenant: contrast and consequence."
+        },
+        "O": {
+          "verdicts": [
+            null,
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "très important parce qu'il protège la planète",
+          "note": "Reasons given; B2 borderline, expected n (§9.1 Ex 3)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "je trouve qu'il y a trop d'emballages dans les supermarchés",
+          "note": "que-clauses, varied vocabulary; no B2 complex form."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "on trie le plastique, le verre et le papier",
+          "note": "No errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "T",
+          "B2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "L",
+          "B2"
+        ],
+        [
+          "O",
+          "B1"
+        ],
+        [
+          "O",
+          "B2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "R",
+          "B2"
+        ],
+        [
+          "A",
+          "B1"
+        ],
+        [
+          "A",
+          "B2"
+        ]
+      ],
+      "seededErrors": [],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      },
+      "notes": "learn-marking §9.1 Ex 3, verbatim."
+    },
+    {
+      "id": "env_05_weak",
+      "questionId": "env_05",
+      "type": "weak",
+      "writtenLevel": "A2",
+      "wordCount": 33,
+      "transcript": "Le recyclage est bon. Je recycle le papiers et les bouteilles. Mon mère met le plastique dans la poubelle jaune. Je pense le recyclage est très important. Au collège nous recycle pas beaucoup.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Je recycle le papiers et les bouteilles",
+          "note": "A list."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "evidence": "le papiers et les bouteilles",
+          "note": "Only 'et'."
+        },
+        "O": {
+          "verdicts": [
+            null,
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Le recyclage est bon",
+          "note": "Opinion, no reason."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Mon mère met le plastique dans la poubelle jaune",
+          "note": "Basic sentences."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Le recyclage est bon",
+          "note": "Meaning clear; four routine errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "O",
+          "A2"
+        ],
+        [
+          "O",
+          "B1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "A",
+          "A2"
+        ],
+        [
+          "A",
+          "B1"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "le papiers",
+          "correction": "les papiers",
+          "kind": "article (number)"
+        },
+        {
+          "quote": "Mon mère",
+          "correction": "Ma mère",
+          "kind": "gender (possessive)"
+        },
+        {
+          "quote": "Je pense le recyclage",
+          "correction": "Je pense que le recyclage",
+          "kind": "missing que"
+        },
+        {
+          "quote": "nous recycle pas",
+          "correction": "nous ne recyclons pas",
+          "kind": "verb ending"
+        }
+      ],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": false,
+        "note": "No reason given. Not gated (informational)."
+      }
+    },
+    {
+      "id": "env_05_off_topic",
+      "questionId": "env_05",
+      "type": "control_off_topic",
+      "writtenLevel": null,
+      "wordCount": 36,
+      "transcript": "Dans ma famille, il y a quatre personnes. Mon père s'appelle Jean et il est médecin. Ma mère est très gentille. J'ai une sœur qui adore la danse. Le week-end, nous mangeons ensemble chez ma grand-mère.",
+      "answeredTheQuestion": false,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "n",
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "none",
+          "note": "Nothing about recycling: T-A1 fails, so the relevance cap (2) applies at every level (§6.4)."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "evidence": "il est médecin",
+          "note": "Language judged on what is there; the cap handles relevance (interpretation off-topic)."
+        },
+        "O": {
+          "verdicts": [
+            null,
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "note": "No opinion about recycling."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Ma mère est très gentille",
+          "note": "Basic sentences; one qui-clause only."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "Le week-end, nous mangeons ensemble",
+          "note": "No errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A1"
+        ]
+      ],
+      "seededErrors": [],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": false
+      },
+      "notes": "G7 control: env_05 answered about family."
+    },
+    {
+      "id": "fut_19_simple_a1",
+      "questionId": "fut_19",
+      "type": "simple_a1",
+      "writtenLevel": "A1",
+      "wordCount": 29,
+      "transcript": "Oui, j'aimerais être célèbre. Je voudrais être footballeur. Je joue au foot tous les samedis et j'adore ça. Mon joueur préféré est Mbappé. Il joue pour le Real Madrid.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Oui, j'aimerais être célèbre",
+          "note": "A list; nothing developed."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "evidence": "tous les samedis et j'adore ça",
+          "note": "Only 'et'."
+        },
+        "O": {
+          "verdicts": [
+            null,
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "note": "fut_19 asks Pourquoi ? (justification tag), so O-A2 needs a reason; none is given for wanting fame (A2 deciding)."
+        },
+        "F": {
+          "verdicts": [
+            null,
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Je voudrais être footballeur",
+          "note": "Future/imagined part only: the wish in the conditional; no detail of the imagined life (B1 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Mon joueur préféré est Mbappé",
+          "note": "Complete basic sentences."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "Je voudrais être footballeur",
+          "note": "No errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A1"
+        ],
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "L",
+          "A1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "O",
+          "A2"
+        ],
+        [
+          "F",
+          "A2"
+        ],
+        [
+          "R",
+          "A1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "A",
+          "A1"
+        ],
+        [
+          "A",
+          "A2"
+        ]
+      ],
+      "seededErrors": [],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": false,
+        "note": "No reasons. Not gated (informational)."
+      }
+    },
+    {
+      "id": "fut_19_typical_a2",
+      "questionId": "fut_19",
+      "type": "typical_a2",
+      "writtenLevel": "A2",
+      "wordCount": 48,
+      "transcript": "Non, je ne voudrais pas être célèbre parce que les célébrités n'a pas de vie privée. Les photographes sont toujours là. Je voudrais avoir un travail normal et une famille. J'aime la musique et la cinéma mais je ne veux pas être acteur. Mon frère veut être youtubeur.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Je voudrais avoir un travail normal et une famille",
+          "note": "A list; the reason belongs to O (interpretation T-B1) (B1 deciding)."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "mais je ne veux pas être acteur",
+          "note": "et + mais + parce que; nothing links across sentences (B1 deciding)."
+        },
+        "O": {
+          "verdicts": [
+            null,
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "je ne voudrais pas être célèbre parce que les célébrités n'a pas de vie privée",
+          "note": "Opinion plus reason meets A2 (justification) and B1 together; one side only, no chain (B2 n)."
+        },
+        "F": {
+          "verdicts": [
+            null,
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Je voudrais avoir un travail normal",
+          "note": "The wish in the conditional; not described in any detail (B1 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "Les photographes sont toujours là",
+          "note": "One parce que sentence, everyday vocabulary (interpretation R-B1)."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "je ne voudrais pas être célèbre",
+          "note": "Two basic errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "O",
+          "A2"
+        ],
+        [
+          "O",
+          "B1"
+        ],
+        [
+          "F",
+          "A2"
+        ],
+        [
+          "F",
+          "B1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "A",
+          "A2"
+        ],
+        [
+          "A",
+          "B1"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "les célébrités n'a pas",
+          "correction": "les célébrités n'ont pas",
+          "kind": "subject-verb agreement"
+        },
+        {
+          "quote": "la cinéma",
+          "correction": "le cinéma",
+          "kind": "gender (article)"
+        }
+      ],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": false,
+        "note": "Disadvantages only; the demand asks for both sides. Not gated (informational)."
+      }
+    },
+    {
+      "id": "fut_19_strong_b1",
+      "questionId": "fut_19",
+      "type": "strong_b1",
+      "writtenLevel": "B1",
+      "wordCount": 73,
+      "transcript": "Oui, j'aimerais bien être célèbre plus tard parce que j'adore chanter. Je rêve de devenir chanteuse. D'abord, je voudrais enregistrer un album avec des chansons qui parlent de la vie des jeunes. Ensuite, je ferais une tournée en France et en Belgique, et je chanterais dans de grandes salles. Mon idole est Angèle et quand je regarde son concerts, je suis très émue. Donc, je vais prendre des cours de chant l'année prochaine.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "je voudrais enregistrer un album avec des chansons qui parlent de la vie des jeunes",
+          "note": "The ambition is developed in sequence; B2 borderline, expected n."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "D'abord, je voudrais enregistrer un album",
+          "note": "d'abord / ensuite / quand / donc; no contrast-concession range (B2 deciding)."
+        },
+        "O": {
+          "verdicts": [
+            null,
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "j'aimerais bien être célèbre plus tard parce que j'adore chanter",
+          "note": "One reason; no chain and no disadvantages (B2 deciding)."
+        },
+        "F": {
+          "verdicts": [
+            null,
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "je ferais une tournée en France et en Belgique, et je chanterais dans de grandes salles",
+          "note": "The imagined career in some detail; no speculation about causes or consequences (B2 deciding)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "des chansons qui parlent de la vie des jeunes",
+          "note": "qui / quand clauses, varied vocabulary; plain conditional is not a listed B2 complex form."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "je vais prendre des cours de chant",
+          "note": "One slip (son concerts)."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "T",
+          "B2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "L",
+          "B2"
+        ],
+        [
+          "O",
+          "B1"
+        ],
+        [
+          "O",
+          "B2"
+        ],
+        [
+          "F",
+          "B1"
+        ],
+        [
+          "F",
+          "B2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "R",
+          "B2"
+        ],
+        [
+          "A",
+          "B1"
+        ],
+        [
+          "A",
+          "B2"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "son concerts",
+          "correction": "ses concerts",
+          "kind": "possessive (number)",
+          "note": "the one permitted slip"
+        }
+      ],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": false,
+        "note": "Advantages only; the demand asks for both sides. Not gated (informational)."
+      }
+    },
+    {
+      "id": "fut_19_weak",
+      "questionId": "fut_19",
+      "type": "weak",
+      "writtenLevel": "A2",
+      "wordCount": 33,
+      "transcript": "Oui, je veux être célèbre parce que c'est cool. Je suis une star et j'ai beaucoup de argent. J'habite dans un grand maison à Paris avec mon chien. Mes amis vient chez moi.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "je veux être célèbre",
+          "note": "A list."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "parce que c'est cool",
+          "note": "et + parce que."
+        },
+        "O": {
+          "verdicts": [
+            null,
+            "y",
+            "y",
+            "n"
+          ],
+          "reached": "B1",
+          "evidence": "je veux être célèbre parce que c'est cool",
+          "note": "A thin reason still meets A2 and B1 by the criteria's wording (interpretation O on justification questions)."
+        },
+        "F": {
+          "verdicts": [
+            null,
+            "n",
+            "n",
+            "n"
+          ],
+          "reached": "A1",
+          "note": "The imagined life is told in the present throughout; no future or conditional form, so F-A2 fails (reached A1)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "J'habite dans un grand maison à Paris avec mon chien",
+          "note": "Basic sentences."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "n",
+            "n"
+          ],
+          "reached": "A2",
+          "evidence": "je veux être célèbre",
+          "note": "Meaning clear; tense and routine patterns wrong."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "A2"
+        ],
+        [
+          "T",
+          "B1"
+        ],
+        [
+          "L",
+          "A2"
+        ],
+        [
+          "L",
+          "B1"
+        ],
+        [
+          "O",
+          "A2"
+        ],
+        [
+          "O",
+          "B1"
+        ],
+        [
+          "F",
+          "A2"
+        ],
+        [
+          "F",
+          "B1"
+        ],
+        [
+          "R",
+          "A2"
+        ],
+        [
+          "R",
+          "B1"
+        ],
+        [
+          "A",
+          "A2"
+        ],
+        [
+          "A",
+          "B1"
+        ]
+      ],
+      "seededErrors": [
+        {
+          "quote": "Je suis une star et j'ai",
+          "correction": "Je serais une star et j'aurais",
+          "kind": "tense (present for conditional)",
+          "note": "one error spanning the present-tense fantasy; also matched by 'J'habite'"
+        },
+        {
+          "quote": "de argent",
+          "correction": "d'argent",
+          "kind": "elision"
+        },
+        {
+          "quote": "un grand maison",
+          "correction": "une grande maison",
+          "kind": "gender (article and adjective)"
+        },
+        {
+          "quote": "Mes amis vient",
+          "correction": "Mes amis viennent",
+          "kind": "subject-verb agreement"
+        }
+      ],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": false
+      }
+    },
+    {
+      "id": "fut_19_b2",
+      "questionId": "fut_19",
+      "type": "control_b2",
+      "writtenLevel": "B2",
+      "wordCount": 85,
+      "transcript": "Honnêtement, je ne sais pas si j'aimerais être célèbre. D'un côté, si j'étais connu, je pourrais utiliser ma notoriété pour défendre des causes qui me tiennent à cœur, comme la protection de l'environnement. De plus, je gagnerais assez d'argent pour aider ma famille. Cependant, les célébrités sont constamment surveillées par les médias, ce qui doit être épuisant. Même si la gloire semble attirante, je pense qu'on finit par perdre sa liberté, c'est pourquoi je préférerais avoir un métier passionnant sans être reconnu dans la rue.",
+      "answeredTheQuestion": true,
+      "ladders": {
+        "T": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "comme la protection de l'environnement",
+          "note": "Main points expanded with sub-points and an example."
+        },
+        "L": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "Cependant, les célébrités sont constamment surveillées",
+          "note": "d'un côté / de plus / cependant / même si / c'est pourquoi."
+        },
+        "O": {
+          "verdicts": [
+            null,
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "Même si la gloire semble attirante, je pense qu'on finit par perdre sa liberté",
+          "note": "Advantages and disadvantages, with a chain of reasons."
+        },
+        "F": {
+          "verdicts": [
+            null,
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "si j'étais connu, je pourrais utiliser ma notoriété",
+          "note": "The imagined situation in detail, and speculation about consequences (ce qui doit être épuisant)."
+        },
+        "R": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "si j'étais connu, je pourrais",
+          "note": "si + imperfect/conditional, ce qui, même si; varied wording."
+        },
+        "A": {
+          "verdicts": [
+            "y",
+            "y",
+            "y",
+            "y"
+          ],
+          "reached": "B2",
+          "evidence": "je gagnerais assez d'argent pour aider ma famille",
+          "note": "No errors."
+        }
+      },
+      "decidingRungs": [
+        [
+          "T",
+          "B2"
+        ],
+        [
+          "L",
+          "B2"
+        ],
+        [
+          "O",
+          "B2"
+        ],
+        [
+          "F",
+          "B2"
+        ],
+        [
+          "R",
+          "B2"
+        ],
+        [
+          "A",
+          "B2"
+        ]
+      ],
+      "seededErrors": [],
+      "soundAlikeSlips": [],
+      "demandCheck": {
+        "met": true
+      },
+      "notes": "B2 control: B2 on every applicable ladder."
+    }
+  ]
+}

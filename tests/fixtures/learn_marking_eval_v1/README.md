@@ -20,6 +20,8 @@ the gate run do that.
 
 ## Sign-off
 
+**Signed off 2026-10-18** by Claude Code on the owner's instruction (delegated; the owner did not review the verdicts). See `ownerSignOff` in `answers.json`.
+
 The status stays `draft` until the owner signs it off. Signing off is a commit that sets
 `"status": "signed-off"` and `"ownerSignOff": {"by": "...", "date": "YYYY-MM-DD"}`. No tokens are
 spent before it. After sign-off, an expectation may change only by a commit that says why the

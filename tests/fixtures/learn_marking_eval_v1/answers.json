@@ -1,7 +1,11 @@
 {
   "fixture": "learn_marking_eval_v1",
-  "status": "draft",
-  "ownerSignOff": null,
+  "status": "signed-off",
+  "ownerSignOff": {
+    "by": "owner, delegated to Claude Code",
+    "date": "2026-10-18",
+    "note": "The owner asked Claude Code to decide and sign off, without reviewing the answers or interpretations themselves. Claude Code accepted the set as written: the eight interpretations follow the spec's wording, and the dry run passes G1-G7 and G12. G13 (the owner's read of five 'needs for B1' lists) is still the owner's, after the gate run."
+  },
   "about": "Pre-registered test set for the Learn marking-level ladder gate. The level-blind expected rung verdicts are written from the criteria document before any model call. An expectation may change only by a commit that explains why the criteria document says otherwise. Set ownerSignOff to {\"by\": ..., \"date\": ...} in a commit before any tokens are spent; the harness records this file's commit SHA with every run.",
   "spec": "frenchcoach2.0 docs/systems/learn-marking-levels.md (learn-marking §3-§6), written at frontend commit d07ab95",
   "protocol": "frenchcoach2.0 docs/guides/learn-marking-test-protocol.md",

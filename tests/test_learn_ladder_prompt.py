@@ -244,7 +244,7 @@ class _FakeGroq:
         return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=self._content))])
 
 
-@pytest.mark.parametrize("ladder, system_prompt, extra", [(False, "SYSTEM_PROMPT", 0), (True, "SYSTEM_PROMPT_LADDER", 500)])
+@pytest.mark.parametrize("ladder, system_prompt, extra", [(False, "SYSTEM_PROMPT", 0), (True, "SYSTEM_PROMPT_LADDER", 1000)])
 def test_groq_uses_the_schemes_system_prompt_and_budget(monkeypatch, ladder, system_prompt, extra):
     fake = _FakeGroq()
     monkeypatch.setattr(main, "get_groq", lambda: fake)

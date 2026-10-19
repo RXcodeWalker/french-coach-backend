@@ -209,7 +209,11 @@ FEEDBACK_DEPTH_ANSWER_TOKENS: dict[FeedbackDepth, int] = {
 # The ladder scheme's reply also carries levelCheck (verdicts, quotes and short
 # examples for up to six ladders) and demandCheck: about 25% more output
 # (learn-marking §1.4). UNVALIDATED; the gate run checks for truncation (G11).
-LADDER_EXTRA_ANSWER_TOKENS = 500
+# Was 500: the first gate run (2026-10-19) cut all three 4-error answers off at
+# 3,060 completion tokens (2,048 + 500 + 512 reasoning reserve), losing rephrase,
+# encouragement and followUpQuestion while the JSON still parsed. The missing
+# fields were ~400-500 tokens; 1,000 leaves ~500 of headroom.
+LADDER_EXTRA_ANSWER_TOKENS = 1000
 
 
 def _feedback_answer_tokens(depth: FeedbackDepth, ladder: bool = False) -> int:

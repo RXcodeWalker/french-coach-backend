@@ -131,7 +131,7 @@ def test_multipart_with_question_field_still_extracts_skill_and_difficulty_conte
 
     (question, transcript, model, depth, metrics_json,
      skill_context, difficulty_context, audio_bytes, audio_mime,
-     question_id, demands_version, demand_signals) = asyncio.run(_run())
+     question_id, demands_version, demand_signals, _marking) = asyncio.run(_run())
 
     assert question == "Que fais-tu le week-end ?"
     assert skill_context == {"weaknesses": [{"name": "subjunctive", "recurrenceCount": 3}]}

@@ -224,7 +224,7 @@ def test_parse_feedback_request_json_extracts_demand_fields():
 
     (question, transcript, model, depth, metrics_json,
      skill_context, difficulty_context, audio_bytes, audio_mime,
-     question_id, demands_version, demand_signals) = asyncio.run(_run())
+     question_id, demands_version, demand_signals, _marking) = asyncio.run(_run())
 
     assert question_id == "fam_01"
     assert demands_version == main.LEARN_DEMANDS_VERSION
@@ -266,7 +266,7 @@ def test_parse_feedback_request_multipart_extracts_demand_fields_and_engine():
 
     (question, transcript, model, depth, metrics_json,
      skill_context, difficulty_context, audio_bytes, audio_mime,
-     question_id, demands_version, demand_signals) = asyncio.run(_run())
+     question_id, demands_version, demand_signals, _marking) = asyncio.run(_run())
 
     assert model == "gemini"
     assert question_id == "fam_01"

@@ -259,7 +259,7 @@ def test_a_transport_failure_is_recorded_and_retried_on_the_next_run(tmp_path):
     "kwargs, reason",
     [
         ({"finish_reason": "length"}, "truncated"),
-        ({"tokens": 7200}, "7200 tokens"),
+        ({"tokens": 8200}, "8200 tokens"),
         ({"mutate": lambda i, r: "not json"}, "invalid JSON"),
     ],
 )
@@ -387,4 +387,4 @@ def test_a_log_from_another_prompt_is_refused(tmp_path):
 
 
 def test_the_cost_limits_are_the_owners_2026_10_19_values():
-    assert (harness.SMOKE_MAX_TOKENS, harness.G11_MEDIAN_TOKENS, harness.G11_MAX_TOKENS) == (7000, 6000, 7000)
+    assert (harness.SMOKE_MAX_TOKENS, harness.G11_MEDIAN_TOKENS, harness.G11_MAX_TOKENS) == (8000, 6000, 8000)

@@ -24,7 +24,7 @@ failure is recorded as `transport_error` and retried on the next run.
 
 Usage (from backend/, with backend/.env holding GROQ_API_KEY / GEMINI_API_KEY):
     python scripts/learn_marking_eval.py --stage smoke       # Stage 1: 3 calls; stops on invalid
-                                                             # JSON, truncation or > 7,000 tokens
+                                                             # JSON, truncation or > 8,000 tokens
     python scripts/learn_marking_eval.py --stage full        # Stage 2: all 22, run 1
     python scripts/learn_marking_eval.py --stage stability   # Stage 3: 8 answers, runs 2 and 3
     python scripts/learn_marking_eval.py --stage gemini      # Stage 4 (optional, not a gate)
@@ -68,13 +68,16 @@ DEFAULT_LOG = FIXTURE_DIR / "runs" / "run_log.jsonl"
 RECORD_SCHEMA = 1
 LEVEL_NAMES = ("A1", "A2", "exam", "B1", "B2")
 
-# Stage 1 stop rules and the G11 cost limits (protocol, "Stages and budget"; G11). Raised from
-# 6,000 / median 5,000 on 2026-10-19 by the owner after the first smoke run: the ladder prompt alone
-# is ~4,100-4,250 tokens (v6's coaching rules and schema, kept unchanged by design), which the
-# 5,000-per-call estimate missed. UNVALIDATED.
-SMOKE_MAX_TOKENS = 7000
+# Stage 1 stop rules and the G11 cost limits (protocol, "Stages and budget"; G11). UNVALIDATED.
+# Raised twice on 2026-10-19 by the owner, from 6,000 / median 5,000:
+# - to 7,000 / 6,000 after smoke iteration 0: the ladder prompt alone is ~4,100-4,250 tokens (v6's
+#   coaching rules and schema, kept unchanged by design), which the 5,000-per-call estimate missed;
+# - max to 8,000 after smoke iteration 1: a 4-error answer used 7,204, and 53% of that reply is v6
+#   listing every error twice (grammar + corrections); the ladder's own keys were 9%. The median
+#   stays 6,000, so ladder bloat on ordinary answers still fails G11.
+SMOKE_MAX_TOKENS = 8000
 G11_MEDIAN_TOKENS = 6000
-G11_MAX_TOKENS = 7000
+G11_MAX_TOKENS = 8000
 # Retry policy for a non-daily 429/503. A retry-after longer than this is treated like the daily limit.
 MAX_RETRIES = 4
 MAX_RETRY_AFTER_SEC = 900.0

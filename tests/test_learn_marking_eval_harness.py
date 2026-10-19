@@ -259,7 +259,7 @@ def test_a_transport_failure_is_recorded_and_retried_on_the_next_run(tmp_path):
     "kwargs, reason",
     [
         ({"finish_reason": "length"}, "truncated"),
-        ({"tokens": 6500}, "6500 tokens"),
+        ({"tokens": 7200}, "7200 tokens"),
         ({"mutate": lambda i, r: "not json"}, "invalid JSON"),
     ],
 )
@@ -352,9 +352,9 @@ def test_g6_and_g11_fail_when_errors_are_missed_or_calls_run_long(tmp_path):
         reply["grammar"] = {"critical": [], "polish": []}
         return reply
 
-    statuses = _gate_status(harness.build_report(_oracle_log(tmp_path, mutate=forget_errors, tokens=5800))[0])
+    statuses = _gate_status(harness.build_report(_oracle_log(tmp_path, mutate=forget_errors, tokens=6500))[0])
     assert statuses["G6"] == "FAIL"
-    assert statuses["G11"] == "FAIL"  # median 5,800 > 5,000
+    assert statuses["G11"] == "FAIL"  # median 6,500 > 6,000
 
 
 def test_g10_counts_quotes_before_the_guardrail(tmp_path):
@@ -374,3 +374,17 @@ def test_the_cli_writes_the_report(tmp_path):
     out = tmp_path / "report.md"
     assert harness.main_cli(["--report", "--log", str(log), "--report-out", str(out)]) == 0
     assert out.read_text(encoding="utf-8").startswith("# Learn marking gate report — groq")
+
+
+def test_a_log_from_another_prompt_is_refused(tmp_path):
+    log = tmp_path / "log.jsonl"
+    run("smoke", log, oracle_provider([]))
+    records = harness.read_log(log)
+    records[0]["versions"]["systemPromptSha256"] = "an-older-prompt"
+    log.write_text("".join(json.dumps(r) + "\n" for r in records), encoding="utf-8")
+    with pytest.raises(SystemExit, match="another prompt"):
+        run("full", log, oracle_provider([]))
+
+
+def test_the_cost_limits_are_the_owners_2026_10_19_values():
+    assert (harness.SMOKE_MAX_TOKENS, harness.G11_MEDIAN_TOKENS, harness.G11_MAX_TOKENS) == (7000, 6000, 7000)

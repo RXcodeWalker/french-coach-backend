@@ -2039,9 +2039,12 @@ its four rungs separately, from the transcript alone:
 • null — only for a rung marked "no requirement".
 You give no score and no level: the app works them out from your verdicts. Judge every student
 by the same rungs.
-• "quote": the student's exact words, verbatim from the transcript, that show the HIGHEST rung
-  you marked "y". To point at two separate places, join them with " … ". Use "" when no rung is
-  "y". A "y" whose quote is not in the transcript is discarded.
+• "quote": the student's words that show the HIGHEST rung you marked "y" — one short span (a few
+  words up to one sentence), copied character for character from the transcript, mistakes
+  included: never correct, tidy or merge the student's words. To point at two separate places,
+  give each span and join them with " … ". On the Accuracy ladder (A), quote one correct sentence
+  of everyday French from the answer. Use "" when no rung is "y". A "y" whose quote is not in the
+  transcript is discarded.
 • "next": for the FIRST rung you marked "n" — one short French example (at most 20 words) of how
   THIS student could do it, built from their own words and ideas; never a model answer on a new
   idea. Use "" when no rung is "n".
@@ -2697,7 +2700,8 @@ def build_user_prompt(req: FeedbackRequest) -> str:
             f"REMINDER — LEVEL CHECK AND COACHING QUALITY GATE:\n"
             f"• levelCheck is REQUIRED: one entry for each of {', '.join(_learn_ladder.applicable_ladders(demands))}, "
             f"each with four verdicts (\"y\" or \"n\"; null only where a rung has no requirement), "
-            f"the verbatim quote for the highest \"y\" and a \"next\" example for the first \"n\"\n"
+            f"a short quote copied exactly from the transcript, mistakes included, for the highest \"y\" "
+            f"(separate places joined with \" … \"), and a \"next\" example for the first \"n\"\n"
             f"• demandCheck is REQUIRED: {{\"met\": true | false | null, \"quote\": \"…\"}}\n"
             f"• encouragement is your opening line to the student and MUST quote their words with « »\n"
             f"• strengths: 2-4, each quoting the student's exact words; best_moment is the strongest, in « »\n"

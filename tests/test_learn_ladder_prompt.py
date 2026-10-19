@@ -28,8 +28,8 @@ import main  # noqa: E402
 
 # Pinned on purpose: bump LEARN_LADDER_PROMPT_VERSION and update these in the same commit as any
 # change to SYSTEM_PROMPT_LADDER or to the ladder branch of build_user_prompt.
-LADDER_SYSTEM_PROMPT_HASH = "948efd855abb4f84bd05710911e6ebab45e2f1a2415c62523b16f16eca06e1a1"
-LADDER_USER_PROMPT_HASH = "dd96af19d177a9274cf7223ca79fa3e65e90a773b7e8c3e9d0e6590222acb23c"
+LADDER_SYSTEM_PROMPT_HASH = "8805d5a5814b1bfcd912cb1e9c2f33cbb47be9be0933ab03fa0fd5f338e646a0"
+LADDER_USER_PROMPT_HASH = "74d9bfb995554cf382e18b351c010ef2d5e09370dd839a5cab6ec99d73f737ed"
 
 TIERS = [None, *({"tier": t} for t in main._TIER_PROMPTS)]
 

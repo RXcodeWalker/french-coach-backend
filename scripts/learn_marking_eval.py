@@ -24,7 +24,7 @@ failure is recorded as `transport_error` and retried on the next run.
 
 Usage (from backend/, with backend/.env holding GROQ_API_KEY / GEMINI_API_KEY):
     python scripts/learn_marking_eval.py --stage smoke       # Stage 1: 3 calls; stops on invalid
-                                                             # JSON, truncation or > 6,000 tokens
+                                                             # JSON, truncation or > 7,000 tokens
     python scripts/learn_marking_eval.py --stage full        # Stage 2: all 22, run 1
     python scripts/learn_marking_eval.py --stage stability   # Stage 3: 8 answers, runs 2 and 3
     python scripts/learn_marking_eval.py --stage gemini      # Stage 4 (optional, not a gate)
@@ -68,8 +68,13 @@ DEFAULT_LOG = FIXTURE_DIR / "runs" / "run_log.jsonl"
 RECORD_SCHEMA = 1
 LEVEL_NAMES = ("A1", "A2", "exam", "B1", "B2")
 
-# Stage 1 stop rules (protocol, "Stages and budget").
-SMOKE_MAX_TOKENS = 6000
+# Stage 1 stop rules and the G11 cost limits (protocol, "Stages and budget"; G11). Raised from
+# 6,000 / median 5,000 on 2026-10-19 by the owner after the first smoke run: the ladder prompt alone
+# is ~4,100-4,250 tokens (v6's coaching rules and schema, kept unchanged by design), which the
+# 5,000-per-call estimate missed. UNVALIDATED.
+SMOKE_MAX_TOKENS = 7000
+G11_MEDIAN_TOKENS = 6000
+G11_MAX_TOKENS = 7000
 # Retry policy for a non-daily 429/503. A retry-after longer than this is treated like the daily limit.
 MAX_RETRIES = 4
 MAX_RETRY_AFTER_SEC = 900.0
@@ -402,6 +407,28 @@ def stage_plan(stage: str, fixture: dict[str, Any]) -> tuple[str, list[tuple[str
     raise SystemExit(f"Unknown stage {stage!r}")
 
 
+def current_versions() -> dict[str, str]:
+    main = _main()
+    return {
+        "learnPrompt": main.LEARN_LADDER_PROMPT_VERSION,
+        "ladder": main._learn_ladder.LEARN_LADDER_VERSION,
+        "systemPromptSha256": _sha256(main.SYSTEM_PROMPT_LADDER),
+    }
+
+
+def check_log_matches_prompt(records: list[dict[str, Any]]) -> None:
+    """One log, one prompt: records from another prompt or ladder version would mix two judges in one
+    report and make resume skip answers the new prompt never saw."""
+    want = current_versions()
+    for record in records:
+        got = {k: (record.get("versions") or {}).get(k) for k in want}
+        if got != want:
+            raise SystemExit(
+                f"The log holds records from another prompt or ladder version ({got} vs {want}). "
+                "Move it aside (keep it as evidence) and start a new log."
+            )
+
+
 def smoke_stop_reason(record: dict[str, Any]) -> str | None:
     if record["status"] == "contract_error" and (record.get("error") or "").startswith("invalid_json"):
         return "invalid JSON"
@@ -425,7 +452,9 @@ async def run_stage(
     provider, plan = stage_plan(stage, fixture)
     call = (providers or PROVIDERS)[provider]
     answers = {a["id"]: a for a in fixture["answers"]}
-    done = {(r["provider"], r["stage"], r["answerId"], r["run"]) for r in read_log(log_path) if observed(r)}
+    existing = read_log(log_path)
+    check_log_matches_prompt(existing)
+    done = {(r["provider"], r["stage"], r["answerId"], r["run"]) for r in existing if observed(r)}
     todo = [(i, run) for i, run in plan if (provider, stage, i, run) not in done]
     print(f"Stage {stage} ({provider}): {len(plan) - len(todo)} of {len(plan)} already observed, {len(todo)} to call.")
     for answer_id, run in todo:  # one call at a time
@@ -697,9 +726,9 @@ def build_report(records: list[dict[str, Any]], provider: str = "groq") -> tuple
     median_tokens = statistics.median(tokens) if tokens else 0
     max_tokens = max(tokens) if tokens else 0
     valid_rate = valid / len(calls) if calls else 0.0
-    _gate(rows, "G11", "Contract and cost", "≥ 97.5% valid; demandCheck 100%; 0 truncations; median ≤ 5,000, max ≤ 6,000",
+    _gate(rows, "G11", "Contract and cost", f"≥ 97.5% valid; demandCheck 100%; 0 truncations; median ≤ {G11_MEDIAN_TOKENS:,}, max ≤ {G11_MAX_TOKENS:,}",
           bool(calls) and valid_rate >= 0.975 and with_demand_check == valid and not truncations
-          and len(tokens) == len(calls) and median_tokens <= 5000 and max_tokens <= 6000,
+          and len(tokens) == len(calls) and median_tokens <= G11_MEDIAN_TOKENS and max_tokens <= G11_MAX_TOKENS,
           f"valid {valid}/{len(calls)} ({valid_rate:.1%}), demandCheck {with_demand_check}/{valid}, "
           f"truncated {len(truncations)}{' (' + ', '.join(truncations) + ')' if truncations else ''}, "
           f"tokens median {median_tokens:.0f} max {max_tokens} ({len(tokens)} with usage)")

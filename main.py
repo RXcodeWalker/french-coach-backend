@@ -2927,23 +2927,31 @@ async def _probe_gemini() -> str:
         return "degraded"
 
 
+def _groq_feedback_kwargs(prompt: str, depth: FeedbackDepth, ladder: bool = False) -> dict[str, Any]:
+    """The chat-completion request for Learn feedback — one place, shared by
+    _call_groq, _stream_groq (which adds stream=True) and the Learn-marking
+    eval harness (scripts/learn_marking_eval.py), so the harness measures the
+    exact production call."""
+    return {
+        "model": GROQ_MODEL,
+        "response_format": {"type": "json_object"},
+        "messages": [
+            {"role": "system", "content": SYSTEM_PROMPT_LADDER if ladder else SYSTEM_PROMPT},
+            {"role": "user", "content": prompt},
+        ],
+        "temperature": 0.4,
+        "max_tokens": _groq_token_budget(_feedback_answer_tokens(depth, ladder)),
+        **_groq_reasoning_kwargs(),
+    }
+
+
 async def _call_groq(prompt: str, depth: FeedbackDepth = "standard", *, ladder: bool = False) -> dict[str, Any]:
     groq = get_groq()
     if not groq:
         raise RuntimeError("Groq not configured")
 
     async def operation() -> dict[str, Any]:
-        resp = await groq.chat.completions.create(
-            model=GROQ_MODEL,
-            response_format={"type": "json_object"},
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT_LADDER if ladder else SYSTEM_PROMPT},
-                {"role": "user", "content": prompt},
-            ],
-            temperature=0.4,
-            max_tokens=_groq_token_budget(_feedback_answer_tokens(depth, ladder)),
-            **_groq_reasoning_kwargs(),
-        )
+        resp = await groq.chat.completions.create(**_groq_feedback_kwargs(prompt, depth, ladder))
         result = extract_json(resp.choices[0].message.content)
         result["modelUsed"] = f"groq/{GROQ_MODEL}"
         return result
@@ -3182,18 +3190,7 @@ async def _stream_groq(
     buffer = ""
     already_emitted: set[str] = set()
 
-    stream = await groq.chat.completions.create(
-        model=GROQ_MODEL,
-        response_format={"type": "json_object"},
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT_LADDER if ladder else SYSTEM_PROMPT},
-            {"role": "user", "content": prompt},
-        ],
-        temperature=0.4,
-        max_tokens=_groq_token_budget(_feedback_answer_tokens(depth, ladder)),
-        stream=True,
-        **_groq_reasoning_kwargs(),
-    )
+    stream = await groq.chat.completions.create(**_groq_feedback_kwargs(prompt, depth, ladder), stream=True)
 
     async for chunk in stream:
         delta = chunk.choices[0].delta.content if chunk.choices else None

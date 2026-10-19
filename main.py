@@ -3876,6 +3876,10 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
         raise
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+    # Capped here, not inside generate(): assigning `question` in the nested
+    # function made it local there, so every stream raised UnboundLocalError
+    # before the prompt was built and Learn fell back to /v3 on every answer.
+    question = question[:_FEEDBACK_QUESTION_MAX_CHARS]
 
     async def generate():
         tmp_path: str | None = None
@@ -3917,7 +3921,6 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
             # normalise before it is emitted so the "transcript" event, the
             # prompt and the final echoed field all agree.
             actual_transcript = clean_transcript(actual_transcript)[:_FEEDBACK_TRANSCRIPT_MAX_CHARS]
-            question = question[:_FEEDBACK_QUESTION_MAX_CHARS]
 
             yield json.dumps({"type": "transcript", "data": {"text": actual_transcript}}) + "\n"
 

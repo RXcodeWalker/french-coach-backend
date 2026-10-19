@@ -651,11 +651,13 @@ def build_report(records: list[dict[str, Any]], provider: str = "groq") -> tuple
     # G8 — verdicts match expectations (run 1, the model's own verdicts).
     total = agree = d_total = d_agree = 0
     per_ladder: dict[str, list[int]] = {}
-    for i, record in run1.items():
-        answer = answers[i]
+    # Every answer counts. One without a scored run 1 (a contract error) counts every expected verdict
+    # as a disagreement — the strictest reading; the protocol does not say how to treat it.
+    for i, answer in answers.items():
+        record = run1.get(i)
         deciding = {(ladder, level) for ladder, level in answer["decidingRungs"]}
         for ladder, expected in answer["ladders"].items():
-            got = model_verdicts(record, ladder)
+            got = model_verdicts(record, ladder) if record else [None] * 4
             for index, want in enumerate(expected["verdicts"]):
                 if want is None:
                     continue
@@ -672,8 +674,9 @@ def build_report(records: list[dict[str, Any]], provider: str = "groq") -> tuple
     overall_rate = agree / total if total else 0.0
     deciding_rate = d_agree / d_total if d_total else 0.0
     _gate(rows, "G8", "Verdicts match expectations", "≥ 85% all; ≥ 90% deciding; every ladder ≥ 75%",
-          not missing and overall_rate >= 0.85 and deciding_rate >= 0.90 and all(v >= 0.75 for v in ladder_rates.values()),
-          f"all {agree}/{total} ({overall_rate:.0%}), deciding {d_agree}/{d_total} ({deciding_rate:.0%}), "
+          bool(run1) and overall_rate >= 0.85 and deciding_rate >= 0.90 and all(v >= 0.75 for v in ladder_rates.values()),
+          (f"unscored, counted as all wrong: {', '.join(missing)}; " if missing else "")
+          + f"all {agree}/{total} ({overall_rate:.0%}), deciding {d_agree}/{d_total} ({deciding_rate:.0%}), "
           + ", ".join(f"{k} {v:.0%}" for k, v in sorted(ladder_rates.items())))
 
     # G9 — stability over 3 runs.

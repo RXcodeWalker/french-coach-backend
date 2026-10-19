@@ -388,3 +388,16 @@ def test_a_log_from_another_prompt_is_refused(tmp_path):
 
 def test_the_cost_limits_are_the_owners_2026_10_19_values():
     assert (harness.SMOKE_MAX_TOKENS, harness.G11_MEDIAN_TOKENS, harness.G11_MAX_TOKENS) == (8000, 6000, 8000)
+
+
+def test_g8_counts_an_unscored_answer_as_all_wrong(tmp_path):
+    def break_b2(answer_id, reply):
+        if answer_id == "fut_19_b2":
+            reply["levelCheck"]["O"]["verdicts"][0] = "null"  # a string, not JSON null: a contract error
+        return reply
+
+    report, _ = harness.build_report(_oracle_log(tmp_path, mutate=break_b2))
+    g8 = next(line for line in report.splitlines() if line.startswith("| G8 "))
+    assert "unscored, counted as all wrong: fut_19_b2" in g8
+    assert "all 387/409" in g8
+    assert _gate_status(report)["G8"] == "PASS"  # 95% still clears 85%

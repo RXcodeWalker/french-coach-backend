@@ -84,3 +84,51 @@ def test_the_stream_still_caps_the_question(client, groq_stream):
     assert events[-1]["type"] == "complete"
     assert "Q" * main._FEEDBACK_QUESTION_MAX_CHARS in groq_stream[0]
     assert "Q" * (main._FEEDBACK_QUESTION_MAX_CHARS + 1) not in groq_stream[0]
+
+
+def test_an_unscored_streamed_reply_is_not_cached(client, monkeypatch):
+    # A reply without scores is shown as malformed_response; caching it served
+    # that same unscored reply to every retry instead of asking the model again.
+    calls: list[int] = []
+
+    async def unscored(prompt, depth, on_section, **kw):
+        calls.append(1)
+        return {"best_moment": "x", "modelUsed": "groq/test"}
+
+    monkeypatch.setattr(main, "GROQ_API_KEY", "test-key")
+    monkeypatch.setattr(main, "get_groq", lambda: object())
+    monkeypatch.setattr(main, "_stream_groq", unscored)
+    body = {"question": "Décris ta famille.", "transcript": "Ma famille est grande."}
+    for _ in range(2):
+        events = _events(client.post("/api/feedback/stream", json=body, headers={"Authorization": "Bearer x"}))
+        assert events[-1]["data"]["providerStatus"] == "malformed_response"
+    assert len(calls) == 2
+
+
+def test_a_scored_streamed_reply_is_cached(client, groq_stream):
+    body = {"question": "Décris ta famille.", "transcript": "Ma famille est grande."}
+    for _ in range(2):
+        client.post("/api/feedback/stream", json=body, headers={"Authorization": "Bearer x"})
+    assert len(groq_stream) == 1
+
+
+def test_stream_and_v3_charge_the_same_key_without_a_question(client, groq_stream, monkeypatch):
+    # The stream falls back to /v3 on failure; both must use one quota key, or
+    # the fallback is charged twice.
+    keys: list[str] = []
+
+    async def record(db, user_id, feature, key):
+        keys.append(key)
+        return {"granted": True}
+
+    async def groq(prompt, depth="standard", **kw):
+        return {"scores": {"comm": 6, "know": 6, "acc": 6}, "modelUsed": "groq/test"}
+
+    monkeypatch.setattr(main, "consume_ai_quota_or_503", record)
+    monkeypatch.setattr(main, "_feedback_cache", main.BoundedTTLCache(50, 300.0))
+    monkeypatch.setattr(main, "_call_groq", groq)
+    body = {"question": "", "transcript": "Ma famille est grande.", "enginePreference": "groq"}
+    client.post("/api/feedback/stream", json=body, headers={"Authorization": "Bearer x"})
+    monkeypatch.setattr(main, "_feedback_cache", main.BoundedTTLCache(50, 300.0))
+    assert client.post("/api/feedback/v3", json=body, headers={"Authorization": "Bearer x"}).status_code == 200
+    assert len(keys) == 2 and keys[0] == keys[1]

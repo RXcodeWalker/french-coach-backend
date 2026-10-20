@@ -440,8 +440,16 @@ async def _feedback_cache_set(key: str, value: dict) -> None:
 
 
 def _is_cacheable_result(result: dict) -> bool:
-    """Only cache real AI responses — not offline fallbacks or error payloads."""
-    return isinstance(result, dict) and result.get("providerStatus") in ("primary", "fallback")
+    """Only cache real AI responses — not offline fallbacks or error payloads.
+    A reply must also be graded: v6 `scores`, or a ladder `levelCheck` (only
+    cached after validate_raw_levelcheck passed). An unscored reply is shown as
+    malformed_response, and caching it would serve that to every retry for the
+    cache TTL instead of asking the model again."""
+    return (
+        isinstance(result, dict)
+        and result.get("providerStatus") in ("primary", "fallback")
+        and ("scores" in result or "levelCheck" in result)
+    )
 
 # ── In-memory metrics ─────────────────────────────────────────────────────────
 _METRICS: dict[str, Any] = {
@@ -4409,8 +4417,11 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
             cache_key: str | None = None
             fb: dict[str, Any] | None = None
             was_cached = False
-            if not tmp_path and actual_transcript and question:
-                cache_key = _request_cache_key(req, question)
+            # Same cache id as _feedback_impl, so a stream that falls back to
+            # /v3 reuses its quota key (no second charge) even without a question.
+            cache_id = question or actual_transcript[:64]
+            if not tmp_path and actual_transcript and cache_id:
+                cache_key = _request_cache_key(req, cache_id)
                 hit = await _feedback_cache_get(cache_key)
                 if hit is not None:
                     fb = hit
@@ -4423,7 +4434,7 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
                 # started streaming — so it's surfaced as a structured
                 # error event and the generator returns cleanly, matching
                 # the existing "No transcript available" pattern above.
-                idempotency_key = cache_key or _request_cache_key(req, question)
+                idempotency_key = cache_key or _request_cache_key(req, cache_id)
                 try:
                     await consume_ai_quota_or_503(get_supabase(), user_id, "feedback", idempotency_key)
                 except QuotaDenied as e:

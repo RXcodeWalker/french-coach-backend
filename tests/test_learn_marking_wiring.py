@@ -155,11 +155,14 @@ def test_cache_key_separates_schemes_question_ids_and_demand_versions():
 def test_cache_key_carries_the_prompt_version_of_its_scheme(monkeypatch):
     v6 = main._feedback_cache_key("t", "q")
     ladder = main._feedback_cache_key("t", "q", marking="ladder-v1")
+    # A ladder reply is v6's feedback plus the checklist (Design D): either prompt version moves its key.
+    monkeypatch.setattr(main, "LEARN_LADDER_PROMPT_VERSION", "ladder-check-test")
+    assert main._feedback_cache_key("t", "q") == v6
+    ladder_after_check = main._feedback_cache_key("t", "q", marking="ladder-v1")
+    assert ladder_after_check != ladder
     monkeypatch.setattr(main, "LEARN_PROMPT_VERSION", "learn-prompt-v6-test")
     assert main._feedback_cache_key("t", "q") != v6
-    assert main._feedback_cache_key("t", "q", marking="ladder-v1") == ladder
-    monkeypatch.setattr(main, "LEARN_LADDER_PROMPT_VERSION", "learn-prompt-v8-test")
-    assert main._feedback_cache_key("t", "q", marking="ladder-v1") != ladder
+    assert main._feedback_cache_key("t", "q", marking="ladder-v1") != ladder_after_check
 
 
 def test_request_cache_key_reads_the_request(monkeypatch):
@@ -206,7 +209,9 @@ def test_a_streamed_reply_is_cached_and_served_to_the_next_identical_request(e2e
     assert second[-1]["data"]["scores"] == first[-1]["data"]["scores"]
 
 
-# ── Slice 3: the ladder reply, end to end (learn-marking §6-§8) ─────────────
+# ── The ladder reply, end to end (learn-marking §6-§8, Design D) ───────────
+# Two calls: the v6 feedback call (_call_groq / _call_gemini / _stream_groq), then the level checklist
+# (_call_groq_ladder_check / _call_gemini_ladder_check).
 
 HOL_01_QUESTION = "Où es-tu allé(e) pendant les dernières vacances ?"
 HOL_01_TRANSCRIPT = (
@@ -214,8 +219,22 @@ HOL_01_TRANSCRIPT = (
 )
 
 
-def _raw_ladder_reply(**overrides):
-    """A ladder-scheme model reply for hol_01 (T L F R A): verdicts only, plus v6's teaching fields."""
+def _v6_reply(**overrides):
+    """A v6 feedback reply, with v6's own (holistic) scores that the ladder must overwrite."""
+    reply = {
+        "fluency": 6.0,
+        "scores": {"comm": 6, "know": 6, "acc": 6},
+        "cefrLevel": "A2",
+        "best_moment": "Your « je suis allé en France » uses the right auxiliary for aller.",
+        "grammar": {"critical": [], "polish": []},
+        "modelUsed": "groq/test",
+    }
+    reply.update(overrides)
+    return reply
+
+
+def _check_reply(**overrides):
+    """The level checklist's reply for hol_01 (T L F R A)."""
     reply = {
         "levelCheck": {
             "T": {"verdicts": ["y", "y", "n", "n"], "quote": "je suis allé en France … nous avons visité Paris",
@@ -227,8 +246,6 @@ def _raw_ladder_reply(**overrides):
             "A": {"verdicts": ["y", "y", "y", "y"], "quote": "je suis allé en France", "next": ""},
         },
         "demandCheck": {"met": False, "quote": ""},
-        "best_moment": "Your « je suis allé en France » uses the right auxiliary for aller.",
-        "grammar": {"critical": [], "polish": []},
         "modelUsed": "groq/test",
     }
     reply.update(overrides)
@@ -250,7 +267,7 @@ def _ladder_body(**overrides):
 
 def _expected_ladder():
     demands = main.resolve_learn_demands("hol_01", main.LEARN_DEMANDS_VERSION)
-    return main._learn_ladder.score_ladders(_raw_ladder_reply()["levelCheck"], demands, HOL_01_TRANSCRIPT)
+    return main._learn_ladder.score_ladders(_check_reply()["levelCheck"], demands, HOL_01_TRANSCRIPT)
 
 
 def _assert_scored_ladder_reply(data):
@@ -262,8 +279,9 @@ def _assert_scored_ladder_reply(data):
     assert data["fluency"] == exam["fluency"]
     assert data["cefrLevel"] == expected.cefr_level
     assert data["answered_the_question"] is True
-    assert data["promptVersion"] == "learn-prompt-v9"
+    assert data["promptVersion"] == "learn-prompt-v6+ladder-check-v1"
     assert data["demandCheck"] == {"met": False, "quote": ""}
+    assert data["best_moment"] == _v6_reply()["best_moment"]  # the feedback is v6's
     assert data.get("providerStatus") != "malformed_response"
 
 
@@ -273,67 +291,101 @@ def ladder_on(monkeypatch):
     monkeypatch.setattr(main, "_log_coaching_quality", lambda *a, **kw: None)
 
 
-def _stub_providers(monkeypatch, *, groq_reply, gemini_reply=None):
+def _stub_providers(monkeypatch, *, feedback=_v6_reply, check=_check_reply, check_fallback=None):
+    """Stub both calls on both providers. `check` answers on Groq; `check_fallback` (None = down) on Gemini."""
     calls = []
 
     async def fake_groq(prompt, depth="standard", **kw):
-        calls.append(("groq", kw))
-        return groq_reply() if callable(groq_reply) else groq_reply
+        calls.append(("groq", "feedback"))
+        return feedback() if callable(feedback) else feedback
 
     async def fake_gemini(prompt, **kw):
-        calls.append(("gemini", kw))
-        if gemini_reply is None:
+        calls.append(("gemini", "feedback"))
+        raise RuntimeError("gemini down")
+
+    async def fake_groq_check(prompt):
+        calls.append(("groq", "check"))
+        reply = check() if callable(check) else check
+        if isinstance(reply, Exception):
+            raise reply
+        return reply
+
+    async def fake_gemini_check(prompt):
+        calls.append(("gemini", "check"))
+        if check_fallback is None:
             raise RuntimeError("gemini down")
-        return gemini_reply
+        return check_fallback() if callable(check_fallback) else check_fallback
 
     monkeypatch.setattr(main, "_call_groq", fake_groq)
     monkeypatch.setattr(main, "_call_gemini", fake_gemini)
+    monkeypatch.setattr(main, "_call_groq_ladder_check", fake_groq_check)
+    monkeypatch.setattr(main, "_call_gemini_ladder_check", fake_gemini_check)
     return calls
 
 
 def test_v3_returns_the_computed_scores_and_the_level_check(e2e, ladder_on, monkeypatch):
-    # The model's own scores (if it wrote any) never survive: code computes them.
-    calls = _stub_providers(monkeypatch, groq_reply=lambda: _raw_ladder_reply(
-        scores={"comm": 1, "know": 1, "acc": 1}, fluency=1.0, cefrLevel="B2", demands_met=["x"],
-    ))
+    # The feedback model's own scores never survive: code computes them from the checklist.
+    calls = _stub_providers(monkeypatch, feedback=lambda: _v6_reply(scores={"comm": 1, "know": 1, "acc": 1},
+                                                                    fluency=1.0, cefrLevel="B2", demands_met=["x"]))
     resp = e2e.post("/api/feedback/v3", json=_ladder_body(), headers={"Authorization": "Bearer x"})
     assert resp.status_code == 200
     data = resp.json()
     _assert_scored_ladder_reply(data)
     assert "demands_met" not in data
-    assert calls == [("groq", {"ladder": True})]
+    assert calls == [("groq", "feedback"), ("groq", "check")]
+    assert data["ladderCheckMeta"]["modelUsed"] == "groq/test"
 
 
-def test_a_bad_level_check_falls_back_to_the_next_provider(e2e, ladder_on, monkeypatch):
-    bad = _raw_ladder_reply()
+def test_a_bad_checklist_falls_back_to_the_other_provider(e2e, ladder_on, monkeypatch):
+    bad = _check_reply()
     del bad["levelCheck"]["F"]  # an applicable ladder is missing
-    calls = _stub_providers(monkeypatch, groq_reply=bad, gemini_reply=_raw_ladder_reply(modelUsed="gemini/test"))
+    calls = _stub_providers(monkeypatch, check=bad, check_fallback=_check_reply(modelUsed="gemini/test"))
     data = e2e.post("/api/feedback/v3", json=_ladder_body(), headers={"Authorization": "Bearer x"}).json()
-    assert calls == [("groq", {"ladder": True}), ("gemini", {"ladder": True})]
-    assert data["providerStatus"] == "fallback"
-    assert data["providerErrors"][0]["type"] == "malformed_response"
+    assert calls == [("groq", "feedback"), ("groq", "check"), ("gemini", "check")]
+    assert data["providerStatus"] == "primary"  # the feedback came from the first provider
+    assert data["ladderCheckMeta"]["modelUsed"] == "gemini/test"
+    assert data["ladderCheckMeta"]["providerErrors"][0]["type"] == "malformed_response"
     _assert_scored_ladder_reply(data)
 
 
-def test_no_usable_level_check_from_any_provider_is_a_502(e2e, ladder_on, monkeypatch):
-    _stub_providers(monkeypatch, groq_reply={"scores": {"comm": 7}}, gemini_reply={"levelCheck": "nope"})
+def test_no_usable_checklist_keeps_the_feedback_unscored_by_the_ladder_and_uncached(e2e, ladder_on, monkeypatch):
+    # §8.3: the app shows the Exam-standard score with "Level marking unavailable". Not cached, so the
+    # next identical request asks for the checklist again.
+    calls = _stub_providers(monkeypatch, check={"levelCheck": "nope"})
+    for _ in range(2):
+        resp = e2e.post("/api/feedback/v3", json=_ladder_body(), headers={"Authorization": "Bearer x"})
+        assert resp.status_code == 200
+        data = resp.json()
+        assert "levelCheck" not in data
+        assert data["scores"] == {"comm": 6, "know": 6, "acc": 6}
+        assert data["ladderCheckError"]
+        assert data["promptVersion"] == "learn-prompt-v6"
+    assert calls.count(("groq", "feedback")) == 2
+
+
+def test_no_feedback_from_any_provider_is_still_a_502(e2e, ladder_on, monkeypatch):
+    async def down(*a, **kw):
+        raise RuntimeError("down")
+
+    calls = _stub_providers(monkeypatch)
+    monkeypatch.setattr(main, "_call_groq", down)
     resp = e2e.post("/api/feedback/v3", json=_ladder_body(), headers={"Authorization": "Bearer x"})
     assert resp.status_code == 502
+    assert ("groq", "check") not in calls
 
 
 def test_with_the_kill_switch_off_the_same_request_is_marked_by_v6(e2e, monkeypatch):
     monkeypatch.setenv("LEARN_LADDER_ENABLED", "0")
     monkeypatch.setattr(main, "_log_coaching_quality", lambda *a, **kw: None)
-    v6_reply = {"scores": {"comm": 6, "know": 6, "acc": 6}, "fluency": 6.0, "cefrLevel": "A2", "modelUsed": "groq/test"}
-    calls = _stub_providers(monkeypatch, groq_reply=v6_reply)
+    calls = _stub_providers(monkeypatch)
     data = e2e.post("/api/feedback/v3", json=_ladder_body(), headers={"Authorization": "Bearer x"}).json()
-    assert calls == [("groq", {})]
+    assert calls == [("groq", "feedback")]
     assert data["scores"] == {"comm": 6, "know": 6, "acc": 6}
     assert "levelCheck" not in data and "promptVersion" not in data
 
 
 def test_the_reply_does_not_depend_on_a_tier_the_request_carries(e2e, ladder_on, monkeypatch):
-    _stub_providers(monkeypatch, groq_reply=_raw_ladder_reply)
+    _stub_providers(monkeypatch)
     replies = []
     for tier in (None, "beginner", "expert"):
         body = _ladder_body(**({"difficultyContext": {"tier": tier}} if tier else {}))
@@ -343,13 +395,14 @@ def test_the_reply_does_not_depend_on_a_tier_the_request_carries(e2e, ladder_on,
 
 
 def test_the_stream_scores_the_ladder_before_complete_and_hides_the_models_snapshot(e2e, ladder_on, monkeypatch):
-    calls = []
+    calls = _stub_providers(monkeypatch)
+    streamed = []
 
     async def fake_stream(prompt, depth, on_section, **kw):
-        calls.append(kw)
+        streamed.append(kw)
         await on_section("snapshot", {"scores": {"comm": 1, "know": 1, "acc": 1}, "fluency": 1})
-        await on_section("strongest_moment", {"best_moment": _raw_ladder_reply()["best_moment"]})
-        return _raw_ladder_reply()
+        await on_section("strongest_moment", {"best_moment": _v6_reply()["best_moment"]})
+        return _v6_reply()
 
     monkeypatch.setattr(main, "GROQ_API_KEY", "test-key")
     monkeypatch.setattr(main, "get_groq", lambda: object())
@@ -358,7 +411,8 @@ def test_the_stream_scores_the_ladder_before_complete_and_hides_the_models_snaps
     first = _stream_events(e2e.post("/api/feedback/stream", json=_ladder_body(), headers={"Authorization": "Bearer x"}))
     second = _stream_events(e2e.post("/api/feedback/stream", json=_ladder_body(), headers={"Authorization": "Bearer x"}))
 
-    assert calls == [{"ladder": True}], "the second identical request must be a cache hit"
+    assert streamed == [{}], "the second identical request must be a cache hit"
+    assert calls == [("groq", "check")]
     assert [e["type"] for e in first] == ["status", "transcript", "status", "strongest_moment", "complete"]
     _assert_scored_ladder_reply(first[-1]["data"])
     # A cache hit holds the raw verdicts and scores them again, to the same result.
@@ -366,12 +420,13 @@ def test_the_stream_scores_the_ladder_before_complete_and_hides_the_models_snaps
     _assert_scored_ladder_reply(second[-1]["data"])
 
 
-def test_a_bad_level_check_ends_the_stream_with_an_error_and_is_not_cached(e2e, ladder_on, monkeypatch):
-    calls = []
+def test_a_failed_checklist_still_completes_the_stream_and_is_not_cached(e2e, ladder_on, monkeypatch):
+    _stub_providers(monkeypatch, check=RuntimeError("down"))
+    streamed = []
 
     async def fake_stream(prompt, depth, on_section, **kw):
-        calls.append(kw)
-        return {"scores": {"comm": 7, "know": 7, "acc": 7}, "fluency": 7.0}
+        streamed.append(kw)
+        return _v6_reply()
 
     monkeypatch.setattr(main, "GROQ_API_KEY", "test-key")
     monkeypatch.setattr(main, "get_groq", lambda: object())
@@ -379,9 +434,9 @@ def test_a_bad_level_check_ends_the_stream_with_an_error_and_is_not_cached(e2e, 
 
     for _ in range(2):
         events = _stream_events(e2e.post("/api/feedback/stream", json=_ladder_body(), headers={"Authorization": "Bearer x"}))
-        assert events[-1]["type"] == "error"
-        assert "complete" not in [e["type"] for e in events]
-    assert len(calls) == 2
+        assert events[-1]["type"] == "complete"
+        assert "levelCheck" not in events[-1]["data"] and events[-1]["data"]["ladderCheckError"]
+    assert len(streamed) == 2
 
 
 def test_apply_learn_ladder_leaves_a_v6_reply_untouched():
@@ -395,7 +450,7 @@ def test_apply_learn_ladder_scores_unresolved_demands_on_four_ladders(ladder_on)
         question=HOL_01_QUESTION, transcript=HOL_01_TRANSCRIPT, question_id="hol_01",
         demands_version="stale", marking="ladder-v1",
     )
-    raw = _raw_ladder_reply()
+    raw = dict(_v6_reply(), **_check_reply())
     del raw["levelCheck"]["F"]
     fb = main.apply_learn_ladder(raw, req)
     assert fb["levelCheck"]["applies"] == ["T", "L", "R", "A"]

@@ -123,8 +123,12 @@ _L = {
     "label": "Linking your ideas",
     "rungs": [
         {
-            # Iteration 1: "et" joining two nouns was judged "n" (G12); the rung is any et/puis link.
-            "model": "Links words or ideas with very basic linear connectors such as et, puis (any et joining two words counts).",
+            # "et" joining two nouns was judged "n" in the first gate run (G12), and iteration 1's "(any et
+            # joining two words counts)" was then read as excluding et between two clauses (G3).
+            "model": (
+                "Links words or ideas with very basic linear connectors such as et, puis: any et or puis "
+                "counts, whether it joins two words, two phrases or two clauses."
+            ),
             "learner": "Link your ideas with simple words like et or puis.",
             "source": "CV p.141 Coherence and cohesion A1",
         },
@@ -289,22 +293,22 @@ _A = {
         },
         {
             # interpretations A-B1-B2 and tense: up to two basic errors still meets B1; three or four do not.
-            # Iteration 1 ties both rungs to the errors the model itself lists: in the first gate run it
-            # listed every seeded error but still judged two of them "occasional slips" (A-B2, 5 of 44).
+            # Both rungs follow the count of the errors the feedback call found, which the checklist is given
+            # (main.ladder_check_errors): in the first gate run the model listed every seeded error but still
+            # judged two of them "occasional slips" (A-B2, 5 of 44).
             "model": (
                 "Everyday patterns are mostly correct (common verbs, common agreements, the tense the question "
-                "asks for); errors are mainly in more ambitious structures. Count the real errors you list in "
-                "grammar: 0-2 is \"y\", 3 or more is \"n\". A present tense where the question asks about the "
-                "past or an imagined future is an error; a spelling that sounds the same as the correct form "
-                "never is (the transcript comes from speech recognition)."
+                "asks for); errors are mainly in more ambitious structures. Count the errors under ERRORS ALREADY "
+                "FOUND: 0-2 is \"y\", 3 or more is \"n\", leaving out any whose only problem is a spelling that "
+                "sounds the same as the correct form (the transcript comes from speech recognition)."
             ),
             "learner": "Get everyday patterns right: common verbs, agreements and the tense the question asks for.",
             "source": "CV p.132 B1 and intro; Syl p.13 'reasonable accuracy'; TN p.12",
         },
         {
             "model": (
-                "No mistake causes misunderstanding; slips are occasional. Counted the same way: 0-1 real error "
-                "that does not confuse the meaning is \"y\", 2 or more is \"n\"."
+                "No mistake causes misunderstanding; slips are occasional. Counted the same way: 0-1 error that "
+                "does not confuse the meaning is \"y\", 2 or more is \"n\"."
             ),
             "learner": "Avoid any mistake that could confuse the listener; only an occasional slip.",
             "source": "CV p.132 B2",

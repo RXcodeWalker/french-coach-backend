@@ -20,3 +20,20 @@ def _consent_granted_by_default(monkeypatch):
         return "13_plus_not_required"
 
     monkeypatch.setattr(consent, "_fetch_consent_status", _not_required)
+
+
+@pytest.fixture(autouse=True)
+def _no_real_ai_providers(monkeypatch):
+    """No test may reach a real provider, even on a machine whose environment holds real keys (CI has
+    none). A local run once spent real Groq tokens through a call path a test had not stubbed. Tests
+    that exercise a provider set GROQ_API_KEY / a fake client themselves, which overrides this."""
+    import sys
+
+    main = sys.modules.get("main")
+    if main is None:
+        return
+    for name, value in (("GROQ_API_KEY", ""), ("GEMINI_API_KEY", ""), ("_groq_client", None),
+                        ("_gemini_model", None), ("_gemini_ladder_check_model", None),
+                        ("_gemini_multimodal_model", None), ("_gemini_examiner_model", None)):
+        if hasattr(main, name):
+            monkeypatch.setattr(main, name, value)

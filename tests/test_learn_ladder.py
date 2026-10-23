@@ -32,7 +32,7 @@ DEMANDS_DIR = ROOT / "data" / "learn"
 
 # Pinned on purpose: any change to the ladder wording, requirements, points or caps changes the version
 # that every levelCheck records. Update the pin in the same commit as the change.
-LADDER_VERSION_PIN = "learn-ladder-v1-f183b9df8e84"
+LADDER_VERSION_PIN = "learn-ladder-v1-b37cd09fd39f"
 
 
 def _corpus() -> dict[str, dict]:

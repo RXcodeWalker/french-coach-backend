@@ -26,4 +26,5 @@ that references it. The main repo's git history is no safety net here.
   guests keep the audio backstop.
 - Groq's on_demand tier refuses (413 "Request too large") any call whose prompt + `max_tokens` is over its
   8,000 tokens-per-minute limit, before the model runs. Check that sum before raising a Groq token budget:
-  the Learn ladder call (`LADDER_EXTRA_ANSWER_TOKENS`) already sits at ~8,150 on six-ladder questions.
+  the one-call Learn ladder prompt (`learn-prompt-v9`) reached ~8,150 on six-ladder questions, one reason the
+  ladder became a separate small checklist call (`LADDER_CHECK_ANSWER_TOKENS`, ~3,500 per request).

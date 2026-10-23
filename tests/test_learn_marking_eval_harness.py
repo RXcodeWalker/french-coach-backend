@@ -33,8 +33,9 @@ ANSWERS = {a["id"]: a for a in FIXTURE["answers"]}
 
 
 def oracle_reply(answer: dict) -> dict:
-    """What a perfect judge would return: the expected verdicts, each ladder's evidence for its highest "y",
-    and the seeded errors reported as grammar items."""
+    """What a perfect judge would return, both calls' keys in one dict: the expected verdicts, each ladder's
+    evidence for its highest "y" (the checklist's), and the seeded errors reported as grammar items (the
+    feedback call's). oracle_provider splits it by call."""
     level_check = {}
     for ladder, expected in answer["ladders"].items():
         verdicts = expected["verdicts"]
@@ -52,13 +53,26 @@ def oracle_reply(answer: dict) -> dict:
     }
 
 
+CHECK_KEYS = ("levelCheck", "demandCheck")
+
+
+def answer_in(prompt: str) -> str:
+    return next(i for i, a in ANSWERS.items() if f"STUDENT TRANSCRIPT (French): {main.clean_transcript(a['transcript'])}\n" in prompt)
+
+
 def oracle_provider(calls: list, *, finish_reason="stop", tokens=4200, mutate=None):
-    async def call(prompt: str, depth: str) -> harness.ProviderReply:
-        answer_id = next(i for i, a in ANSWERS.items() if f"STUDENT TRANSCRIPT (French): {main.clean_transcript(a['transcript'])}\n" in prompt)
-        calls.append((answer_id, depth, prompt))
+    """Both production calls: the feedback call gets the grammar half of oracle_reply, the level
+    checklist (kind "check") its levelCheck/demandCheck. `calls` records the feedback calls only, as
+    (answerId, depth, prompt). `mutate` sees the whole reply; a string reply is sent as is."""
+    async def call(prompt: str, depth: str, kind: str = "feedback") -> harness.ProviderReply:
+        answer_id = answer_in(prompt)
+        if kind == "feedback":
+            calls.append((answer_id, depth, prompt))
         reply = oracle_reply(ANSWERS[answer_id])
         if mutate:
             reply = mutate(answer_id, reply)
+        if isinstance(reply, dict):
+            reply = {k: v for k, v in reply.items() if (k in CHECK_KEYS) == (kind == "check")}
         content = reply if isinstance(reply, str) else json.dumps(reply, ensure_ascii=False)
         return harness.ProviderReply(
             content=content,
@@ -110,7 +124,9 @@ def test_the_request_is_the_one_a_learn_client_sends():
     assert req.depth == entry["depth"]
     assert req.demand_signals.model_dump(exclude_none=True) == entry["demandSignals"]
     assert req.difficulty_context is None and req.skill_context is None
-    assert "LEVEL CHECK — ladders for this question: T, L, F, R, A." in main.build_user_prompt(req)
+    # The feedback call is v6's; the checklist carries the ladders.
+    assert main.build_user_prompt(req) == main.build_user_prompt(req.model_copy(update={"marking": None}))
+    assert "LEVEL CHECK — ladders for this question: T, L, F, R, A." in main.build_ladder_check_prompt(req, {})
 
 
 def test_a_changed_transcript_or_unresolved_demands_refuses_to_run(monkeypatch):
@@ -167,9 +183,12 @@ def test_the_groq_call_is_the_production_call(monkeypatch):
     fake = SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=create)))
     monkeypatch.setattr(main, "get_groq", lambda: fake)
     reply = asyncio.run(harness.call_groq("the prompt", "brief"))
-    asyncio.run(main._call_groq("the prompt", "brief", ladder=True))
-    assert sent[0] == sent[1] == main._groq_feedback_kwargs("the prompt", "brief", ladder=True)
-    assert sent[0]["messages"][0]["content"] == main.SYSTEM_PROMPT_LADDER
+    asyncio.run(main._call_groq("the prompt", "brief"))
+    assert sent[0] == sent[1] == main._groq_feedback_kwargs("the prompt", "brief")
+    assert sent[0]["messages"][0]["content"] == main.SYSTEM_PROMPT
+    asyncio.run(harness.call_groq("the check", "brief", "check"))
+    asyncio.run(main._call_groq_ladder_check("the check"))
+    assert sent[2] == sent[3] == main._groq_ladder_check_kwargs("the check")
     assert reply.usage == {"promptTokens": 3000, "completionTokens": 1200, "totalTokens": 4200}
     assert reply.finish_reason == "stop" and reply.model == "groq/openai/gpt-oss-120b"
 
@@ -194,10 +213,16 @@ def test_each_record_carries_what_the_protocol_asks(tmp_path):
     assert [r["answerId"] for r in records] == FIXTURE["stages"]["smoke"]["answers"]
     for record in records:
         assert record["status"] == "ok"
-        for key in ("rawOutput", "usage", "finishReason", "latencyMs", "model", "versions", "fixtureCommit",
-                    "fixtureContentSha256", "clientInputsSha256", "request", "rawLevelCheck", "result"):
+        for key in ("rawOutput", "rawCheckOutput", "calls", "usage", "finishReason", "latencyMs", "model", "versions",
+                    "fixtureCommit", "fixtureContentSha256", "clientInputsSha256", "request", "rawLevelCheck", "result"):
             assert key in record, key
-        assert record["versions"]["learnPrompt"] == "learn-prompt-v9"
+        assert record["versions"]["learnPrompt"] == "learn-prompt-v6+ladder-check-v1"
+        assert [c["kind"] for c in record["calls"]] == ["feedback", "check"]
+        assert record["usage"]["totalTokens"] == sum(c["usage"]["totalTokens"] for c in record["calls"])
+        # The checklist was built from this answer's feedback reply.
+        req = harness.build_request(ANSWERS[record["answerId"]], FIXTURE, CLIENT_INPUTS)
+        check_prompt = main.build_ladder_check_prompt(req, json.loads(record["rawOutput"]))
+        assert record["versions"]["checkPromptSha256"] == hashlib.sha256(check_prompt.encode()).hexdigest()
         assert record["request"]["marking"] == "ladder-v1"
         assert record["result"]["levelCheck"]["scheme"] == "ladder-v1"
     # Depth sent is the client's.
@@ -209,14 +234,14 @@ def test_a_run_resumes_and_never_repeats_an_observation(tmp_path):
     calls: list = []
     budget = {"left": 5}
 
-    async def limited(prompt, depth):
+    async def limited(prompt, depth, kind="feedback"):
         if budget["left"] == 0:
             raise harness.DailyLimitReached("tokens per day")
         budget["left"] -= 1
-        return await oracle_provider(calls)(prompt, depth)
+        return await oracle_provider(calls)(prompt, depth, kind)
 
     assert run("full", log, limited) == harness.EXIT_DAILY_LIMIT
-    assert len(harness.read_log(log)) == 5
+    assert len(harness.read_log(log)) == 2  # two calls an answer; the 6th call is the 3rd answer's checklist
     budget["left"] = 100
     assert run("full", log, limited) == 0
     ids = [r["answerId"] for r in harness.read_log(log)]
@@ -228,16 +253,16 @@ def test_retry_after_is_honoured_and_a_long_one_stops_like_the_daily_limit(tmp_p
     state = {"n": 0}
     oracle = oracle_provider([])
 
-    async def flaky(prompt, depth):
+    async def flaky(prompt, depth, kind="feedback"):
         state["n"] += 1
         if state["n"] == 1:
             raise harness.TransientProviderError("429", retry_after=7.0)
-        return await oracle(prompt, depth)
+        return await oracle(prompt, depth, kind)
 
     assert run("smoke", log, flaky) == 0
     assert _no_sleep.waits == [7.0]
 
-    async def very_long(prompt, depth):
+    async def very_long(prompt, depth, kind="feedback"):
         raise harness.TransientProviderError("429", retry_after=3600.0)
 
     assert run("full", tmp_path / "other.jsonl", very_long) == harness.EXIT_DAILY_LIMIT
@@ -251,22 +276,23 @@ def test_a_rejected_request_is_recorded_and_the_run_goes_on(tmp_path):
     oracle = oracle_provider([])
     tries: list = []
 
-    async def too_large_once(prompt, depth):
-        if f"STUDENT TRANSCRIPT (French): {main.clean_transcript(ANSWERS[first]['transcript'])}\n" in prompt:
+    async def too_large_once(prompt, depth, kind="feedback"):
+        if answer_in(prompt) == first and kind == "check":
             tries.append(first)
             raise harness.RequestRejected("413 Request too large")
-        return await oracle(prompt, depth)
+        return await oracle(prompt, depth, kind)
 
     assert run("smoke", log, too_large_once) == 0
     records = harness.read_log(log)
     assert [r["status"] for r in records] == ["transport_error", "ok", "ok"]
-    assert records[0]["error"].startswith("request_rejected:") and tries == [first]
+    assert records[0]["error"].startswith("request_rejected (check):") and tries == [first]
+    assert [c["kind"] for c in records[0]["calls"]] == ["feedback"]  # the feedback call's tokens are kept
 
 
 def test_a_transport_failure_is_recorded_and_retried_on_the_next_run(tmp_path):
     log = tmp_path / "log.jsonl"
 
-    async def down(prompt, depth):
+    async def down(prompt, depth, kind="feedback"):
         raise harness.TransientProviderError("503")
 
     assert run("smoke", log, down) == 0

@@ -1,10 +1,12 @@
-"""Learn marking ladder, Batch 1b: the ladder scheme's prompt and provider wiring.
+"""Learn marking ladder (Design D): the level checklist's prompt and provider wiring.
 
-Frontend spec: docs/systems/learn-marking-levels.md (`learn-marking §N`). Covers SYSTEM_PROMPT_LADDER,
-build_user_prompt's LEVEL CHECK rendering, the describe floor (ladder scheme only), and which system
-prompt and token budget each provider call uses. The v6 prompt's own pins live in
-tests/test_learn_prompt_v6.py (system prompt) and tests/test_learn_demands.py (user prompt); they
-must not move, which is what proves every other screen and every old app is unaffected.
+Frontend spec: docs/systems/learn-marking-levels.md (`learn-marking §N`, Design D amendment). The ladder
+scheme makes two calls: Learn's unchanged v6 feedback call, then this checklist (SYSTEM_PROMPT_LADDER_CHECK
++ build_ladder_check_prompt) at temperature 0. Covers the checklist's prompt (level-blind, the rungs, the
+error list it is given), which request each call sends, and the checklist's own Groq -> Gemini chain.
+The v6 prompt's own pins live in tests/test_learn_prompt_v6.py (system prompt) and
+tests/test_learn_demands.py (user prompt); they must not move, which is what proves Learn's feedback,
+every other screen and every old app are unaffected.
 
 Run: pytest tests/test_learn_ladder_prompt.py
 """
@@ -13,8 +15,8 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
-import re
 import os
+import re
 import sys
 from types import SimpleNamespace
 
@@ -28,17 +30,18 @@ os.environ.pop("AZURE_SPEECH_REGION", None)
 import main  # noqa: E402
 
 # Pinned on purpose: bump LEARN_LADDER_PROMPT_VERSION and update these in the same commit as any
-# change to SYSTEM_PROMPT_LADDER or to the ladder branch of build_user_prompt.
-LADDER_SYSTEM_PROMPT_HASH = "86b1c1b44fd9d7d079e79544c1ca4db3b215464c65501f5e3ee327a291b7712b"
-LADDER_USER_PROMPT_HASH = "694ac29335d190498abf301f6aeaa6df43e6fdd2ab82d4ba7aacb08e1b3cf150"
+# change to SYSTEM_PROMPT_LADDER_CHECK or build_ladder_check_prompt.
+LADDER_CHECK_SYSTEM_PROMPT_HASH = "2434e84b83af031d11ff0d1aa00c4b03888496660682533cd41976d66b389947"
+LADDER_CHECK_USER_PROMPT_HASH = "763d72f5a67474703cb6faed307374232ad55d48430885501238d862db0d7c9e"
 
 TIERS = [None, *({"tier": t} for t in main._TIER_PROMPTS)]
+_CEFR = re.compile(r"\b(?:A1|A2|B1|B2|C1|C2)\b")
 
 
 def _req(question_id="hol_01", *, marking="ladder-v1", difficulty_context=None, version=None, **kw):
     return main.FeedbackRequest(
         question=kw.pop("question", "Où es-tu allé(e) pendant les dernières vacances ?"),
-        transcript=kw.pop("transcript", "Je suis allé en France avec ma famille."),
+        transcript=kw.pop("transcript", "Je suis allé en France avec ma famille. J'ai allé à la plage."),
         question_id=question_id,
         demands_version=main.LEARN_DEMANDS_VERSION if version is None else version,
         difficulty_context=difficulty_context,
@@ -47,128 +50,110 @@ def _req(question_id="hol_01", *, marking="ladder-v1", difficulty_context=None, 
     )
 
 
+def _fb(*quotes, polish=()):
+    """A v6 feedback reply carrying grammar items with these quotes."""
+    def item(q):
+        return {"quote": q, "correction": f"[{q}]"}
+    return {"grammar": {"critical": [item(q) for q in quotes], "polish": [item(q) for q in polish]}}
+
+
+FB = _fb("J'ai allé")
+
+
 # ── Versions and pins ───────────────────────────────────────────────────────
 
 
-def test_the_ladder_prompt_has_its_own_version_and_v6_keeps_its_own():
-    assert main.LEARN_LADDER_PROMPT_VERSION == "learn-prompt-v9"
+def test_the_checklist_has_its_own_version_and_v6_keeps_its_own():
+    assert main.LEARN_LADDER_PROMPT_VERSION == "ladder-check-v1"
     assert main.LEARN_PROMPT_VERSION == "learn-prompt-v6"
+    assert main.LEARN_LADDER_REPLY_VERSION == "learn-prompt-v6+ladder-check-v1"
 
 
-def test_ladder_system_prompt_snapshot():
-    actual = hashlib.sha256(main.SYSTEM_PROMPT_LADDER.encode("utf-8")).hexdigest()
-    assert actual == LADDER_SYSTEM_PROMPT_HASH, (
-        "SYSTEM_PROMPT_LADDER changed — bump LEARN_LADDER_PROMPT_VERSION and update "
-        "LADDER_SYSTEM_PROMPT_HASH together in this commit"
+def test_checklist_system_prompt_snapshot():
+    actual = hashlib.sha256(main.SYSTEM_PROMPT_LADDER_CHECK.encode("utf-8")).hexdigest()
+    assert actual == LADDER_CHECK_SYSTEM_PROMPT_HASH, (
+        "SYSTEM_PROMPT_LADDER_CHECK changed — bump LEARN_LADDER_PROMPT_VERSION and update "
+        "LADDER_CHECK_SYSTEM_PROMPT_HASH together in this commit"
     )
 
 
-def test_ladder_user_prompt_snapshot():
-    req = _req(
-        depth="standard",
-        demand_signals=main.DemandSignals(cognitiveDemand="describe", wordCount=7, hasPastOrFuture=True),
-    )
-    actual = hashlib.sha256(main.build_user_prompt(req).encode("utf-8")).hexdigest()
-    assert actual == LADDER_USER_PROMPT_HASH, (
-        "the ladder user prompt changed — bump LEARN_LADDER_PROMPT_VERSION and update "
-        "LADDER_USER_PROMPT_HASH together in this commit"
+def test_checklist_user_prompt_snapshot():
+    actual = hashlib.sha256(main.build_ladder_check_prompt(_req(), FB).encode("utf-8")).hexdigest()
+    assert actual == LADDER_CHECK_USER_PROMPT_HASH, (
+        "the checklist user prompt changed — bump LEARN_LADDER_PROMPT_VERSION and update "
+        "LADDER_CHECK_USER_PROMPT_HASH together in this commit"
     )
 
 
-# ── SYSTEM_PROMPT_LADDER (learn-marking §7) ─────────────────────────────────
+# ── The first call is exactly v6 ────────────────────────────────────────────
 
 
-def test_ladder_system_prompt_asks_for_verdicts_not_scores():
-    prompt = main.SYSTEM_PROMPT_LADDER
+@pytest.mark.parametrize("question_id", ["fam_01", "hol_01", "sch_03", "env_05", "fut_19"])
+@pytest.mark.parametrize("ctx", TIERS)
+def test_the_feedback_call_of_a_ladder_request_is_the_v6_prompt(question_id, ctx):
+    ladder = main.build_user_prompt(_req(question_id, difficulty_context=ctx))
+    v6 = main.build_user_prompt(_req(question_id, marking=None, difficulty_context=ctx))
+    assert ladder == v6
+    assert "LEVEL CHECK" not in ladder
+
+
+def test_groq_feedback_request_is_v6_and_the_checklist_request_is_its_own():
+    feedback = main._groq_feedback_kwargs("p", "deep")
+    assert feedback["messages"][0] == {"role": "system", "content": main.SYSTEM_PROMPT}
+    assert feedback["max_tokens"] == main._groq_token_budget(main.FEEDBACK_DEPTH_ANSWER_TOKENS["deep"])
+    assert feedback["temperature"] == 0.4
+    check = main._groq_ladder_check_kwargs("p")
+    assert check["messages"] == [
+        {"role": "system", "content": main.SYSTEM_PROMPT_LADDER_CHECK},
+        {"role": "user", "content": "p"},
+    ]
+    assert check["temperature"] == 0
+    assert check["max_tokens"] == main._groq_token_budget(main.LADDER_CHECK_ANSWER_TOKENS)
+    assert check["response_format"] == {"type": "json_object"}
+
+
+# ── SYSTEM_PROMPT_LADDER_CHECK (learn-marking §7) ───────────────────────────
+
+
+def test_the_checklist_asks_for_verdicts_only():
+    prompt = main.SYSTEM_PROMPT_LADDER_CHECK
     assert '"levelCheck"' in prompt and '"demandCheck"' in prompt
-    for removed in ('"fluency":', '"scores":', '"cefrLevel":', '"answered_the_question":', '"demands_met":', '"demands_missed":'):
-        assert removed not in prompt, removed
-    assert "You give no score and no level" in prompt
-    assert "levelCheck (one entry for every ladder listed under LEVEL CHECK) and demandCheck are REQUIRED" in prompt
+    assert "exactly these two keys" in prompt
+    for absent in ('"scores"', '"fluency"', '"cefrLevel"', '"grammar"', '"corrections"', '"improved_answer"',
+                   "TEACHER VOICE", "STRENGTHS"):
+        assert absent not in prompt, absent
+    assert 'JSON null (never the string "null")' in prompt
+    assert "do not add errors of your own" in prompt
+    assert "DATA BOUNDARY" in prompt
 
 
-def test_ladder_system_prompt_has_no_per_request_target_level():
-    prompt = main.SYSTEM_PROMPT_LADDER
-    assert "TARGET LEVEL" not in prompt
-    assert "A2 with elements of B1 (the IGCSE target, Cambridge 0520 Teacher's Notes p.11), for every" in prompt
+def test_the_checklist_system_prompt_names_no_cefr_level_and_no_target():
+    prompt = main.SYSTEM_PROMPT_LADDER_CHECK
+    assert not _CEFR.search(prompt)
+    for banned in ("TARGET LEVEL", "target level", "marking level", "strict", "lenient", "Exam standard"):
+        assert banned not in prompt, banned
 
 
-def test_ladder_system_prompt_keeps_v6_teaching_rules():
-    # learn-marking §7: errors, strengths, improved_answer at exam standard, the teacher voice and the
-    # filters stay as in v6.
-    for shared in (
-        "EVERY REAL ERROR — report every genuine error in this answer, most important first:",
-        "STRENGTHS — strengths[] holds 2-4 real strengths of THIS answer",
-        "TEACHER VOICE — you are the student's own French teacher",
-        "COACHING QUALITY GATE — SELF-VALIDATE before returning.",
-        "QUOTE PRECISION",
-        "DATA BOUNDARY",
-        '"improved_answer": "<\'Say it better\': take the student\'s exact answer and improve it at the target level (A2 with elements of B1)',
-    ):
-        assert shared in main.SYSTEM_PROMPT and shared in main.SYSTEM_PROMPT_LADDER, shared
-
-
-# ── build_user_prompt, ladder branch ────────────────────────────────────────
+# ── build_ladder_check_prompt ───────────────────────────────────────────────
 
 
 @pytest.mark.parametrize("question_id", ["fam_01", "hol_01", "sch_03", "env_05", "fut_19"])
-def test_the_ladder_prompt_is_the_same_whatever_tier_the_request_carries(question_id):
-    # The level never reaches the backend (learn-marking §1.1); even a stray tier changes nothing.
-    prompts = {main.build_user_prompt(_req(question_id, difficulty_context=ctx)) for ctx in TIERS}
+def test_the_checklist_prompt_is_level_and_tier_blind(question_id):
+    prompts = {main.build_ladder_check_prompt(_req(question_id, difficulty_context=ctx), FB) for ctx in TIERS}
     assert len(prompts) == 1
+    prompt = prompts.pop()
+    assert not _CEFR.search(prompt), _CEFR.search(prompt)
+    for banned in ("Demand level", "Learner's session target", "TARGET LEVEL", "Coaching tone", "DETERMINISTIC SIGNALS"):
+        assert banned not in prompt, banned
 
 
-def test_the_ladder_prompt_contains_no_level_text():
-    prompt = main.build_user_prompt(_req(difficulty_context={"tier": "expert"}))
-    assert "TARGET LEVEL" not in prompt
-    assert "Learner's session target" not in prompt
-    assert "Coaching tone" not in prompt
-    for tier in main._TIER_PROMPTS.values():
-        assert tier["coachingRubric"] not in prompt
-        assert tier["coachingTone"] not in prompt
-
-
-_CEFR = re.compile(r"\b(?:A1|A2|B1|B2|C1|C2)\b")
-# The one CEFR phrase the ladder prompt may carry: the fixed pitch of the French the model writes
-# (corrections, improved_answer), shared with v6 and the same for every learner and every answer.
-_FRENCH_YOU_WRITE = "A2 with elements of B1"
-
-
-@pytest.mark.parametrize("question_id", ["fam_01", "hol_01", "sch_03", "env_05", "fut_19"])
-def test_the_ladder_user_prompt_names_no_cefr_level(question_id):
-    # Level-blind (learn-marking §1.1): neither the learner's level nor the question's demand level.
-    # learn-prompt-v8 rendered "Demand level: B1/B2"; the two questions that showed it were the ones
-    # whose typical A2 answers the first gate run judged B1.
-    for ctx in TIERS:
-        prompt = main.build_user_prompt(_req(question_id, difficulty_context=ctx)).replace(_FRENCH_YOU_WRITE, "")
-        assert not _CEFR.search(prompt), _CEFR.search(prompt)
-        assert "Demand level" not in prompt
-
-
-def test_the_ladder_system_prompt_names_no_cefr_level_outside_the_french_it_writes():
-    prompt = main.SYSTEM_PROMPT_LADDER
-    level_check = prompt[prompt.index("LEVEL CHECK —"): prompt.index("DATA BOUNDARY")]
-    assert not _CEFR.search(level_check)
-    # Outside LEVEL CHECK the only CEFR words are v6's fixed "FRENCH YOU WRITE" pitch.
-    rest = prompt.replace(_FRENCH_YOU_WRITE, "").replace("Never above B1", "")
-    assert not _CEFR.search(rest), _CEFR.search(rest)
-
-
-def test_each_ladder_states_its_verdict_shape():
-    # The first gate run put null on rungs that have a requirement and once wrote the string "null".
-    prompt = main.build_user_prompt(_req("fut_19"))
-    for ladder in ("T", "L", "R", "A"):
-        assert f'(verdicts: 4 × "y"/"n")' in prompt.split(f"\n{ladder} — ")[1].split("\n")[0]
-    for ladder in ("O", "F"):
-        assert '(verdicts: null, then 3 × "y"/"n")' in prompt.split(f"\n{ladder} — ")[1].split("\n")[0]
-    assert 'JSON null (never the string "null")' in main.SYSTEM_PROMPT_LADDER
-
-
-def test_the_v6_prompt_still_carries_the_target_level():
-    prompt = main.build_user_prompt(_req(marking=None, difficulty_context={"tier": "intermediate"}))
-    assert "TARGET LEVEL: CEFR A2." in prompt
-    assert "Learner's session target: A2" in prompt
-    assert "LEVEL CHECK" not in prompt
+def test_the_checklist_prompt_ignores_skill_context_metrics_and_signals():
+    plain = main.build_ladder_check_prompt(_req(), FB)
+    busy = main.build_ladder_check_prompt(_req(
+        skill_context={"weaknesses": [{"name": "Gender", "recurrenceCount": 4}]},
+        demand_signals=main.DemandSignals(cognitiveDemand="describe", wordCount=7, hasConnectors=False),
+    ), FB)
+    assert plain == busy
 
 
 @pytest.mark.parametrize(
@@ -182,48 +167,83 @@ def test_the_v6_prompt_still_carries_the_target_level():
     ],
 )
 def test_the_applicable_ladders_line_for_the_five_test_questions(question_id, ladders):
-    prompt = main.build_user_prompt(_req(question_id))
+    prompt = main.build_ladder_check_prompt(_req(question_id), FB)
     assert f"LEVEL CHECK — ladders for this question: {ladders}. Return levelCheck with exactly these keys." in prompt
-    assert f"one entry for each of {ladders}," in prompt
 
 
 def test_unresolved_demands_check_only_the_four_always_ladders():
-    prompt = main.build_user_prompt(_req("fut_19", version="stale-version"))
-    assert "QUESTION DEMANDS" not in prompt
+    prompt = main.build_ladder_check_prompt(_req("fut_19", version="stale-version"), FB)
+    assert "QUESTION DEMANDS" not in prompt and "A complete answer must" not in prompt
     assert "LEVEL CHECK — ladders for this question: T, L, R, A." in prompt
+
+
+def test_the_complete_answer_line_that_demand_check_judges_is_in_the_prompt():
+    prompt = main.build_ladder_check_prompt(_req("hol_01"), FB)
+    demands = main.resolve_learn_demands("hol_01", main.LEARN_DEMANDS_VERSION)
+    assert f"\n\nA complete answer must: {demands['sufficientAnswer']}" in prompt
 
 
 def test_every_rung_of_every_applicable_ladder_is_rendered_with_the_model_wording():
     demands = main.LEARN_DEMANDS_BY_QUESTION_ID["fut_19"]
-    prompt = main.build_user_prompt(_req("fut_19"))
+    prompt = main.build_ladder_check_prompt(_req("fut_19"), FB)
     for ladder in main._learn_ladder.applicable_ladders(demands):
         for index in range(4):
             text = main._learn_ladder.rung_text(ladder, index, demands, "model")
             assert f"  {index + 1}. {text if text is not None else 'no requirement (always null)'}" in prompt
 
 
-def test_o_and_f_have_no_a1_requirement_in_the_prompt():
-    prompt = main.build_user_prompt(_req("fut_19"))
-    o_block = prompt.split("\nO — ")[1].split("\nF — ")[0]
-    f_block = prompt.split("\nF — ")[1].split("\nR — ")[0]
-    assert "  1. no requirement (always null)" in o_block
-    assert "  1. no requirement (always null)" in f_block
+def test_each_ladder_states_its_verdict_shape():
+    # The first gate run put null on rungs that have a requirement and once wrote the string "null".
+    prompt = main.build_ladder_check_prompt(_req("fut_19"), FB)
+    for ladder in ("T", "L", "R", "A"):
+        assert '(verdicts: 4 × "y"/"n")' in prompt.split(f"\n{ladder} — ")[1].split("\n")[0]
+    for ladder in ("O", "F"):
+        header = prompt.split(f"\n{ladder} — ")[1].split("\n")[0]
+        assert '(verdicts: null, then 3 × "y"/"n")' in header
+        assert "  1. no requirement (always null)" in prompt.split(f"\n{ladder} — ")[1]
 
 
-def test_the_reminder_asks_for_both_keys_and_nothing_is_optional():
-    prompt = main.build_user_prompt(_req("env_05"))
-    reminder = prompt.split("REMINDER — LEVEL CHECK AND COACHING QUALITY GATE:")[1]
-    assert "levelCheck is REQUIRED" in reminder
-    assert "demandCheck is REQUIRED" in reminder
-    assert "OPTIONAL" not in prompt
+def test_the_error_list_is_the_feedback_calls_grounded_errors_each_once():
+    transcript = "Je suis allé en France avec mon famille. J'ai allé à la plage. J'ai allé au musée."
+    fb = _fb("J'ai allé", "mon famille", "j'ai allé", polish=("un erreur inventée",))
+    errors = main.ladder_check_errors(fb, transcript)
+    # A repeated quote counts once (the 2026-10-23 run listed one error twice); a quote that is not in
+    # the transcript is dropped, as the coaching quality gate drops it.
+    assert errors == [
+        {"quote": "J'ai allé", "correction": "[J'ai allé]"},
+        {"quote": "mon famille", "correction": "[mon famille]"},
+    ]
+    prompt = main.build_ladder_check_prompt(_req(transcript=transcript), fb)
+    assert (
+        "ERRORS ALREADY FOUND IN THIS ANSWER (for the Accuracy ladder): 2\n"
+        "1. « J'ai allé » → « [J'ai allé] »\n"
+        "2. « mon famille » → « [mon famille] »"
+    ) in prompt
 
 
-def test_the_complete_answer_line_that_demand_check_judges_is_in_the_prompt():
-    prompt = main.build_user_prompt(_req("hol_01"))
-    assert "\n\nA complete answer must: " in prompt
+@pytest.mark.parametrize("fb", [{}, {"grammar": None}, {"grammar": {"critical": "x"}}, _fb()])
+def test_no_errors_reads_none(fb):
+    assert "ERRORS ALREADY FOUND IN THIS ANSWER (for the Accuracy ladder): 0\nnone" in main.build_ladder_check_prompt(_req(), fb)
 
 
-# ── The describe floor (reused from v7, ladder scheme only) ─────────────────
+def test_the_accuracy_rungs_point_at_the_error_list():
+    prompt = main.build_ladder_check_prompt(_req(), FB)
+    a_block = prompt.split("\nA — ")[1]
+    assert "Count the errors under ERRORS ALREADY FOUND: 0-2" in a_block
+
+
+def test_the_largest_checklist_request_fits_far_below_the_groq_per_request_limit():
+    # Groq's on_demand tier refuses a request whose prompt + max_tokens is over 8,000 tokens (413). A
+    # French/English token is at least ~2.5 characters, so this bound is conservative.
+    longest = max(
+        len(main.build_ladder_check_prompt(_req(q, transcript="Mot " * 120), _fb(*(f"mot{i}" for i in range(6)))))
+        for q in main.LEARN_DEMANDS_BY_QUESTION_ID
+    )
+    estimate = (len(main.SYSTEM_PROMPT_LADDER_CHECK) + longest) / 2.5 + main._groq_token_budget(main.LADDER_CHECK_ANSWER_TOKENS)
+    assert estimate < 6000, estimate
+
+
+# ── The describe floor (the TS port; no prompt renders it) ──────────────────
 
 # Shared with the TS port in Batch 2: (cognitiveDemand, timeFrames, responseLoad, lexicalReach,
 # structures) -> (score, level), with the floor on.
@@ -262,17 +282,33 @@ def test_the_floor_is_off_by_default_so_v6_scores_do_not_move():
     assert main.derive_demand_score(_demands(DESCRIBE_FLOOR_CASES[1][0])) == 1.25
 
 
-def test_no_prompt_renders_the_floor():
-    # learn-prompt-v9 dropped the ladder prompt's demand level; v6 never used the floor.
-    assert "Demand level" not in main.build_user_prompt(_req("hol_01"))
+def test_v6_keeps_its_unfloored_demand_level_line():
     assert "- Demand level: A1   |" in main.build_user_prompt(_req("hol_01", marking=None))
 
 
-# ── Which system prompt and budget each provider call uses ──────────────────
+# ── The checklist's providers ───────────────────────────────────────────────
+
+
+def test_the_ladder_gemini_model_is_created_with_the_checklist_prompt_at_temperature_0(monkeypatch):
+    created = []
+
+    class _Model:
+        def __init__(self, name, system_instruction, generation_config=None):
+            created.append((system_instruction, generation_config))
+
+    fake_genai = SimpleNamespace(configure=lambda api_key: None, GenerativeModel=_Model)
+    monkeypatch.setitem(sys.modules, "google.generativeai", fake_genai)
+    import google
+
+    monkeypatch.setattr(google, "generativeai", fake_genai, raising=False)
+    monkeypatch.setattr(main, "GEMINI_API_KEY", "test-key")
+    monkeypatch.setattr(main, "_gemini_ladder_check_model", None)
+    main.get_gemini_ladder_check()
+    assert created == [(main.SYSTEM_PROMPT_LADDER_CHECK, {"temperature": 0, "response_mime_type": "application/json"})]
 
 
 class _FakeGroq:
-    def __init__(self, content='{"scores": {}}'):
+    def __init__(self, content):
         self.calls = []
         self._content = content
         self.chat = SimpleNamespace(completions=SimpleNamespace(create=self._create))
@@ -282,56 +318,101 @@ class _FakeGroq:
         return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=self._content))])
 
 
-@pytest.mark.parametrize("ladder, system_prompt, extra", [(False, "SYSTEM_PROMPT", 0), (True, "SYSTEM_PROMPT_LADDER", 1000)])
-def test_groq_uses_the_schemes_system_prompt_and_budget(monkeypatch, ladder, system_prompt, extra):
-    fake = _FakeGroq()
+def test_the_groq_checklist_call_sends_the_checklist_request(monkeypatch):
+    fake = _FakeGroq('{"levelCheck": {}, "demandCheck": null}')
     monkeypatch.setattr(main, "get_groq", lambda: fake)
-    kwargs = {"ladder": True} if ladder else {}
-    asyncio.run(main._call_groq("user prompt", "deep", **kwargs))
-    sent = fake.calls[0]
-    assert sent["messages"][0] == {"role": "system", "content": getattr(main, system_prompt)}
-    assert sent["max_tokens"] == main._groq_token_budget(main.FEEDBACK_DEPTH_ANSWER_TOKENS["deep"] + extra)
+    result = asyncio.run(main._call_groq_ladder_check("check prompt"))
+    assert fake.calls == [main._groq_ladder_check_kwargs("check prompt")]
+    assert result["modelUsed"] == f"groq/{main.GROQ_MODEL}"
 
 
-def test_gemini_uses_a_model_bound_to_the_ladder_system_prompt(monkeypatch):
+HOL_TRANSCRIPT = "Je suis allé en France avec ma famille. J'ai allé à la plage."
+
+
+def _good_check():
+    return {
+        "levelCheck": {
+            ladder: {"verdicts": [None if ladder == "F" else "y", "y", "n", "n"], "quote": "Je suis allé en France", "next": ""}
+            for ladder in ("T", "L", "F", "R", "A")
+        },
+        "demandCheck": {"met": True, "quote": "Je suis allé en France"},
+    }
+
+
+def _stub_check(monkeypatch, *, groq, gemini):
+    calls = []
+
+    def make(name, reply):
+        async def call(prompt):
+            calls.append((name, prompt))
+            if isinstance(reply, Exception):
+                raise reply
+            return dict(reply, modelUsed=f"{name}/test")
+        return call
+
+    monkeypatch.setattr(main, "_call_groq_ladder_check", make("groq", groq))
+    monkeypatch.setattr(main, "_call_gemini_ladder_check", make("gemini", gemini))
+    return calls
+
+
+def test_the_checklist_runs_on_groq_first_with_the_built_prompt(monkeypatch):
+    calls = _stub_check(monkeypatch, groq=_good_check(), gemini=RuntimeError("unused"))
+    req = _req(transcript=HOL_TRANSCRIPT, model="groq")
+    check = asyncio.run(main.call_ladder_check(req, FB))
+    assert [c[0] for c in calls] == ["groq"]
+    assert calls[0][1] == main.build_ladder_check_prompt(req, FB)
+    assert check["levelCheck"] == _good_check()["levelCheck"]
+    assert check["modelUsed"] == "groq/test" and "providerErrors" not in check
+
+
+def test_an_unusable_checklist_falls_back_to_the_other_provider(monkeypatch):
+    bad = _good_check()
+    del bad["levelCheck"]["F"]  # an applicable ladder is missing
+    calls = _stub_check(monkeypatch, groq=bad, gemini=_good_check())
+    check = asyncio.run(main.call_ladder_check(_req(transcript=HOL_TRANSCRIPT, model="groq"), FB))
+    assert [c[0] for c in calls] == ["groq", "gemini"]
+    assert check["modelUsed"] == "gemini/test"
+    assert check["providerErrors"][0]["type"] == "malformed_response"
+
+
+@pytest.mark.parametrize("model", ["gemini", None])
+def test_without_a_groq_preference_gemini_goes_first_as_in_call_ai_feedback(monkeypatch, model):
+    calls = _stub_check(monkeypatch, groq=_good_check(), gemini=_good_check())
+    asyncio.run(main.call_ladder_check(_req(transcript=HOL_TRANSCRIPT, model=model), FB))
+    assert [c[0] for c in calls] == ["gemini"]
+
+
+def test_no_usable_checklist_raises(monkeypatch):
+    _stub_check(monkeypatch, groq={"levelCheck": "nope"}, gemini=RuntimeError("down"))
+    with pytest.raises(main.LadderCheckUnavailable):
+        asyncio.run(main.call_ladder_check(_req(transcript=HOL_TRANSCRIPT), FB))
+
+
+def test_attach_keeps_the_feedback_and_marks_a_failed_checklist(monkeypatch):
+    _stub_check(monkeypatch, groq=RuntimeError("down"), gemini=RuntimeError("down"))
+    fb = asyncio.run(main.attach_ladder_check(_req(transcript=HOL_TRANSCRIPT), dict(FB, scores={"comm": 6})))
+    assert fb["scores"] == {"comm": 6} and "levelCheck" not in fb
+    assert fb["ladderCheckError"]
+    assert not main._is_cacheable_result(dict(fb, providerStatus="primary"))
+
+
+def test_call_ai_feedback_runs_the_checklist_only_for_a_ladder_request(monkeypatch):
     seen = []
 
-    def model(name):
-        return SimpleNamespace(generate_content=lambda prompt: seen.append(name) or SimpleNamespace(text='{"scores": {}}'))
+    async def fake_groq(prompt, depth="standard"):
+        seen.append(("feedback", prompt))
+        return {"scores": {"comm": 6}, "grammar": FB["grammar"], "modelUsed": "groq/test"}
 
-    monkeypatch.setattr(main, "get_gemini", lambda: model("v6"))
-    monkeypatch.setattr(main, "get_gemini_ladder", lambda: model("ladder"))
-    asyncio.run(main._call_gemini("p"))
-    asyncio.run(main._call_gemini("p", ladder=True))
-    assert seen == ["v6", "ladder"]
-
-
-def test_the_ladder_gemini_model_is_created_with_the_ladder_system_prompt(monkeypatch):
-    created = []
-
-    class _Model:
-        def __init__(self, name, system_instruction):
-            created.append(system_instruction)
-
-    fake_genai = SimpleNamespace(configure=lambda api_key: None, GenerativeModel=_Model)
-    monkeypatch.setitem(sys.modules, "google.generativeai", fake_genai)
-    import google
-
-    monkeypatch.setattr(google, "generativeai", fake_genai, raising=False)
-    monkeypatch.setattr(main, "GEMINI_API_KEY", "test-key")
-    monkeypatch.setattr(main, "_gemini_ladder_model", None)
-    main.get_gemini_ladder()
-    assert created == [main.SYSTEM_PROMPT_LADDER]
-
-
-def test_call_ai_feedback_sends_the_ladder_prompt_only_when_the_request_asks(monkeypatch):
-    seen = []
-
-    async def fake_groq(prompt, depth="standard", **kw):
-        seen.append(kw)
-        return {"scores": {"comm": 6}, "modelUsed": "groq/test"}
+    async def fake_attach(req, fb):
+        seen.append(("check", req.marking))
+        return fb
 
     monkeypatch.setattr(main, "_call_groq", fake_groq)
+    monkeypatch.setattr(main, "attach_ladder_check", fake_attach)
     monkeypatch.setattr(main, "_log_coaching_quality", lambda *a, **kw: None)
     asyncio.run(main.call_ai_feedback(_req(marking=None, model="groq")))
-    assert seen == [{}]
+    assert [s[0] for s in seen] == ["feedback"]
+    seen.clear()
+    asyncio.run(main.call_ai_feedback(_req(model="groq")))
+    assert seen[0] == ("feedback", main.build_user_prompt(_req(marking=None, model="groq")))
+    assert seen[1] == ("check", "ladder-v1")

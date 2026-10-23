@@ -216,7 +216,7 @@ def test_each_record_carries_what_the_protocol_asks(tmp_path):
         for key in ("rawOutput", "rawCheckOutput", "calls", "usage", "finishReason", "latencyMs", "model", "versions",
                     "fixtureCommit", "fixtureContentSha256", "clientInputsSha256", "request", "rawLevelCheck", "result"):
             assert key in record, key
-        assert record["versions"]["learnPrompt"] == "learn-prompt-v6+ladder-check-v1"
+        assert record["versions"]["learnPrompt"] == "learn-prompt-v6+ladder-check-v2"
         assert [c["kind"] for c in record["calls"]] == ["feedback", "check"]
         assert record["usage"]["totalTokens"] == sum(c["usage"]["totalTokens"] for c in record["calls"])
         # The checklist was built from this answer's feedback reply.

@@ -1778,8 +1778,9 @@ LEARN_PROMPT_VERSION = "learn-prompt-v6"
 # version and its pinned hashes. History: learn-prompt-v8 (2026-10-19) and v9
 # (gate iteration 1, 2026-10-23) put the ladder inside one bigger v6-style call;
 # neither passed the gate (frontend verification-log.md), and Design D replaced
-# them with this checklist.
-LEARN_LADDER_PROMPT_VERSION = "ladder-check-v1"
+# them with this checklist. ladder-check-v2 (after its first smoke run): only
+# Accuracy rungs 3-4 count the error list (v1 failed all four rungs on 5 errors).
+LEARN_LADDER_PROMPT_VERSION = "ladder-check-v2"
 # What a ladder reply's `promptVersion` says: the feedback prompt + the checklist.
 LEARN_LADDER_REPLY_VERSION = f"{LEARN_PROMPT_VERSION}+{LEARN_LADDER_PROMPT_VERSION}"
 
@@ -2006,9 +2007,10 @@ clauses, more advanced connectors) still meets it. Bracketed French words are ex
 rung says what does not count, that decides it. Only T, O and F judge whether the answer does what the question
 asks; L, R and A judge the French that is there, whatever its topic.
 
-ACCURACY — the user message lists the errors already found in this answer. The Accuracy ladder (A) uses that list
+ACCURACY — the user message lists the errors already found in this answer. Accuracy rungs 3 and 4 count that list
 as it is: do not add errors of your own and do not drop any, except that a spelling which sounds the same as the
-correct form is never an error.
+correct form is never an error. Rungs 1 and 2 do not count errors: they ask whether some simple structures are
+right and whether the meaning stays clear, which an answer with many errors can still do.
 
 For every listed ladder also give:
 • "quote": the student's words that show the HIGHEST rung you marked "y" — one short span (a few words up to one

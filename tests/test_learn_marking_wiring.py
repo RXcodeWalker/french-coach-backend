@@ -279,7 +279,7 @@ def _assert_scored_ladder_reply(data):
     assert data["fluency"] == exam["fluency"]
     assert data["cefrLevel"] == expected.cefr_level
     assert data["answered_the_question"] is True
-    assert data["promptVersion"] == "learn-prompt-v6+ladder-check-v1"
+    assert data["promptVersion"] == "learn-prompt-v6+ladder-check-v2"
     assert data["demandCheck"] == {"met": False, "quote": ""}
     assert data["best_moment"] == _v6_reply()["best_moment"]  # the feedback is v6's
     assert data.get("providerStatus") != "malformed_response"

@@ -31,7 +31,7 @@ import main  # noqa: E402
 
 # Pinned on purpose: bump LEARN_LADDER_PROMPT_VERSION and update these in the same commit as any
 # change to SYSTEM_PROMPT_LADDER_CHECK or build_ladder_check_prompt.
-LADDER_CHECK_SYSTEM_PROMPT_HASH = "2434e84b83af031d11ff0d1aa00c4b03888496660682533cd41976d66b389947"
+LADDER_CHECK_SYSTEM_PROMPT_HASH = "2da545aad1e47deba2ceadfcdca95d587092120af43bbf107b98e1b2546c8c3f"
 LADDER_CHECK_USER_PROMPT_HASH = "763d72f5a67474703cb6faed307374232ad55d48430885501238d862db0d7c9e"
 
 TIERS = [None, *({"tier": t} for t in main._TIER_PROMPTS)]
@@ -64,9 +64,9 @@ FB = _fb("J'ai allé")
 
 
 def test_the_checklist_has_its_own_version_and_v6_keeps_its_own():
-    assert main.LEARN_LADDER_PROMPT_VERSION == "ladder-check-v1"
+    assert main.LEARN_LADDER_PROMPT_VERSION == "ladder-check-v2"
     assert main.LEARN_PROMPT_VERSION == "learn-prompt-v6"
-    assert main.LEARN_LADDER_REPLY_VERSION == "learn-prompt-v6+ladder-check-v1"
+    assert main.LEARN_LADDER_REPLY_VERSION == "learn-prompt-v6+ladder-check-v2"
 
 
 def test_checklist_system_prompt_snapshot():
@@ -124,6 +124,8 @@ def test_the_checklist_asks_for_verdicts_only():
         assert absent not in prompt, absent
     assert 'JSON null (never the string "null")' in prompt
     assert "do not add errors of your own" in prompt
+    # Only the top two Accuracy rungs count errors (ladder-check-v1 failed all four on five errors).
+    assert "Rungs 1 and 2 do not count errors" in prompt
     assert "DATA BOUNDARY" in prompt
 
 

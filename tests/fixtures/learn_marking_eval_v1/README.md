@@ -71,7 +71,8 @@ answer below A1 on a ladder is not a simple-but-correct A1 answer.
 - **`runs/designD_run_log.jsonl`** — the harness's default log since Design D (two calls per answer:
   the unchanged v6 feedback call, then the level checklist; both in each record's `calls`).
   `runs/designD_smoke_check_v1.jsonl` is the first Design D smoke (`ladder-check-v1`, 2026-10-23),
-  kept as evidence for the v2 wording fix.
+  kept as evidence for the v2 wording fix; `runs/designD_smoke_check_v2_budget2048.jsonl` is the v2 smoke
+  that stopped on a truncated v6 call, before the standard feedback budget went from 2,048 to 2,500.
 - **`runs/iter1_run_log.jsonl`**, **`runs/iter1_report_stage2.md`** — gate iteration 1 (one-call
   `learn-prompt-v9`, 2026-10-23), kept apart from the 2026-10-19 `learn-prompt-v8` records below; pass
   `--log` to read them.

@@ -243,6 +243,26 @@ def test_retry_after_is_honoured_and_a_long_one_stops_like_the_daily_limit(tmp_p
     assert run("full", tmp_path / "other.jsonl", very_long) == harness.EXIT_DAILY_LIMIT
 
 
+def test_a_rejected_request_is_recorded_and_the_run_goes_on(tmp_path):
+    # Groq's 413 (prompt + max_tokens above the per-minute token limit) refuses the same request every
+    # time: record it for that answer, never retry it in the run, and call the next answer.
+    log = tmp_path / "log.jsonl"
+    first = FIXTURE["stages"]["smoke"]["answers"][0]
+    oracle = oracle_provider([])
+    tries: list = []
+
+    async def too_large_once(prompt, depth):
+        if f"STUDENT TRANSCRIPT (French): {main.clean_transcript(ANSWERS[first]['transcript'])}\n" in prompt:
+            tries.append(first)
+            raise harness.RequestRejected("413 Request too large")
+        return await oracle(prompt, depth)
+
+    assert run("smoke", log, too_large_once) == 0
+    records = harness.read_log(log)
+    assert [r["status"] for r in records] == ["transport_error", "ok", "ok"]
+    assert records[0]["error"].startswith("request_rejected:") and tries == [first]
+
+
 def test_a_transport_failure_is_recorded_and_retried_on_the_next_run(tmp_path):
     log = tmp_path / "log.jsonl"
 

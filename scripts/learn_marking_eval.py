@@ -89,6 +89,12 @@ class DailyLimitReached(Exception):
     """The provider's per-day quota is spent: stop cleanly, resume tomorrow."""
 
 
+class RequestRejected(Exception):
+    """The provider refused this request outright and would refuse it again (Groq's 413 "Request too
+    large": prompt + max_tokens above the tier's per-minute token limit). Recorded as a transport_error
+    for that answer; the run goes on to the next one."""
+
+
 class TransientProviderError(Exception):
     def __init__(self, message: str, retry_after: float | None = None):
         super().__init__(message)
@@ -224,6 +230,8 @@ async def call_groq(prompt: str, depth: str) -> ProviderReply:
     except Exception as exc:  # noqa: BLE001 — classified below
         if _is_daily_limit(exc):
             raise DailyLimitReached(str(exc)) from exc
+        if getattr(exc, "status_code", None) == 413:
+            raise RequestRejected(str(exc)) from exc
         if main._is_retryable(exc):
             raise TransientProviderError(str(exc), _retry_after(exc)) from exc
         raise
@@ -345,6 +353,9 @@ async def run_one(
         try:
             reply = await call(prompt, req.depth)
             break
+        except RequestRejected as exc:
+            record.update(status="transport_error", error=f"request_rejected: {exc}", latencyMs=None)
+            return record
         except TransientProviderError as exc:
             attempt += 1
             wait = exc.retry_after if exc.retry_after is not None else min(2.0 ** attempt, 30.0)

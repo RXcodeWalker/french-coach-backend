@@ -24,3 +24,6 @@ that references it. The main repo's git history is no safety net here.
   `exam_turn` → `exam_turn_transcribe`, `junior` → `junior_transcribe`, default `transcribe`); any new feature must be seeded in
   `ai_quota_limits` by a migration first (FK), and `lib/guest.py`'s `_AUDIO_FEATURES` must list it so
   guests keep the audio backstop.
+- Groq's on_demand tier refuses (413 "Request too large") any call whose prompt + `max_tokens` is over its
+  8,000 tokens-per-minute limit, before the model runs. Check that sum before raising a Groq token budget:
+  the Learn ladder call (`LADDER_EXTRA_ANSWER_TOKENS`) already sits at ~8,150 on six-ladder questions.

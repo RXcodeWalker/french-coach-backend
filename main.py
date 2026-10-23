@@ -213,6 +213,13 @@ FEEDBACK_DEPTH_ANSWER_TOKENS: dict[FeedbackDepth, int] = {
 # 3,060 completion tokens (2,048 + 500 + 512 reasoning reserve), losing rephrase,
 # encouragement and followUpQuestion while the JSON still parsed. The missing
 # fields were ~400-500 tokens; 1,000 leaves ~500 of headroom.
+# Checked live in gate iteration 1 (2026-10-23, learn-prompt-v9): no truncation;
+# the largest reply used 3,487 of the 3,560 a standard-depth call allows. But
+# Groq's on_demand tier refuses (413) any request whose prompt + max_tokens is
+# over its 8,000 tokens-per-minute limit, and a six-ladder question at standard
+# depth asks for ~8,150 (prompt ~4,600 + 3,560): two of five such calls were
+# refused before going through on a retry. Do not raise this without cutting
+# the prompt; in production a refusal falls through to Gemini.
 LADDER_EXTRA_ANSWER_TOKENS = 1000
 
 

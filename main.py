@@ -891,10 +891,10 @@ _DEMAND_STRUCTURE_BONUS_CAP = 0.75
 
 # A describe question in the past or future asks for at least A2 (CEFR A2
 # sustained monologue: "past activities and personal experiences", "plans and
-# arrangements"). Reused from learn-prompt-v7 inside the ladder scheme only, so
-# the v6 prompt's "Demand level" line (and its pinned hash) does not move; the
-# TS original gets the same rule in Batch 2 (DESCRIBE_FLOOR_CASES is the case
-# table both sides share).
+# arrangements"). Reused from learn-prompt-v7 for the ladder scheme's "Demand
+# level" line, which learn-prompt-v9 dropped (the ladder prompt carries no CEFR
+# level); it stays here as the port of the TS rule (Batch 2), whose case table
+# DESCRIBE_FLOOR_CASES both sides share. The v6 line never uses it.
 _DESCRIBE_PAST_FUTURE_FLOOR = 3.0
 
 
@@ -1774,7 +1774,9 @@ LEARN_PROMPT_VERSION = "learn-prompt-v6"
 # LEVEL CHECK rendering), sent only when a request opts in with
 # `marking: "ladder-v1"`. Versioned separately so v6 — still what every other
 # screen and every old app uses — keeps its version and its pinned hashes.
-LEARN_LADDER_PROMPT_VERSION = "learn-prompt-v8"
+# v9 (gate iteration 1, 2026-10-23): operational rung wording, no question
+# demand level, the verdict shape per ladder; see the frontend verification-log.
+LEARN_LADDER_PROMPT_VERSION = "learn-prompt-v9"
 
 # Tracks the wire *shape* of the /v3 and /stream feedback response — separate
 # from LEARN_PROMPT_VERSION, which tracks prompt text. Bump only when the
@@ -2048,9 +2050,12 @@ skill with four rungs, numbered 1 to 4 from the simplest. For every listed ladde
 its four rungs separately, from the transcript alone:
 • "y" — this answer clearly does what the rung describes;
 • "n" — it does not, or you are not sure;
-• null — only for a rung marked "no requirement".
+• null — JSON null (never the string "null"), only for a rung marked "no requirement".
 You give no score and no level: the app works them out from your verdicts. Judge every student
-by the same rungs.
+by the same rungs. A rung is a minimum: doing more than it asks (longer sentences, more clauses,
+more advanced connectors) still meets it. Bracketed French words are examples. Only T, O and F
+judge whether the answer does what the question asks; L, R and A judge the French that is there.
+DETERMINISTIC SIGNALS never decide a rung ("connectors" counts only advanced ones like cependant).
 • "quote": the student's words that show the HIGHEST rung you marked "y" — one short span (a few
   words up to one sentence), copied character for character from the transcript, mistakes
   included: never correct, tidy or merge the student's words. To point at two separate places,
@@ -2583,7 +2588,14 @@ def _level_check_section(demands: dict[str, Any] | None) -> str:
         f"Return levelCheck with exactly these keys."
     ]
     for ladder in applies:
-        lines.append(f"\n{ladder} — {_learn_ladder.ladder_label(ladder, demands)}")
+        # The verdict shape per ladder, spelled out: the first gate run put null on rungs that have a
+        # requirement (R rung 1, right after F's "no requirement" rung) and once wrote the string "null".
+        shape = (
+            'null, then 3 × "y"/"n"'
+            if _learn_ladder.rung_text(ladder, 0, demands, "model") is None
+            else '4 × "y"/"n"'
+        )
+        lines.append(f"\n{ladder} — {_learn_ladder.ladder_label(ladder, demands)} (verdicts: {shape})")
         for index in range(len(_learn_ladder.LEVELS)):
             text = _learn_ladder.rung_text(ladder, index, demands, "model")
             lines.append(f"\n  {index + 1}. {text if text is not None else 'no requirement (always null)'}")
@@ -2660,7 +2672,7 @@ def build_user_prompt(req: FeedbackRequest) -> str:
         structures = demands.get("structures") or []
         response_load = demands.get("responseLoad") or ""
         sufficient_answer = demands.get("sufficientAnswer") or ""
-        demand_level = demand_score_to_level(derive_demand_score(demands, describe_floor=ladder))
+        demand_level = demand_score_to_level(derive_demand_score(demands))
         # The ladder prompt is the same for every learner (learn-marking §1.1):
         # no session target, no tier text.
         target_level = "" if ladder else (_difficulty_prompt(req.difficulty_context).get("cefrTarget") or "")
@@ -2676,9 +2688,13 @@ def build_user_prompt(req: FeedbackRequest) -> str:
             f"- What the learner must do: {cognitive_demand}\n"
             f"- Time frames the question invites: {', '.join(time_frames) or 'none specified'}\n"
             f"- Structures it invites: {', '.join(structures) or 'none specified'}\n"
-            f"- Expected developed answer: {load_hint}\n"
-            f"- Demand level: {demand_level}"
+            f"- Expected developed answer: {load_hint}"
         )
+        # The ladder prompt carries no CEFR level at all (learn-marking §1.1). The question's own
+        # demand level was dropped from it in learn-prompt-v9: in the first gate run the two questions
+        # rendered "Demand level: B1"/"B2" were the ones whose typical A2 answers were judged B1.
+        if not ladder:
+            demands_section += f"\n- Demand level: {demand_level}"
         if target_level:
             demands_section += f"   |   Learner's session target: {target_level}"
         if sufficient_answer:
@@ -2711,9 +2727,9 @@ def build_user_prompt(req: FeedbackRequest) -> str:
             f"{detail_instruction}\n\n"
             f"REMINDER — LEVEL CHECK AND COACHING QUALITY GATE:\n"
             f"• levelCheck is REQUIRED: one entry for each of {', '.join(_learn_ladder.applicable_ladders(demands))}, "
-            f"each with four verdicts (\"y\" or \"n\"; null only where a rung has no requirement), "
-            f"a short quote copied exactly from the transcript, mistakes included, for the highest \"y\" "
-            f"(separate places joined with \" … \"), and a \"next\" example for the first \"n\"\n"
+            f"verdicts in the shape listed for each ladder, a quote copied exactly from the transcript (mistakes "
+            f"included) for the highest \"y\", a \"next\" example for the first \"n\"; a rung is met when the "
+            f"answer does more than it asks; Accuracy rungs 3-4 follow your grammar error count\n"
             f"• demandCheck is REQUIRED: {{\"met\": true | false | null, \"quote\": \"…\"}}\n"
             f"• encouragement is your opening line to the student and MUST quote their words with « »\n"
             f"• strengths: 2-4, each quoting the student's exact words; best_moment is the strongest, in « »\n"

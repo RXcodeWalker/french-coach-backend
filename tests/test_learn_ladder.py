@@ -16,6 +16,7 @@ import inspect
 import itertools
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -31,7 +32,7 @@ DEMANDS_DIR = ROOT / "data" / "learn"
 
 # Pinned on purpose: any change to the ladder wording, requirements, points or caps changes the version
 # that every levelCheck records. Update the pin in the same commit as the change.
-LADDER_VERSION_PIN = "learn-ladder-v1-139f19a106d2"
+LADDER_VERSION_PIN = "learn-ladder-v1-f183b9df8e84"
 
 
 def _corpus() -> dict[str, dict]:
@@ -342,6 +343,27 @@ def test_a_null_counts_as_no_except_on_the_a1_rung_of_o_and_f():
     assert guarded["F"].reached == 1  # the missing A1 rung counts as met
 
 
+@pytest.mark.parametrize("written", ["null", "NULL", " null "])
+def test_the_string_null_is_read_as_json_null(written):
+    # A contract fix, not a scoring rule: the first gate run lost fut_19_b2 because the model wrote
+    # "null" in quotes on the A1 rung of O and F. It now follows the usual null rules.
+    applies = ("T", "L", "O", "F", "R", "A")
+    raw = _all_n_raw(
+        applies, O=_entry([written, "y", "n", "n"]), F=_entry([written, "y", "n", "n"]), R=_entry([written, "y", "n", "n"])
+    )
+    ll.validate_raw_levelcheck(raw, applies)  # no longer a contract error
+    guarded = ll.apply_guardrails(raw, applies, TRANSCRIPT)
+    assert guarded["O"].reached == 2 and guarded["F"].reached == 2  # met: the A1 rung has no requirement
+    assert guarded["R"].reached == 0  # R's A1 rung is a real requirement: a null there is a "no"
+
+
+def test_other_strings_are_still_a_contract_error():
+    for bad in ("maybe", "None", "yes", ""):
+        raw = _all_n_raw(FOUR, T=_entry([bad, "n", "n", "n"], quote=""))
+        with pytest.raises(ll.LadderValidationError):
+            ll.validate_raw_levelcheck(raw, FOUR)
+
+
 def test_the_a1_rung_of_o_and_f_is_met_whatever_the_model_wrote():
     applies = ("T", "L", "O", "F", "R", "A")
     raw = _all_n_raw(applies, O=_entry(["n", "n", "n", "n"], quote=""), F=_entry(["y", "n", "n", "n"]))
@@ -584,6 +606,7 @@ def test_model_wording_names_no_marking_level():
                 text = (ll.rung_text(ladder, index, demands, "model") or "").lower()
                 for banned in ("target level", "marking level", "exam standard", "strict", "lenient", "learner picked"):
                     assert banned not in text, (ladder, index, banned)
+                assert not re.search(r"\b(?:a1|a2|b1|b2|c1|c2)\b", text), (ladder, index, "a CEFR level")
 
 
 def test_version_is_pinned():

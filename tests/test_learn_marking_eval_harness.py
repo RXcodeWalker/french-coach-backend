@@ -197,7 +197,7 @@ def test_each_record_carries_what_the_protocol_asks(tmp_path):
         for key in ("rawOutput", "usage", "finishReason", "latencyMs", "model", "versions", "fixtureCommit",
                     "fixtureContentSha256", "clientInputsSha256", "request", "rawLevelCheck", "result"):
             assert key in record, key
-        assert record["versions"]["learnPrompt"] == "learn-prompt-v8"
+        assert record["versions"]["learnPrompt"] == "learn-prompt-v9"
         assert record["request"]["marking"] == "ladder-v1"
         assert record["result"]["levelCheck"]["scheme"] == "ladder-v1"
     # Depth sent is the client's.
@@ -393,7 +393,7 @@ def test_the_cost_limits_are_the_owners_2026_10_19_values():
 def test_g8_counts_an_unscored_answer_as_all_wrong(tmp_path):
     def break_b2(answer_id, reply):
         if answer_id == "fut_19_b2":
-            reply["levelCheck"]["O"]["verdicts"][0] = "null"  # a string, not JSON null: a contract error
+            reply["levelCheck"]["O"]["verdicts"][1] = "maybe"  # not y, n or null: a contract error
         return reply
 
     report, _ = harness.build_report(_oracle_log(tmp_path, mutate=break_b2))

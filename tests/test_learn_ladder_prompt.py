@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import re
 import os
 import sys
 from types import SimpleNamespace
@@ -28,8 +29,8 @@ import main  # noqa: E402
 
 # Pinned on purpose: bump LEARN_LADDER_PROMPT_VERSION and update these in the same commit as any
 # change to SYSTEM_PROMPT_LADDER or to the ladder branch of build_user_prompt.
-LADDER_SYSTEM_PROMPT_HASH = "8805d5a5814b1bfcd912cb1e9c2f33cbb47be9be0933ab03fa0fd5f338e646a0"
-LADDER_USER_PROMPT_HASH = "74d9bfb995554cf382e18b351c010ef2d5e09370dd839a5cab6ec99d73f737ed"
+LADDER_SYSTEM_PROMPT_HASH = "86b1c1b44fd9d7d079e79544c1ca4db3b215464c65501f5e3ee327a291b7712b"
+LADDER_USER_PROMPT_HASH = "694ac29335d190498abf301f6aeaa6df43e6fdd2ab82d4ba7aacb08e1b3cf150"
 
 TIERS = [None, *({"tier": t} for t in main._TIER_PROMPTS)]
 
@@ -50,7 +51,7 @@ def _req(question_id="hol_01", *, marking="ladder-v1", difficulty_context=None, 
 
 
 def test_the_ladder_prompt_has_its_own_version_and_v6_keeps_its_own():
-    assert main.LEARN_LADDER_PROMPT_VERSION == "learn-prompt-v8"
+    assert main.LEARN_LADDER_PROMPT_VERSION == "learn-prompt-v9"
     assert main.LEARN_PROMPT_VERSION == "learn-prompt-v6"
 
 
@@ -125,6 +126,42 @@ def test_the_ladder_prompt_contains_no_level_text():
     for tier in main._TIER_PROMPTS.values():
         assert tier["coachingRubric"] not in prompt
         assert tier["coachingTone"] not in prompt
+
+
+_CEFR = re.compile(r"\b(?:A1|A2|B1|B2|C1|C2)\b")
+# The one CEFR phrase the ladder prompt may carry: the fixed pitch of the French the model writes
+# (corrections, improved_answer), shared with v6 and the same for every learner and every answer.
+_FRENCH_YOU_WRITE = "A2 with elements of B1"
+
+
+@pytest.mark.parametrize("question_id", ["fam_01", "hol_01", "sch_03", "env_05", "fut_19"])
+def test_the_ladder_user_prompt_names_no_cefr_level(question_id):
+    # Level-blind (learn-marking §1.1): neither the learner's level nor the question's demand level.
+    # learn-prompt-v8 rendered "Demand level: B1/B2"; the two questions that showed it were the ones
+    # whose typical A2 answers the first gate run judged B1.
+    for ctx in TIERS:
+        prompt = main.build_user_prompt(_req(question_id, difficulty_context=ctx)).replace(_FRENCH_YOU_WRITE, "")
+        assert not _CEFR.search(prompt), _CEFR.search(prompt)
+        assert "Demand level" not in prompt
+
+
+def test_the_ladder_system_prompt_names_no_cefr_level_outside_the_french_it_writes():
+    prompt = main.SYSTEM_PROMPT_LADDER
+    level_check = prompt[prompt.index("LEVEL CHECK —"): prompt.index("DATA BOUNDARY")]
+    assert not _CEFR.search(level_check)
+    # Outside LEVEL CHECK the only CEFR words are v6's fixed "FRENCH YOU WRITE" pitch.
+    rest = prompt.replace(_FRENCH_YOU_WRITE, "").replace("Never above B1", "")
+    assert not _CEFR.search(rest), _CEFR.search(rest)
+
+
+def test_each_ladder_states_its_verdict_shape():
+    # The first gate run put null on rungs that have a requirement and once wrote the string "null".
+    prompt = main.build_user_prompt(_req("fut_19"))
+    for ladder in ("T", "L", "R", "A"):
+        assert f'(verdicts: 4 × "y"/"n")' in prompt.split(f"\n{ladder} — ")[1].split("\n")[0]
+    for ladder in ("O", "F"):
+        assert '(verdicts: null, then 3 × "y"/"n")' in prompt.split(f"\n{ladder} — ")[1].split("\n")[0]
+    assert 'JSON null (never the string "null")' in main.SYSTEM_PROMPT_LADDER
 
 
 def test_the_v6_prompt_still_carries_the_target_level():
@@ -225,8 +262,9 @@ def test_the_floor_is_off_by_default_so_v6_scores_do_not_move():
     assert main.derive_demand_score(_demands(DESCRIBE_FLOOR_CASES[1][0])) == 1.25
 
 
-def test_the_floor_reaches_the_ladder_prompt_only():
-    assert "- Demand level: A2\n" in main.build_user_prompt(_req("hol_01"))
+def test_no_prompt_renders_the_floor():
+    # learn-prompt-v9 dropped the ladder prompt's demand level; v6 never used the floor.
+    assert "Demand level" not in main.build_user_prompt(_req("hol_01"))
     assert "- Demand level: A1   |" in main.build_user_prompt(_req("hol_01", marking=None))
 
 

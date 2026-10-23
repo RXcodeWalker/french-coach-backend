@@ -99,11 +99,14 @@ _T = {
             "source": "CV p.62 A2",
         },
         {
-            # interpretation T-B1: a reason attached to an opinion counts under O, not here.
+            # interpretation T-B1: a reason attached to an opinion counts under O, not here; a list of
+            # one- or two-attribute facts is rung 2. Iteration 1 made "developed" checkable: the first gate
+            # run counted an extra separate fact as development (7 of 44 mismatches).
             "model": (
-                "The points come as a sequence, and at least one point is developed with a further detail, "
-                "example or explanation. A list of separate one- or two-attribute facts is not development. "
-                "A reason attached to an opinion belongs to the opinions ladder, not here."
+                "The points come as a sequence, and at least one is developed: the answer says more about that "
+                "same point (why or how, an example of it, what follows from it). Not development: a further "
+                "separate fact or attribute, even about the same person and even joined by et or mais (rung 2); "
+                "a time, number, place or name inside the fact; when O is listed, the reason for the opinion."
             ),
             "learner": "Put your points in a sequence and develop one of them with an extra detail or an example.",
             "source": "CV p.62 B1; CV p.140 Thematic development B1; 'at least one' UNVALIDATED (TN p.11 Good band)",
@@ -120,19 +123,20 @@ _L = {
     "label": "Linking your ideas",
     "rungs": [
         {
-            "model": "Links words or ideas with very basic linear connectors such as et, puis.",
+            # Iteration 1: "et" joining two nouns was judged "n" (G12); the rung is any et/puis link.
+            "model": "Links words or ideas with very basic linear connectors such as et, puis (any et joining two words counts).",
             "learner": "Link your ideas with simple words like et or puis.",
             "source": "CV p.141 Coherence and cohesion A1",
         },
         {
-            "model": "Uses simple connectors such as mais, parce que, car.",
+            "model": "Uses simple connectors such as mais, parce que, car (or a more advanced one: donc, cependant…).",
             "learner": "Use simple connectors like mais, parce que or car.",
             "source": "CV p.141 A2",
         },
         {
             "model": (
                 "Joins several short points into one connected sequence, linking across sentences "
-                "(d'abord, ensuite, après, donc, quand)."
+                "(d'abord, ensuite, après, donc, quand), not only inside one sentence."
             ),
             "learner": "Join your sentences into one connected sequence with words like d'abord, ensuite, après, donc or quand.",
             "source": "CV p.141 B1; Syl p.13; French examples from Syl p.26 UNVALIDATED as a list",
@@ -157,14 +161,17 @@ _O = {
             # interpretation O-justification: on a question tagged `justification` a simple reason is also needed.
             "modelWhy": (
                 "Gives an opinion or preference in simple terms (j'aime, je préfère, je pense que, c'est…) "
-                "and a simple reason for it, because the question asks why."
+                "and a simple reason for it (as defined in rung 3), because the question asks why."
             ),
             "learner": "Say what you think or prefer, in simple terms (j'aime…, je pense que…).",
             "learnerWhy": "Say what you think or prefer and give a simple reason (j'aime… parce que…).",
             "source": "CV p.64 A2 and A2+",
         },
         {
-            "model": "Gives at least one reason or explanation for an opinion, plan or action.",
+            "model": (
+                "Gives at least one reason or explanation for an opinion, plan or action, presented as why "
+                "(parce que, car, comme, donc…); a liking, habit or fact merely placed beside it is not a reason."
+            ),
             "learner": "Give at least one reason for your opinion.",
             "source": "CV p.64 B1; Syl p.13; TN p.11 Good band",
         },
@@ -215,7 +222,10 @@ _F = {
                 "source": "CV p.62-63 A2",
             },
             {
-                "model": "Describes hopes, ambitions or the imagined situation in some detail.",
+                "model": (
+                    "Describes hopes, ambitions or the imagined situation in some detail: what it would be like "
+                    "or what they would do, beyond naming the wish; facts about their present life do not count."
+                ),
                 "learner": "Describe your hopes or the imagined situation in more detail.",
                 "source": "CV p.62-63 B1; Syl p.13",
             },
@@ -242,21 +252,21 @@ _R = {
             "source": "CV p.130-131 A2; Vocabulary range A2",
         },
         {
-            # interpretation R-B1: 'more than one clause' means a subordinate clause; et/mais are L's job.
+            # interpretation R-B1: 'more than one clause' means a subordinate clause; et/mais are L's job;
+            # one formulaic 'je pense que ... parce que' sentence is not "some sentences". Iteration 1 states
+            # the plural as a count: at least two sentences.
             "model": (
                 "Uses varied topic vocabulary and some sentences with more than one clause, meaning a "
-                "subordinate clause (qui, que, où, quand, si, parce que). Clauses joined only by et or "
-                "mais do not count here (that is the linking ladder); one formulaic 'je pense que … parce "
-                "que' sentence with everyday vocabulary is not enough."
+                "subordinate clause (qui, que, où, quand, si, parce que): at least two different sentences "
+                "with one. Clauses joined only by et or mais do not count."
             ),
             "learner": "Add some sentences with a second clause (qui, que, quand, si, parce que) and use a wider range of topic words.",
             "source": "CV p.130-131 B1; Vocabulary range B1; the more-than-one-clause test is UNVALIDATED",
         },
         {
             "model": (
-                "Uses some complex sentence forms and varied wording. The examples (si + imperfect/conditional, "
-                "dont, ce que, en + present participle, pluperfect) are only examples: any complex form counts, "
-                "and no particular tense or structure is ever required."
+                "Uses some complex sentence forms and varied wording (e.g. si + imperfect/conditional, dont, "
+                "ce que, en + present participle, pluperfect: any complex form counts, none is required)."
             ),
             "learner": "Try some complex sentence forms (for example with si, dont, ce que, or a verb ending in -ant after en) and vary your wording.",
             "source": "CV p.130-131 B2; Vocabulary range B2; Syl p.25-26",
@@ -279,21 +289,22 @@ _A = {
         },
         {
             # interpretations A-B1-B2 and tense: up to two basic errors still meets B1; three or four do not.
+            # Iteration 1 ties both rungs to the errors the model itself lists: in the first gate run it
+            # listed every seeded error but still judged two of them "occasional slips" (A-B2, 5 of 44).
             "model": (
                 "Everyday patterns are mostly correct (common verbs, common agreements, the tense the question "
-                "asks for); errors are mainly in more ambitious structures. Up to two basic errors still meets "
-                "this; three or four routine errors do not. A present tense where the question asks about the "
-                "past or an imagined future is an error. A spelling that sounds the same as the correct form "
-                "is never an error, because the transcript comes from speech recognition."
+                "asks for); errors are mainly in more ambitious structures. Count the real errors you list in "
+                "grammar: 0-2 is \"y\", 3 or more is \"n\". A present tense where the question asks about the "
+                "past or an imagined future is an error; a spelling that sounds the same as the correct form "
+                "never is (the transcript comes from speech recognition)."
             ),
             "learner": "Get everyday patterns right: common verbs, agreements and the tense the question asks for.",
             "source": "CV p.132 B1 and intro; Syl p.13 'reasonable accuracy'; TN p.12",
         },
         {
             "model": (
-                "No mistake causes misunderstanding; slips are occasional (one slip is fine; two basic "
-                "everyday-pattern errors are not). A spelling that sounds the same as the correct form is "
-                "never an error."
+                "No mistake causes misunderstanding; slips are occasional. Counted the same way: 0-1 real error "
+                "that does not confuse the meaning is \"y\", 2 or more is \"n\"."
             ),
             "learner": "Avoid any mistake that could confuse the listener; only an occasional slip.",
             "source": "CV p.132 B2",
@@ -451,12 +462,24 @@ def _no_a1_requirement(ladder: str) -> bool:
     return ladder in ("O", "F")
 
 
+def _verdict(value: Any) -> Any:
+    """A verdict as the model meant it: the string "null" is read as JSON null.
+
+    A contract fix, not a scoring rule: the first gate run (2026-10-19) lost a whole reply because
+    the model wrote "null" in quotes for the A1 rung of O and F. A null then follows the usual rules
+    (met on the A1 rung of O and F, "no" anywhere else).
+    """
+    if isinstance(value, str) and value.strip().lower() == "null":
+        return None
+    return value
+
+
 def validate_raw_levelcheck(raw: Any, applies: Sequence[str]) -> None:
     """Raises LadderValidationError unless every applicable ladder has four verdicts, each "y", "n" or null.
 
     The shape (the Batch 1 prompt asks for it): ``{"T": {"verdicts": ["y","y","n","n"], "quote": "…",
     "next": "…"}, …}``. A ladder that does not apply is ignored if present. A null where only O and F
-    allow one is not malformed; it counts as "no".
+    allow one is not malformed; it counts as "no". The string "null" is read as null (`_verdict`).
     """
     if not isinstance(raw, Mapping):
         raise LadderValidationError("levelCheck is not an object")
@@ -467,7 +490,7 @@ def validate_raw_levelcheck(raw: Any, applies: Sequence[str]) -> None:
         verdicts = entry.get("verdicts")
         if not isinstance(verdicts, (list, tuple)) or len(verdicts) != 4:
             raise LadderValidationError(f"ladder {ladder} needs four verdicts")
-        if any(v not in ("y", "n", None) for v in verdicts):
+        if any(_verdict(v) not in ("y", "n", None) for v in verdicts):
             raise LadderValidationError(f"ladder {ladder} has a verdict that is not y, n or null")
 
 
@@ -536,7 +559,7 @@ def apply_guardrails(
             if index == 0 and _no_a1_requirement(ladder):
                 verdicts.append(None)
             else:
-                verdicts.append("y" if verdict == "y" else "n")
+                verdicts.append("y" if _verdict(verdict) == "y" else "n")
         # Where the model's own first "no" sits, before the quote check can move it.
         model_first_no = next((i for i, v in enumerate(verdicts) if v == "n"), 4)
         yes_rungs = [i for i, v in enumerate(verdicts) if v == "y"]

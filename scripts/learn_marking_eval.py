@@ -82,9 +82,12 @@ LEVEL_NAMES = ("A1", "A2", "exam", "B1", "B2")
 # - max to 8,000 after smoke iteration 1: a 4-error answer used 7,204, and 53% of that reply is v6
 #   listing every error twice (grammar + corrections); the ladder's own keys were 9%. The median
 #   stays 6,000, so ladder bloat on ordinary answers still fails G11.
-SMOKE_MAX_TOKENS = 8000
-G11_MEDIAN_TOKENS = 6000
-G11_MAX_TOKENS = 8000
+# Changed on 2026-10-23 by the owner, for Design D (an answer is two calls): the median is now per
+# ANSWER (both calls together) and 7,500 ("I'm fine with about 7,500 per answer"); the max stays
+# 8,000 per CALL, which is also the most one Groq on_demand request may ask for.
+SMOKE_MAX_TOKENS = 8000  # per call
+G11_MEDIAN_TOKENS_PER_ANSWER = 7500
+G11_MAX_TOKENS = 8000  # per call
 # Retry policy for a non-daily 429/503. A retry-after longer than this is treated like the daily limit.
 MAX_RETRIES = 4
 MAX_RETRY_AFTER_SEC = 900.0
@@ -818,27 +821,27 @@ def build_report(records: list[dict[str, Any]], provider: str = "groq") -> tuple
     _gate(rows, "G10", "Evidence is real", "≥ 95% of \"y\" quotes in the transcript", quotes > 0 and evidence_rate >= 0.95,
           f"{real}/{quotes} ({evidence_rate:.0%})")
 
-    # G11 — contract and cost (every observed answer-run, smoke included). Validity is per answer.
-    # The token limits are read per provider call, as the protocol words them; since Design D an
-    # answer is two calls, so the per-answer total is printed beside them (the owner's call which one
-    # the cost gate should hold — see the protocol's Design D note).
+    # G11 — contract and cost (every observed answer-run, smoke included). Validity is per answer;
+    # the median is per answer (both calls) and the max per provider call (owner, 2026-10-23).
     valid = sum(1 for r in calls if r["status"] == "ok")
     with_demand_check = sum(1 for r in calls if r["status"] == "ok" and r["result"].get("demandCheck") is not None)
     truncations = [f"{r['answerId']}#{r['run']}" for r in calls if r.get("truncated")]
     provider_calls = [c for r in calls for c in record_calls(r)]
     tokens = [c["usage"]["totalTokens"] for c in provider_calls if (c.get("usage") or {}).get("totalTokens") is not None]
-    median_tokens = statistics.median(tokens) if tokens else 0
     max_tokens = max(tokens) if tokens else 0
     per_answer = [r["usage"]["totalTokens"] for r in calls if (r.get("usage") or {}).get("totalTokens") is not None]
+    median_answer = statistics.median(per_answer) if per_answer else 0
     valid_rate = valid / len(calls) if calls else 0.0
-    _gate(rows, "G11", "Contract and cost", f"≥ 97.5% valid; demandCheck 100%; 0 truncations; median ≤ {G11_MEDIAN_TOKENS:,}, max ≤ {G11_MAX_TOKENS:,}",
+    _gate(rows, "G11", "Contract and cost",
+          f"≥ 97.5% valid; demandCheck 100%; 0 truncations; median ≤ {G11_MEDIAN_TOKENS_PER_ANSWER:,} per answer, "
+          f"max ≤ {G11_MAX_TOKENS:,} per call",
           bool(calls) and valid_rate >= 0.975 and with_demand_check == valid and not truncations
-          and len(tokens) == len(provider_calls) and median_tokens <= G11_MEDIAN_TOKENS and max_tokens <= G11_MAX_TOKENS,
+          and len(tokens) == len(provider_calls) and len(per_answer) == len(calls)
+          and median_answer <= G11_MEDIAN_TOKENS_PER_ANSWER and max_tokens <= G11_MAX_TOKENS,
           f"valid {valid}/{len(calls)} ({valid_rate:.1%}), demandCheck {with_demand_check}/{valid}, "
           f"truncated {len(truncations)}{' (' + ', '.join(truncations) + ')' if truncations else ''}, "
-          f"tokens per call median {median_tokens:.0f} max {max_tokens} ({len(tokens)} calls with usage)"
-          + (f"; per answer median {statistics.median(per_answer):.0f} max {max(per_answer)}"
-             if per_answer and len(provider_calls) > len(calls) else ""))
+          f"tokens per answer median {median_answer:.0f} max {max(per_answer) if per_answer else 0}, "
+          f"per call max {max_tokens} ({len(tokens)} calls with usage)")
 
     # G12 — needs list.
     ids = by_type["simple_a1"]

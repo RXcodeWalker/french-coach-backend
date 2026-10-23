@@ -60,7 +60,7 @@ def answer_in(prompt: str) -> str:
     return next(i for i, a in ANSWERS.items() if f"STUDENT TRANSCRIPT (French): {main.clean_transcript(a['transcript'])}\n" in prompt)
 
 
-def oracle_provider(calls: list, *, finish_reason="stop", tokens=4200, mutate=None):
+def oracle_provider(calls: list, *, finish_reason="stop", tokens=3500, mutate=None):
     """Both production calls: the feedback call gets the grammar half of oracle_reply, the level
     checklist (kind "check") its levelCheck/demandCheck. `calls` records the feedback calls only, as
     (answerId, depth, prompt). `mutate` sees the whole reply; a string reply is sent as is."""
@@ -400,7 +400,7 @@ def test_g6_and_g11_fail_when_errors_are_missed_or_calls_run_long(tmp_path):
 
     statuses = _gate_status(harness.build_report(_oracle_log(tmp_path, mutate=forget_errors, tokens=6500))[0])
     assert statuses["G6"] == "FAIL"
-    assert statuses["G11"] == "FAIL"  # median 6,500 > 6,000
+    assert statuses["G11"] == "FAIL"  # 13,000 an answer > 7,500
 
 
 def test_g10_counts_quotes_before_the_guardrail(tmp_path):
@@ -432,8 +432,16 @@ def test_a_log_from_another_prompt_is_refused(tmp_path):
         run("full", log, oracle_provider([]))
 
 
-def test_the_cost_limits_are_the_owners_2026_10_19_values():
-    assert (harness.SMOKE_MAX_TOKENS, harness.G11_MEDIAN_TOKENS, harness.G11_MAX_TOKENS) == (8000, 6000, 8000)
+def test_the_cost_limits_are_the_owners_values():
+    # 2026-10-19: max 8,000 per call. 2026-10-23 (Design D): median 7,500 per answer, both calls together.
+    assert (harness.SMOKE_MAX_TOKENS, harness.G11_MEDIAN_TOKENS_PER_ANSWER, harness.G11_MAX_TOKENS) == (8000, 7500, 8000)
+
+
+def test_g11_holds_the_median_per_answer_and_the_max_per_call(tmp_path):
+    # 3,700 a call is 7,400 an answer: passes. 3,800 a call is 7,600 an answer: fails, though each call is small.
+    for name, tokens, status in (("a", 3700, "PASS"), ("b", 3800, "FAIL")):
+        (tmp_path / name).mkdir()
+        assert _gate_status(harness.build_report(_oracle_log(tmp_path / name, tokens=tokens))[0])["G11"] == status
 
 
 def test_g8_counts_an_unscored_answer_as_all_wrong(tmp_path):

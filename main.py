@@ -200,9 +200,15 @@ def _groq_token_budget(answer_tokens: int) -> int:
 FeedbackDepth = Literal["brief", "standard", "deep"]
 _VALID_FEEDBACK_DEPTHS: frozenset[str] = frozenset({"brief", "standard", "deep"})
 
+# standard was 2,048 (2,560 with the reasoning reserve): the 2026-10-23 Learn
+# marking smoke run cut a 4-error answer's feedback off at exactly 2,560,
+# losing rephrase, encouragement and followUpQuestion (it had used 2,401 on the
+# run before). Raised to 2,500 (3,012 with the reserve) on the owner's OK; a
+# reply that fits already is unchanged. prompt (~3,300) + max_tokens stays well
+# under the 8,000 a Groq on_demand request may ask for.
 FEEDBACK_DEPTH_ANSWER_TOKENS: dict[FeedbackDepth, int] = {
     "brief": 1400,
-    "standard": 2048,
+    "standard": 2500,
     "deep": 3000,
 }
 

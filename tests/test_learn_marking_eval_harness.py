@@ -15,6 +15,7 @@ import asyncio
 import hashlib
 import json
 import os
+import re
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -41,6 +42,12 @@ def oracle_reply(answer: dict) -> dict:
         verdicts = expected["verdicts"]
         has_yes = "y" in verdicts
         level_check[ladder] = {"verdicts": verdicts, "quote": expected["evidence"] if has_yes else "", "next": ""}
+        if ladder == "T":
+            # Development evidence from the answer's own sentences (the guardrail asks for it on rungs 3-4).
+            sentences = [x for x in re.split(r"(?<=[.!?])\s+", answer["transcript"]) if x]
+            level_check[ladder]["developed"] = [
+                {"point": sentences[0], "more": more, "how": "example"} for more in sentences[1:4]
+            ]
     errors = [
         {"id": f"e{n}", "msg": f"« {e['quote']} » is wrong.", "correction": e["correction"], "quote": e["quote"], "severity": "major"}
         for n, e in enumerate(answer["seededErrors"])
@@ -216,7 +223,7 @@ def test_each_record_carries_what_the_protocol_asks(tmp_path):
         for key in ("rawOutput", "rawCheckOutput", "calls", "usage", "finishReason", "latencyMs", "model", "versions",
                     "fixtureCommit", "fixtureContentSha256", "clientInputsSha256", "request", "rawLevelCheck", "result"):
             assert key in record, key
-        assert record["versions"]["learnPrompt"] == "learn-prompt-v6+ladder-check-v2"
+        assert record["versions"]["learnPrompt"] == "learn-prompt-v6+ladder-check-v3"
         assert [c["kind"] for c in record["calls"]] == ["feedback", "check"]
         assert record["usage"]["totalTokens"] == sum(c["usage"]["totalTokens"] for c in record["calls"])
         # The checklist was built from this answer's feedback reply.

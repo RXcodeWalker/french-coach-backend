@@ -59,6 +59,15 @@ POINTS_FAR_SHORT = 1.0  # gap >= 3
 # §6 step 4: if T-A1 is not met, every sub-score is capped here (TN p.11 lowest bands). UNVALIDATED.
 RELEVANCE_CAP = 2.0
 
+# Ladder T needs evidence of development (Design D checklist, 2026-10-24 amendment): the checklist
+# lists each place the answer says more about one of its points, as {point, more, how}. A T-B1 "yes"
+# needs at least one such pair found in the transcript, a T-B2 "yes" at least three ("main points are
+# expanded": several points, not one or two). The 2026-10-24 Stage 2 run said "yes" to T-B2 on 10
+# answers expected "no", plain lists of facts included. UNVALIDATED numbers.
+T_B1_MIN_DEVELOPED = 1
+T_B2_MIN_DEVELOPED = 3
+DEVELOPMENT_KINDS = frozenset({"why", "how", "example", "result", "feeling"})
+
 # §4. Decided by code from the resolved demands, never by the model or the marking level.
 _O_STRUCTURES = frozenset({"opinion", "justification", "comparison"})
 _O_COGNITIVE_DEMANDS = frozenset({"justify", "compare", "hypothesize"})
@@ -329,6 +338,7 @@ def _table_fingerprint() -> str:
             POINTS_ABOVE, POINTS_MEETS, POINTS_MEETS_AT_TOP, POINTS_ONE_SHORT, POINTS_TWO_SHORT, POINTS_FAR_SHORT,
         ],
         "cap": RELEVANCE_CAP,
+        "developed": [T_B1_MIN_DEVELOPED, T_B2_MIN_DEVELOPED, sorted(DEVELOPMENT_KINDS)],
         "needs": [MAX_NEEDS_ITEMS, MAX_EXAMPLE_WORDS, list(NEEDS_ORDER)],
         "applies": [sorted(_O_STRUCTURES), sorted(_O_COGNITIVE_DEMANDS), sorted(_F_PAST), sorted(_F_FUTURE)],
     }
@@ -498,6 +508,27 @@ def validate_raw_levelcheck(raw: Any, applies: Sequence[str]) -> None:
             raise LadderValidationError(f"ladder {ladder} has a verdict that is not y, n or null")
 
 
+def developed_points(entry: Mapping[str, Any], transcript: str) -> int:
+    """How many of ladder T's `developed` pairs hold up: both quotes are in the transcript, they are
+    not the same words, and the kind is one of DEVELOPMENT_KINDS. A missing or malformed list counts
+    as none. Each `more` counts once."""
+    items = entry.get("developed")
+    if not isinstance(items, (list, tuple)):
+        return 0
+    seen: set[str] = set()
+    for item in items:
+        if not isinstance(item, Mapping) or item.get("how") not in DEVELOPMENT_KINDS:
+            continue
+        point, more = item.get("point"), item.get("more")
+        if not (quote_in_transcript(point, transcript) and quote_in_transcript(more, transcript)):
+            continue
+        key = _normalise(more)
+        if key == _normalise(point) or key in seen:
+            continue
+        seen.add(key)
+    return len(seen)
+
+
 def reached_rung(verdicts: Sequence[str | None]) -> int:
     """How high a ladder climbs: the highest rung (0 = none ... 4 = B2) up to which every rung is met.
 
@@ -548,9 +579,10 @@ def apply_guardrails(
 
     1. The A1 rung of O and F has no requirement: whatever the model wrote there, it counts as met.
     2. Any other null counts as "no".
-    3. The quote is evidence for the highest "yes". If it is not in the transcript (or missing), that
+    3. Ladder T's rungs 3 and 4 need their `developed` evidence (developed_points).
+    4. The quote is evidence for the highest "yes". If it is not in the transcript (or missing), that
        "yes" becomes a "no".
-    4. `reached` ignores a "yes" above a "no".
+    5. `reached` ignores a "yes" above a "no".
 
     Raises LadderValidationError for a missing or malformed ladder. Level-blind by construction.
     """
@@ -564,8 +596,15 @@ def apply_guardrails(
                 verdicts.append(None)
             else:
                 verdicts.append("y" if _verdict(verdict) == "y" else "n")
-        # Where the model's own first "no" sits, before the quote check can move it.
+        # Where the model's own first "no" sits, before the guardrails below can move it.
         model_first_no = next((i for i, v in enumerate(verdicts) if v == "n"), 4)
+        if ladder == "T":
+            # A development "yes" needs its evidence (T_B1/T_B2_MIN_DEVELOPED).
+            developed = developed_points(entry, transcript)
+            if verdicts[2] == "y" and developed < T_B1_MIN_DEVELOPED:
+                verdicts[2] = "n"
+            if verdicts[3] == "y" and developed < T_B2_MIN_DEVELOPED:
+                verdicts[3] = "n"
         yes_rungs = [i for i, v in enumerate(verdicts) if v == "y"]
         quote_found: bool | None = None
         if yes_rungs:

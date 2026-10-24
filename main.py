@@ -206,8 +206,10 @@ _VALID_FEEDBACK_DEPTHS: frozenset[str] = frozenset({"brief", "standard", "deep"}
 # run before). Raised to 2,500 (3,012 with the reserve) on the owner's OK; a
 # reply that fits already is unchanged. prompt (~3,300) + max_tokens stays well
 # under the 8,000 a Groq on_demand request may ask for.
+# brief was 1,400 (1,912 with the reserve) until 2026-10-24, when a brief reply on
+# a strong answer was cut off at exactly 1,912 in the Learn marking gate run.
 FEEDBACK_DEPTH_ANSWER_TOKENS: dict[FeedbackDepth, int] = {
-    "brief": 1400,
+    "brief": 2000,
     "standard": 2500,
     "deep": 3000,
 }
@@ -218,7 +220,9 @@ FEEDBACK_DEPTH_ANSWER_TOKENS: dict[FeedbackDepth, int] = {
 # UNVALIDATED; the gate run checks for truncation (G11). Its prompt is ~1,500
 # tokens, so prompt + max_tokens stays far below the 8,000 a Groq on_demand
 # request may ask for (a bigger request is refused with a 413).
-LADDER_CHECK_ANSWER_TOKENS = 1200
+# Raised 1,200 -> 1,800 on 2026-10-24: a six-ladder checklist hit 1,712 in Stage 2 and lost
+# ladder A; the T `developed` list adds ~100 more.
+LADDER_CHECK_ANSWER_TOKENS = 1800
 
 
 FEEDBACK_DEPTH_ITEM_CAPS: dict[FeedbackDepth, dict[str, int]] = {
@@ -1786,7 +1790,8 @@ LEARN_PROMPT_VERSION = "learn-prompt-v6"
 # neither passed the gate (frontend verification-log.md), and Design D replaced
 # them with this checklist. ladder-check-v2 (after its first smoke run): only
 # Accuracy rungs 3-4 count the error list (v1 failed all four rungs on 5 errors).
-LEARN_LADDER_PROMPT_VERSION = "ladder-check-v2"
+# v3 (2026-10-24): ladder T lists its `developed` evidence, which code counts.
+LEARN_LADDER_PROMPT_VERSION = "ladder-check-v3"
 # What a ladder reply's `promptVersion` says: the feedback prompt + the checklist.
 LEARN_LADDER_REPLY_VERSION = f"{LEARN_PROMPT_VERSION}+{LEARN_LADDER_PROMPT_VERSION}"
 
@@ -2018,6 +2023,14 @@ as it is: do not add errors of your own and do not drop any, except that a spell
 correct form is never an error. Rungs 1 and 2 do not count errors: they ask whether some simple structures are
 right and whether the meaning stays clear, which an answer with many errors can still do.
 
+DEVELOPMENT — ladder T also returns "developed": every place where the answer says more about one of its own
+points, as {"point": "<the student's words stating the point>", "more": "<the student's words that say more about
+that same point>", "how": "why" | "how" | "example" | "result" | "feeling"}, both copied exactly from the
+transcript. Only list a pair when "more" explains, illustrates or follows from "point"; a further separate fact, a
+second attribute of the same person or thing, or a time or number inside the fact is not "more". When the opinions
+ladder (O) is listed, the reason given for the opinion is not listed here. Use [] when there is none. The app checks
+the list: rung 3 needs at least one pair, rung 4 at least three.
+
 For every listed ladder also give:
 • "quote": the student's words that show the HIGHEST rung you marked "y" — one short span (a few words up to one
   sentence), copied character for character from the transcript, mistakes included: never correct, tidy or merge
@@ -2041,7 +2054,8 @@ Return ONLY a raw JSON object — no prose, no markdown, no code fences — with
     "<letter of each ladder listed under LEVEL CHECK, e.g. T>": {
       "verdicts": [<rung 1>, <rung 2>, <rung 3>, <rung 4> — each "y", "n" or null],
       "quote": "<the student's exact words that show the highest \"y\" rung, or \"\">",
-      "next": "<for the first \"n\" rung: a short French example built from the student's own words, or \"\">"
+      "next": "<for the first \"n\" rung: a short French example built from the student's own words, or \"\">",
+      "developed": [{"point": "…", "more": "…", "how": "why | how | example | result | feeling"}]  ← ladder T only
     }
   },
   "demandCheck": {"met": <true | false | null>, "quote": "<the student's exact words that meet it, or \"\">"}

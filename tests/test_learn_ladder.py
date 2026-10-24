@@ -32,7 +32,7 @@ DEMANDS_DIR = ROOT / "data" / "learn"
 
 # Pinned on purpose: any change to the ladder wording, requirements, points or caps changes the version
 # that every levelCheck records. Update the pin in the same commit as the change.
-LADDER_VERSION_PIN = "learn-ladder-v1-b37cd09fd39f"
+LADDER_VERSION_PIN = "learn-ladder-v1-8d123ddf9bcd"
 
 
 def _corpus() -> dict[str, dict]:
@@ -57,14 +57,27 @@ def _reached_combinations(applies):
         yield dict(zip(applies, combo))
 
 
+def _developed(transcript, n=3):
+    """n valid ladder-T development pairs built from `transcript`'s words: the first word is the point,
+    each later word one "more". Fewer when the transcript has fewer words."""
+    words = transcript.split()
+    return [{"point": words[0], "more": more, "how": "why"} for more in words[1:n + 1]]
+
+
+DEV_TRANSCRIPT = "un deux trois quatre cinq"
+
+
 def _raw_from_reached(reached, transcript="x"):
-    """A model reply whose verdicts give exactly `reached`, quoting a word that is in `transcript`."""
+    """A model reply whose verdicts give exactly `reached`, quoting a word that is in `transcript`, with
+    enough T development evidence for the T rungs it claims."""
     raw = {}
     for ladder, rung in reached.items():
         verdicts = ["y" if i < rung else "n" for i in range(4)]
         if ladder in ("O", "F"):
             verdicts[0] = None
         raw[ladder] = {"verdicts": verdicts, "quote": transcript, "next": ""}
+    if "T" in raw:
+        raw["T"]["developed"] = _developed(transcript)
     return raw
 
 
@@ -283,8 +296,16 @@ def test_quotes_that_are_not_in_the_transcript_are_not_found(quote):
 
 # ── Guardrails ───────────────────────────────────────────────────────────────────────────────
 
-def _entry(verdicts, quote="mon frère et moi", nxt=""):
-    return {"verdicts": verdicts, "quote": quote, "next": nxt}
+# Three valid development pairs in TRANSCRIPT, so a T rung 3-4 "yes" in a test is not dropped for want
+# of evidence (tests of that rule pass their own).
+TRANSCRIPT_DEVELOPED = [
+    {"point": "mon père", "more": more, "how": "example"} for more in ("ma mère", "mon frère", "J'aime l'école")
+]
+
+
+def _entry(verdicts, quote="mon frère et moi", nxt="", developed=None):
+    return {"verdicts": verdicts, "quote": quote, "next": nxt,
+            "developed": TRANSCRIPT_DEVELOPED if developed is None else developed}
 
 
 def _all_n_raw(applies, **overrides):
@@ -328,6 +349,36 @@ def test_a_ladder_with_no_yes_needs_no_quote():
     guarded = ll.apply_guardrails(_all_n_raw(FOUR), FOUR, TRANSCRIPT)
     assert all(g.quote_found is None for g in guarded.values())
     assert all(g.reached == 0 for g in guarded.values())
+
+
+@pytest.mark.parametrize(
+    "developed, reached",
+    [
+        ([], 2),  # no evidence: neither development rung stands
+        (None, 4),  # three valid pairs
+        (TRANSCRIPT_DEVELOPED[:1], 3),  # one pair: rung 3 stands, rung 4 needs three
+        (TRANSCRIPT_DEVELOPED[:2], 3),
+        ([{"point": "mon père", "more": "des mots inventés", "how": "why"}] * 3, 2),  # not in the transcript
+        ([{"point": "mon père", "more": "mon père", "how": "why"}], 2),  # the same words
+        ([{"point": "mon père", "more": "ma mère", "how": "because"}], 2),  # an unknown kind
+        ([dict(TRANSCRIPT_DEVELOPED[0])] * 3, 3),  # the same "more" counts once
+        ("not a list", 2),
+        ([None, "x", 3], 2),
+    ],
+)
+def test_t_development_rungs_need_their_evidence(developed, reached):
+    raw = _all_n_raw(FOUR, T=_entry(["y", "y", "y", "y"], developed=developed))
+    assert ll.apply_guardrails(raw, FOUR, TRANSCRIPT)["T"].reached == reached
+
+
+def test_development_evidence_only_matters_on_ladder_t():
+    raw = _all_n_raw(FOUR, L=_entry(["y", "y", "y", "y"], developed=[]))
+    assert ll.apply_guardrails(raw, FOUR, TRANSCRIPT)["L"].reached == 4
+
+
+def test_the_development_minimums():
+    assert (ll.T_B1_MIN_DEVELOPED, ll.T_B2_MIN_DEVELOPED) == (1, 3)
+    assert ll.DEVELOPMENT_KINDS == {"why", "how", "example", "result", "feeling"}
 
 
 def test_a_null_counts_as_no_except_on_the_a1_rung_of_o_and_f():
@@ -404,7 +455,7 @@ def test_a_missing_or_malformed_levelcheck_raises_so_the_provider_fallback_runs(
 SIX = ("T", "L", "O", "F", "R", "A")
 
 
-def _needs_for(reached, transcript="x", demands=None, **overrides):
+def _needs_for(reached, transcript=DEV_TRANSCRIPT, demands=None, **overrides):
     applies = tuple(reached)
     raw = _raw_from_reached(reached, transcript)
     for ladder, entry in overrides.items():
@@ -620,7 +671,7 @@ def test_version_is_pinned():
 def test_score_ladders_returns_the_levelcheck_the_spec_describes():
     demands = CORPUS["env_05"]
     reached = {"T": 3, "L": 4, "O": 3, "R": 3, "A": 4}
-    result = ll.score_ladders(_raw_from_reached(reached, "x"), demands, "x")
+    result = ll.score_ladders(_raw_from_reached(reached, DEV_TRANSCRIPT), demands, DEV_TRANSCRIPT)
     check = result.level_check
     assert set(check) == {"scheme", "ladderVersion", "applies", "reached", "subScoresByLevel", "needsByLevel"}
     assert check["scheme"] == "ladder-v1" and check["ladderVersion"] == ll.LEARN_LADDER_VERSION
@@ -695,11 +746,20 @@ EXPECTED_OVERALLS = {
 }
 
 
+def sentence_developed(transcript):
+    """Three development pairs from the answer's own sentences (the first as the point), so an expected
+    T rung 3-4 "yes" carries the evidence the guardrail asks for."""
+    sentences = [x for x in re.split(r"(?<=[.!?])\s+", transcript) if x]
+    return [{"point": sentences[0], "more": more, "how": "example"} for more in sentences[1:4]]
+
+
 def _expected_raw(answer):
     """The model reply the pre-registered expectations amount to."""
     raw = {}
     for ladder, expected in answer["ladders"].items():
         raw[ladder] = {"verdicts": expected["verdicts"], "quote": expected.get("evidence", ""), "next": ""}
+        if ladder == "T":
+            raw[ladder]["developed"] = sentence_developed(answer["transcript"])
     return raw
 
 

@@ -117,6 +117,10 @@ def init_sentry(env: dict[str, str] | os._Environ[str] = os.environ) -> bool:
     if sentry_sdk is None or not env.get("SENTRY_DSN", "").strip():
         return False
     sentry_sdk.init(**sentry_options(env))
+    # Set SENTRY_TEST_EVENT=1 on Render to confirm the wiring (one event per
+    # boot), then remove it.
+    if env.get("SENTRY_TEST_EVENT", "").strip() == "1":
+        sentry_sdk.capture_message("Sentry test event from the FastAPI backend (SENTRY_TEST_EVENT=1)", level="error")
     return True
 
 

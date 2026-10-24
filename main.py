@@ -223,6 +223,9 @@ FEEDBACK_DEPTH_ANSWER_TOKENS: dict[FeedbackDepth, int] = {
 # Raised 1,200 -> 1,800 on 2026-10-24: a six-ladder checklist hit 1,712 in Stage 2 and lost
 # ladder A; the T `developed` list adds ~100 more.
 LADDER_CHECK_ANSWER_TOKENS = 1800
+# How long the Groq checklist call may take, Groq's own 429 retry-after waits
+# included (see _call_groq_ladder_check). UNVALIDATED.
+LADDER_CHECK_TIMEOUT_SEC = float(os.getenv("LADDER_CHECK_TIMEOUT_SEC", "60"))
 
 
 FEEDBACK_DEPTH_ITEM_CAPS: dict[FeedbackDepth, dict[str, int]] = {
@@ -2550,7 +2553,14 @@ async def _call_groq_ladder_check(prompt: str) -> dict[str, Any]:
         result["modelUsed"] = f"groq/{GROQ_MODEL}"
         return result
 
-    return await _run_with_retries(f"groq/{GROQ_MODEL} ladder-check", operation)
+    # One attempt with room to wait: the checklist follows the feedback call within
+    # the same minute, so Groq's on_demand per-minute token limit often answers 429
+    # and the SDK waits out its retry-after (17 s + 5 s in a 2026-10-24 local run),
+    # which the default 25 s timeout cut off. The frontend's /v3 budget adds the
+    # same 60 s (apiClient.ts LADDER_CHECK_GRACE_MS); the stream has no client timeout.
+    return await _run_with_retries(
+        f"groq/{GROQ_MODEL} ladder-check", operation, attempts=1, timeout_sec=LADDER_CHECK_TIMEOUT_SEC,
+    )
 
 
 async def _call_gemini_ladder_check(prompt: str) -> dict[str, Any]:

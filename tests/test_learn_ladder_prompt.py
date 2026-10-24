@@ -419,3 +419,16 @@ def test_call_ai_feedback_runs_the_checklist_only_for_a_ladder_request(monkeypat
     asyncio.run(main.call_ai_feedback(_req(model="groq")))
     assert seen[0] == ("feedback", main.build_user_prompt(_req(marking=None, model="groq")))
     assert seen[1] == ("check", "ladder-v1")
+
+
+def test_the_groq_checklist_has_one_long_attempt_to_wait_out_the_per_minute_limit(monkeypatch):
+    seen = {}
+
+    async def fake_run(provider, operation, *, attempts=None, timeout_sec=None):
+        seen.update(provider=provider, attempts=attempts, timeout_sec=timeout_sec)
+        return {"levelCheck": {}}
+
+    monkeypatch.setattr(main, "get_groq", lambda: object())
+    monkeypatch.setattr(main, "_run_with_retries", fake_run)
+    asyncio.run(main._call_groq_ladder_check("p"))
+    assert seen["attempts"] == 1 and seen["timeout_sec"] == main.LADDER_CHECK_TIMEOUT_SEC == 60.0

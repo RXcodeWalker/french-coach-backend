@@ -13,6 +13,7 @@ from typing import Any, Awaitable, Callable
 
 from services.pronunciation.azure_client import AzureQuotaExceeded, assess_pronunciation
 from services.pronunciation.transcript import transcript_is_unusable
+from lib.observability import capture_provider_failure
 
 log = logging.getLogger("uvicorn.error")
 
@@ -130,6 +131,7 @@ async def _assess_with_fallback(
             raise
         except Exception as exc:
             log.warning("Azure pronunciation assessment failed, falling back to Whisper heuristic: %s", exc)
+            capture_provider_failure("azure pronunciation_fallback", exc)
 
     if transcript_is_unusable(heard_text):
         # Nothing recognisable was said (or Whisper hallucinated a subtitle

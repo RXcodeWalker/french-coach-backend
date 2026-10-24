@@ -24,3 +24,8 @@ that references it. The main repo's git history is no safety net here.
   `exam_turn` → `exam_turn_transcribe`, `junior` → `junior_transcribe`, default `transcribe`); any new feature must be seeded in
   `ai_quota_limits` by a migration first (FK), and `lib/guest.py`'s `_AUDIO_FEATURES` must list it so
   guests keep the audio backstop.
+- Sentry lives in `lib/observability.py` (no-op without `SENTRY_DSN`; initialised at the top of
+  `main.py`). 5xx responses are reported by the FastAPI integration; a provider's final failure by
+  `_log_provider_failure` (pass `report=False` for a retry or when raising a 5xx `HTTPException
+  from exc`); a failure inside a stream by `capture_route_error`. `log.error` is a breadcrumb, not
+  an issue. Expected 4xx never report. Request bodies and frame locals are never sent.

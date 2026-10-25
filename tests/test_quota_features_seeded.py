@@ -68,6 +68,7 @@ def test_every_charged_feature_is_seeded():
     features = (
         literals
         | set(main._EXAMINER_QUOTA_FEATURE.values())
+        | set(main._EXAMINER_RETRY_QUOTA_FEATURE.values())
         | set(main._TRANSCRIBE_QUOTA_FEATURE.values())
         | {"exam_pronunciation"}
     )
@@ -75,6 +76,7 @@ def test_every_charged_feature_is_seeded():
     assert not missing, f"quota features with no ai_quota_limits row in any migration: {sorted(missing)}"
     assert {"pronunciation", "transcribe", "feedback", "roleplay_turn", "exam_turn_feedback"} <= features
     assert {"learn_transcribe", "exam_turn_transcribe", "junior_transcribe"} <= features
+    assert {"learn_answer"} <= features
 
 
 def test_the_collector_sees_real_call_sites():

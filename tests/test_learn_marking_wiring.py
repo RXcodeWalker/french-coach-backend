@@ -471,3 +471,111 @@ def test_apply_learn_ladder_scores_unresolved_demands_on_four_ladders(ladder_on)
 )
 def test_demand_check_is_kept_only_in_its_documented_shape(raw, expected):
     assert main._clean_demand_check(raw) == expected
+
+
+# ── Launch limit: 3 AI-marked Learn answers a day (learn_answer) ─────────────
+
+
+@pytest.fixture
+def charges(monkeypatch):
+    seen = []
+
+    async def consume(db, user_id, feature, key):
+        seen.append(("consume", feature, key))
+        return {"granted": True}
+
+    async def release(db, user_id, feature, key):
+        seen.append(("release", feature, key))
+
+    monkeypatch.setattr(main, "consume_ai_quota_or_503", consume)
+    monkeypatch.setattr(main, "release_ai_quota_grant", release)
+    return seen
+
+
+def test_a_learn_answer_charges_learn_answer_and_other_callers_charge_feedback(e2e, ladder_on, monkeypatch, charges):
+    _stub_providers(monkeypatch)
+    e2e.post("/api/feedback/v3", json=_ladder_body(), headers={"Authorization": "Bearer x"})
+    plain = {k: v for k, v in _ladder_body(transcript="Autre réponse.").items() if k != "marking"}
+    e2e.post("/api/feedback/v3", json=plain, headers={"Authorization": "Bearer x"})
+    assert [(op, feature) for op, feature, _ in charges] == [("consume", "learn_answer"), ("consume", "feedback")]
+
+
+def test_the_kill_switch_does_not_lift_the_learn_limit(e2e, monkeypatch, charges):
+    monkeypatch.setenv("LEARN_LADDER_ENABLED", "0")
+    monkeypatch.setattr(main, "_log_coaching_quality", lambda *a, **kw: None)
+    _stub_providers(monkeypatch)
+    e2e.post("/api/feedback/v3", json=_ladder_body(), headers={"Authorization": "Bearer x"})
+    assert [feature for _, feature, _ in charges] == ["learn_answer"]
+
+
+def test_the_stream_charges_learn_answer_for_learn(e2e, ladder_on, monkeypatch, charges):
+    _stub_providers(monkeypatch)
+
+    async def fake_stream(prompt, depth, on_section, **kw):
+        return _v6_reply()
+
+    monkeypatch.setattr(main, "GROQ_API_KEY", "test-key")
+    monkeypatch.setattr(main, "get_groq", lambda: object())
+    monkeypatch.setattr(main, "_stream_groq", fake_stream)
+    _stream_events(e2e.post("/api/feedback/stream", json=_ladder_body(), headers={"Authorization": "Bearer x"}))
+    assert [feature for _, feature, _ in charges] == ["learn_answer"]
+
+
+def test_a_learn_answer_no_provider_could_mark_is_given_back(e2e, ladder_on, monkeypatch, charges):
+    async def down(*a, **kw):
+        raise RuntimeError("down")
+
+    _stub_providers(monkeypatch)
+    monkeypatch.setattr(main, "_call_groq", down)
+    resp = e2e.post("/api/feedback/v3", json=_ladder_body(), headers={"Authorization": "Bearer x"})
+    assert resp.status_code == 502
+    assert [(op, feature) for op, feature, _ in charges] == [("consume", "learn_answer"), ("release", "learn_answer")]
+    assert charges[0][2] == charges[1][2]
+
+
+class _Res:
+    def __init__(self, data=None, count=None):
+        self.data, self.count = data, count
+
+
+class _Query:
+    def __init__(self, table, calls):
+        self.table, self.calls, self.filters = table, calls, {}
+
+    def select(self, *a, **kw):
+        return self
+
+    def eq(self, key, value):
+        self.filters[key] = value
+        return self
+
+    def execute(self):
+        self.calls.append((self.table, dict(self.filters)))
+        if self.table == "ai_quota_limits":
+            return _Res(data=[{"daily_limit": 3}])
+        return _Res(count=2)
+
+
+class _Db:
+    def __init__(self):
+        self.calls = []
+
+    def table(self, name):
+        return _Query(name, self.calls)
+
+
+def test_the_learn_allowance_reads_today_without_charging(e2e, monkeypatch, charges):
+    db = _Db()
+    monkeypatch.setattr(main, "get_supabase", lambda: db)
+    data = e2e.get("/api/learn/allowance", headers={"Authorization": "Bearer x"}).json()
+    assert {k: data[k] for k in ("limit", "used", "remaining")} == {"limit": 3, "used": 2, "remaining": 1}
+    assert data["resetsAt"].endswith("+00:00")
+    grants = [f for t, f in db.calls if t == "ai_usage_grants"][0]
+    assert grants["user_id"] == "user-1" and grants["feature"] == "learn_answer"
+    assert grants["grant_date"] == main.datetime.now(main.timezone.utc).date().isoformat()
+    assert charges == []
+
+
+def test_the_learn_allowance_is_503_without_quota_state(e2e, monkeypatch):
+    monkeypatch.setattr(main, "get_supabase", lambda: None)
+    assert e2e.get("/api/learn/allowance", headers={"Authorization": "Bearer x"}).status_code == 503

@@ -182,8 +182,15 @@ def test_learn_transcript_may_be_longer_than_rail(rec):
     assert _post(_body(transcript="mot " * 1000)).status_code == 200
 
 
-def test_learn_charges_feedback_with_the_documented_key(rec):
+def test_learn_charges_learn_answer_with_the_documented_key(rec):
+    # A Learn answer counts toward Learn's daily answers (learn_answer, 3/day), whatever the style.
     body = _body()
+    assert _post(body).status_code == 200
+    assert rec.consumed == [("user-1", "learn_answer", _expected_key(body))]
+
+
+def test_the_learn_grounding_retry_does_not_use_another_daily_answer(rec):
+    body = _body(attempt=2)
     assert _post(body).status_code == 200
     assert rec.consumed == [("user-1", "feedback", _expected_key(body))]
 
@@ -381,7 +388,7 @@ def test_a_request_without_input_mode_keeps_the_v1_key(rec):
     body = _body()
     assert "inputMode" not in body
     assert _post(body).status_code == 200
-    assert rec.consumed == [("user-1", "feedback", _expected_key(body))]
+    assert rec.consumed == [("user-1", "learn_answer", _expected_key(body))]
 
 
 def test_input_mode_and_context_are_rendered_only_inside_the_boundary(rec):

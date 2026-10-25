@@ -109,6 +109,12 @@ def consume_guest_quota(guest_id: str, feature: str, idempotency_key: str) -> di
         return {"granted": True, "replayed": False, "used": len(keys), "limit": limit}
 
 
+def guest_usage(guest_id: str, feature: str) -> tuple[int, int]:
+    """(used, limit) for a guest's feature, without charging anything."""
+    with _lock:
+        return len(_grants.get((guest_id, feature), set())), _limit_for(feature)
+
+
 def release_guest_grant(guest_id: str, feature: str, idempotency_key: str) -> None:
     with _lock:
         _grants.get((guest_id, feature), set()).discard(idempotency_key)

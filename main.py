@@ -40,7 +40,7 @@ import time
 import traceback
 import unicodedata
 import uuid
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from email.message import EmailMessage
 from pathlib import Path
 from typing import Annotated, Any, Literal
@@ -52,7 +52,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 
-from lib.guest import verify_user_or_guest
+from lib.guest import guest_usage, is_guest, verify_user_or_guest
 from lib.ai_quota import QuotaDenied, consume_ai_quota_or_503, release_ai_quota_grant
 from lib.consent import require_speaking_consent
 from lib.auth import require_admin, verify_supabase_jwt
@@ -3453,7 +3453,12 @@ _EXAMINER_PROMPTS_PATH = Path(__file__).resolve().parent / "data" / "examiner_fe
 _examiner_prompts: dict[str, Any] | None = None
 
 _EXAMINER_TRANSCRIPT_MAX: dict[str, int] = {"learn": 8000, "rail": 2000}
-_EXAMINER_QUOTA_FEATURE: dict[str, str] = {"learn": "feedback", "rail": "exam_turn_feedback"}
+# A Learn answer in the Examiner style counts toward Learn's daily answers too
+# (learn_answer, see _consume_feedback_quota) — on its first attempt only: the
+# grounding retry (attempt 2) is the same answer asked again, so it stays on
+# `feedback` (_examiner_quota_feature).
+_EXAMINER_QUOTA_FEATURE: dict[str, str] = {"learn": "learn_answer", "rail": "exam_turn_feedback"}
+_EXAMINER_RETRY_QUOTA_FEATURE: dict[str, str] = {"learn": "feedback", "rail": "exam_turn_feedback"}
 # Hard ceiling on a template's own maxOutputTokens, so a generated file can
 # never raise the provider budget above what the old relay used.
 _EXAMINER_MAX_OUTPUT_TOKENS_CEILING = 1500
@@ -3690,7 +3695,7 @@ async def _examiner_feedback_route(payload: Any, user_id: str) -> dict[str, Any]
     if hit is not None:
         return copy.deepcopy(hit)
 
-    feature = _EXAMINER_QUOTA_FEATURE[req.profile]
+    feature = (_EXAMINER_RETRY_QUOTA_FEATURE if req.attempt == 2 else _EXAMINER_QUOTA_FEATURE)[req.profile]
     db = get_supabase()
     grant = await consume_ai_quota_or_503(db, user_id, feature, idempotency_key)
     if grant.get("replayed"):
@@ -3938,6 +3943,18 @@ def _feedback_provider_name(payload: dict[str, Any]) -> str:
     return "offline"
 
 
+async def _consume_feedback_quota(user_id: str, idempotency_key: str, *, learn: bool) -> dict[str, Any]:
+    """Charge one AI feedback answer. A Learn answer — the only caller that names
+    a `marking` scheme — charges `learn_answer`, Learn's own daily allowance
+    (3 per account per day, owner decision 2026-10-24; the ai_quota_limits row
+    is the number). Every other caller keeps `feedback`. Learn is recognised by
+    the field it sent, not by the kill switch's verdict, so switching the ladder
+    off does not lift the Learn limit."""
+    if learn:
+        return await consume_ai_quota_or_503(get_supabase(), user_id, "learn_answer", idempotency_key)
+    return await consume_ai_quota_or_503(get_supabase(), user_id, "feedback", idempotency_key)
+
+
 async def _feedback_impl(
     question: str,
     transcript: str,
@@ -4059,10 +4076,18 @@ async def _feedback_impl(
             # cache) so identical retries of the same attempt are not charged
             # twice.
             idempotency_key = cache_key or _request_cache_key(req, _cache_id)
-            await consume_ai_quota_or_503(get_supabase(), user_id, "feedback", idempotency_key)
+            learn = marking is not None
+            await _consume_feedback_quota(user_id, idempotency_key, learn=learn)
 
             t_start = time.monotonic()
-            fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
+            try:
+                fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
+            except HTTPException:
+                # Every provider failed: a Learn answer that was never marked does
+                # not use up one of the learner's few daily answers.
+                if learn:
+                    await release_ai_quota_grant(get_supabase(), user_id, "learn_answer", idempotency_key)
+                raise
             latency_ms = (time.monotonic() - t_start) * 1000
             _log_feedback_latency(
                 fb.get("modelUsed", "unknown"),
@@ -4352,6 +4377,45 @@ async def _parse_feedback_request(request: Request) -> tuple[
     )
 
 
+LEARN_ANSWER_FEATURE = "learn_answer"
+
+
+def _utc_day_end() -> str:
+    now = datetime.now(timezone.utc)
+    return (datetime(now.year, now.month, now.day, tzinfo=timezone.utc) + timedelta(days=1)).isoformat()
+
+
+@app.get("/api/learn/allowance")
+@rate_limit("60/minute")
+async def learn_allowance(request: Request, authorization: str | None = Header(None)) -> dict[str, Any]:
+    """How many AI-marked Learn answers this account has left today (UTC day),
+    read without charging anything: {limit, used, remaining, resetsAt}. The
+    charge itself is consume_ai_quota's (learn_answer); this only lets the app
+    size a session and say "come back tomorrow" before a learner records."""
+    user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
+    if is_guest(user_id):
+        used, limit = guest_usage(user_id, LEARN_ANSWER_FEATURE)
+    else:
+        db = get_supabase()
+        if db is None:
+            raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"})
+        today = datetime.now(timezone.utc).date().isoformat()
+        try:
+            limit_res = await asyncio.to_thread(
+                lambda: db.table("ai_quota_limits").select("daily_limit").eq("feature", LEARN_ANSWER_FEATURE).execute()
+            )
+            used_res = await asyncio.to_thread(
+                lambda: db.table("ai_usage_grants").select("id", count="exact")
+                .eq("user_id", user_id).eq("feature", LEARN_ANSWER_FEATURE).eq("grant_date", today).execute()
+            )
+            limit = int((limit_res.data or [{}])[0]["daily_limit"])
+            used = int(used_res.count or 0)
+        except Exception as exc:
+            log.warning("learn allowance lookup failed: %r", exc)
+            raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"}) from exc
+    return {"limit": limit, "used": used, "remaining": max(0, limit - used), "resetsAt": _utc_day_end()}
+
+
 @app.post("/api/feedback/stream")
 @rate_limit("20/minute")
 async def feedback_stream(request: Request, authorization: str | None = Header(None)) -> StreamingResponse:
@@ -4470,7 +4534,7 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
                 # the existing "No transcript available" pattern above.
                 idempotency_key = cache_key or _request_cache_key(req, cache_id)
                 try:
-                    await consume_ai_quota_or_503(get_supabase(), user_id, "feedback", idempotency_key)
+                    await _consume_feedback_quota(user_id, idempotency_key, learn=marking is not None)
                 except QuotaDenied as e:
                     detail = e.detail if isinstance(e.detail, dict) else {"error": "denied"}
                     yield json.dumps({"type": "error", "data": detail}) + "\n"

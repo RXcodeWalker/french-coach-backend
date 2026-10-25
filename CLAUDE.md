@@ -28,3 +28,8 @@ that references it. The main repo's git history is no safety net here.
   8,000 tokens-per-minute limit, before the model runs. Check that sum before raising a Groq token budget:
   the one-call Learn ladder prompt (`learn-prompt-v9`) reached ~8,150 on six-ladder questions, one reason the
   ladder became a separate small checklist call (`LADDER_CHECK_ANSWER_TOKENS`, ~3,500 per request).
+- Sentry lives in `lib/observability.py` (no-op without `SENTRY_DSN`; initialised at the top of
+  `main.py`). 5xx responses are reported by the FastAPI integration; a provider's final failure by
+  `_log_provider_failure` (pass `report=False` for a retry or when raising a 5xx `HTTPException
+  from exc`); a failure inside a stream by `capture_route_error`. `log.error` is a breadcrumb, not
+  an issue. Expected 4xx never report. Request bodies and frame locals are never sent.

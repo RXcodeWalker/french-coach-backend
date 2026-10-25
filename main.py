@@ -82,6 +82,10 @@ except Exception:  # pragma: no cover - google libs may be absent in local dev
 
 load_dotenv()
 
+# Sentry first, so it sees everything below (no-op without SENTRY_DSN).
+from lib.observability import capture_provider_failure, capture_route_error, init_sentry, tag_request_route
+init_sentry()
+
 log = logging.getLogger("french-coach")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 
@@ -507,6 +511,7 @@ if _RATE_LIMIT_AVAILABLE:
 
 @app.exception_handler(Exception)
 async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    capture_route_error(exc, route=request.url.path, stage="unhandled")
     log.error(
         "Unhandled error on %s %s: %s\n%s",
         request.method,
@@ -528,6 +533,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONR
 async def _observability_middleware(request: Request, call_next):
     req_id = secrets.token_hex(8)
     request.state.request_id = req_id
+    tag_request_route(request.url.path)
     request.state.obs_provider = None
     request.state.obs_cached = False
     request.state.obs_extra = None
@@ -2795,7 +2801,13 @@ def _log_provider_failure(
     exc: Exception,
     attempt: int | None = None,
     request_id: str | None = None,
+    *,
+    report: bool = True,
 ) -> None:
+    # report=False for a retry that will be attempted again, or when the caller
+    # raises a 5xx HTTPException from `exc` (Sentry reports that, cause included).
+    if report:
+        capture_provider_failure(provider, exc)
     attempt_part = f" attempt={attempt}" if attempt is not None else ""
     rid_part = f" request_id={request_id}" if request_id else ""
     log.error(
@@ -2896,8 +2908,9 @@ async def _run_with_retries(
             return await asyncio.wait_for(operation(), timeout=timeout_sec)
         except Exception as exc:
             last_exc = exc
-            _log_provider_failure(provider, exc, attempt)
-            if attempt >= attempts or not _is_retryable(exc):
+            final = attempt >= attempts or not _is_retryable(exc)
+            _log_provider_failure(provider, exc, attempt, report=final)
+            if final:
                 break
             base_delay = _RETRY_DELAYS[min(attempt - 1, len(_RETRY_DELAYS) - 1)]
             delay = base_delay + random.uniform(0, base_delay * 0.5)
@@ -4230,7 +4243,7 @@ async def feedback(request: Request, authorization: str | None = Header(None)) -
         # engine's failure and falls through the chain to the client's own
         # coachService.evaluate, so an honest 500 here is a strict
         # improvement over a plausible-looking but ungraded response.
-        _log_provider_failure("feedback_endpoint_unhandled", exc, request_id=getattr(request.state, "request_id", None))
+        _log_provider_failure("feedback_endpoint_unhandled", exc, request_id=getattr(request.state, "request_id", None), report=False)
         raise HTTPException(status_code=500, detail=f"Feedback generation failed — {exc.__class__.__name__}") from exc
 
 
@@ -4545,6 +4558,8 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
             # now the terminal event; the client's streamFeedback treats it as
             # fatal and falls through to its own offline evaluator
             # (coachService.evaluate), exactly once.
+            # The response is already a 200 stream, so nothing else reports this.
+            capture_route_error(exc, route="/api/feedback/stream", stage="stream")
             log.error("feedback/stream error: %s\n%s", repr(exc), traceback.format_exc())
             yield json.dumps({"type": "error", "data": {"message": str(exc)}}) + "\n"
         finally:
@@ -4971,7 +4986,7 @@ def _require_supabase():
     try:
         db = get_supabase()
     except Exception as exc:
-        _log_provider_failure("supabase-init", exc)
+        _log_provider_failure("supabase-init", exc, report=False)
         raise HTTPException(status_code=503, detail="Database initialization failed") from exc
     if db is None:
         raise HTTPException(status_code=503, detail="Database not configured")

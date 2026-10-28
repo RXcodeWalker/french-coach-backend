@@ -33,3 +33,9 @@ that references it. The main repo's git history is no safety net here.
   `_log_provider_failure` (pass `report=False` for a retry or when raising a 5xx `HTTPException
   from exc`); a failure inside a stream by `capture_route_error`. `log.error` is a breadcrumb, not
   an issue. Expected 4xx never report. Request bodies and frame locals are never sent.
+- `POST /api/native-voice` (`routers/native_voice.py`, Pronunciation Lab Stage 4b) is the only place Azure
+  **text-to-speech** runs at request time: it writes an AI-corrected sentence once into the public `tts-audio`
+  bucket at `lib/voice_key.py`'s path — a port of the main repo's `src/services/tts/voiceKey.ts`; change neither
+  without the other (vectors in `data/tts/voice_key_vectors.json`, checked by both repos' tests). It charges
+  `native_voice` (20/day) and meters characters in `azure_tts_usage` against `azure_tts_budget.cap_characters`
+  (50k/month — F0's 500k is shared with the "Record voices" workflow); a file already in the bucket costs nothing.

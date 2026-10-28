@@ -5907,6 +5907,17 @@ _configure_exam_pronunciation(
 )
 app.include_router(_exam_pronunciation_router)
 
+# ── Native voice for AI-corrected sentences (Pronunciation Lab Stage 4b) ────
+# Synthesises a sentence once with Azure TTS into the public tts-audio bucket
+# (write-through, metered); the app then plays it like any recorded line.
+from routers.native_voice import (
+    router as _native_voice_router,
+    set_rate_limiter as _set_native_voice_rate_limiter,
+)
+
+app.include_router(_native_voice_router)
+_set_native_voice_rate_limiter(rate_limit, app)
+
 
 # ── One-time admin bootstrap ──────────────────────────────────────────────────
 # Grants the admin role via service-role app_metadata. This is a break-glass

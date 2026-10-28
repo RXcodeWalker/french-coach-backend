@@ -1,0 +1,52 @@
+{
+  "_comment": "Pinned voice-key vectors shared with the main repo's src/services/tts/voiceKey.ts. Both repos' tests must compute exactly these paths; change only with a VOICE_KEY_VERSION bump.",
+  "version": "v2",
+  "voice": "henri",
+  "vectors": [
+    {
+      "text": "Bonjour ! Comment \u00e7a va ? Es-tu pr\u00eat ? On va commencer.",
+      "normalized": "Bonjour ! Comment \u00e7a va ? Es-tu pr\u00eat ? On va commencer.",
+      "path": "v2/henri/2363d401f53d9816d3b069c74953fd5a.mp3"
+    },
+    {
+      "text": "Bonjour\u00a0! \u00c7a va\u202f?",
+      "normalized": "Bonjour ! \u00c7a va ?",
+      "path": "v2/henri/425f2e8bd397ca01f9102ad0d1d895cd.mp3"
+    },
+    {
+      "text": "  Tu  aimes\tle\n\nsport ?  ",
+      "normalized": "Tu aimes le sport ?",
+      "path": "v2/henri/a6ac09f4b321e996357532e9ffad7927.mp3"
+    },
+    {
+      "text": "pr\u00eate",
+      "normalized": "pr\u00eate",
+      "path": "v2/henri/4f9afbae2bed7d2bbb9f5d98d870b847.mp3"
+    },
+    {
+      "text": "pre\u0302te",
+      "normalized": "pr\u00eate",
+      "path": "v2/henri/4f9afbae2bed7d2bbb9f5d98d870b847.mp3"
+    },
+    {
+      "text": "J'aime l\u2019\u00e9cole\u2026",
+      "normalized": "J'aime l\u2019\u00e9cole\u2026",
+      "path": "v2/henri/19a26c9d215f08ace34043f461d257d6.mp3"
+    },
+    {
+      "text": "\ufeffLe week-end dernier, je suis all\u00e9 au cin\u00e9ma avec mes amis.\u3000",
+      "normalized": "Le week-end dernier, je suis all\u00e9 au cin\u00e9ma avec mes amis.",
+      "path": "v2/henri/75901fd28b58e842799f13b440ea4d41.mp3"
+    },
+    {
+      "text": "les enfants",
+      "normalized": "les enfants",
+      "path": "v2/henri/af8bb7e31b10518d103ebc3c330eed8e.mp3"
+    },
+    {
+      "text": "Il\u001fest l\u00e0.",
+      "normalized": "Il\u001fest l\u00e0.",
+      "path": "v2/henri/aef962080644379664a226c0d31ee9eb.mp3"
+    }
+  ]
+}

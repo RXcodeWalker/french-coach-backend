@@ -77,7 +77,7 @@ def test_every_charged_feature_is_seeded():
     assert {"pronunciation", "transcribe", "feedback", "roleplay_turn", "exam_turn_feedback"} <= features
     assert {"learn_transcribe", "exam_turn_transcribe", "junior_transcribe"} <= features
     assert {"learn_answer"} <= features
-    assert {"native_voice"} <= features
+    assert {"native_voice", "pronunciation_lab"} <= features
 
 
 def test_the_collector_sees_real_call_sites():

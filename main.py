@@ -4416,6 +4416,40 @@ async def learn_allowance(request: Request, authorization: str | None = Header(N
     return {"limit": limit, "used": used, "remaining": max(0, limit - used), "resetsAt": _utc_day_end()}
 
 
+PRONUNCIATION_LAB_FEATURE = "pronunciation_lab"
+
+
+@app.get("/api/pronunciation/allowance")
+@rate_limit("60/minute")
+async def pronunciation_lab_allowance(request: Request, authorization: str | None = Header(None)) -> dict[str, Any]:
+    """How many Pronunciation Lab takes this account has left today (UTC day),
+    read without charging anything: {limit, used, remaining, resetsAt}. The
+    charge itself is POST /api/pronunciation's (`pronunciation_lab`, scripted
+    takes naming source=lab); this only lets the Lab say "N checks left"."""
+    user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
+    if is_guest(user_id):
+        used, limit = guest_usage(user_id, PRONUNCIATION_LAB_FEATURE)
+    else:
+        db = get_supabase()
+        if db is None:
+            raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"})
+        today = datetime.now(timezone.utc).date().isoformat()
+        try:
+            limit_res = await asyncio.to_thread(
+                lambda: db.table("ai_quota_limits").select("daily_limit").eq("feature", PRONUNCIATION_LAB_FEATURE).execute()
+            )
+            used_res = await asyncio.to_thread(
+                lambda: db.table("ai_usage_grants").select("id", count="exact")
+                .eq("user_id", user_id).eq("feature", PRONUNCIATION_LAB_FEATURE).eq("grant_date", today).execute()
+            )
+            limit = int((limit_res.data or [{}])[0]["daily_limit"])
+            used = int(used_res.count or 0)
+        except Exception as exc:
+            log.warning("pronunciation lab allowance lookup failed: %r", exc)
+            raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"}) from exc
+    return {"limit": limit, "used": used, "remaining": max(0, limit - used), "resetsAt": _utc_day_end()}
+
+
 @app.post("/api/feedback/stream")
 @rate_limit("20/minute")
 async def feedback_stream(request: Request, authorization: str | None = Header(None)) -> StreamingResponse:

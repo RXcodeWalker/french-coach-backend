@@ -1379,3 +1379,60 @@ def test_ledger_source_attribution(monkeypatch, form, expected):
 def test_audio_ms_comes_from_the_wav_header():
     assert _pron_router._audio_ms(_wav_bytes(1.25)) == 1250
     assert _pron_router._audio_ms(b"webm") is None
+
+
+# ── Pronunciation Lab allowance (plan Stage 7, owner D3) ─────────────────────
+
+
+def test_a_lab_take_charges_pronunciation_lab_and_other_callers_charge_pronunciation(monkeypatch):
+    quota, _ = _metered_setup(monkeypatch, azure=False)
+    client = TestClient(_build_app())
+    assert _post_wav(client, source="lab").status_code == 200
+    assert _post_wav(client, seconds=2.5, source="learn").status_code == 200
+    assert _post_wav(client, seconds=3.0).status_code == 200  # no source: inferred, never the Lab's allowance
+    assert [f for f, _ in quota.consumed] == ["pronunciation_lab", "pronunciation", "pronunciation"]
+
+
+def test_a_freeform_request_naming_lab_is_not_a_lab_take(monkeypatch):
+    quota, _ = _metered_setup(monkeypatch, azure=False)
+    _post_wav(TestClient(_build_app()), source="lab", mode="freeform")
+    assert [f for f, _ in quota.consumed] == ["pronunciation"]
+
+
+def test_a_failed_lab_take_gives_the_lab_allowance_back(monkeypatch):
+    quota, _ = _metered_setup(monkeypatch, azure=False)
+
+    async def _boom(**kwargs):
+        raise RuntimeError("pipeline bug")
+
+    monkeypatch.setattr(_pron_router, "assess_with_fallback", _boom)
+    resp = _post_wav(TestClient(_build_app(), raise_server_exceptions=False), source="lab")
+    assert resp.status_code == 500
+    assert quota.released == quota.consumed and quota.consumed[0][0] == "pronunciation_lab"
+
+
+def test_a_lab_take_nobody_assessed_gives_the_lab_allowance_back(monkeypatch):
+    quota, _ = _metered_setup(monkeypatch, azure=False)
+
+    async def _no_verdict(**kwargs):
+        return {"score": None, "transcript": "", "issues": [], "words": [], "provider": "whisper-heuristic",
+                "subScores": None, "couldNotAssess": True, "couldNotAssessReason": "no_speech_recognized"}
+
+    monkeypatch.setattr(_pron_router, "assess_with_fallback", _no_verdict)
+    assert _post_wav(TestClient(_build_app()), source="lab").status_code == 200
+    assert quota.released == quota.consumed and quota.consumed[0][0] == "pronunciation_lab"
+
+
+def test_a_lab_replay_of_the_same_audio_costs_nothing(monkeypatch):
+    quota, _ = _metered_setup(monkeypatch, azure=True, db=_LedgerDb(), azure_handler=_azure_ok)
+    client = TestClient(_build_app())
+    form = {"target_text": "Un bon vin blanc.", "source": "lab"}
+    audio = _wav_bytes(2.0) + b"\x01\x02"
+    for _ in range(2):
+        r = client.post(
+            "/api/pronunciation", data=form,
+            headers={"Authorization": f"Bearer {_fake_jwt(sub='22222222-2222-2222-2222-222222222222')}"},
+            files={"audio": ("recording.wav", audio, "audio/wav")},
+        )
+        assert r.status_code == 200
+    assert [f for f, _ in quota.consumed] == ["pronunciation_lab"]

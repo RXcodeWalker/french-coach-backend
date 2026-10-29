@@ -39,3 +39,8 @@ that references it. The main repo's git history is no safety net here.
   without the other (vectors in `data/tts/voice_key_vectors.json`, checked by both repos' tests). It charges
   `native_voice` (20/day) and meters characters in `azure_tts_usage` against `azure_tts_budget.cap_characters`
   (50k/month — F0's 500k is shared with the "Record voices" workflow); a file already in the bucket costs nothing.
+- `POST /api/pronunciation` charges `pronunciation_lab` (30/day, migration `20261029090000`) instead of `pronunciation`
+  when the client sends `source=lab` on a **scripted** take (Pronunciation Lab: sentence takes, focus-word drills, monthly
+  check); freeform and every other source keep `pronunciation`. Cache-miss only, released on failure/no-verdict, and the
+  feature names stay string literals at the call sites (`test_quota_features_seeded` collects them). Read-only
+  `GET /api/pronunciation/allowance` (in `main.py`, beside `/api/learn/allowance`) → `{limit, used, remaining, resetsAt}`.

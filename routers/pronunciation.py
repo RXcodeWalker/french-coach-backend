@@ -76,6 +76,19 @@ def _ledger_source(source: str, mode: str, coaching: str) -> str:
     return "learn" if mode == "freeform" else "lab"
 
 
+def _is_lab_take(source: str, mode: str) -> bool:
+    """A Pronunciation Lab take: the client names source=lab and the target is a
+    real sentence (scripted). Freeform is never a Lab take."""
+    return source == "lab" and mode == "scripted"
+
+
+async def _release_assessment_grant(user_id: str, lab_take: bool, cache_key: str) -> None:
+    if lab_take:
+        await release_ai_quota_grant(_db(), user_id, "pronunciation_lab", cache_key)
+    else:
+        await release_ai_quota_grant(_db(), user_id, "pronunciation", cache_key)
+
+
 def _whisper_duration_seconds(whisper_data: dict[str, Any]) -> float | None:
     ends = [seg.get("end") for seg in whisper_data.get("segments") or [] if isinstance(seg.get("end"), (int, float))]
     ends += [w.get("end") for w in whisper_data.get("words") or [] if isinstance(w.get("end"), (int, float))]
@@ -444,7 +457,15 @@ async def pronunciation_evaluate(
             # Quota consumed only on the cache-miss branch (plan correction
             # #6), same as main.py's /api/feedback — a cache hit never calls
             # Azure, so it correctly never charges quota either.
-            await consume_ai_quota_or_503(_db(), user_id, "pronunciation", cache_key)
+            # The Lab's scripted takes have their own daily allowance (plan
+            # Stage 7, owner D3); every other caller keeps `pronunciation`.
+            # Literal feature names on purpose: test_quota_features_seeded
+            # collects them from the call sites.
+            lab_take = _is_lab_take(source, mode)
+            if lab_take:
+                await consume_ai_quota_or_503(_db(), user_id, "pronunciation_lab", cache_key)
+            else:
+                await consume_ai_quota_or_503(_db(), user_id, "pronunciation", cache_key)
             try:
                 result = await _assess_metered(
                     user_id=user_id,
@@ -461,14 +482,14 @@ async def pronunciation_evaluate(
                     run_with_retries=_run_with_retries_fn,
                 )
             except BaseException:
-                await release_ai_quota_grant(_db(), user_id, "pronunciation", cache_key)
+                await _release_assessment_grant(user_id, lab_take, cache_key)
                 raise
             # Release-on-failure (exam-pronunciation plan §4): the learner got
             # no assessment and Azure never processed the audio, so nothing
             # was spent. An Azure couldNotAssess (silence, no match) was
             # processed and billed, so it stays charged.
             if result.get("couldNotAssess") and result.get("provider") != "azure":
-                await release_ai_quota_grant(_db(), user_id, "pronunciation", cache_key)
+                await _release_assessment_grant(user_id, lab_take, cache_key)
             was_cached = False
             if _is_cacheable(result):
                 await _audio_cache.set(cache_key, result)

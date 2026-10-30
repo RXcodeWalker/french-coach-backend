@@ -44,3 +44,7 @@ that references it. The main repo's git history is no safety net here.
   check); freeform and every other source keep `pronunciation`. Cache-miss only, released on failure/no-verdict, and the
   feature names stay string literals at the call sites (`test_quota_features_seeded` collects them). Read-only
   `GET /api/pronunciation/allowance` (in `main.py`, beside `/api/learn/allowance`) → `{limit, used, remaining, resetsAt}`.
+- `scripts/probe_lab_calibration.py` (+ pure helpers in `services/pronunciation/lab_calibration.py`) records the Pronunciation Lab's
+  §7 calibration fixtures: the production **scripted** Azure request on real recordings, metered as ledger source `probe`, written to
+  `tests/fixtures/pronunciation_lab_calibration/` (no audio). That folder is the evidence the main repo's `gate.test.ts` reads, so only
+  real, honestly recorded sets belong in it — use `--out-dir` for practice or synthetic runs.

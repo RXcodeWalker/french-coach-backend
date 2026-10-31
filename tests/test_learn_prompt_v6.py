@@ -27,11 +27,28 @@ import main
 # SYSTEM_PROMPT is half of what LEARN_PROMPT_VERSION versions; the user-prompt
 # half is pinned in test_learn_demands.py. Bump LEARN_PROMPT_VERSION and this
 # hash together.
-SYSTEM_PROMPT_HASH = "5f73d750bd22cb2098151dcc551df1194e123fe52caee18b9cce3510b709a243"
+SYSTEM_PROMPT_HASH = "0a259ffdad9e0191789f0e06cc9da3cd8a09fe24f80e2390035f798bd02594d6"
 
 
-def test_prompt_version_is_v6():
-    assert main.LEARN_PROMPT_VERSION == "learn-prompt-v6"
+def test_prompt_version():
+    # v10 (2026-10-31) kept everything v6 asks for and added SELF-CORRECTION and VOCABULARY.
+    assert main.LEARN_PROMPT_VERSION == "learn-prompt-v10"
+
+
+def test_system_prompt_does_not_count_a_self_corrected_slip():
+    p = main.SYSTEM_PROMPT
+    assert "SELF-CORRECTION" in p
+    assert "« dans ton école, désolé, dans mon école »" in p
+    assert "that is NOT an error" in p
+    assert "do not lower any score for it" in p
+
+
+def test_system_prompt_keeps_vocabulary_upgrades_at_the_learners_level():
+    p = main.SYSTEM_PROMPT
+    assert "VOCABULARY —" in p
+    assert "realistically say" in p
+    assert "anything above\nB1" in p or "anything above B1" in p.replace("\n", " ")
+    assert "aisément" in p
 
 
 def test_system_prompt_snapshot():

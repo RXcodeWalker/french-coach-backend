@@ -208,7 +208,7 @@ _VALID_FEEDBACK_DEPTHS: frozenset[str] = frozenset({"brief", "standard", "deep"}
 # marking smoke run cut a 4-error answer's feedback off at exactly 2,560,
 # losing rephrase, encouragement and followUpQuestion (it had used 2,401 on the
 # run before). Raised to 2,500 (3,012 with the reserve) on the owner's OK; a
-# reply that fits already is unchanged. prompt (~3,300) + max_tokens stays well
+# reply that fits already is unchanged. prompt (~3,300; ~3,600 since v10) + max_tokens stays well
 # under the 8,000 a Groq on_demand request may ask for.
 # brief was 1,400 (1,912 with the reserve) until 2026-10-24, when a brief reply on
 # a strong answer was cut off at exactly 1,912 in the Learn marking gate run.
@@ -1789,7 +1789,11 @@ JSON schema:
 # DETERMINISTIC SIGNALS rendering changes in a way that changes the rendered
 # prompt — mirrors src/domain/igcse/judgement/version.ts's SCORING_PROMPT_VERSION
 # discipline; paired with a snapshot test in backend/tests/.
-LEARN_PROMPT_VERSION = "learn-prompt-v6"
+# learn-prompt-v10 (2026-10-31, owner report): SELF-CORRECTION (a slip the student
+# fixes straight away is not an error) and VOCABULARY (upgrades a learner at the
+# target level would really say, not « aisément » / « recherches approfondies »).
+# v7-v9 were used by the retired one-call ladder prompts, hence the jump.
+LEARN_PROMPT_VERSION = "learn-prompt-v10"
 
 # The ladder scheme's level-checklist prompt (SYSTEM_PROMPT_LADDER_CHECK +
 # build_ladder_check_prompt), the second call made only when a request opts in
@@ -1838,6 +1842,12 @@ a correct form as a mistake; if the French is correct, report none.
 Each fix: quote the exact student words → the FULL corrected French phrase (the quoted words
 rewritten correctly, e.g. « je suis allé », not just « suis ») → ONE sentence saying why → a tip.
 
+SELF-CORRECTION — this is speech, so students restart. When the student says something wrong and
+then corrects it themselves straight away (« dans ton école, désolé, dans mon école »; often after
+« désolé », « pardon », « non » or « je veux dire »), that is NOT an error: do not list it in grammar
+or corrections[], do not lower any score for it, and do not make it biggest_opportunity. An examiner
+credits what the candidate ends up saying, and a quick self-correction shows they know the rule.
+
 STRENGTHS — strengths[] holds 2-4 real strengths of THIS answer, strongest first (fewer only if
 the answer genuinely has fewer; never pad). Each quotes the student's exact words verbatim in
 "quote" and says in "why", in one sentence, what those words show. best_moment restates the
@@ -1847,6 +1857,13 @@ TEACHER VOICE — you are the student's own French teacher, talking to them. Wri
 explanation in the second person, addressed to the student ("You said « … » — …"); never write
 "the student". encouragement is your OPENING LINE: 1-2 sentences that quote something specific
 the student said, in « », before you go through the fixes. Do not name yourself or the student.
+
+VOCABULARY — every vocabulary upgrade must be something THIS student could realistically say in
+their next answer at the target level: a common, everyday word or phrase from the IGCSE topics,
+natural in speech, one small step above the word they used (« c'est bien » → « c'est pratique »,
+« des choses » → « des documents »). Never offer rare, formal or literary words, or anything above
+B1 (not « aisément », « approfondi », « néanmoins »). If the student's word is already right for
+their level, leave it out: fewer good upgrades, or none, beat one they would never say.
 
 COACHING QUALITY GATE — SELF-VALIDATE before returning. Reject and rewrite any item that:
 • Could apply to almost any student answer
@@ -1942,7 +1959,7 @@ JSON SCHEMA (return exactly this shape, no extra keys):
   "vocabulary": [
     {
       "basic": "<word the student actually used>",
-      "upgrade": "<better alternative>",
+      "upgrade": "<a better word or phrase they could really say at the target level — see VOCABULARY>",
       "example": "<natural French sentence using the upgrade>",
       "nuance": "<optional: one sentence on the nuance difference>"
     }

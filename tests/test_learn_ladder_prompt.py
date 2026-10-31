@@ -65,8 +65,8 @@ FB = _fb("J'ai allé")
 
 def test_the_checklist_has_its_own_version_and_v6_keeps_its_own():
     assert main.LEARN_LADDER_PROMPT_VERSION == "ladder-check-v3"
-    assert main.LEARN_PROMPT_VERSION == "learn-prompt-v6"
-    assert main.LEARN_LADDER_REPLY_VERSION == "learn-prompt-v6+ladder-check-v3"
+    assert main.LEARN_PROMPT_VERSION == "learn-prompt-v10"
+    assert main.LEARN_LADDER_REPLY_VERSION == "learn-prompt-v10+ladder-check-v3"
 
 
 def test_checklist_system_prompt_snapshot():

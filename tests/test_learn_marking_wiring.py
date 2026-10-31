@@ -279,7 +279,7 @@ def _assert_scored_ladder_reply(data):
     assert data["fluency"] == exam["fluency"]
     assert data["cefrLevel"] == expected.cefr_level
     assert data["answered_the_question"] is True
-    assert data["promptVersion"] == "learn-prompt-v6+ladder-check-v3"
+    assert data["promptVersion"] == "learn-prompt-v10+ladder-check-v3"
     assert data["demandCheck"] == {"met": False, "quote": ""}
     assert data["best_moment"] == _v6_reply()["best_moment"]  # the feedback is v6's
     assert data.get("providerStatus") != "malformed_response"
@@ -359,7 +359,7 @@ def test_no_usable_checklist_keeps_the_feedback_unscored_by_the_ladder_and_uncac
         assert "levelCheck" not in data
         assert data["scores"] == {"comm": 6, "know": 6, "acc": 6}
         assert data["ladderCheckError"]
-        assert data["promptVersion"] == "learn-prompt-v6"
+        assert data["promptVersion"] == "learn-prompt-v10"
     assert calls.count(("groq", "feedback")) == 2
 
 

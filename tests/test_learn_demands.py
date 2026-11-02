@@ -48,7 +48,7 @@ def test_learn_demands_corpus_loaded():
     import main
 
     assert main.LEARN_DEMANDS_VERSION != ""
-    assert len(main.LEARN_DEMANDS_BY_QUESTION_ID) == 668  # every question; mirrors questions.demands.test.ts
+    assert len(main.LEARN_DEMANDS_BY_QUESTION_ID) == 828  # every question; mirrors questions.demands.test.ts
     assert "fam_01" in main.LEARN_DEMANDS_BY_QUESTION_ID
 
 

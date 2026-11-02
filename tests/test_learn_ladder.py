@@ -128,7 +128,7 @@ def test_f_parts_only_the_parts_the_question_asks_for():
 
 
 def test_every_question_in_the_corpus_gets_a_consistent_ladder_set():
-    assert len(CORPUS) == 668
+    assert len(CORPUS) == 828
     for question_id, demands in CORPUS.items():
         applies = ll.applicable_ladders(demands)
         assert applies[:2] == ("T", "L") and applies[-2:] == ("R", "A"), question_id
@@ -564,7 +564,7 @@ def test_a_bad_example_never_changes_a_score():
     assert plain.level_check["subScoresByLevel"] == with_example.level_check["subScoresByLevel"]
 
 
-# ── Gate G14: only what the question asks, over all 668 questions ───────────────────────────
+# ── Gate G14: only what the question asks, over all 828 questions ───────────────────────────
 
 # Words that would ask for something a ladder may not ask for. Checked on the learner's sentences.
 _ASKS_OPINION = ("opinion", "think", "prefer", "reason", "because", "why", "view")
@@ -613,7 +613,7 @@ def test_g14_no_needs_item_asks_for_a_time_frame_opinion_or_reason_the_question_
         if "O" in applies:
             text = ll.rung_text("O", 1, demands, "learner").lower()
             assert ("reason" in text) == ll.asks_why(demands), question_id
-    assert checked > 668
+    assert checked > 828
 
 
 def test_g14_wording_for_the_five_test_questions():

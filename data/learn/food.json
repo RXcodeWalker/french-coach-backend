@@ -1516,6 +1516,424 @@
         "status": "draft",
         "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
       }
+    },
+    {
+      "questionId": "foo_75",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your weekday breakfast with at least three details, such as food, drink and time.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_76",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe at least five items your family buys each week and who does the shopping.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_77",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe a favourite fruit or vegetable with at least three details, such as colour, taste or when you eat it.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_78",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe a typical evening meal at home with at least three details, such as time, food or who cooks.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_79",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe what you ate for your birthday last year using past tenses, with at least two dishes or details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_80",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe a meal you have cooked using past tenses, with at least two steps or details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_81",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "near-future"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe at least two meals you will eat this weekend using a future form.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_82",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how you choose your lunch at school, giving at least two factors.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_83",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain whether you like food shopping, with at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_84",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Explain how you stay healthy during exams, giving at least two habits and why they help.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_85",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether young people eat enough fruit and vegetables and support it with at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_86",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare food from your country with French food, with a point about each, and say which you prefer and why.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_87",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "past",
+          "present"
+        ],
+        "structures": [
+          "comparison",
+          "imperfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare what you could cook two years ago with what you can cook now, with at least one dish for each and how you improved.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_88",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name a restaurant you would choose tonight and give at least one reason, using the conditional.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_89",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on eating less meat and support it with at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_90",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Imagine opening a restaurant and describe at least two features in the conditional, explaining why it would succeed.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_91",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "comparison",
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare having a personal chef with cooking perfectly yourself, with at least one point for each, and choose one using the conditional.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_92",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Propose at least two changes to the school canteen menu, using the conditional, and justify each.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_93",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Imagine becoming vegetarian tomorrow and say, in the conditional, what would be hardest and at least one thing you would do instead, with reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "foo_94",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Imagine cooking for three famous guests, describe a menu in the conditional and explain at least two choices.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
     }
   ]
 }

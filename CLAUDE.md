@@ -16,6 +16,10 @@ that references it. The main repo's git history is no safety net here.
   `docs/decisions/0003-node-engine-is-the-authoritative-scorer.md`. Do not "fix" its rubric to
   match the main repo's `rubric.ts`; that's a separate decision, not a documentation or routine
   change.
+- **Admin = the `admin` role AND an allow-listed email** (`lib/auth.py`'s `is_admin_payload`; env `ADMIN_EMAILS`,
+  default the owner `omjhamvar29@gmail.com`; fails closed). `require_admin` and the exam-pronunciation `admin` mode both use
+  it, and the SQL `is_admin()` (migration `20261102090000`) repeats the email — change all of them together. Never
+  check `app_metadata.role` alone.
 - Its own CI runs pytest; there is no frontend CI here.
 - Every Groq/Gemini model ID, Whisper included, comes from `lib/model_config.py` (env var with a fallback
   default there, nowhere else): `GROQ_WHISPER_MODEL` (default `whisper-large-v3`) is what

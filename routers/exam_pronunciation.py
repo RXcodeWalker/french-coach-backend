@@ -44,7 +44,7 @@ from typing import Any, Awaitable, Callable
 from fastapi import APIRouter, File, Form, Header, HTTPException, Query, Request, UploadFile
 
 from lib.ai_quota import consume_ai_quota_or_503, release_ai_quota_grant
-from lib.auth import _role_from_payload, verify_supabase_jwt
+from lib.auth import is_admin_payload, verify_supabase_jwt
 from lib.azure_budget import (
     release_azure_seconds,
     reserve_azure_seconds,
@@ -140,7 +140,7 @@ def _authorize(authorization: str | None) -> str:
     if mode == "off":
         raise _not_enabled()
     payload = verify_supabase_jwt(authorization)
-    if mode == "admin" and _role_from_payload(payload) != "admin":
+    if mode == "admin" and not is_admin_payload(payload):
         raise _not_enabled()
     return str(payload["sub"])
 

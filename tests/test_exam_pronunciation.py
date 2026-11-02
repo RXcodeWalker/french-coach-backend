@@ -36,10 +36,11 @@ USER_A = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
 USER_B = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
 
 
-def _jwt(sub: str, *, admin: bool = False) -> str:
+def _jwt(sub: str, *, admin: bool = False, email: str = "omjhamvar29@gmail.com") -> str:
     claims = {"sub": sub, "exp": int(time.time()) + 3600}
     if admin:
         claims["app_metadata"] = {"role": "admin"}
+        claims["email"] = email
     return pyjwt.encode(claims, _SECRET, algorithm="HS256")
 
 

@@ -172,10 +172,29 @@ def _role_from_payload(payload: dict) -> str | None:
     return meta.get("role")
 
 
-async def require_admin(authorization: str | None = Header(None)) -> dict:
-    """FastAPI dependency — 403 unless the caller's JWT carries an admin role."""
-    payload = verify_supabase_jwt(authorization)
+# Admin is the role AND an allow-listed email. The role alone is not enough, so a
+# role granted to the wrong account (or via the break-glass route) opens nothing.
+# Fails closed: an empty ADMIN_EMAILS env means "the owner" (default), never "anyone".
+_DEFAULT_ADMIN_EMAILS = "omjhamvar29@gmail.com"
+
+
+def admin_emails() -> set[str]:
+    raw = os.getenv("ADMIN_EMAILS", "").strip() or _DEFAULT_ADMIN_EMAILS
+    return {e.strip().lower() for e in raw.split(",") if e.strip()}
+
+
+def is_admin_payload(payload: dict) -> bool:
+    """True only for an admin-role token whose email is on the allow-list."""
     if _role_from_payload(payload) != "admin":
+        return False
+    email = str(payload.get("email") or "").strip().lower()
+    return bool(email) and email in admin_emails()
+
+
+async def require_admin(authorization: str | None = Header(None)) -> dict:
+    """FastAPI dependency — 403 unless the caller is the allow-listed admin."""
+    payload = verify_supabase_jwt(authorization)
+    if not is_admin_payload(payload):
         raise HTTPException(status_code=403, detail="Admin role required")
     return payload
 

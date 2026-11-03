@@ -55,6 +55,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import os
+import time
 from datetime import datetime, timezone
 from typing import Any, Callable, Literal
 
@@ -184,6 +185,9 @@ class StripeGateway:
         return self._plain(
             self._client.v1.billing_portal.sessions.create({"customer": customer, "return_url": return_url})
         )
+
+    def retrieve_price(self, price_id: str) -> dict:
+        return self._plain(self._client.v1.prices.retrieve(price_id))
 
     def retrieve_subscription(self, subscription_id: str) -> dict:
         return self._plain(self._client.v1.subscriptions.retrieve(subscription_id))
@@ -456,6 +460,43 @@ async def _limits(db) -> dict[str, dict[str, int]]:
     return out
 
 
+# Prices change rarely; the Premium page should not cost a Stripe call per view.
+_PRICE_TTL_S = 600.0
+_price_cache: dict[str, tuple[float, dict]] = {}
+
+
+async def _prices() -> dict[str, dict]:
+    """{plan: {amount, currency, interval}} for each configured plan, from Stripe
+    (amount in the currency's smallest unit, as Stripe gives it). A plan whose
+    price cannot be read is left out — the page then shows no number for it."""
+    if not stripe_configured():
+        return {}
+    out: dict[str, dict] = {}
+    gateway = None
+    for plan in ("monthly", "yearly"):
+        price_id = price_for(plan)
+        if not price_id:
+            continue
+        cached = _price_cache.get(price_id)
+        if cached and time.monotonic() - cached[0] < _PRICE_TTL_S:
+            out[plan] = cached[1]
+            continue
+        try:
+            gateway = gateway or _gateway_factory()
+            price = await _run(lambda: gateway.retrieve_price(price_id))
+        except Exception as exc:  # noqa: BLE001 — display-only
+            log.warning("billing: price lookup failed for %s: %r", plan, exc)
+            continue
+        info = {
+            "amount": price.get("unit_amount"),
+            "currency": price.get("currency"),
+            "interval": (price.get("recurring") or {}).get("interval"),
+        }
+        _price_cache[price_id] = (time.monotonic(), info)
+        out[plan] = info
+    return out
+
+
 @router.get("/status")
 async def billing_status(authorization: str | None = Header(None)) -> dict[str, Any]:
     """Anyone may read it (the Premium page shows plans to guests too). With a
@@ -465,6 +506,7 @@ async def billing_status(authorization: str | None = Header(None)) -> dict[str, 
     result: dict[str, Any] = {
         "configured": configured,
         "plans": [p for p in ("monthly", "yearly") if price_for(p)] if configured else [],
+        "prices": await _prices(),
         "premium": False,
         "subscription": None,
         "limits": await _limits(db) if db is not None else {},

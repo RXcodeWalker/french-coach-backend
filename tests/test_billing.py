@@ -137,6 +137,10 @@ class FakeGateway(billing.StripeGateway):
         self.calls.append(("portal", customer, return_url))
         return {"url": "https://billing.stripe.com/p/session/x"}
 
+    def retrieve_price(self, price_id):
+        self.calls.append(("price", price_id))
+        return {"unit_amount": 499 if price_id == "price_month" else 3999, "currency": "gbp", "recurring": {"interval": "month" if price_id == "price_month" else "year"}}
+
     def retrieve_subscription(self, subscription_id):
         self.calls.append(("retrieve_sub", subscription_id))
         return self.subs[subscription_id]
@@ -159,6 +163,7 @@ def env(monkeypatch):
     monkeypatch.setattr(billing, "_get_db", lambda: db)
     monkeypatch.setattr(main, "get_supabase", lambda: db)
     monkeypatch.setattr(billing, "_gateway_factory", lambda: gw)
+    billing._price_cache.clear()
     monkeypatch.setattr(main, "verify_jwt", lambda authorization: USER)
     monkeypatch.setattr(
         billing, "verify_supabase_jwt",
@@ -366,6 +371,26 @@ def test_status_for_a_guest_shows_plans_and_limits(env):
     assert data["configured"] is True and data["plans"] == ["monthly", "yearly"]
     assert data["premium"] is False and data["subscription"] is None
     assert data["limits"]["learn_answer"] == {"free": 3, "premium": 30}
+    assert data["prices"]["monthly"] == {"amount": 499, "currency": "gbp", "interval": "month"}
+    assert data["prices"]["yearly"]["amount"] == 3999
+
+
+def test_prices_are_cached(env):
+    client, _, gw = env
+    client.get("/api/billing/status")
+    client.get("/api/billing/status")
+    assert len([c for c in gw.calls if c[0] == "price"]) == 2  # one per plan, not per view
+
+
+def test_a_price_stripe_cannot_read_is_left_out(env):
+    client, _, gw = env
+
+    def boom(_pid):
+        raise RuntimeError("stripe down")
+
+    gw.retrieve_price = boom
+    data = client.get("/api/billing/status").json()
+    assert data["prices"] == {} and data["plans"] == ["monthly", "yearly"]
 
 
 def test_status_for_a_subscriber(env):
@@ -434,3 +459,23 @@ def test_the_learn_allowance_reports_the_premium_limit(env, monkeypatch):
     assert paid["limit"] == 30 and paid["remaining"] == 25 and paid["premium"] is True
     lab = client.get("/api/pronunciation/allowance", headers=AUTH).json()
     assert lab["limit"] == 60 and lab["premium"] is True
+
+
+def test_the_allowance_still_works_before_the_premium_migration(env, monkeypatch):
+    client, db, _ = env
+
+    class _OldSchemaQuery(_AllowanceQuery):
+        def select(self, cols="*", *a, **kw):
+            self.cols = cols
+            return self
+
+        def execute(self):
+            if self.table == "ai_quota_limits" and "premium_daily_limit" in self.cols:
+                raise RuntimeError("column ai_quota_limits.premium_daily_limit does not exist")
+            if self.table == "ai_quota_limits":
+                return _Res([{"daily_limit": 3}])
+            return super().execute()
+
+    monkeypatch.setattr(db, "table", lambda name: _OldSchemaQuery(db, name))
+    data = client.get("/api/learn/allowance", headers=AUTH).json()
+    assert data["limit"] == 3 and data["premium"] is False

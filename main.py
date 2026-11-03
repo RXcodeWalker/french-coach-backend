@@ -4402,6 +4402,22 @@ def _utc_day_end() -> str:
     return (datetime(now.year, now.month, now.day, tzinfo=timezone.utc) + timedelta(days=1)).isoformat()
 
 
+async def _read_limit_row(db, feature: str) -> dict:
+    """The ai_quota_limits row, with premium_daily_limit when that column exists.
+    Before migration 20261104090000 is applied the two-column select fails, so it
+    falls back to daily_limit alone (free limits) instead of 503ing the counter."""
+    try:
+        res = await asyncio.to_thread(
+            lambda: db.table("ai_quota_limits").select("daily_limit, premium_daily_limit").eq("feature", feature).execute()
+        )
+    except Exception as exc:  # noqa: BLE001 — retried below without the new column
+        log.warning("ai_quota_limits premium column unreadable, using free limits: %r", exc)
+        res = await asyncio.to_thread(
+            lambda: db.table("ai_quota_limits").select("daily_limit").eq("feature", feature).execute()
+        )
+    return (res.data or [{}])[0]
+
+
 async def _plan_limit(db, user_id: str, limit_row: dict) -> tuple[int, bool]:
     """(daily limit, premium?) for this account: the Premium limit when the row
     has one and the account is subscribed (routers/billing.py). Mirrors what
@@ -4432,15 +4448,12 @@ async def learn_allowance(request: Request, authorization: str | None = Header(N
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"})
         today = datetime.now(timezone.utc).date().isoformat()
         try:
-            limit_res = await asyncio.to_thread(
-                lambda: db.table("ai_quota_limits").select("daily_limit, premium_daily_limit")
-                .eq("feature", LEARN_ANSWER_FEATURE).execute()
-            )
+            limit_row = await _read_limit_row(db, LEARN_ANSWER_FEATURE)
             used_res = await asyncio.to_thread(
                 lambda: db.table("ai_usage_grants").select("id", count="exact")
                 .eq("user_id", user_id).eq("feature", LEARN_ANSWER_FEATURE).eq("grant_date", today).execute()
             )
-            limit, premium = await _plan_limit(db, user_id, (limit_res.data or [{}])[0])
+            limit, premium = await _plan_limit(db, user_id, limit_row)
             used = int(used_res.count or 0)
         except Exception as exc:
             log.warning("learn allowance lookup failed: %r", exc)
@@ -4471,15 +4484,12 @@ async def pronunciation_lab_allowance(request: Request, authorization: str | Non
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"})
         today = datetime.now(timezone.utc).date().isoformat()
         try:
-            limit_res = await asyncio.to_thread(
-                lambda: db.table("ai_quota_limits").select("daily_limit, premium_daily_limit")
-                .eq("feature", PRONUNCIATION_LAB_FEATURE).execute()
-            )
+            limit_row = await _read_limit_row(db, PRONUNCIATION_LAB_FEATURE)
             used_res = await asyncio.to_thread(
                 lambda: db.table("ai_usage_grants").select("id", count="exact")
                 .eq("user_id", user_id).eq("feature", PRONUNCIATION_LAB_FEATURE).eq("grant_date", today).execute()
             )
-            limit, premium = await _plan_limit(db, user_id, (limit_res.data or [{}])[0])
+            limit, premium = await _plan_limit(db, user_id, limit_row)
             used = int(used_res.count or 0)
         except Exception as exc:
             log.warning("pronunciation lab allowance lookup failed: %r", exc)

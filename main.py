@@ -4402,6 +4402,19 @@ def _utc_day_end() -> str:
     return (datetime(now.year, now.month, now.day, tzinfo=timezone.utc) + timedelta(days=1)).isoformat()
 
 
+async def _plan_limit(db, user_id: str, limit_row: dict) -> tuple[int, bool]:
+    """(daily limit, premium?) for this account: the Premium limit when the row
+    has one and the account is subscribed (routers/billing.py). Mirrors what
+    consume_ai_quota charges against (migration 20261104090000)."""
+    limit = int(limit_row["daily_limit"])
+    premium_limit = limit_row.get("premium_daily_limit")
+    if premium_limit is None:
+        return limit, False
+    if await _billing_has_premium(db, user_id):
+        return int(premium_limit), True
+    return limit, False
+
+
 @app.get("/api/learn/allowance")
 @rate_limit("60/minute")
 async def learn_allowance(request: Request, authorization: str | None = Header(None)) -> dict[str, Any]:
@@ -4412,6 +4425,7 @@ async def learn_allowance(request: Request, authorization: str | None = Header(N
     user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
     if is_guest(user_id):
         used, limit = guest_usage(user_id, LEARN_ANSWER_FEATURE)
+        premium = False
     else:
         db = get_supabase()
         if db is None:
@@ -4419,18 +4433,22 @@ async def learn_allowance(request: Request, authorization: str | None = Header(N
         today = datetime.now(timezone.utc).date().isoformat()
         try:
             limit_res = await asyncio.to_thread(
-                lambda: db.table("ai_quota_limits").select("daily_limit").eq("feature", LEARN_ANSWER_FEATURE).execute()
+                lambda: db.table("ai_quota_limits").select("daily_limit, premium_daily_limit")
+                .eq("feature", LEARN_ANSWER_FEATURE).execute()
             )
             used_res = await asyncio.to_thread(
                 lambda: db.table("ai_usage_grants").select("id", count="exact")
                 .eq("user_id", user_id).eq("feature", LEARN_ANSWER_FEATURE).eq("grant_date", today).execute()
             )
-            limit = int((limit_res.data or [{}])[0]["daily_limit"])
+            limit, premium = await _plan_limit(db, user_id, (limit_res.data or [{}])[0])
             used = int(used_res.count or 0)
         except Exception as exc:
             log.warning("learn allowance lookup failed: %r", exc)
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"}) from exc
-    return {"limit": limit, "used": used, "remaining": max(0, limit - used), "resetsAt": _utc_day_end()}
+    return {
+        "limit": limit, "used": used, "remaining": max(0, limit - used),
+        "resetsAt": _utc_day_end(), "premium": premium,
+    }
 
 
 PRONUNCIATION_LAB_FEATURE = "pronunciation_lab"
@@ -4446,6 +4464,7 @@ async def pronunciation_lab_allowance(request: Request, authorization: str | Non
     user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
     if is_guest(user_id):
         used, limit = guest_usage(user_id, PRONUNCIATION_LAB_FEATURE)
+        premium = False
     else:
         db = get_supabase()
         if db is None:
@@ -4453,18 +4472,22 @@ async def pronunciation_lab_allowance(request: Request, authorization: str | Non
         today = datetime.now(timezone.utc).date().isoformat()
         try:
             limit_res = await asyncio.to_thread(
-                lambda: db.table("ai_quota_limits").select("daily_limit").eq("feature", PRONUNCIATION_LAB_FEATURE).execute()
+                lambda: db.table("ai_quota_limits").select("daily_limit, premium_daily_limit")
+                .eq("feature", PRONUNCIATION_LAB_FEATURE).execute()
             )
             used_res = await asyncio.to_thread(
                 lambda: db.table("ai_usage_grants").select("id", count="exact")
                 .eq("user_id", user_id).eq("feature", PRONUNCIATION_LAB_FEATURE).eq("grant_date", today).execute()
             )
-            limit = int((limit_res.data or [{}])[0]["daily_limit"])
+            limit, premium = await _plan_limit(db, user_id, (limit_res.data or [{}])[0])
             used = int(used_res.count or 0)
         except Exception as exc:
             log.warning("pronunciation lab allowance lookup failed: %r", exc)
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"}) from exc
-    return {"limit": limit, "used": used, "remaining": max(0, limit - used), "resetsAt": _utc_day_end()}
+    return {
+        "limit": limit, "used": used, "remaining": max(0, limit - used),
+        "resetsAt": _utc_day_end(), "premium": premium,
+    }
 
 
 @app.post("/api/feedback/stream")
@@ -5968,6 +5991,19 @@ from routers.native_voice import (
 
 app.include_router(_native_voice_router)
 _set_native_voice_rate_limiter(rate_limit, app)
+
+# ── Premium subscriptions (Stripe) ───────────────────────────────────────────
+# Checkout / portal / status / webhook. Premium raises ai_quota_limits via
+# premium_daily_limit (migration 20261104090000); billing is off (503) until
+# STRIPE_SECRET_KEY and STRIPE_PRICE_MONTHLY are set.
+from routers.billing import (
+    configure as _configure_billing,
+    has_premium as _billing_has_premium,
+    router as _billing_router,
+)
+
+_configure_billing(get_db=lambda: get_supabase(), allowed_origins=CORS_ORIGINS)
+app.include_router(_billing_router)
 
 
 # ── One-time admin bootstrap ──────────────────────────────────────────────────

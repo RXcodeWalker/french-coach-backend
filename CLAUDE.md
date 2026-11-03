@@ -52,3 +52,11 @@ that references it. The main repo's git history is no safety net here.
   §7 calibration fixtures: the production **scripted** Azure request on real recordings, metered as ledger source `probe`, written to
   `tests/fixtures/pronunciation_lab_calibration/` (no audio). That folder is the evidence the main repo's `gate.test.ts` reads, so only
   real, honestly recorded sets belong in it — use `--out-dir` for practice or synthetic runs.
+- **Premium billing is Stripe, in `routers/billing.py` (migration `20261104090000`).** Only the Stripe webhook (signature =
+  `STRIPE_WEBHOOK_SECRET`, raw body) and the signed-in `/sync` / `/cancel-for-deletion` routes write `billing_*` rows, always from a
+  subscription **re-read from Stripe** — never trust an event payload's status or a browser's user id; the account link is the
+  `user_id` metadata written at Checkout, outranked by `billing_customers`. Premium only raises limits: `consume_ai_quota` uses
+  `ai_quota_limits.premium_daily_limit` (NULL = same as free; never set it below `daily_limit`) when `has_premium()` is true, and
+  `has_premium()`'s status list must match `PREMIUM_STATUSES`. A profile with a live subscription cannot be deleted (trigger) —
+  the app cancels first. Billing is off (503 `billing_not_configured`) until `STRIPE_SECRET_KEY` + `STRIPE_PRICE_MONTHLY` are set.
+  Never sell gems here (main repo `shop-economy.md` §10).

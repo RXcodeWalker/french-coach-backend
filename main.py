@@ -55,6 +55,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from lib.guest import guest_usage, is_guest, verify_user_or_guest
 from lib.ai_quota import QuotaDenied, consume_ai_quota_or_503, release_ai_quota_grant
 from lib.consent import require_speaking_consent
+from lib.assignment_allowance import ASSIGNMENT_HEADER, homework_learn_key, parse_assignment_id
 from lib.auth import require_admin, verify_supabase_jwt
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
@@ -3696,7 +3697,7 @@ def _relay_examiner_result(result: dict[str, Any], tpl: dict[str, Any]) -> dict[
     return {k: result.get(k) or [] for k in _EXAMINER_LEGACY_KEYS}
 
 
-async def _examiner_feedback_route(payload: Any, user_id: str) -> dict[str, Any]:
+async def _examiner_feedback_route(payload: Any, user_id: str, assignment_id: str | None = None) -> dict[str, Any]:
     """Validate -> template (409 if the version is absent) -> cache -> quota
     -> replay guard -> provider (grant released on failure) -> cache."""
     try:
@@ -3714,7 +3715,18 @@ async def _examiner_feedback_route(payload: Any, user_id: str) -> dict[str, Any]
 
     feature = (_EXAMINER_RETRY_QUOTA_FEATURE if req.attempt == 2 else _EXAMINER_QUOTA_FEATURE)[req.profile]
     db = get_supabase()
-    grant = await consume_ai_quota_or_503(db, user_id, feature, idempotency_key)
+    # Homework (lib/assignment_allowance.py): a Learn first attempt sent for an
+    # assignment the RPC accepts charges assignment_learn_answer instead.
+    homework_key = (
+        await homework_learn_key(db, user_id, assignment_id, idempotency_key)
+        if req.profile == "learn" and req.attempt == 1
+        else None
+    )
+    if homework_key is not None:
+        feature, idempotency_key = "assignment_learn_answer", homework_key
+        grant = await consume_ai_quota_or_503(db, user_id, "assignment_learn_answer", homework_key)
+    else:
+        grant = await consume_ai_quota_or_503(db, user_id, feature, idempotency_key)
     if grant.get("replayed"):
         hit = await _examiner_cache.get(cache_key)
         if hit is not None:
@@ -3960,16 +3972,30 @@ def _feedback_provider_name(payload: dict[str, Any]) -> str:
     return "offline"
 
 
-async def _consume_feedback_quota(user_id: str, idempotency_key: str, *, learn: bool) -> dict[str, Any]:
-    """Charge one AI feedback answer. A Learn answer — the only caller that names
+async def _consume_feedback_quota(
+    user_id: str, idempotency_key: str, *, learn: bool, assignment_id: str | None = None
+) -> tuple[str, str]:
+    """Charge one AI feedback answer; returns the (feature, key) charged, which
+    is what a failure must release. A Learn answer — the only caller that names
     a `marking` scheme — charges `learn_answer`, Learn's own daily allowance
     (3 per account per day, owner decision 2026-10-24; the ai_quota_limits row
     is the number). Every other caller keeps `feedback`. Learn is recognised by
     the field it sent, not by the kill switch's verdict, so switching the ladder
-    off does not lift the Learn limit."""
+    off does not lift the Learn limit.
+
+    Homework (teacher dashboard, lib/assignment_allowance.py): a Learn answer
+    sent with a valid X-Assignment-Id that the assignment_allowance RPC accepts
+    charges `assignment_learn_answer` instead; anything else falls back to
+    `learn_answer`."""
     if learn:
-        return await consume_ai_quota_or_503(get_supabase(), user_id, "learn_answer", idempotency_key)
-    return await consume_ai_quota_or_503(get_supabase(), user_id, "feedback", idempotency_key)
+        homework_key = await homework_learn_key(get_supabase(), user_id, assignment_id, idempotency_key)
+        if homework_key is not None:
+            await consume_ai_quota_or_503(get_supabase(), user_id, "assignment_learn_answer", homework_key)
+            return ("assignment_learn_answer", homework_key)
+        await consume_ai_quota_or_503(get_supabase(), user_id, "learn_answer", idempotency_key)
+        return ("learn_answer", idempotency_key)
+    await consume_ai_quota_or_503(get_supabase(), user_id, "feedback", idempotency_key)
+    return ("feedback", idempotency_key)
 
 
 async def _feedback_impl(
@@ -3986,6 +4012,7 @@ async def _feedback_impl(
     demands_version: str | None = None,
     demand_signals: dict[str, Any] | None = None,
     marking: str | None = None,
+    assignment_id: str | None = None,
 ) -> dict[str, Any]:
     """
     Unified feedback endpoint. Two modes:
@@ -4094,7 +4121,9 @@ async def _feedback_impl(
             # twice.
             idempotency_key = cache_key or _request_cache_key(req, _cache_id)
             learn = marking is not None
-            await _consume_feedback_quota(user_id, idempotency_key, learn=learn)
+            charged_feature, charged_key = await _consume_feedback_quota(
+                user_id, idempotency_key, learn=learn, assignment_id=assignment_id
+            )
 
             t_start = time.monotonic()
             try:
@@ -4103,7 +4132,7 @@ async def _feedback_impl(
                 # Every provider failed: a Learn answer that was never marked does
                 # not use up one of the learner's few daily answers.
                 if learn:
-                    await release_ai_quota_grant(get_supabase(), user_id, "learn_answer", idempotency_key)
+                    await release_ai_quota_grant(get_supabase(), user_id, charged_feature, charged_key)
                 raise
             latency_ms = (time.monotonic() - t_start) * 1000
             _log_feedback_latency(
@@ -4229,7 +4258,9 @@ async def feedback(request: Request, authorization: str | None = Header(None)) -
         # enrich_feedback, no scores default, no offline fallback voice) and
         # renders its prompt server-side — see _examiner_feedback_route.
         if isinstance(payload, dict) and payload.get("feedbackMode") == "examiner":
-            return await _examiner_feedback_route(payload, user_id)
+            return await _examiner_feedback_route(
+                payload, user_id, parse_assignment_id(request.headers.get(ASSIGNMENT_HEADER))
+            )
 
         question = _extract_question_text(
             payload.get("question") or payload.get("prompt") or ""
@@ -4267,6 +4298,7 @@ async def feedback(request: Request, authorization: str | None = Header(None)) -
             demands_version=demands_version,
             demand_signals=demand_signals,
             marking=marking,
+            assignment_id=parse_assignment_id(request.headers.get(ASSIGNMENT_HEADER)),
         )
         try:
             request.state.obs_provider = result.get("provider")
@@ -4476,6 +4508,7 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
     Degrades gracefully to a single buffered `complete` for Gemini/offline.
     """
     user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
+    stream_assignment_id = parse_assignment_id(request.headers.get(ASSIGNMENT_HEADER))
     try:
         (question, transcript, model, depth, metrics_json,
          skill_context, difficulty_context, audio_bytes, audio_mime,
@@ -4585,7 +4618,9 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
                 # the existing "No transcript available" pattern above.
                 idempotency_key = cache_key or _request_cache_key(req, cache_id)
                 try:
-                    await _consume_feedback_quota(user_id, idempotency_key, learn=marking is not None)
+                    await _consume_feedback_quota(
+                        user_id, idempotency_key, learn=marking is not None, assignment_id=stream_assignment_id
+                    )
                 except QuotaDenied as e:
                     detail = e.detail if isinstance(e.detail, dict) else {"error": "denied"}
                     yield json.dumps({"type": "error", "data": detail}) + "\n"

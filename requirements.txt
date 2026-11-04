@@ -13,3 +13,4 @@ slowapi>=0.1.9
 sentry-sdk[fastapi]>=2.20.0,<3
 pytest>=8.0.0
 pytest-asyncio>=0.24.0
+stripe>=16.1,<17

@@ -52,6 +52,21 @@ that references it. The main repo's git history is no safety net here.
   §7 calibration fixtures: the production **scripted** Azure request on real recordings, metered as ledger source `probe`, written to
   `tests/fixtures/pronunciation_lab_calibration/` (no audio). That folder is the evidence the main repo's `gate.test.ts` reads, so only
   real, honestly recorded sets belong in it — use `--out-dir` for practice or synthetic runs.
+- **Premium billing is Stripe, in `routers/billing.py` (migration `20261104230000`).** Only the Stripe webhook (signature =
+  `STRIPE_WEBHOOK_SECRET`, raw body) and the signed-in `/sync` / `/cancel-for-deletion` routes write `billing_*` rows, always from a
+  subscription **re-read from Stripe** — never trust an event payload's status or a browser's user id; the account link is the
+  `user_id` metadata written at Checkout, outranked by `billing_customers`. Premium only raises limits: `consume_ai_quota` uses
+  `ai_quota_limits.premium_daily_limit` (NULL = same as free; never set it below `daily_limit`) when `has_premium()` is true, and
+  `has_premium()`'s status list must match `PREMIUM_STATUSES`. A profile with a live subscription cannot be deleted (trigger) —
+  the app cancels first. Billing is off (503 `billing_not_configured`) until `STRIPE_SECRET_KEY` + `STRIPE_PRICE_MONTHLY` are set.
+  Never sell gems here (main repo `shop-economy.md` §10).
+  **Razorpay is the second provider (`routers/billing_razorpay.py`, migration `20261105090000`, table
+  `billing_razorpay_subscriptions`)** under the same rules: the account link is the row inserted when this service creates the
+  subscription (then its `user_id` note), every write comes from a re-read, the webhook is `X-Razorpay-Signature` over the raw body.
+  `has_premium()` and the deletion trigger read both tables — `billing_razorpay.PREMIUM_STATUSES`/`LIVE_STATUSES` change with
+  them (`test_statuses_match_the_migration`). Razorpay has no cancel-at-period-end flag, so `cancel_at_period_end` there is
+  this app's own record from `/cancel`, kept across re-reads. Off until `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET` +
+  `RAZORPAY_PLAN_MONTHLY` are set; its table is read only while it is configured.
 - **Teacher dashboard** (migration `20261103091000`, main repo `docs/systems/teacher-dashboard.md`, ADR 0014): a teacher
   reads a student's data only through the class-scoped `SECURITY DEFINER` `teacher_*` functions, for active members,
   from their join date onward — never widen RLS on `sessions`/`scoring_envelopes`/`session_transcripts`/

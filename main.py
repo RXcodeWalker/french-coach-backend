@@ -4434,6 +4434,35 @@ def _utc_day_end() -> str:
     return (datetime(now.year, now.month, now.day, tzinfo=timezone.utc) + timedelta(days=1)).isoformat()
 
 
+async def _read_limit_row(db, feature: str) -> dict:
+    """The ai_quota_limits row, with premium_daily_limit when that column exists.
+    Before migration 20261104230000 is applied the two-column select fails, so it
+    falls back to daily_limit alone (free limits) instead of 503ing the counter."""
+    try:
+        res = await asyncio.to_thread(
+            lambda: db.table("ai_quota_limits").select("daily_limit, premium_daily_limit").eq("feature", feature).execute()
+        )
+    except Exception as exc:  # noqa: BLE001 — retried below without the new column
+        log.warning("ai_quota_limits premium column unreadable, using free limits: %r", exc)
+        res = await asyncio.to_thread(
+            lambda: db.table("ai_quota_limits").select("daily_limit").eq("feature", feature).execute()
+        )
+    return (res.data or [{}])[0]
+
+
+async def _plan_limit(db, user_id: str, limit_row: dict) -> tuple[int, bool]:
+    """(daily limit, premium?) for this account: the Premium limit when the row
+    has one and the account is subscribed (routers/billing.py). Mirrors what
+    consume_ai_quota charges against (migration 20261104230000)."""
+    limit = int(limit_row["daily_limit"])
+    premium_limit = limit_row.get("premium_daily_limit")
+    if premium_limit is None:
+        return limit, False
+    if await _billing_has_premium(db, user_id):
+        return int(premium_limit), True
+    return limit, False
+
+
 @app.get("/api/learn/allowance")
 @rate_limit("60/minute")
 async def learn_allowance(request: Request, authorization: str | None = Header(None)) -> dict[str, Any]:
@@ -4444,25 +4473,27 @@ async def learn_allowance(request: Request, authorization: str | None = Header(N
     user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
     if is_guest(user_id):
         used, limit = guest_usage(user_id, LEARN_ANSWER_FEATURE)
+        premium = False
     else:
         db = get_supabase()
         if db is None:
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"})
         today = datetime.now(timezone.utc).date().isoformat()
         try:
-            limit_res = await asyncio.to_thread(
-                lambda: db.table("ai_quota_limits").select("daily_limit").eq("feature", LEARN_ANSWER_FEATURE).execute()
-            )
+            limit_row = await _read_limit_row(db, LEARN_ANSWER_FEATURE)
             used_res = await asyncio.to_thread(
                 lambda: db.table("ai_usage_grants").select("id", count="exact")
                 .eq("user_id", user_id).eq("feature", LEARN_ANSWER_FEATURE).eq("grant_date", today).execute()
             )
-            limit = int((limit_res.data or [{}])[0]["daily_limit"])
+            limit, premium = await _plan_limit(db, user_id, limit_row)
             used = int(used_res.count or 0)
         except Exception as exc:
             log.warning("learn allowance lookup failed: %r", exc)
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"}) from exc
-    return {"limit": limit, "used": used, "remaining": max(0, limit - used), "resetsAt": _utc_day_end()}
+    return {
+        "limit": limit, "used": used, "remaining": max(0, limit - used),
+        "resetsAt": _utc_day_end(), "premium": premium,
+    }
 
 
 PRONUNCIATION_LAB_FEATURE = "pronunciation_lab"
@@ -4478,25 +4509,27 @@ async def pronunciation_lab_allowance(request: Request, authorization: str | Non
     user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
     if is_guest(user_id):
         used, limit = guest_usage(user_id, PRONUNCIATION_LAB_FEATURE)
+        premium = False
     else:
         db = get_supabase()
         if db is None:
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"})
         today = datetime.now(timezone.utc).date().isoformat()
         try:
-            limit_res = await asyncio.to_thread(
-                lambda: db.table("ai_quota_limits").select("daily_limit").eq("feature", PRONUNCIATION_LAB_FEATURE).execute()
-            )
+            limit_row = await _read_limit_row(db, PRONUNCIATION_LAB_FEATURE)
             used_res = await asyncio.to_thread(
                 lambda: db.table("ai_usage_grants").select("id", count="exact")
                 .eq("user_id", user_id).eq("feature", PRONUNCIATION_LAB_FEATURE).eq("grant_date", today).execute()
             )
-            limit = int((limit_res.data or [{}])[0]["daily_limit"])
+            limit, premium = await _plan_limit(db, user_id, limit_row)
             used = int(used_res.count or 0)
         except Exception as exc:
             log.warning("pronunciation lab allowance lookup failed: %r", exc)
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"}) from exc
-    return {"limit": limit, "used": used, "remaining": max(0, limit - used), "resetsAt": _utc_day_end()}
+    return {
+        "limit": limit, "used": used, "remaining": max(0, limit - used),
+        "resetsAt": _utc_day_end(), "premium": premium,
+    }
 
 
 @app.post("/api/feedback/stream")
@@ -6003,6 +6036,22 @@ from routers.native_voice import (
 
 app.include_router(_native_voice_router)
 _set_native_voice_rate_limiter(rate_limit, app)
+
+# ── Premium subscriptions (Stripe + Razorpay) ────────────────────────────────
+# Checkout / portal / status / webhook. Premium raises ai_quota_limits via
+# premium_daily_limit (migrations 20261104230000, 20261105090000); each provider
+# is off (503) until its keys are set (STRIPE_SECRET_KEY + STRIPE_PRICE_MONTHLY;
+# RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET + RAZORPAY_PLAN_MONTHLY).
+from routers.billing import (
+    configure as _configure_billing,
+    has_premium as _billing_has_premium,
+    router as _billing_router,
+)
+from routers.billing_razorpay import router as _razorpay_billing_router
+
+_configure_billing(get_db=lambda: get_supabase(), allowed_origins=CORS_ORIGINS)
+app.include_router(_billing_router)
+app.include_router(_razorpay_billing_router)
 
 
 # ── One-time admin bootstrap ──────────────────────────────────────────────────

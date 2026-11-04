@@ -4404,7 +4404,7 @@ def _utc_day_end() -> str:
 
 async def _read_limit_row(db, feature: str) -> dict:
     """The ai_quota_limits row, with premium_daily_limit when that column exists.
-    Before migration 20261104090000 is applied the two-column select fails, so it
+    Before migration 20261104100000 is applied the two-column select fails, so it
     falls back to daily_limit alone (free limits) instead of 503ing the counter."""
     try:
         res = await asyncio.to_thread(
@@ -4421,7 +4421,7 @@ async def _read_limit_row(db, feature: str) -> dict:
 async def _plan_limit(db, user_id: str, limit_row: dict) -> tuple[int, bool]:
     """(daily limit, premium?) for this account: the Premium limit when the row
     has one and the account is subscribed (routers/billing.py). Mirrors what
-    consume_ai_quota charges against (migration 20261104090000)."""
+    consume_ai_quota charges against (migration 20261104100000)."""
     limit = int(limit_row["daily_limit"])
     premium_limit = limit_row.get("premium_daily_limit")
     if premium_limit is None:
@@ -6004,7 +6004,7 @@ _set_native_voice_rate_limiter(rate_limit, app)
 
 # ── Premium subscriptions (Stripe + Razorpay) ────────────────────────────────
 # Checkout / portal / status / webhook. Premium raises ai_quota_limits via
-# premium_daily_limit (migrations 20261104090000, 20261105090000); each provider
+# premium_daily_limit (migrations 20261104100000, 20261105090000); each provider
 # is off (503) until its keys are set (STRIPE_SECRET_KEY + STRIPE_PRICE_MONTHLY;
 # RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET + RAZORPAY_PLAN_MONTHLY).
 from routers.billing import (

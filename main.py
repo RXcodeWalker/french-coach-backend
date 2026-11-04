@@ -6002,18 +6002,21 @@ from routers.native_voice import (
 app.include_router(_native_voice_router)
 _set_native_voice_rate_limiter(rate_limit, app)
 
-# ── Premium subscriptions (Stripe) ───────────────────────────────────────────
+# ── Premium subscriptions (Stripe + Razorpay) ────────────────────────────────
 # Checkout / portal / status / webhook. Premium raises ai_quota_limits via
-# premium_daily_limit (migration 20261104090000); billing is off (503) until
-# STRIPE_SECRET_KEY and STRIPE_PRICE_MONTHLY are set.
+# premium_daily_limit (migrations 20261104090000, 20261105090000); each provider
+# is off (503) until its keys are set (STRIPE_SECRET_KEY + STRIPE_PRICE_MONTHLY;
+# RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET + RAZORPAY_PLAN_MONTHLY).
 from routers.billing import (
     configure as _configure_billing,
     has_premium as _billing_has_premium,
     router as _billing_router,
 )
+from routers.billing_razorpay import router as _razorpay_billing_router
 
 _configure_billing(get_db=lambda: get_supabase(), allowed_origins=CORS_ORIGINS)
 app.include_router(_billing_router)
+app.include_router(_razorpay_billing_router)
 
 
 # ── One-time admin bootstrap ──────────────────────────────────────────────────

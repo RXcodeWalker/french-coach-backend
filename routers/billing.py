@@ -7,6 +7,9 @@ usage limits. The limits themselves stay where they always were —
 `premium_daily_limit` for an account `has_premium()` says is subscribed
 (migration 20261104090000). Nothing here grants AI calls directly.
 
+Razorpay (UPI, RuPay, Indian cards) is the second provider, in
+routers/billing_razorpay.py; /status and /cancel-for-deletion cover both.
+
 Routes (all under /api/billing):
 
 - POST /checkout              signed in → a Stripe Checkout URL for {plan}.
@@ -354,6 +357,7 @@ def public_subscription(row: dict | None) -> dict | None:
     if not row:
         return None
     return {
+        "provider": "stripe",
         "status": row.get("status"),
         "plan": row.get("plan"),
         "currentPeriodEnd": row.get("current_period_end"),
@@ -361,12 +365,21 @@ def public_subscription(row: dict | None) -> dict | None:
     }
 
 
-def _best_subscription(rows: list[dict]) -> dict | None:
-    """The row to show: a Premium-giving one first, then the most recent."""
-    if not rows:
+def _best_subscription(rows: list[dict], razorpay_rows: list[dict] | None = None) -> dict | None:
+    """The subscription to show (public shape), across both providers: a
+    Premium-giving one first, then the most recently updated. A Razorpay
+    subscription nobody has paid for yet (`created`) is never shown."""
+    from routers import billing_razorpay as rzp
+
+    candidates = [
+        (r.get("status") in PREMIUM_STATUSES, r.get("updated_at") or "", public_subscription(r)) for r in rows
+    ] + [
+        (r.get("status") in rzp.PREMIUM_STATUSES, r.get("updated_at") or "", rzp.public_subscription(r))
+        for r in (razorpay_rows or []) if r.get("status") != "created"
+    ]
+    if not candidates:
         return None
-    rank = lambda r: (r.get("status") in PREMIUM_STATUSES, r.get("updated_at") or "")
-    return sorted(rows, key=rank, reverse=True)[0]
+    return sorted(candidates, key=lambda c: (c[0], c[1]), reverse=True)[0][2]
 
 
 # ── Routes ───────────────────────────────────────────────────────────────────
@@ -501,12 +514,23 @@ async def _prices() -> dict[str, dict]:
 async def billing_status(authorization: str | None = Header(None)) -> dict[str, Any]:
     """Anyone may read it (the Premium page shows plans to guests too). With a
     token, it also says whether this account is Premium."""
+    from routers import billing_razorpay as rzp
+
     db = _get_db()
-    configured = stripe_configured()
+    stripe_on = stripe_configured()
+    stripe_plans = [p for p in ("monthly", "yearly") if price_for(p)] if stripe_on else []
+    stripe_prices = await _prices()
+    providers: list[dict[str, Any]] = []
+    if stripe_on:
+        providers.append({"id": "stripe", "plans": stripe_plans, "prices": stripe_prices})
+    if rzp.razorpay_configured():
+        providers.append({"id": "razorpay", "plans": rzp.configured_plans(), "prices": await rzp.prices()})
     result: dict[str, Any] = {
-        "configured": configured,
-        "plans": [p for p in ("monthly", "yearly") if price_for(p)] if configured else [],
-        "prices": await _prices(),
+        "configured": bool(providers),
+        "providers": providers,
+        # Stripe's alone, for a frontend that predates `providers`.
+        "plans": stripe_plans,
+        "prices": stripe_prices,
         "premium": False,
         "subscription": None,
         "limits": await _limits(db) if db is not None else {},
@@ -519,8 +543,14 @@ async def billing_status(authorization: str | None = Header(None)) -> dict[str, 
             except Exception as exc:  # noqa: BLE001 — display-only
                 log.warning("billing: subscription lookup failed: %r", exc)
                 rows = []
+            razorpay_rows: list[dict] = []
+            if rzp.razorpay_configured():
+                try:
+                    razorpay_rows = await rzp.rows_for(db, user_id)
+                except Exception as exc:  # noqa: BLE001 — display-only
+                    log.warning("billing: Razorpay subscription lookup failed: %r", exc)
             result["premium"] = await has_premium(db, user_id)
-            result["subscription"] = public_subscription(_best_subscription(rows))
+            result["subscription"] = _best_subscription(rows, razorpay_rows)
     return result
 
 
@@ -559,13 +589,18 @@ async def cancel_for_deletion(authorization: str | None = Header(None)) -> dict[
     """Cancels every subscription that could still charge this account, right
     now (no refund of the current period — Stripe's default). The app calls this
     just before delete_my_account, which the DB refuses while one is live."""
+    from routers import billing_razorpay as rzp
+
     user_id, _ = _caller(authorization)
     db = _db()
+    # Razorpay's table is read only while Razorpay is configured (it may not
+    # exist before migration 20261105090000). An unconfigured provider's live row
+    # is still caught by the DB trigger, which refuses the delete.
+    canceled = await rzp.cancel_all_now(db, user_id) if rzp.razorpay_configured() else 0
     rows = [r for r in await _subscriptions_for(db, user_id) if r.get("status") in LIVE_STATUSES]
     if not rows:
-        return {"canceled": 0}
+        return {"canceled": canceled}
     gateway = _gateway()
-    canceled = 0
     for row in rows:
         sub_id = row["stripe_subscription_id"]
         try:

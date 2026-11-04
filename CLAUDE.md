@@ -60,3 +60,10 @@ that references it. The main repo's git history is no safety net here.
   `has_premium()`'s status list must match `PREMIUM_STATUSES`. A profile with a live subscription cannot be deleted (trigger) —
   the app cancels first. Billing is off (503 `billing_not_configured`) until `STRIPE_SECRET_KEY` + `STRIPE_PRICE_MONTHLY` are set.
   Never sell gems here (main repo `shop-economy.md` §10).
+  **Razorpay is the second provider (`routers/billing_razorpay.py`, migration `20261105090000`, table
+  `billing_razorpay_subscriptions`)** under the same rules: the account link is the row inserted when this service creates the
+  subscription (then its `user_id` note), every write comes from a re-read, the webhook is `X-Razorpay-Signature` over the raw body.
+  `has_premium()` and the deletion trigger read both tables — `billing_razorpay.PREMIUM_STATUSES`/`LIVE_STATUSES` change with
+  them (`test_statuses_match_the_migration`). Razorpay has no cancel-at-period-end flag, so `cancel_at_period_end` there is
+  this app's own record from `/cancel`, kept across re-reads. Off until `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET` +
+  `RAZORPAY_PLAN_MONTHLY` are set; its table is read only while it is configured.

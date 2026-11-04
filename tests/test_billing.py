@@ -75,9 +75,14 @@ class _Rpc:
     def execute(self):
         assert self.name == "has_premium"
         uid = self.params["p_user_id"]
+        from routers import billing_razorpay
+
         live = [
             r for r in self.db.tables.get("billing_subscriptions", [])
             if r["user_id"] == uid and r["status"] in billing.PREMIUM_STATUSES
+        ] + [
+            r for r in self.db.tables.get("billing_razorpay_subscriptions", [])
+            if r["user_id"] == uid and r["status"] in billing_razorpay.PREMIUM_STATUSES
         ]
         return _Res(bool(live))
 

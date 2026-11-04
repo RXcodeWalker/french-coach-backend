@@ -5,7 +5,7 @@
 -- by sessionToRow, so an exam restored on a new device lost them and counted
 -- toward progress again. The client now writes and reads them back.
 --
--- These columns already exist in production: 20261103090000_teacher_dashboard
+-- These columns already exist in production: 20261103091000_teacher_dashboard
 -- (applied 2026-11-03, on the teacher-dashboard branch) added them. This file
 -- records them on main and is a no-op where they exist. assignment_id belongs to
 -- that migration and is not repeated here. The existing "Users can update own

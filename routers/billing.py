@@ -5,7 +5,7 @@ What Premium is: a monthly or yearly Stripe subscription that raises the launch
 usage limits. The limits themselves stay where they always were —
 `ai_quota_limits` and `consume_ai_quota` — which now read
 `premium_daily_limit` for an account `has_premium()` says is subscribed
-(migration 20261104100000). Nothing here grants AI calls directly.
+(migration 20261104120000). Nothing here grants AI calls directly.
 
 Razorpay (UPI, RuPay, Indian cards) is the second provider, in
 routers/billing_razorpay.py; /status and /cancel-for-deletion cover both.

@@ -8,7 +8,7 @@ the assignment still has answers left, it charges ``assignment_learn_answer``
 learner's daily answers.
 
 The check is the service-role RPC ``assignment_allowance`` (migration
-20261103090000), which owns every rule (membership, targeting, closed after
+20261103091000), which owns every rule (membership, targeting, closed after
 due + 14 days, the cap). This module only asks it. Anything unexpected — no
 header, a guest, a malformed id, an RPC error, a "no" — falls back to the
 normal ``learn_answer`` charge: homework allowance is never granted by

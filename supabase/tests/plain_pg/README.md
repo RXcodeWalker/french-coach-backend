@@ -10,7 +10,7 @@ Never run these against the hosted project.
 createdb -h <socket-dir> -p <port> -U postgres teacher_test
 psql -q -v ON_ERROR_STOP=1 -h <socket-dir> -p <port> -U postgres -d teacher_test \
   -f supabase/tests/plain_pg/prelude.sql \
-  -f supabase/migrations/20261103090000_teacher_dashboard.sql \
+  -f supabase/migrations/20261103091000_teacher_dashboard.sql \
   -f supabase/tests/plain_pg/teacher_dashboard_test.sql
 ```
 

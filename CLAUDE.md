@@ -52,7 +52,7 @@ that references it. The main repo's git history is no safety net here.
   §7 calibration fixtures: the production **scripted** Azure request on real recordings, metered as ledger source `probe`, written to
   `tests/fixtures/pronunciation_lab_calibration/` (no audio). That folder is the evidence the main repo's `gate.test.ts` reads, so only
   real, honestly recorded sets belong in it — use `--out-dir` for practice or synthetic runs.
-- **Teacher dashboard** (migration `20261103090000`, main repo `docs/systems/teacher-dashboard.md`, ADR 0014): a teacher
+- **Teacher dashboard** (migration `20261103091000`, main repo `docs/systems/teacher-dashboard.md`, ADR 0014): a teacher
   reads a student's data only through the class-scoped `SECURITY DEFINER` `teacher_*` functions, for active members,
   from their join date onward — never widen RLS on `sessions`/`scoring_envelopes`/`session_transcripts`/
   `exam_feedback_reports` for teachers. Learn feedback (JSON, stream, examiner routes) charges `assignment_learn_answer`

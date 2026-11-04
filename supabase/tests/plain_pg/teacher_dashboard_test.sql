@@ -1,4 +1,4 @@
--- Behaviour spec for 20261103090000_teacher_dashboard.sql. Run per README.md; ends with 'ALL PASSED'.
+-- Behaviour spec for 20261103091000_teacher_dashboard.sql. Run per README.md; ends with 'ALL PASSED'.
 \set ON_ERROR_STOP 1
 -- users: T teacher, T2 other teacher, A,B students, X stranger
 insert into auth.users values ('00000000-0000-0000-0000-00000000000a','t@x'),('00000000-0000-0000-0000-00000000000b','t2@x'),('00000000-0000-0000-0000-0000000000a1','a@x'),('00000000-0000-0000-0000-0000000000b1','b@x'),('00000000-0000-0000-0000-0000000000c1','x@x');

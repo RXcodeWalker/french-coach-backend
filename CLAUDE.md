@@ -67,7 +67,7 @@ that references it. The main repo's git history is no safety net here.
   them (`test_statuses_match_the_migration`). Razorpay has no cancel-at-period-end flag, so `cancel_at_period_end` there is
   this app's own record from `/cancel`, kept across re-reads. Off until `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET` +
   `RAZORPAY_PLAN_MONTHLY` are set; its table is read only while it is configured.
-- **Teacher dashboard** (migration `20261103091000`, main repo `docs/systems/teacher-dashboard.md`, ADR 0014): a teacher
+- **Teacher dashboard** (migration `20261103091000`, main repo `docs/systems/teacher-dashboard.md`, ADR 0015): a teacher
   reads a student's data only through the class-scoped `SECURITY DEFINER` `teacher_*` functions, for active members,
   from their join date onward — never widen RLS on `sessions`/`scoring_envelopes`/`session_transcripts`/
   `exam_feedback_reports` for teachers. Learn feedback (JSON, stream, examiner routes) charges `assignment_learn_answer`

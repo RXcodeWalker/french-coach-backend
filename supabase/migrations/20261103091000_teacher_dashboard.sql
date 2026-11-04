@@ -1,5 +1,5 @@
 /*
-  Teacher dashboard (main repo docs/plans/teacher-dashboard.md; ADR 0014
+  Teacher dashboard (main repo docs/plans/teacher-dashboard.md; ADR 0015
   "Teacher access to student data is granted by class membership").
 
   Owner decisions taken as recommended in the plan: D1 teachers are invite-only

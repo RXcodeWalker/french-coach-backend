@@ -6,7 +6,7 @@
   premium_daily_limit) and the same has_premium(), which now also counts a
   Razorpay subscription. Main repo docs/systems/payments.md §6.
 
-  Needs 20261104120000_premium_billing.sql first (it redefines has_premium() and
+  Needs 20261104230000_premium_billing.sql first (it redefines has_premium() and
   refuse_delete_with_live_subscription(), both created there).
 
   Tables (written only by the FastAPI service, routers/billing_razorpay.py, with
@@ -29,7 +29,7 @@
   Deleting an account is refused while a Razorpay subscription holds a mandate
   (authenticated, active, pending, halted, paused); the app cancels it first.
 
-  Rollback: re-run 20261104120000's has_premium() and
+  Rollback: re-run 20261104230000's has_premium() and
   refuse_delete_with_live_subscription() bodies, then DROP the two tables.
 */
 

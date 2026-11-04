@@ -12,7 +12,7 @@
     - learner_snapshots: one row per account, written by the client (push-only,
       never read back — the same one-directional precedent as profiles.daily_goal).
       Holds what the app itself shows: the streak count and its day key (the
-      app's streak days are UTC dates — analyticsService.ts dateKey()), streak
+      learner's local calendar day — the main repo's src/lib/localDay.ts), streak
       freezes owned, the learner's timezone, and the coach's current recurring
       mistake (the Learn intervention loop's active problem: skill id, its
       display label/hint, misses this week). Only ever used to word the
@@ -43,7 +43,7 @@
     - get_daily_nudge_candidates(): everyone with a push subscription and a
       notify_* preference on, who has not had today's nudge (local day), with
       the facts the sender needs to choose and word one nudge: streak, freezes,
-      today's answers (UTC day, the same day the app's goal ring counts),
+      today's answers (local day, the same day the app's goal ring counts),
       habit hour (most common local hour of their last 21 days of sessions),
       last activity, focus mistake. The decision itself lives in TypeScript
       (retention/dailyNudge.ts) where it is unit-tested.
@@ -270,8 +270,8 @@ BEGIN
   JOIN LATERAL (
     SELECT
       max(s.created_at) AS last_active,
-      -- The app's goal ring and streak count UTC days (dateKey()).
-      count(*) FILTER (WHERE (s.created_at AT TIME ZONE 'UTC')::date = (now() AT TIME ZONE 'UTC')::date) AS today_count,
+      -- The app's goal ring and streak count the learner's local day (src/lib/localDay.ts).
+      count(*) FILTER (WHERE (s.created_at AT TIME ZONE b.tz)::date = (now() AT TIME ZONE b.tz)::date) AS today_count,
       count(DISTINCT (s.created_at AT TIME ZONE b.tz)::date) FILTER (WHERE s.created_at > now() - interval '14 days') AS active_days_14
     FROM public.sessions s WHERE s.user_id = b.uid
   ) sess ON true

@@ -6103,11 +6103,11 @@ class _SendGuardianEmailRequest(BaseModel):
 
 def _send_guardian_consent_email(guardian_email: str, consent_url: str) -> None:
     msg = EmailMessage()
-    msg["Subject"] = "A learner has asked you to confirm speaking practice on Français AI"
+    msg["Subject"] = "A learner has asked you to confirm speaking practice on French Coach"
     msg["From"] = SMTP_FROM
     msg["To"] = guardian_email
     msg.set_content(
-        "A learner using Français AI, a French speaking-practice app, has told us "
+        "A learner using French Coach, a French speaking-practice app, has told us "
         "they're under 13 and given us your email as their parent or guardian.\n\n"
         "Speaking practice is switched off for their account — no audio is recorded "
         "and nothing is sent to any provider — until you confirm you're okay with it.\n\n"

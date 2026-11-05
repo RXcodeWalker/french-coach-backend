@@ -73,4 +73,7 @@ that references it. The main repo's git history is no safety net here.
   `exam_feedback_reports` for teachers. Learn feedback (JSON, stream, examiner routes) charges `assignment_learn_answer`
   instead of `learn_answer` when `X-Assignment-Id` names homework the service-role RPC `assignment_allowance` accepts
   (`lib/assignment_allowance.py`; key prefix `asg:<id>:` so the RPC can count an assignment's answers); anything else
-  falls back to `learn_answer`. SQL behaviour spec: `supabase/tests/plain_pg/` (plain local Postgres).
+  falls back to `learn_answer`. Co-teachers and several classes per student (migration `20261105120000`): `_owned_class` = any
+  teacher of the class, `_class_owner` = owner only (archive, managing teachers); teacher-table RLS goes through the SECURITY
+  DEFINER `is_class_teacher()` (a policy querying `class_teachers` directly would recurse). SQL behaviour specs:
+  `supabase/tests/plain_pg/` (plain local Postgres).

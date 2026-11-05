@@ -11,7 +11,8 @@ createdb -h <socket-dir> -p <port> -U postgres teacher_test
 psql -q -v ON_ERROR_STOP=1 -h <socket-dir> -p <port> -U postgres -d teacher_test \
   -f supabase/tests/plain_pg/prelude.sql \
   -f supabase/migrations/20261103091000_teacher_dashboard.sql \
-  -f supabase/tests/plain_pg/teacher_dashboard_test.sql
+  -f supabase/migrations/20261105120000_co_teachers_and_multi_class.sql \
+  -f supabase/tests/plain_pg/teacher_dashboard_test.sql   # or co_teachers_multi_class_test.sql
 ```
 
 The last line printed must be `ALL PASSED`; any failed expectation stops with an error.

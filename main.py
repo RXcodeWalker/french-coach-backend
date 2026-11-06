@@ -23,6 +23,7 @@ Run locally:
 
 from __future__ import annotations
 
+from zoneinfo import ZoneInfo
 import asyncio
 import copy
 import hashlib
@@ -4429,9 +4430,19 @@ async def _parse_feedback_request(request: Request) -> tuple[
 LEARN_ANSWER_FEATURE = "learn_answer"
 
 
-def _utc_day_end() -> str:
-    now = datetime.now(timezone.utc)
-    return (datetime(now.year, now.month, now.day, tzinfo=timezone.utc) + timedelta(days=1)).isoformat()
+# The AI usage-limit day ends at midnight India time (owner, 2026-11-06), not UTC
+# midnight (05:30 IST). Must match consume_ai_quota's grant_date (migration
+# 20261106090000) and the scoring server's examAllowance.ts.
+QUOTA_TZ = ZoneInfo("Asia/Kolkata")
+
+
+def _quota_today() -> str:
+    return datetime.now(QUOTA_TZ).date().isoformat()
+
+
+def _quota_day_end() -> str:
+    now = datetime.now(QUOTA_TZ)
+    return (datetime(now.year, now.month, now.day, tzinfo=QUOTA_TZ) + timedelta(days=1)).isoformat()
 
 
 async def _read_limit_row(db, feature: str) -> dict:
@@ -4466,7 +4477,7 @@ async def _plan_limit(db, user_id: str, limit_row: dict) -> tuple[int, bool]:
 @app.get("/api/learn/allowance")
 @rate_limit("60/minute")
 async def learn_allowance(request: Request, authorization: str | None = Header(None)) -> dict[str, Any]:
-    """How many AI-marked Learn answers this account has left today (UTC day),
+    """How many AI-marked Learn answers this account has left today (India day, midnight IST),
     read without charging anything: {limit, used, remaining, resetsAt}. The
     charge itself is consume_ai_quota's (learn_answer); this only lets the app
     size a session and say "come back tomorrow" before a learner records."""
@@ -4478,7 +4489,7 @@ async def learn_allowance(request: Request, authorization: str | None = Header(N
         db = get_supabase()
         if db is None:
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"})
-        today = datetime.now(timezone.utc).date().isoformat()
+        today = _quota_today()
         try:
             limit_row = await _read_limit_row(db, LEARN_ANSWER_FEATURE)
             used_res = await asyncio.to_thread(
@@ -4492,7 +4503,7 @@ async def learn_allowance(request: Request, authorization: str | None = Header(N
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"}) from exc
     return {
         "limit": limit, "used": used, "remaining": max(0, limit - used),
-        "resetsAt": _utc_day_end(), "premium": premium,
+        "resetsAt": _quota_day_end(), "premium": premium,
     }
 
 
@@ -4502,7 +4513,7 @@ PRONUNCIATION_LAB_FEATURE = "pronunciation_lab"
 @app.get("/api/pronunciation/allowance")
 @rate_limit("60/minute")
 async def pronunciation_lab_allowance(request: Request, authorization: str | None = Header(None)) -> dict[str, Any]:
-    """How many Pronunciation Lab takes this account has left today (UTC day),
+    """How many Pronunciation Lab takes this account has left today (India day, midnight IST),
     read without charging anything: {limit, used, remaining, resetsAt}. The
     charge itself is POST /api/pronunciation's (`pronunciation_lab`, scripted
     takes naming source=lab); this only lets the Lab say "N checks left"."""
@@ -4514,7 +4525,7 @@ async def pronunciation_lab_allowance(request: Request, authorization: str | Non
         db = get_supabase()
         if db is None:
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"})
-        today = datetime.now(timezone.utc).date().isoformat()
+        today = _quota_today()
         try:
             limit_row = await _read_limit_row(db, PRONUNCIATION_LAB_FEATURE)
             used_res = await asyncio.to_thread(
@@ -4528,7 +4539,7 @@ async def pronunciation_lab_allowance(request: Request, authorization: str | Non
             raise HTTPException(status_code=503, detail={"error": "quota_service_unavailable"}) from exc
     return {
         "limit": limit, "used": used, "remaining": max(0, limit - used),
-        "resetsAt": _utc_day_end(), "premium": premium,
+        "resetsAt": _quota_day_end(), "premium": premium,
     }
 
 

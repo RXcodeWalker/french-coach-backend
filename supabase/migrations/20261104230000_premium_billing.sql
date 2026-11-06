@@ -166,13 +166,13 @@ BEGIN
 
   IF EXISTS (SELECT 1 FROM public.ai_usage_grants WHERE id = v_id) THEN
     SELECT count(*) INTO v_used FROM public.ai_usage_grants
-      WHERE user_id = p_user_id AND feature = p_feature AND grant_date = (now() AT TIME ZONE 'utc')::date;
+      WHERE user_id = p_user_id AND feature = p_feature AND grant_date = (now() AT TIME ZONE 'Asia/Kolkata')::date;
     RETURN jsonb_build_object('ok', true, 'granted', true, 'replayed', true, 'used', v_used, 'limit', v_limit);
   END IF;
 
   PERFORM pg_advisory_xact_lock(hashtext('ai_quota:' || p_feature || ':' || p_user_id::text));
 
-  v_date := (now() AT TIME ZONE 'utc')::date;
+  v_date := (now() AT TIME ZONE 'Asia/Kolkata')::date;
 
   SELECT count(*) INTO v_used FROM public.ai_usage_grants
     WHERE user_id = p_user_id AND feature = p_feature AND grant_date = v_date;
@@ -224,7 +224,7 @@ BEGIN
 
   PERFORM pg_advisory_xact_lock(hashtext('ai_quota:' || p_feature || ':' || p_user_id::text));
 
-  v_date := (now() AT TIME ZONE 'utc')::date;
+  v_date := (now() AT TIME ZONE 'Asia/Kolkata')::date;
   v_id := p_user_id::text || ':' || p_feature || ':' || p_idempotency_key;
 
   DELETE FROM public.ai_usage_grants WHERE id = v_id;

@@ -18,5 +18,5 @@ psql -q -v ON_ERROR_STOP=1 -h <socket-dir> -p <port> -U postgres -d teacher_test
 The last line printed must be `ALL PASSED`; any failed expectation stops with an error.
 
 Parent view email links: `-f prelude.sql -f parent_view_prelude.sql -f ../../migrations/20261104090000_parent_links.sql
--f ../../migrations/20261104100000_parent_report_exam_columns.sql -f ../../migrations/20261106100000_parent_digest_dashboard_link.sql
+-f ../../migrations/20261104100000_parent_report_exam_columns.sql -f ../../migrations/20261107100000_parent_digest_dashboard_link.sql
 -f parent_digest_link_test.sql`.

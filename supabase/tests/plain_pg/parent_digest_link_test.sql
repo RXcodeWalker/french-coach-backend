@@ -1,4 +1,4 @@
--- Behaviour spec for 20261106100000_parent_digest_dashboard_link.sql. Run after prelude.sql,
+-- Behaviour spec for 20261107100000_parent_digest_dashboard_link.sql. Run after prelude.sql,
 -- parent_view_prelude.sql, 20261104090000_parent_links.sql, 20261104100000_parent_report_exam_columns.sql
 -- and that migration (README.md); ends with 'ALL PASSED'.
 \set ON_ERROR_STOP 1

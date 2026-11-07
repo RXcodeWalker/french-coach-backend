@@ -423,7 +423,7 @@ BEGIN
     NOT EXISTS (
       SELECT 1 FROM public.ai_usage_grants g
       WHERE g.user_id = d.uid AND g.feature = 'exam_attempt'
-        AND g.grant_date > (now() AT TIME ZONE 'UTC')::date - 7
+        AND g.grant_date > (now() AT TIME ZONE 'Asia/Kolkata')::date - 7
     ),
     lastact.at,
     COALESCE(ls.streak_count, 0),

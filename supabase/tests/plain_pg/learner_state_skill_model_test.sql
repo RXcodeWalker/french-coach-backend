@@ -1,4 +1,4 @@
--- Behaviour spec for 20261106090000_learner_state_skill_model.sql. Run after prelude.sql,
+-- Behaviour spec for 20261106100000_learner_state_skill_model.sql. Run after prelude.sql,
 -- 20261103150000_learner_state.sql and that migration (README.md); ends with 'ALL PASSED'.
 \set ON_ERROR_STOP 1
 insert into auth.users values ('00000000-0000-0000-0000-0000000000a1','a@x'),('00000000-0000-0000-0000-0000000000b2','b@x');

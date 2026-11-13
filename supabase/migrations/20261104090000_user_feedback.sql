@@ -26,7 +26,11 @@ CREATE INDEX IF NOT EXISTS user_feedback_user_created_idx
 
 ALTER TABLE public.user_feedback ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON public.user_feedback FROM anon, authenticated;
--- No policies: only the service key (bypasses RLS) and submit_feedback() touch it.
+-- No policies. service_role bypasses RLS but still needs the grant (this project
+-- does not auto-expose new tables). SELECT + UPDATE: the hourly email job.
+-- Inserts go through submit_feedback() only. Granted again, idempotently, in
+-- 20261113140000 because this file had already been applied without the grant.
+GRANT SELECT, UPDATE ON public.user_feedback TO service_role;
 
 CREATE OR REPLACE FUNCTION public.submit_feedback(
   p_kind text,

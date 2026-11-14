@@ -375,11 +375,11 @@ def get_whisper():
 from collections import OrderedDict
 from services.cache import BoundedTTLCache
 
-# General-purpose cache (health probes, daily news, grammar lessons, vocab
+# General-purpose cache (health probes, grammar lessons, vocab
 # prep, igcse-papers) — bounded (phase-3-plan-tidy-widget.md §3), unlike the
 # plain unbounded dict this replaced. ttl_sec is per-entry (see
 # BoundedTTLCache.set), since call sites here use very different TTLs (5s
-# health-probe failure through 86400s daily news); the instance default
+# health-probe failure through day-long entries); the instance default
 # below is never actually relied on.
 _CACHE_MAX = 500
 _CACHE: BoundedTTLCache[Any] = BoundedTTLCache(_CACHE_MAX, 3600.0)
@@ -5247,57 +5247,6 @@ async def get_daily_question() -> dict:
         raise HTTPException(status_code=404, detail="No daily challenges found")
     day_index = (datetime.now(timezone.utc).toordinal()) % len(pool)
     return pool[day_index]
-
-
-@app.get("/api/news/daily")
-@rate_limit("20/minute")
-async def generate_daily_news(request: Request) -> dict:
-    """Generate today's news snippet using Gemini (cached 24 h)."""
-    today = date.today().isoformat()
-    cache_key = f"news:{today}"
-    cached = await _cache_get(cache_key)
-    if cached:
-        return cached
-
-    # Randomly pick a topic to ensure variety
-    topics = ["Sports", "Technologie", "Culture", "Météo", "Environnement", "Société"]
-    chosen_topic = random.choice(topics)
-
-    prompt = f"Générez un bulletin d'actualités sur le thème : {chosen_topic}. Date : {today}."
-
-    try:
-        import google.generativeai as genai
-        if not GEMINI_API_KEY:
-            raise HTTPException(status_code=503, detail="Gemini not configured")
-
-        genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel(
-            GEMINI_MODEL,
-            system_instruction=NEWS_SYSTEM_PROMPT,
-        )
-
-        response = await asyncio.to_thread(model.generate_content, prompt)
-        news = extract_json(response.text)
-        news["id"] = f"news-{today}"
-        news["date"] = today
-        await _cache_set(cache_key, news, 86400)
-        return news
-    except Exception as e:
-        log.error("Failed to generate news: %s", e)
-        fallback = {
-            "id": f"news-{today}",
-            "date": today,
-            "headline": "Bulletin d'Information Quotidien",
-            "transcript": "Bienvenue à votre bulletin d'actualités. Aujourd'hui en France, nous observons une amélioration générale du climat social. Les citoyens se préparent pour les festivités nationales de la semaine prochaine.",
-            "keywords": ["actualités", "climat", "social", "festivités"],
-            "summaryPoints": [
-                "Daily news update",
-                "General improvement in social climate in France",
-                "Citizens preparing for national festivities next week"
-            ],
-        }
-        await _cache_set(cache_key, fallback, 3600)
-        return fallback
 
 
 # ── /api/exam-sets ─────────────────────────────────────────────────────────────

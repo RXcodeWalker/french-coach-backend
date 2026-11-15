@@ -610,6 +610,903 @@
         "status": "draft",
         "notes": "Learn Batch 3b: re-read against its wording by the authoring model; not human-reviewed."
       }
+    },
+    {
+      "questionId": "tra_31",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say what transport you last used and where you went, in the past tense, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_32",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say which you prefer, walking or the bus, and give at least one reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_33",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say at least two things you do on a long journey.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_34",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect",
+          "imperfect"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Tell what went wrong on a journey, in the past tense, with what happened and how it ended.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_35",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give at least two ideas to get more people on buses, with a reason for each.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_36",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give at least two differences between a train and a metro.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_37",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Say what disabled passengers need and give your opinion on whether transport should be accessible to everyone.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_38",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Tell what happened when something went wrong on a trip, in the past tense, with at least three details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_39",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification",
+          "negation"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on speed limits with at least one reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_40",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain the parking problem and suggest at least one solution.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_41",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past",
+          "present"
+        ],
+        "structures": [
+          "perfect",
+          "imperfect",
+          "negation"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Tell about a frightening car ride, in the past tense, and say how you reacted.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_42",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "justification",
+          "negation",
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give at least two reasons people choose electric cars.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_43",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say where you would go first and who with, using the conditional.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_44",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain how people learn to drive and give your opinion on the age limit.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_45",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say the best way to see a foreign city and give at least one reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_46",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect",
+          "imperfect"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Tell about a boat trip in the past tense, with where you went and at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_47",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say at least two things you do to prepare for a long journey.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_48",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "past",
+          "present",
+          "future"
+        ],
+        "structures": [
+          "perfect",
+          "simple-future",
+          "comparison"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give at least two ways air travel has changed, and say what you expect in future.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_49",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name a country you'd tour by train and give a reason, using the conditional.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_50",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give at least one advantage and one disadvantage of coach travel.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_51",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "justification",
+          "conditional",
+          "opinion"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give at least two reasons night trains are popular again.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_52",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "simple-future",
+          "opinion"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Predict at least two kinds of transport in future cities, using the future tense.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_53",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say at least two things that would change if trains were free, using the conditional.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_54",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "conditional",
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on flying taxis and say whether you would use one, with a reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_55",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give at least two effects of carpooling apps and one point of caution.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_56",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison",
+          "justification",
+          "opinion"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give at least two ways a high-speed train beats a plane, and say which you prefer.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_57",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say at least two effects of banning cars from the centre, using the conditional.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_58",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say why a helmet matters and give your opinion on the rule.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_59",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "negation",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name a vehicle you dream about and give at least one reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_60",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say how you get to at least two after-school activities.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_61",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say at least two things you would do as mayor to improve transport, using the conditional.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_62",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Tell about a time someone helped you on a journey, in the past tense, with what happened.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_63",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "justification",
+          "opinion",
+          "conditional"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give at least two ways cities can reduce traffic jams and say which is best.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_64",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "opinion",
+          "justification",
+          "negation"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your view on whether bikes and scooters are dangerous, with at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_65",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect",
+          "imperfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe a travel memory in the past tense, with who, where and at least one detail.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_66",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "opinion",
+          "justification",
+          "conditional",
+          "negation"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Say whether transport feels safe at night and suggest at least two improvements.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_67",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect",
+          "imperfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say how you travelled on holiday, in the past tense, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_68",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion of bike-share schemes with at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_69",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "past"
+        ],
+        "structures": [
+          "opinion",
+          "justification",
+          "perfect"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Choose the best transport invention and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "tra_70",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [
+          "conditional",
+          "simple-future",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you'd work in transport, name a job and give at least one reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
     }
   ]
 }

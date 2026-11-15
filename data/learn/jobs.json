@@ -1520,6 +1520,685 @@
         "status": "draft",
         "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
       }
+    },
+    {
+      "questionId": "job_71",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [
+          "justification",
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Name an interesting future job and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_72",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your ideal job with at least two details, such as place, people or hours.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_73",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification",
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Choose an artistic job and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_74",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional",
+          "past"
+        ],
+        "structures": [
+          "conditional",
+          "perfect",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name someone to interview and give at least two questions you would ask.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_75",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "conditional",
+          "present"
+        ],
+        "structures": [
+          "conditional",
+          "negation",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give at least two pieces of advice about choosing a career, with reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_76",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "past"
+        ],
+        "structures": [
+          "perfect",
+          "negation",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name someone who inspires you at work and give at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_77",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [
+          "comparison",
+          "justification",
+          "simple-future"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare a stable and an adventurous job and say which you prefer.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_78",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name a job to try for a year and give at least two things you would do or learn.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_79",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe a hairdresser's day with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_80",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "opinion",
+          "negation",
+          "conditional",
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name chores you do and say whether they are real work, with a reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_81",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect",
+          "imperfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Tell about a workplace visit with at least two past details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_82",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say how a family member gets to work with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_83",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give the best and the worst part of a part-time job.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_84",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "simple-future"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe your first day at work with at least two future details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_85",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present",
+          "future"
+        ],
+        "structures": [
+          "comparison",
+          "simple-future",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain at least two things to do to succeed in a job interview.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_86",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "negation",
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say at least two things to put in a CV.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_87",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "future",
+          "present"
+        ],
+        "structures": [
+          "near-future",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name a skill and give at least two ways you will improve it.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_88",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "opinion",
+          "conditional",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on a gap year with at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_89",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe two science jobs with at least one detail each.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_90",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "negation",
+          "opinion",
+          "conditional",
+          "comparison"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain at least two ways school prepares you for work.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_91",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "negation",
+          "comparison",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name a disliked subject and give at least one way it could help in a job.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_92",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain at least two steps or studies needed for a chosen job.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_93",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say at least two things you did this year towards your future job.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_94",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "past",
+          "conditional"
+        ],
+        "structures": [
+          "perfect",
+          "imperfect",
+          "conditional",
+          "opinion",
+          "negation"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Name jobs that were vital in the pandemic and explain why.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_95",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give at least two examples of jobs protecting the environment.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_96",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison",
+          "opinion",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give at least one advantage of small and of large companies.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_97",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "conditional",
+          "comparison",
+          "negation"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Name at least two causes of work stress and two ways to manage it.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_98",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "conditional",
+          "future"
+        ],
+        "structures": [
+          "opinion",
+          "conditional",
+          "simple-future",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Give your opinion on child labour with at least two reasons or solutions.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_99",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present",
+          "conditional"
+        ],
+        "structures": [
+          "opinion",
+          "conditional",
+          "comparison",
+          "justification"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give an age for retirement and at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "job_100",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "simple-future",
+          "opinion"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Name at least two jobs that will exist in fifty years and say why.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-15 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
     }
   ]
 }

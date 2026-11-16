@@ -20,3 +20,18 @@ The last line printed must be `ALL PASSED`; any failed expectation stops with an
 Parent view email links: `-f prelude.sql -f parent_view_prelude.sql -f ../../migrations/20261104090000_parent_links.sql
 -f ../../migrations/20261104100000_parent_report_exam_columns.sql -f ../../migrations/20261107100000_parent_digest_dashboard_link.sql
 -f parent_digest_link_test.sql`.
+
+## Whole-schema tests (PGlite, no Postgres install)
+
+`run_all_migrations.mjs` applies **every** migration in order to an in-memory Postgres (PGlite) behind
+`supabase_prelude.sql` (Supabase's roles, `auth.users`, `auth.uid()`/`auth.jwt()`, the `extensions` schema and the
+default table privileges production grants), then runs the test files named on the command line. PGlite is not a
+dependency here, so install it in a scratch folder outside both repos and run from there:
+
+```bash
+cd <scratch> && npm install @electric-sql/pglite
+node <repo>/backend/supabase/tests/plain_pg/run_all_migrations.mjs <repo>/backend/supabase/tests/plain_pg/security_2026_11_f1_profiles_test.sql
+```
+
+It stops if any migration fails to apply. The `security_2026_11_*_test.sql` files are the security review's
+(main repo `docs/audits/security-review-2026-11.md`) findings as regression tests; each ends with `ALL PASSED`.

@@ -206,3 +206,21 @@ def test_the_legacy_exam_pipeline_is_gone(path):
     with TestClient(main.app) as client:
         resp = client.post(path, json={"candidate_id": "anyone", "session_id": "s"})
     assert resp.status_code == 404
+
+
+# ── Security review 2026-11 F11a: the SRS routes are gone ────────────────────
+# They took `user_id` from the caller and read/wrote srs_cards with the service
+# key and no sign-in (inert only because the table does not exist).
+
+
+@pytest.mark.parametrize(
+    ("method", "path"),
+    [("post", "/api/srs/card"), ("get", "/api/srs/next"), ("post", "/api/srs/review")],
+)
+def test_the_srs_routes_are_gone(monkeypatch, method, path):
+    touched: list[str] = []
+    monkeypatch.setattr(main, "get_supabase", lambda: touched.append("db"))
+    with TestClient(main.app) as client:
+        resp = getattr(client, method)(path, params={"user_id": "22222222-2222-2222-2222-222222222222"})
+    assert resp.status_code == 404
+    assert touched == []

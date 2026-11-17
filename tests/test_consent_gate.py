@@ -67,20 +67,55 @@ def downstream_calls(monkeypatch):
     return calls
 
 
+_FEEDBACK_PATHS = ["/api/feedback", "/api/feedback/v3", "/api/feedback/stream"]
+
+
 def _post(client, path):
-    data = {"language": "fr"} if path == "/api/transcribe" else {"target_text": "bonjour", "mode": "scripted"}
+    if path == "/api/transcribe":
+        data = {"language": "fr"}
+    elif path.startswith("/api/feedback"):
+        data = {"question": "Parle de ta famille."}
+    else:
+        data = {"target_text": "bonjour", "mode": "scripted"}
     return client.post(path, files=_AUDIO, data=data, headers={"Authorization": "Bearer t"})
 
 
-@pytest.mark.parametrize("path", ["/api/transcribe", "/api/pronunciation"])
+@pytest.fixture
+def whisper_calls(monkeypatch):
+    calls: list[str] = []
+
+    async def _whisper(path, lang, prompt=None):
+        calls.append(path)
+        return {"text": "bonjour je m'appelle Leo", "words": [], "segments": []}
+
+    monkeypatch.setattr(main, "GROQ_API_KEY", "stub")
+    monkeypatch.setattr(main, "_groq_whisper", _whisper)
+    return calls
+
+
+@pytest.mark.parametrize("path", ["/api/transcribe", "/api/pronunciation", *_FEEDBACK_PATHS])
 @pytest.mark.parametrize("status", ["pending", consent._MISSING])
-def test_pending_or_missing_profile_is_403_before_any_downstream_call(monkeypatch, signed_in, downstream_calls, path, status):
+def test_pending_or_missing_profile_is_403_before_any_downstream_call(
+    monkeypatch, signed_in, downstream_calls, whisper_calls, path, status
+):
+    """Security review F2: the feedback routes took audio with no check."""
     monkeypatch.setattr(consent, "_fetch_consent_status", _status(status))
     with TestClient(main.app) as client:
         resp = _post(client, path)
     assert resp.status_code == 403
     assert resp.json()["detail"] == {"error": "consent_required"}
     assert downstream_calls == []
+    assert whisper_calls == []
+
+
+@pytest.mark.parametrize("path", _FEEDBACK_PATHS)
+def test_feedback_without_audio_is_not_consent_gated(monkeypatch, signed_in, downstream_calls, path):
+    """A typed answer sends no recording, so a `pending` account may still ask."""
+    monkeypatch.setattr(consent, "_fetch_consent_status", _status("pending"))
+    body = {"question": "Parle de ta famille.", "transcript": "J'ai deux freres."}
+    with TestClient(main.app) as client:
+        resp = client.post(path, json=body, headers={"Authorization": "Bearer t"})
+    assert downstream_calls, resp.text
 
 
 @pytest.mark.parametrize("path", ["/api/transcribe", "/api/pronunciation"])

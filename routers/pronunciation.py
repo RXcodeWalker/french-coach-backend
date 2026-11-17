@@ -392,6 +392,27 @@ async def pronunciation_evaluate(
     raw = b"".join(chunks)
     audio_digest_hex = digest.hexdigest()
 
+    # Charged before the first provider call (Whisper; security review F2), so
+    # the key names only what the client sent: for a scripted take it is the
+    # cache key below, for freeform it uses the client's target_text because
+    # the reference text comes from Whisper. The Lab's scripted takes have
+    # their own daily allowance (plan Stage 7, owner D3); every other caller
+    # keeps `pronunciation`. Literal feature names on purpose:
+    # test_quota_features_seeded collects them from the call sites.
+    lab_take = _is_lab_take(source, mode)
+    quota_key = _audio_digest_key(audio_digest_hex, target_text, mode)
+    if lab_take:
+        grant = await consume_ai_quota_or_503(_db(), user_id, "pronunciation_lab", quota_key)
+    else:
+        grant = await consume_ai_quota_or_503(_db(), user_id, "pronunciation", quota_key)
+    fresh_grant = not (grant or {}).get("replayed")
+
+    async def refund_unused_grant() -> None:
+        """Nothing was assessed, so nothing is spent: a grant this request made
+        is given back (a replayed one belongs to the earlier request)."""
+        if fresh_grant:
+            await _release_assessment_grant(user_id, lab_take, quota_key)
+
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
         tmp.write(raw)
         tmp_path = tmp.name
@@ -434,6 +455,7 @@ async def pronunciation_evaluate(
             # would be asked to grade against an empty ReferenceText, which
             # yields a meaningless result rather than an error. Report the
             # honest outcome instead.
+            await refund_unused_grant()
             return PronunciationAssessmentResponse(
                 score=None,
                 transcript="",
@@ -451,21 +473,12 @@ async def pronunciation_evaluate(
         cache_key = _audio_digest_key(audio_digest_hex, reference_text, mode)
         cached_result = await _audio_cache.get(cache_key)
         if cached_result is not None:
+            # A cache hit never calls Azure, so it is never charged (plan
+            # correction #6), same as main.py's /api/feedback.
+            await refund_unused_grant()
             result = dict(cached_result)
             was_cached = True
         else:
-            # Quota consumed only on the cache-miss branch (plan correction
-            # #6), same as main.py's /api/feedback — a cache hit never calls
-            # Azure, so it correctly never charges quota either.
-            # The Lab's scripted takes have their own daily allowance (plan
-            # Stage 7, owner D3); every other caller keeps `pronunciation`.
-            # Literal feature names on purpose: test_quota_features_seeded
-            # collects them from the call sites.
-            lab_take = _is_lab_take(source, mode)
-            if lab_take:
-                await consume_ai_quota_or_503(_db(), user_id, "pronunciation_lab", cache_key)
-            else:
-                await consume_ai_quota_or_503(_db(), user_id, "pronunciation", cache_key)
             try:
                 result = await _assess_metered(
                     user_id=user_id,
@@ -482,14 +495,14 @@ async def pronunciation_evaluate(
                     run_with_retries=_run_with_retries_fn,
                 )
             except BaseException:
-                await _release_assessment_grant(user_id, lab_take, cache_key)
+                await _release_assessment_grant(user_id, lab_take, quota_key)
                 raise
             # Release-on-failure (exam-pronunciation plan §4): the learner got
             # no assessment and Azure never processed the audio, so nothing
             # was spent. An Azure couldNotAssess (silence, no match) was
             # processed and billed, so it stays charged.
             if result.get("couldNotAssess") and result.get("provider") != "azure":
-                await _release_assessment_grant(user_id, lab_take, cache_key)
+                await _release_assessment_grant(user_id, lab_take, quota_key)
             was_cached = False
             if _is_cacheable(result):
                 await _audio_cache.set(cache_key, result)

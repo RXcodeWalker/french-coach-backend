@@ -1435,4 +1435,8 @@ def test_a_lab_replay_of_the_same_audio_costs_nothing(monkeypatch):
             files={"audio": ("recording.wav", audio, "audio/wav")},
         )
         assert r.status_code == 200
-    assert [f for f, _ in quota.consumed] == ["pronunciation_lab"]
+    # Since security review F2 the charge comes before Whisper, so the second
+    # (cached) take is charged and given straight back: one charge in all. (In
+    # production the same key is a free replay; this recorder has no replays.)
+    assert [f for f, _ in quota.consumed] == ["pronunciation_lab", "pronunciation_lab"]
+    assert quota.released == quota.consumed[1:]

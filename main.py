@@ -3999,6 +3999,36 @@ async def _consume_feedback_quota(
     return ("feedback", idempotency_key)
 
 
+async def _read_audio_upload(upload: Any) -> tuple[bytes, str]:
+    """(bytes, sha256 hex) of an uploaded recording, read in bounded chunks with
+    /api/transcribe's cap: 413 as soon as it is exceeded, never one unbounded read."""
+    total_bytes = 0
+    chunks: list[bytes] = []
+    digest = hashlib.sha256()
+    while True:
+        chunk = await upload.read(_TRANSCRIBE_READ_CHUNK_BYTES)
+        if not chunk:
+            break
+        total_bytes += len(chunk)
+        if total_bytes > _TRANSCRIBE_MAX_BYTES:
+            raise HTTPException(status_code=413, detail="Audio upload exceeds the size limit")
+        chunks.append(chunk)
+        digest.update(chunk)
+    return b"".join(chunks), digest.hexdigest()
+
+
+def _audio_feedback_quota_key(
+    audio_digest: str, question: str, transcript: str, marking: str | None, depth: str
+) -> str:
+    """Quota idempotency key for a feedback request that carries audio. It is
+    charged before transcription (security review F2), so it cannot depend on
+    the transcript Whisper will produce: it names the recording by its digest,
+    as /api/transcribe does. The same recording and request is the same key, so
+    an identical retry (or the stream's fallback to /v3) is not charged twice."""
+    parts = ["audio-feedback", audio_digest, question[:_FEEDBACK_QUESTION_MAX_CHARS], transcript, marking or "", depth]
+    return hashlib.sha256(json.dumps(parts, ensure_ascii=False).encode()).hexdigest()
+
+
 async def _feedback_impl(
     question: str,
     transcript: str,
@@ -4022,15 +4052,28 @@ async def _feedback_impl(
     """
     tmp_path: str | None = None
     audio_mime = "audio/webm"
+    learn = marking is not None
+    # (feature, key) charged for this request, released if it then fails.
+    charged: tuple[str, str] | None = None
 
     try:
         # ── Step 1: Transcribe audio if present ───────────────────────────────
         whisper_data: dict[str, Any] = {}
 
         if audio and audio.filename:
+            # Security review F2: a `pending` (under-13) account's recording
+            # never reaches a provider, the upload is read with a cap, and the
+            # answer is charged before the first provider call (Whisper).
+            await require_speaking_consent(get_supabase(), user_id)
             suffix   = os.path.splitext(audio.filename)[1] or ".webm"
             audio_mime = audio.content_type or f"audio/{suffix.lstrip('.')}" or "audio/webm"
-            raw = await audio.read()
+            raw, audio_digest = await _read_audio_upload(audio)
+            charged = await _consume_feedback_quota(
+                user_id,
+                _audio_feedback_quota_key(audio_digest, question, transcript, marking, depth),
+                learn=learn,
+                assignment_id=assignment_id,
+            )
 
             with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
                 tmp.write(raw)
@@ -4120,21 +4163,15 @@ async def _feedback_impl(
             # cache_key itself is never computed, since tmp_path disables the
             # cache) so identical retries of the same attempt are not charged
             # twice.
-            idempotency_key = cache_key or _request_cache_key(req, _cache_id)
-            learn = marking is not None
-            charged_feature, charged_key = await _consume_feedback_quota(
-                user_id, idempotency_key, learn=learn, assignment_id=assignment_id
-            )
+            # A request with audio was already charged, before transcription.
+            if charged is None:
+                idempotency_key = cache_key or _request_cache_key(req, _cache_id)
+                charged = await _consume_feedback_quota(
+                    user_id, idempotency_key, learn=learn, assignment_id=assignment_id
+                )
 
             t_start = time.monotonic()
-            try:
-                fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
-            except HTTPException:
-                # Every provider failed: a Learn answer that was never marked does
-                # not use up one of the learner's few daily answers.
-                if learn:
-                    await release_ai_quota_grant(get_supabase(), user_id, charged_feature, charged_key)
-                raise
+            fb = await call_ai_feedback(req, audio_path=tmp_path, audio_mime=audio_mime)
             latency_ms = (time.monotonic() - t_start) * 1000
             _log_feedback_latency(
                 fb.get("modelUsed", "unknown"),
@@ -4167,6 +4204,12 @@ async def _feedback_impl(
 
         return result
 
+    except Exception:
+        # Nothing was marked (transcription gave nothing, or every provider
+        # failed): the answer does not use up one of the learner's daily ones.
+        if charged is not None:
+            await release_ai_quota_grant(get_supabase(), user_id, *charged)
+        raise
     finally:
         if tmp_path:
             try:
@@ -4330,13 +4373,16 @@ def _extract_question_text_util(raw: Any) -> str:
     return str(raw or "")
 
 
-async def _parse_feedback_request(request: Request) -> tuple[
+async def _parse_feedback_request(request: Request, user_id: str | None = None) -> tuple[
     str, str, str, FeedbackDepth, str, dict[str, Any] | None, dict[str, Any] | None, bytes | None, str,
     str | None, str | None, dict[str, Any] | None, str | None,
 ]:
     """Parse multipart or JSON feedback request. Returns (question, transcript,
     model, depth, metrics_json, skill_context, difficulty_context, audio_bytes,
-    audio_mime, question_id, demands_version, demand_signals, marking)."""
+    audio_mime, question_id, demands_version, demand_signals, marking).
+
+    With an audio part, the caller's speaking consent (`user_id`, which the
+    route always passes) is checked before the upload is read (F2)."""
     content_type = (request.headers.get("content-type") or "").lower()
     question = ""
     transcript = ""
@@ -4363,8 +4409,10 @@ async def _parse_feedback_request(request: Request) -> tuple[
         if isinstance(maybe_audio, UploadFile) or (
             hasattr(maybe_audio, "read") and hasattr(maybe_audio, "filename")
         ):
+            if user_id is not None:
+                await require_speaking_consent(get_supabase(), user_id)
             audio_mime = maybe_audio.content_type or "audio/webm"
-            audio_bytes = await maybe_audio.read()
+            audio_bytes, _ = await _read_audio_upload(maybe_audio)
         # The client always sets the top-level `question` form field (even
         # when `data` also carries a fuller payload alongside audio), so this
         # must run unconditionally — gating it behind `if not question:` meant
@@ -4556,7 +4604,7 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
     try:
         (question, transcript, model, depth, metrics_json,
          skill_context, difficulty_context, audio_bytes, audio_mime,
-         question_id, demands_version, demand_signals, marking) = await _parse_feedback_request(request)
+         question_id, demands_version, demand_signals, marking) = await _parse_feedback_request(request, user_id)
     except HTTPException:
         raise
     except Exception as exc:
@@ -4568,6 +4616,24 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
 
     async def generate():
         tmp_path: str | None = None
+        # (feature, key) charged for this stream, released if nothing is marked.
+        charged: tuple[str, str] | None = None
+
+        async def charge(idempotency_key: str) -> dict | None:
+            """Charge this answer; on a refusal, the `error` event's data. A
+            denial can't raise HTTPException here — the response has already
+            started streaming — so it is surfaced as a structured error event."""
+            nonlocal charged
+            try:
+                charged = await _consume_feedback_quota(
+                    user_id, idempotency_key, learn=marking is not None, assignment_id=stream_assignment_id
+                )
+            except QuotaDenied as e:
+                return e.detail if isinstance(e.detail, dict) else {"error": "denied"}
+            except HTTPException as e:
+                return e.detail if isinstance(e.detail, dict) else {"error": "quota_service_unavailable"}
+            return None
+
         try:
             # ── status: transcribing ──────────────────────────────────────────
             yield json.dumps({"type": "status", "data": {"phase": "transcribing"}}) + "\n"
@@ -4576,6 +4642,14 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
             actual_transcript = transcript
 
             if audio_bytes:
+                # Security review F2: charged before Whisper, so a refused
+                # request gets no free transcription back.
+                refused = await charge(_audio_feedback_quota_key(
+                    hashlib.sha256(audio_bytes).hexdigest(), question, transcript, marking, depth
+                ))
+                if refused is not None:
+                    yield json.dumps({"type": "error", "data": refused}) + "\n"
+                    return
                 suffix = ".webm"
                 with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
                     tmp.write(audio_bytes)
@@ -4599,6 +4673,9 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
                 actual_transcript = (whisper_data.get("text") or transcript or "").strip()
 
             if not actual_transcript.strip():
+                if charged is not None:
+                    await release_ai_quota_grant(get_supabase(), user_id, *charged)
+                    charged = None
                 yield json.dumps({"type": "error", "data": {"message": "No transcript available"}}) + "\n"
                 return
 
@@ -4655,24 +4732,13 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
 
             if not was_cached:
                 # Quota is consumed only on the cache-miss branch (plan
-                # correction #6), same as _feedback_impl. A denial can't
-                # raise HTTPException here — the response has already
-                # started streaming — so it's surfaced as a structured
-                # error event and the generator returns cleanly, matching
-                # the existing "No transcript available" pattern above.
-                idempotency_key = cache_key or _request_cache_key(req, cache_id)
-                try:
-                    await _consume_feedback_quota(
-                        user_id, idempotency_key, learn=marking is not None, assignment_id=stream_assignment_id
-                    )
-                except QuotaDenied as e:
-                    detail = e.detail if isinstance(e.detail, dict) else {"error": "denied"}
-                    yield json.dumps({"type": "error", "data": detail}) + "\n"
-                    return
-                except HTTPException as e:
-                    detail = e.detail if isinstance(e.detail, dict) else {"error": "quota_service_unavailable"}
-                    yield json.dumps({"type": "error", "data": detail}) + "\n"
-                    return
+                # correction #6), same as _feedback_impl; a request with audio
+                # was already charged, before transcription.
+                if charged is None:
+                    refused = await charge(cache_key or _request_cache_key(req, cache_id))
+                    if refused is not None:
+                        yield json.dumps({"type": "error", "data": refused}) + "\n"
+                        return
 
                 yield json.dumps({"type": "status", "data": {"phase": "generating"}}) + "\n"
 
@@ -4755,6 +4821,8 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
             # The response is already a 200 stream, so nothing else reports this.
             capture_route_error(exc, route="/api/feedback/stream", stage="stream")
             log.error("feedback/stream error: %s\n%s", repr(exc), traceback.format_exc())
+            if charged is not None:
+                await release_ai_quota_grant(get_supabase(), user_id, *charged)
             yield json.dumps({"type": "error", "data": {"message": str(exc)}}) + "\n"
         finally:
             if tmp_path:

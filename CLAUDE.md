@@ -21,6 +21,9 @@ that references it. The main repo's git history is no safety net here.
   it, and the SQL `is_admin()` (migration `20261102090000`) repeats the email — change all of them together. Never
   check `app_metadata.role` alone.
 - Its own CI runs pytest; there is no frontend CI here.
+- A guest's id and slowapi's address bucket come from `lib/guest.py`'s `client_ip`: the X-Forwarded-For entry
+  `TRUSTED_PROXY_HOPS` (default 1) places from the right, never the first hop (the caller writes it). slowapi
+  keys on the verified user id first (`main._rate_limit_key`).
 - Every Groq/Gemini model ID, Whisper included, comes from `lib/model_config.py` (env var with a fallback
   default there, nowhere else): `GROQ_WHISPER_MODEL` (default `whisper-large-v3`) is what
   `main._groq_whisper` sends, so never put a literal model string in a call site. `/api/transcribe`

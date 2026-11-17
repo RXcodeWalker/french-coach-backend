@@ -64,8 +64,20 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_valida
 try:
     from slowapi import Limiter, _rate_limit_exceeded_handler
     from slowapi.errors import RateLimitExceeded
-    from slowapi.util import get_remote_address as _get_remote_address
-    _limiter = Limiter(key_func=_get_remote_address)
+    from lib.guest import client_ip as _client_ip
+
+    def _rate_limit_key(request: Request) -> str:
+        """slowapi's bucket: the verified user id, else the caller's address as
+        the trusted proxy saw it (security review F6). It used to be the socket
+        peer, which behind Render's proxy may be one bucket for everyone. A
+        token that does not verify gets the address bucket; the route itself
+        then answers 401."""
+        try:
+            return "user:" + str(verify_supabase_jwt(request.headers.get("authorization"))["sub"])
+        except Exception:  # noqa: BLE001 — no or bad token: fall back to the address
+            return "ip:" + _client_ip(request)
+
+    _limiter = Limiter(key_func=_rate_limit_key)
     def rate_limit(rate: str):
         def _decorate(func):
             # This module uses `from __future__ import annotations`, so every

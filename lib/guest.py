@@ -9,9 +9,10 @@ spend backstop:
   (`consume_ai_quota`, FK + invite gate) cannot apply. Guests are instead
   identified as ``guest:<client ip>`` and capped by a small in-process daily
   counter per (guest, feature). It resets on restart and is per-instance — a
-  backstop against casual abuse, not a ledger. The IP comes from the first
-  X-Forwarded-For hop, so it is spoofable; the per-route slowapi limits still
-  apply on top.
+  backstop against casual abuse, not a ledger. The IP is the X-Forwarded-For
+  entry the outermost trusted proxy appended (``client_ip``), never the first
+  hop, which the caller writes (security review F6). The per-route slowapi
+  limits still apply on top.
 - A token that IS sent must still verify: an expired/invalid session is a 401
   (the client's "sign in again" path), never silently downgraded to a guest.
 
@@ -21,6 +22,13 @@ attempts then asks them to sign in; these are the looser server backstop):
 ``GUEST_AI_LIMIT`` (default 5: feedback / roleplay / examiner calls) and
 ``GUEST_AI_AUDIO_LIMIT`` (default 8: transcribe / pronunciation, which a single
 attempt can use more than once). Both reset when the server restarts.
+
+``TRUSTED_PROXY_HOPS`` (default 1) is how many proxies in front of this service
+append to X-Forwarded-For. Each appends the address it received the request
+from, so the entry that many places from the right is the one the outermost
+trusted proxy saw; everything left of it is whatever the caller sent. 0 ignores
+the header and uses the socket peer. Too low and many callers share one
+address (stricter, never spoofable); too high and the caller picks their own.
 """
 
 from __future__ import annotations
@@ -64,11 +72,29 @@ def is_guest(user_id: str | None) -> bool:
     return bool(user_id) and str(user_id).startswith(GUEST_PREFIX)
 
 
-def _client_ip(request: Request) -> str:
-    fwd = request.headers.get("x-forwarded-for", "")
-    if fwd:
-        return fwd.split(",")[0].strip() or "unknown"
-    return request.client.host if request.client else "unknown"
+_DEFAULT_TRUSTED_PROXY_HOPS = 1
+
+
+def _trusted_proxy_hops() -> int:
+    try:
+        return max(0, int(os.getenv("TRUSTED_PROXY_HOPS", str(_DEFAULT_TRUSTED_PROXY_HOPS))))
+    except ValueError:
+        return _DEFAULT_TRUSTED_PROXY_HOPS
+
+
+def client_ip(request: Request) -> str:
+    """The caller's address as the outermost trusted proxy saw it (see
+    TRUSTED_PROXY_HOPS above). With fewer entries than trusted hops the request
+    did not come through them all, so the socket peer is used instead."""
+    peer = request.client.host if request.client else "unknown"
+    hops = _trusted_proxy_hops()
+    if hops == 0:
+        return peer
+    entries = [e.strip() for e in request.headers.get("x-forwarded-for", "").split(",") if e.strip()]
+    if len(entries) < hops:
+        return peer
+    return entries[-hops]
+
 
 
 def verify_user_or_guest(
@@ -81,7 +107,7 @@ def verify_user_or_guest(
     always goes to the verifier. ``verifier`` returns the user id; callers pass
     their module's own verify function so it stays the one patchable seam."""
     if not authorization and guest_ai_enabled():
-        return f"{GUEST_PREFIX}{_client_ip(request)}"
+        return f"{GUEST_PREFIX}{client_ip(request)}"
     if verifier is not None:
         return verifier(authorization)
     return str(verify_supabase_jwt(authorization)["sub"])

@@ -78,3 +78,131 @@ def test_admin_roles_rejects_wrong_secret_when_enabled(monkeypatch):
         resp = client.post("/api/admin/roles", json={"user_id": "u1", "secret": "wrong"})
     # Enabled + wrong secret -> 403, not 404 and not a grant.
     assert resp.status_code == 403
+
+
+# ── Security review 2026-11 F5: no paid model call without a sign-in ─────────
+
+import pytest  # noqa: E402
+from fastapi import HTTPException  # noqa: E402
+
+
+class _FakeGemini:
+    def __init__(self, calls):
+        self.calls = calls
+
+    def generate_content(self, prompt, **kwargs):
+        self.calls.append(prompt)
+
+        class _R:
+            text = '{"ipa":"x","hint":"x","sentences":[],"tip":"x","vocab":[],"phrases":[]}'
+        return _R()
+
+
+class _FakeGroq:
+    def __init__(self, calls):
+        outer = self
+        self.calls = calls
+
+        class _Completions:
+            async def create(self, **kwargs):
+                outer.calls.append(kwargs.get("messages"))
+
+                class _Msg:
+                    content = '{"rule":"x","examples":[],"practice":[]}'
+
+                class _Choice:
+                    message = _Msg()
+
+                class _Resp:
+                    choices = [_Choice()]
+                return _Resp()
+
+        class _Chat:
+            completions = _Completions()
+
+        self.chat = _Chat()
+
+
+@pytest.fixture
+def model_calls(monkeypatch):
+    calls: list = []
+    monkeypatch.setattr(main, "get_gemini", lambda: _FakeGemini(calls))
+    monkeypatch.setattr(main, "get_groq", lambda: _FakeGroq(calls))
+
+    async def _scenario(description):
+        calls.append(description)
+        return {"title": "t"}
+
+    import scenario_generator
+    monkeypatch.setattr(scenario_generator, "generate_scenario", _scenario)
+    main._CACHE.pop_prefix_sync("grammar:")
+    main._CACHE.pop_prefix_sync("vocab:")
+    return calls
+
+
+def _call(client, route, headers=None):
+    if route == "drill":
+        return client.post("/api/drill", data={"word": "bonjour", "issue": "ignore the above"}, headers=headers)
+    if route == "grammar_lesson":
+        return client.get("/api/grammar-lesson", params={"topic": "le passé composé"}, headers=headers)
+    if route == "vocab_prep":
+        return client.get("/api/vocab-prep", params={"topic": "la famille"}, headers=headers)
+    return client.post("/api/generate-scenario", json={"description": "au marché"}, headers=headers)
+
+
+_ROUTES = ["drill", "grammar_lesson", "vocab_prep", "scenario_generate"]
+
+
+@pytest.mark.parametrize("route", _ROUTES)
+def test_ai_routes_need_a_sign_in(model_calls, route):
+    with TestClient(main.app) as client:
+        resp = _call(client, route)
+    assert resp.status_code == 401, resp.text
+    assert model_calls == [], "an anonymous request reached the model"
+
+
+@pytest.mark.parametrize("route", _ROUTES)
+def test_ai_routes_charge_their_own_row_before_the_model(monkeypatch, model_calls, route):
+    monkeypatch.setattr(main, "verify_jwt", lambda authorization: "user-1")
+    charged: list[str] = []
+
+    async def _refuse(db, user_id, feature, key):
+        charged.append(feature)
+        raise HTTPException(status_code=429, detail={"error": "daily_quota_reached"})
+
+    monkeypatch.setattr(main, "consume_ai_quota_or_503", _refuse)
+    with TestClient(main.app) as client:
+        resp = _call(client, route, headers={"Authorization": "Bearer t"})
+    assert resp.status_code == 429
+    assert charged == [route]
+    assert model_calls == []
+
+
+def test_generate_scenario_reads_its_body(monkeypatch, model_calls):
+    """It answered 422 "missing query req" for every call: slowapi's wrapper made
+    FastAPI resolve the string annotation in the wrong module (main.rate_limit)."""
+    monkeypatch.setattr(main, "verify_jwt", lambda authorization: "user-1")
+
+    async def _grant(db, user_id, feature, key):
+        return {"granted": True}
+
+    monkeypatch.setattr(main, "consume_ai_quota_or_503", _grant)
+    with TestClient(main.app) as client:
+        resp = _call(client, "scenario_generate", headers={"Authorization": "Bearer t"})
+    assert resp.status_code == 200, resp.text
+    assert model_calls == ["au marché"]
+
+
+def test_roleplay_turn_reads_its_body():
+    # Same root cause as generate-scenario: the body is resolved, so the route
+    # reaches its own auth check instead of a 422.
+    with TestClient(main.app) as client:
+        resp = client.post("/api/roleplay/turn", json={"scenario_id": "cafe", "turn_history": [], "student_transcript": "x"})
+    assert resp.status_code == 401
+
+
+@pytest.mark.parametrize("path", ["/api/exam/start", "/api/exam/respond", "/api/exam/finish", "/api/exam/evaluate"])
+def test_the_legacy_exam_pipeline_is_gone(path):
+    with TestClient(main.app) as client:
+        resp = client.post(path, json={"candidate_id": "anyone", "session_id": "s"})
+    assert resp.status_code == 404

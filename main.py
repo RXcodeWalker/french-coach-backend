@@ -39,6 +39,7 @@ import tempfile
 import threading
 import time
 import traceback
+import typing
 import unicodedata
 import uuid
 from datetime import date, datetime, timedelta, timezone
@@ -66,7 +67,17 @@ try:
     from slowapi.util import get_remote_address as _get_remote_address
     _limiter = Limiter(key_func=_get_remote_address)
     def rate_limit(rate: str):
-        return _limiter.limit(rate)
+        def _decorate(func):
+            # This module uses `from __future__ import annotations`, so every
+            # annotation is a string, which FastAPI resolves against the
+            # endpoint's __globals__ — slowapi's wrapper's, not this module's.
+            # A body model defined here (ScenarioGenerateRequest,
+            # RoleplayTurnRequest) was then unresolvable and became a required
+            # query parameter, so every call 422'd before the handler ran.
+            # Resolving the annotations first keeps them real types.
+            func.__annotations__ = typing.get_type_hints(func, include_extras=True)
+            return _limiter.limit(rate)(func)
+        return _decorate
     _RATE_LIMIT_AVAILABLE = True
 except ImportError:
     _limiter = None  # type: ignore[assignment]
@@ -4869,6 +4880,12 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
 
 # ── /api/drill — generate a 3-step practice drill for a word ─────────────────
 
+def _inputs_key(*parts: str) -> str:
+    """Quota idempotency key for a request named only by its inputs, so an
+    identical retry is not charged twice."""
+    return hashlib.sha256(json.dumps(list(parts), ensure_ascii=False).encode()).hexdigest()
+
+
 @app.post("/api/drill")
 @rate_limit("20/minute")
 async def generate_drill(
@@ -4877,11 +4894,18 @@ async def generate_drill(
     context: str = Form("", max_length=1000),
     ipa: str = Form("", max_length=200),
     issue: str = Form("", max_length=1000),
+    authorization: str | None = Header(None),
 ) -> dict[str, Any]:
     """
     Generate a targeted pronunciation drill for a single French word.
     Returns {ipa, hint, sentences: [{fr, en}], tip}.
+
+    Signed in (or a guest) and charged `drill` (security review F5: it used to
+    reach Gemini with no sign-in and no limit).
     """
+    user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
+    quota_key = _inputs_key(word, context, ipa, issue)
+    await consume_ai_quota_or_503(get_supabase(), user_id, "drill", quota_key)
     prompt = (
         f"A student is drilling the French word «{word}».\n"
         f"Pronunciation issue: {issue or '(not specified)'}\n"
@@ -4913,6 +4937,7 @@ async def generate_drill(
         return result
     except Exception as e:
         _log_provider_failure("drill-gemini", e)
+        await release_ai_quota_grant(get_supabase(), user_id, "drill", quota_key)
         return {
             "word": word,
             "ipa": ipa or "",
@@ -5513,7 +5538,9 @@ Grammar note: {topic}"""
 
 @app.get("/api/grammar-lesson")
 @rate_limit("20/minute")
-async def get_grammar_lesson(request: Request, topic: str) -> dict:
+async def get_grammar_lesson(request: Request, topic: str, authorization: str | None = Header(None)) -> dict:
+    # Signed in (or a guest) and charged on a cache miss (security review F5).
+    user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
     if not topic or len(topic) > 300:
         raise HTTPException(status_code=400, detail="Invalid topic")
 
@@ -5521,6 +5548,7 @@ async def get_grammar_lesson(request: Request, topic: str) -> dict:
     cached = await _cache_get(cache_key)
     if cached:
         return cached
+    await consume_ai_quota_or_503(get_supabase(), user_id, "grammar_lesson", cache_key)
 
     prompt = GRAMMAR_LESSON_PROMPT.replace("{topic}", topic)
     raw = None
@@ -5561,6 +5589,7 @@ async def get_grammar_lesson(request: Request, topic: str) -> dict:
             log.warning("Grammar lesson Gemini-1.5 failed: %s", e)
 
     if not raw:
+        await release_ai_quota_grant(get_supabase(), user_id, "grammar_lesson", cache_key)
         return {
             "rule": "AI grammar lessons are temporarily unavailable. Review the correction note and identify the verb, agreement, or word-order pattern it refers to.",
             "examples": [
@@ -5672,13 +5701,21 @@ class ScenarioGenerateRequest(BaseModel):
 
 @app.post("/api/generate-scenario")
 @rate_limit("20/minute")
-async def api_generate_scenario(request: Request, req: ScenarioGenerateRequest) -> dict:
+async def api_generate_scenario(
+    request: Request, req: ScenarioGenerateRequest, authorization: str | None = Header(None)
+) -> dict:
+    # Signed in (or a guest) and charged (security review F5). The client
+    # (apiClient.ts generateScenario) already sends the token when there is one.
+    user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
+    quota_key = _inputs_key(req.description)
+    await consume_ai_quota_or_503(get_supabase(), user_id, "scenario_generate", quota_key)
     from scenario_generator import generate_scenario
     try:
         scenario = await generate_scenario(req.description)
         return scenario
     except Exception as e:
         _log_provider_failure("scenario-generator", e)
+        await release_ai_quota_grant(get_supabase(), user_id, "scenario_generate", quota_key)
         title = (req.description or "Custom scenario").strip()[:80] or "Custom scenario"
         return {
             "title": title,
@@ -5804,12 +5841,17 @@ async def roleplay_turn(request: Request, req: RoleplayTurnRequest, authorizatio
 
 @app.get("/api/vocab-prep")
 @rate_limit("20/minute")
-async def vocab_prep(request: Request, topic: str) -> dict[str, Any]:
-    """Generate vocabulary and phrases for a given topic (cached 1 h)."""
+async def vocab_prep(request: Request, topic: str, authorization: str | None = Header(None)) -> dict[str, Any]:
+    """Generate vocabulary and phrases for a given topic (cached 1 h). Signed in
+    (or a guest) and charged on a cache miss (security review F5)."""
+    user_id = verify_user_or_guest(authorization, request, lambda a: verify_jwt(a))
+    if len(topic) > 300:
+        raise HTTPException(status_code=400, detail="Invalid topic")
     cache_key = f"vocab:{topic.strip().lower()[:100]}"
     cached = await _cache_get(cache_key)
     if cached:
         return cached
+    await consume_ai_quota_or_503(get_supabase(), user_id, "vocab_prep", cache_key)
 
     prompt = f"Generez du vocabulaire et des phrases pour le sujet suivant : {topic}."
 
@@ -5829,6 +5871,7 @@ async def vocab_prep(request: Request, topic: str) -> dict[str, Any]:
         return result
     except Exception as e:
         _log_provider_failure("vocab-prep-gemini", e)
+        await release_ai_quota_grant(get_supabase(), user_id, "vocab_prep", cache_key)
         return {
             "vocab": [
                 {"fr": "important", "en": "important", "type": "adjective"},

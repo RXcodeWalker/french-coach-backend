@@ -18,6 +18,8 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 def test_all_modules_use_the_shared_model_ids():
     for mod in (main, exam_controller, scenario_generator):
         assert mod.GROQ_MODEL == model_config.GROQ_MODEL
+    # exam_controller no longer calls Gemini (its legacy exam routes were deleted, F5).
+    for mod in (main, scenario_generator):
         assert mod.GEMINI_MODEL == model_config.GEMINI_MODEL
 
 

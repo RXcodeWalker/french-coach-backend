@@ -190,9 +190,11 @@ def test_learn_charges_learn_answer_with_the_documented_key(rec):
 
 
 def test_the_learn_grounding_retry_does_not_use_another_daily_answer(rec):
+    # Security review F4: the retry has its own small row; it used to charge the
+    # 20-a-day `feedback` row, a way round the Learn limit.
     body = _body(attempt=2)
     assert _post(body).status_code == 200
-    assert rec.consumed == [("user-1", "feedback", _expected_key(body))]
+    assert rec.consumed == [("user-1", "learn_examiner_retry", _expected_key(body))]
 
 
 def test_rail_charges_exam_turn_feedback(rec):

@@ -81,10 +81,21 @@ def test_any_other_marking_is_a_422(value):
 
 
 def test_parse_feedback_request_reads_marking_from_json_and_from_multipart_data():
-    assert _parse(_JsonRequest({"question": "Q", "transcript": "T", "marking": "ladder-v1"}))[-1] == "ladder-v1"
-    assert _parse(_JsonRequest({"question": "Q", "transcript": "T"}))[-1] is None
-    assert _parse(_MultipartRequest({"transcript": "T", "marking": "ladder-v1"}))[-1] == "ladder-v1"
-    assert _parse(_MultipartRequest({"transcript": "T"}))[-1] is None
+    assert _parse(_JsonRequest({"question": "Q", "transcript": "T", "marking": "ladder-v1"}))[-2] == "ladder-v1"
+    assert _parse(_JsonRequest({"question": "Q", "transcript": "T"}))[-2] is None
+    assert _parse(_MultipartRequest({"transcript": "T", "marking": "ladder-v1"}))[-2] == "ladder-v1"
+    assert _parse(_MultipartRequest({"transcript": "T"}))[-2] is None
+
+
+def test_parse_feedback_request_reads_surface_and_rejects_an_unknown_one():
+    # Security review F4: the screen is named in `surface`, validated against FEEDBACK_SURFACES.
+    assert _parse(_JsonRequest({"transcript": "T", "surface": "news"}))[-1] == "news"
+    assert _parse(_MultipartRequest({"transcript": "T", "surface": "placement"}))[-1] == "placement"
+    assert _parse(_JsonRequest({"transcript": "T"}))[-1] is None
+    for request in (_JsonRequest({"surface": "anything"}), _MultipartRequest({"surface": "anything"})):
+        with pytest.raises(HTTPException) as exc:
+            _parse(request)
+        assert exc.value.status_code == 422
 
 
 def test_parse_feedback_request_rejects_an_unknown_marking_in_json_and_in_multipart_data():
@@ -496,8 +507,34 @@ def test_a_learn_answer_charges_learn_answer_and_other_callers_charge_feedback(e
     _stub_providers(monkeypatch)
     e2e.post("/api/feedback/v3", json=_ladder_body(), headers={"Authorization": "Bearer x"})
     plain = {k: v for k, v in _ladder_body(transcript="Autre réponse.").items() if k != "marking"}
-    e2e.post("/api/feedback/v3", json=plain, headers={"Authorization": "Bearer x"})
+    e2e.post("/api/feedback/v3", json={**plain, "surface": "news"}, headers={"Authorization": "Bearer x"})
     assert [(op, feature) for op, feature, _ in charges] == [("consume", "learn_answer"), ("consume", "feedback")]
+
+
+@pytest.mark.parametrize("extra", [{}, {"surface": "learn"}, {"surface": "news", "marking": "ladder-v1"}])
+def test_the_server_decides_a_learn_answer(e2e, ladder_on, monkeypatch, charges, extra):
+    # Security review F4: leaving `marking` out (or naming no surface) no longer
+    # moves a Learn answer to the 20-a-day `feedback` row; a non-Learn surface
+    # that still names a marking scheme is a Learn answer too.
+    _stub_providers(monkeypatch)
+    plain = {k: v for k, v in _ladder_body().items() if k != "marking"}
+    e2e.post("/api/feedback/v3", json={**plain, **extra}, headers={"Authorization": "Bearer x"})
+    assert [feature for _, feature, _ in charges] == ["learn_answer"]
+
+
+@pytest.mark.parametrize("surface", ["placement", "news", "role_play", "scenario"])
+def test_the_named_other_screens_keep_the_feedback_row(e2e, ladder_on, monkeypatch, charges, surface):
+    _stub_providers(monkeypatch)
+    plain = {k: v for k, v in _ladder_body().items() if k != "marking"}
+    e2e.post("/api/feedback/v3", json={**plain, "surface": surface}, headers={"Authorization": "Bearer x"})
+    assert [feature for _, feature, _ in charges] == ["feedback"]
+
+
+def test_an_unknown_surface_is_422_before_any_charge(e2e, ladder_on, monkeypatch, charges):
+    _stub_providers(monkeypatch)
+    resp = e2e.post("/api/feedback/v3", json={**_ladder_body(), "surface": "free"}, headers={"Authorization": "Bearer x"})
+    assert resp.status_code == 422
+    assert charges == []
 
 
 def test_the_kill_switch_does_not_lift_the_learn_limit(e2e, monkeypatch, charges):

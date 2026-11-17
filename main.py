@@ -3474,10 +3474,11 @@ _examiner_prompts: dict[str, Any] | None = None
 _EXAMINER_TRANSCRIPT_MAX: dict[str, int] = {"learn": 8000, "rail": 2000}
 # A Learn answer in the Examiner style counts toward Learn's daily answers too
 # (learn_answer, see _consume_feedback_quota) — on its first attempt only: the
-# grounding retry (attempt 2) is the same answer asked again, so it stays on
-# `feedback` (_examiner_quota_feature).
+# grounding retry (attempt 2) is the same answer asked again, so it has its own
+# small row, `learn_examiner_retry` (security review F4: it used to charge the
+# 20-a-day `feedback` row, which made "attempt 2" a way round the Learn limit).
 _EXAMINER_QUOTA_FEATURE: dict[str, str] = {"learn": "learn_answer", "rail": "exam_turn_feedback"}
-_EXAMINER_RETRY_QUOTA_FEATURE: dict[str, str] = {"learn": "feedback", "rail": "exam_turn_feedback"}
+_EXAMINER_RETRY_QUOTA_FEATURE: dict[str, str] = {"learn": "learn_examiner_retry", "rail": "exam_turn_feedback"}
 # Hard ceiling on a template's own maxOutputTokens, so a generated file can
 # never raise the provider budget above what the old relay used.
 _EXAMINER_MAX_OUTPUT_TOKENS_CEILING = 1500
@@ -3973,16 +3974,39 @@ def _feedback_provider_name(payload: dict[str, Any]) -> str:
     return "offline"
 
 
+# Security review F4: the server, not an optional client field, decides which
+# daily limit a feedback answer is charged to. The caller names its screen in
+# `surface`; only the screens listed here as not Learn keep the looser
+# `feedback` row. No surface (an older or unknown caller), "learn", or any
+# request naming a `marking` scheme (only Learn sends one) is a Learn answer.
+# A value outside this list is a 422.
+FEEDBACK_SURFACES = frozenset({"learn", "placement", "news", "role_play", "scenario"})
+
+
+def _parse_surface(raw: Any) -> str | None:
+    if raw is None or raw == "":
+        return None
+    if not isinstance(raw, str) or raw not in FEEDBACK_SURFACES:
+        raise HTTPException(
+            status_code=422, detail={"error": "unknown_surface", "allowed": sorted(FEEDBACK_SURFACES)}
+        )
+    return raw
+
+
+def _is_learn_answer(surface: str | None, marking: str | None) -> bool:
+    return marking is not None or surface is None or surface == "learn"
+
+
 async def _consume_feedback_quota(
     user_id: str, idempotency_key: str, *, learn: bool, assignment_id: str | None = None
 ) -> tuple[str, str]:
     """Charge one AI feedback answer; returns the (feature, key) charged, which
-    is what a failure must release. A Learn answer — the only caller that names
-    a `marking` scheme — charges `learn_answer`, Learn's own daily allowance
-    (3 per account per day, owner decision 2026-10-24; the ai_quota_limits row
-    is the number). Every other caller keeps `feedback`. Learn is recognised by
-    the field it sent, not by the kill switch's verdict, so switching the ladder
-    off does not lift the Learn limit.
+    is what a failure must release. A Learn answer (`_is_learn_answer`) charges
+    `learn_answer`, Learn's own daily allowance (3 per account per day, owner
+    decision 2026-10-24; the ai_quota_limits row is the number). Only the
+    screens FEEDBACK_SURFACES names as not Learn keep `feedback`. This does not
+    depend on the kill switch's verdict, so switching the ladder off does not
+    lift the Learn limit.
 
     Homework (teacher dashboard, lib/assignment_allowance.py): a Learn answer
     sent with a valid X-Assignment-Id that the assignment_allowance RPC accepts
@@ -4044,6 +4068,7 @@ async def _feedback_impl(
     demand_signals: dict[str, Any] | None = None,
     marking: str | None = None,
     assignment_id: str | None = None,
+    surface: str | None = None,
 ) -> dict[str, Any]:
     """
     Unified feedback endpoint. Two modes:
@@ -4052,7 +4077,7 @@ async def _feedback_impl(
     """
     tmp_path: str | None = None
     audio_mime = "audio/webm"
-    learn = marking is not None
+    learn = _is_learn_answer(surface, marking)
     # (feature, key) charged for this request, released if it then fails.
     charged: tuple[str, str] | None = None
 
@@ -4242,6 +4267,7 @@ async def feedback(request: Request, authorization: str | None = Header(None)) -
     demands_version: str | None = None
     demand_signals: dict[str, Any] | None = None
     marking: str | None = None
+    surface: str | None = None
     audio: UploadFile | None = None
 
     def _extract_question_text(raw: Any) -> str:
@@ -4281,6 +4307,7 @@ async def feedback(request: Request, authorization: str | None = Header(None)) -
             demands_version = data_payload.get("demandsVersion") or None
             demand_signals = data_payload.get("demandSignals") or None
             marking = _parse_marking(data_payload.get("marking"))
+            surface = _parse_surface(data_payload.get("surface"))
             # Same as the JSON branch: the client bundles its engine choice in
             # `data`, not as a top-level form field.
             model = str(data_payload.get("enginePreference") or data_payload.get("model") or model)
@@ -4321,6 +4348,7 @@ async def feedback(request: Request, authorization: str | None = Header(None)) -
         demands_version = payload.get("demandsVersion") or None
         demand_signals = payload.get("demandSignals") or None
         marking = _parse_marking(payload.get("marking"))
+        surface = _parse_surface(payload.get("surface"))
         metrics = payload.get("metrics")
         if isinstance(metrics, dict):
             metrics_json = json.dumps(metrics)
@@ -4343,6 +4371,7 @@ async def feedback(request: Request, authorization: str | None = Header(None)) -
             demand_signals=demand_signals,
             marking=marking,
             assignment_id=parse_assignment_id(request.headers.get(ASSIGNMENT_HEADER)),
+            surface=surface,
         )
         try:
             request.state.obs_provider = result.get("provider")
@@ -4375,11 +4404,11 @@ def _extract_question_text_util(raw: Any) -> str:
 
 async def _parse_feedback_request(request: Request, user_id: str | None = None) -> tuple[
     str, str, str, FeedbackDepth, str, dict[str, Any] | None, dict[str, Any] | None, bytes | None, str,
-    str | None, str | None, dict[str, Any] | None, str | None,
+    str | None, str | None, dict[str, Any] | None, str | None, str | None,
 ]:
     """Parse multipart or JSON feedback request. Returns (question, transcript,
     model, depth, metrics_json, skill_context, difficulty_context, audio_bytes,
-    audio_mime, question_id, demands_version, demand_signals, marking).
+    audio_mime, question_id, demands_version, demand_signals, marking, surface).
 
     With an audio part, the caller's speaking consent (`user_id`, which the
     route always passes) is checked before the upload is read (F2)."""
@@ -4395,6 +4424,7 @@ async def _parse_feedback_request(request: Request, user_id: str | None = None) 
     demands_version: str | None = None
     demand_signals: dict[str, Any] | None = None
     marking: str | None = None
+    surface: str | None = None
     audio_bytes: bytes | None = None
     audio_mime = "audio/webm"
 
@@ -4432,6 +4462,7 @@ async def _parse_feedback_request(request: Request, user_id: str | None = None) 
             demands_version = data_payload.get("demandsVersion") or None
             demand_signals = data_payload.get("demandSignals") or None
             marking = _parse_marking(data_payload.get("marking"))
+            surface = _parse_surface(data_payload.get("surface"))
             # Same as the JSON branch below: the client bundles its engine
             # choice in `data`, not as a top-level form field — reading only
             # `model` meant the preference was silently dropped here too.
@@ -4464,6 +4495,7 @@ async def _parse_feedback_request(request: Request, user_id: str | None = None) 
         demands_version = payload.get("demandsVersion") or None
         demand_signals = payload.get("demandSignals") or None
         marking = _parse_marking(payload.get("marking"))
+        surface = _parse_surface(payload.get("surface"))
         metrics = payload.get("metrics")
         if isinstance(metrics, dict):
             metrics_json = json.dumps(metrics)
@@ -4471,7 +4503,7 @@ async def _parse_feedback_request(request: Request, user_id: str | None = None) 
     return (
         question, transcript, model, depth, metrics_json,
         skill_context, difficulty_context, audio_bytes, audio_mime,
-        question_id, demands_version, demand_signals, marking,
+        question_id, demands_version, demand_signals, marking, surface,
     )
 
 
@@ -4604,7 +4636,7 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
     try:
         (question, transcript, model, depth, metrics_json,
          skill_context, difficulty_context, audio_bytes, audio_mime,
-         question_id, demands_version, demand_signals, marking) = await _parse_feedback_request(request, user_id)
+         question_id, demands_version, demand_signals, marking, surface) = await _parse_feedback_request(request, user_id)
     except HTTPException:
         raise
     except Exception as exc:
@@ -4626,7 +4658,8 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
             nonlocal charged
             try:
                 charged = await _consume_feedback_quota(
-                    user_id, idempotency_key, learn=marking is not None, assignment_id=stream_assignment_id
+                    user_id, idempotency_key, learn=_is_learn_answer(surface, marking),
+                    assignment_id=stream_assignment_id,
                 )
             except QuotaDenied as e:
                 return e.detail if isinstance(e.detail, dict) else {"error": "denied"}

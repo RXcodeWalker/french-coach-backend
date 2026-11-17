@@ -6212,9 +6212,55 @@ async def grant_admin_role(req: _GrantAdminRequest) -> dict:
 # SMTP isn't configured (SMTP_HOST/USER/PASSWORD/FROM all unset by
 # default), it 503s and the client shows a copy-link fallback instead of
 # silently pretending an email was sent.
+#
+# Security review F7: it used to mail any address with any `token` text, so
+# it was an open relay for caller-written links. The token must now look like
+# one (64 hex), it must be the caller's own consent request that is still
+# open, the email goes to that request's guardian address (never the body's),
+# and an account gets _GUARDIAN_EMAILS_PER_DAY sends.
+_GUARDIAN_TOKEN_PATTERN = r"^[0-9a-f]{64}$"
+_GUARDIAN_EMAILS_PER_DAY = 5
+_guardian_email_sends: dict[str, list[float]] = {}
+_guardian_email_lock = threading.Lock()
+
+
 class _SendGuardianEmailRequest(BaseModel):
-    guardian_email: str
-    token: str
+    # Still sent by the client; the consent request's own address is used.
+    guardian_email: str = Field(default="", max_length=320)
+    token: str = Field(pattern=_GUARDIAN_TOKEN_PATTERN)
+
+
+def _take_guardian_email_slot(user_id: str, now: float | None = None) -> bool:
+    """One of the account's sends in the last 24 hours, if any are left.
+    In-process (one instance, resets on restart), like lib/guest.py's caps."""
+    now = time.time() if now is None else now
+    with _guardian_email_lock:
+        recent = [t for t in _guardian_email_sends.get(user_id, []) if now - t < 86400]
+        if len(recent) >= _GUARDIAN_EMAILS_PER_DAY:
+            _guardian_email_sends[user_id] = recent
+            return False
+        recent.append(now)
+        _guardian_email_sends[user_id] = recent
+        return True
+
+
+async def _open_guardian_request_email(db, user_id: str, token: str) -> str | None:
+    """The guardian address of the caller's own consent request that this token
+    belongs to and that is neither granted nor revoked; None if there is none.
+    The row stores sha256 of the token's hex text (request_guardian_consent)."""
+    token_hash = hashlib.sha256(token.encode()).hexdigest()
+    res = await asyncio.to_thread(
+        lambda: db.table("guardian_consents")
+        .select("guardian_email")
+        .eq("token_hash", token_hash)
+        .eq("child_user_id", user_id)
+        .is_("granted_at", "null")
+        .is_("revoked_at", "null")
+        .limit(1)
+        .execute()
+    )
+    rows = res.data or []
+    return rows[0].get("guardian_email") if rows else None
 
 
 def _send_guardian_consent_email(guardian_email: str, consent_url: str) -> None:
@@ -6243,15 +6289,28 @@ async def send_guardian_consent_email(
     req: _SendGuardianEmailRequest,
     authorization: str | None = Header(None),
 ) -> dict:
-    verify_jwt(authorization)  # caller must be a signed-in learner; result unused, just gates the route
+    user_id = verify_jwt(authorization)
     if not (SMTP_HOST and SMTP_FROM):
         raise HTTPException(status_code=503, detail="Email delivery not configured")
     if not APP_ORIGIN:
         raise HTTPException(status_code=503, detail="APP_ORIGIN not configured")
 
+    db = _require_supabase()
+    try:
+        guardian_email = await _open_guardian_request_email(db, user_id, req.token)
+    except Exception as exc:
+        log.error("guardian consent lookup failed: %s", exc)
+        raise HTTPException(status_code=503, detail="Consent request lookup failed") from exc
+    if not guardian_email:
+        raise HTTPException(status_code=404, detail={"error": "consent_request_not_found"})
+    if not _take_guardian_email_slot(user_id):
+        raise HTTPException(
+            status_code=429, detail={"error": "guardian_email_limit", "limit": _GUARDIAN_EMAILS_PER_DAY}
+        )
+
     consent_url = f"{APP_ORIGIN}/guardian-consent?token={req.token}"
     try:
-        await asyncio.to_thread(_send_guardian_consent_email, req.guardian_email, consent_url)
+        await asyncio.to_thread(_send_guardian_consent_email, guardian_email, consent_url)
     except Exception as exc:
         log.error("send_guardian_consent_email failed: %s", exc)
         raise HTTPException(status_code=502, detail="Failed to send email")

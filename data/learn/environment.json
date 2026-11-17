@@ -1249,6 +1249,824 @@
         "status": "draft",
         "notes": "Authored with the question on 2026-11-02 by the authoring model; demands tagged from its wording, not human-reviewed."
       }
+    },
+    {
+      "questionId": "env_62",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe at least two green things you do in the morning, with a short reason for each.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_63",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "past",
+          "present"
+        ],
+        "structures": [
+          "imperfect",
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare what people did ten years ago with today, with at least one point for each, and say which is better.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_64",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name the hardest part of being eco-friendly and explain why, with at least one reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_65",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Name a green habit you started last year in the past tense and give at least one reason why you started it.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_66",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "simple-future",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say whether you will be greener in ten years, using the future tense, and give at least two reasons or actions.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_67",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "subjunctive"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Give your opinion on who should act, using at least one \"il faut que\" structure, and justify it with two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_68",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say how you would react using the conditional, with at least two things you would say or do.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_69",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say what you do with at least two kinds of old things you no longer want.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_70",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say what is wasted most at school lunch and explain why, with at least two reasons or one reason and one suggestion.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_71",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give your opinion on reusable bottles with at least two reasons, and mention one problem.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_72",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe in the past tense what you threw away, kept or recycled, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_73",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe at least two consequences of bins not being collected, using the conditional, and say what people would do.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_74",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare the advantages and disadvantages of disposable products, with at least one point for each, and give your verdict.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_75",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "simple-future"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain at least two ways waste will be handled in fifty years, using the future tense.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_76",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "past",
+          "present"
+        ],
+        "structures": [
+          "imperfect",
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare the weather in your childhood with today, with at least one point for each, and say what you think caused the change.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_77",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect",
+          "imperfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe a storm or bad-weather day in the past tense, with at least two details about the weather and what you did.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_78",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion",
+          "justification",
+          "subjunctive"
+        ],
+        "responseLoad": "extended",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Give your opinion on whether rich countries must help, using at least one \"il faut que\" structure, with at least two reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_79",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "abstract",
+        "sufficientAnswer": "Give your opinion on nuclear energy, with at least one advantage and one risk as reasons.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_80",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "simple-future"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain at least two consequences of rising temperatures, using the future tense.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_81",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe at least two things you would do if your town flooded, using the conditional.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_82",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give at least two tips for saving heating and explain how each saves energy.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_83",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on these taxes with at least two reasons, including one drawback.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_84",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "negation",
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give at least two reasons why some people do not believe in climate change and explain each.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_85",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe a natural place with at least two details and say why you like it.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_86",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe a visit to a zoo or aquarium in the past tense, with at least two animals or details and your reaction.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_87",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on zoos with at least one point for and one point against.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_88",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "negation"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Give at least two rules for walking in nature, including one with \"ne… pas\" or \"ne… jamais\", and explain why they matter.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_89",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on hunting and fishing with at least one argument for and one against.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_90",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "imperfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe in the past tense at least two things you used to do outdoors as a child.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_91",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare nature in the countryside and the city, with at least one point for each, and say which you prefer.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_92",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "near-future"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe at least two things you are going to do in nature this summer, using the near future.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_93",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say which animal you would be and describe at least two things you would ask humans, using the conditional, with a reason.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_94",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Say roughly how long you use your phone and describe at least two things you do on it.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_95",
+      "demands": {
+        "cognitiveDemand": "justify",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "opinion"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give your opinion on smart devices with at least one advantage and one drawback.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_96",
+      "demands": {
+        "cognitiveDemand": "describe",
+        "timeFrames": [
+          "past"
+        ],
+        "structures": [
+          "perfect"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe in the past tense what broke and how it was fixed or dealt with, with at least two details.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_97",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "justification"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Give at least two reasons people change phones often and say whether it is necessary.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_98",
+      "demands": {
+        "cognitiveDemand": "explain",
+        "timeFrames": [
+          "future"
+        ],
+        "structures": [
+          "simple-future"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "topical",
+        "sufficientAnswer": "Explain at least two ways technology will help the planet, using the future tense.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_99",
+      "demands": {
+        "cognitiveDemand": "hypothesize",
+        "timeFrames": [
+          "conditional"
+        ],
+        "structures": [
+          "conditional"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Describe at least two things you would do during a screen-free week, using the conditional.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
+    },
+    {
+      "questionId": "env_100",
+      "demands": {
+        "cognitiveDemand": "compare",
+        "timeFrames": [
+          "present"
+        ],
+        "structures": [
+          "comparison"
+        ],
+        "responseLoad": "developed",
+        "lexicalReach": "everyday",
+        "sufficientAnswer": "Compare paper and screens with at least one point for each and say which you prefer.",
+        "provenance": "inferred",
+        "inferenceConfidence": 0.8
+      },
+      "review": {
+        "status": "draft",
+        "notes": "Authored with the question on 2026-11-17 by the authoring model; demands tagged from its wording, not human-reviewed."
+      }
     }
   ]
 }

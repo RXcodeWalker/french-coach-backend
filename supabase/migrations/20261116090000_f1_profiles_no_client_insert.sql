@@ -7,7 +7,9 @@
 
   1. The profile row is created only by the signup trigger. production already has
      on_auth_user_created / handle_new_user, but no migration defined them; they are
-     defined here so the repo matches (id only, ON CONFLICT DO NOTHING). The trigger is
+     defined here so the repo matches (id and full_name from the signup metadata, as
+     production's does, ON CONFLICT DO NOTHING; profiles.full_name exists in production
+     but in no migration, so it is added if missing). The trigger is
      created only if it is missing, so production's existing trigger is not dropped.
   2. INSERT on profiles is revoked from authenticated and anon, and the
      "Users can insert own profile" policy is dropped. The app's profile writes are UPDATEs
@@ -23,6 +25,8 @@
 */
 
 -- 1. Signup creates the profile row.
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS full_name text;
+
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -30,7 +34,9 @@ SECURITY DEFINER
 SET search_path = pg_catalog, public, pg_temp
 AS $$
 BEGIN
-  INSERT INTO public.profiles (id) VALUES (NEW.id) ON CONFLICT (id) DO NOTHING;
+  INSERT INTO public.profiles (id, full_name)
+  VALUES (NEW.id, NEW.raw_user_meta_data->>'full_name')
+  ON CONFLICT (id) DO NOTHING;
   RETURN NEW;
 END;
 $$;

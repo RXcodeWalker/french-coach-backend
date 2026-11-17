@@ -94,11 +94,12 @@ def whisper_calls(monkeypatch):
 
 
 @pytest.mark.parametrize("path", ["/api/transcribe", "/api/pronunciation", *_FEEDBACK_PATHS])
-@pytest.mark.parametrize("status", ["pending", consent._MISSING])
+@pytest.mark.parametrize("status", ["pending", "revoked", None, "something_new", consent._MISSING])
 def test_pending_or_missing_profile_is_403_before_any_downstream_call(
     monkeypatch, signed_in, downstream_calls, whisper_calls, path, status
 ):
-    """Security review F2: the feedback routes took audio with no check."""
+    """Security review F2 (the feedback routes took audio with no check) and
+    F15 (only `pending` was refused, so a `revoked` account passed)."""
     monkeypatch.setattr(consent, "_fetch_consent_status", _status(status))
     with TestClient(main.app) as client:
         resp = _post(client, path)

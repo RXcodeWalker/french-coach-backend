@@ -12,7 +12,9 @@ Contract:
   guest access is a separate, switchable opening and is not consent-gated
   here, matching the client gate (which only blocks a signed-in `pending`
   account);
-- `pending` -> 403 {"error": "consent_required"};
+- only `granted` and `13_plus_not_required` pass; `pending`, `revoked` (a
+  guardian withdrew consent) and anything else -> 403 {"error":
+  "consent_required"} (security review F15: it used to refuse `pending` only);
 - no profile row at all -> 403 as well (deny): a deleted account, or a
   request racing a guardian revocation, must not reach a provider;
 - consent state that can't be read (no service client, RPC error) -> 503:
@@ -33,6 +35,7 @@ from lib.guest import is_guest
 log = logging.getLogger("uvicorn.error")
 
 CONSENT_REQUIRED = "consent_required"
+_SPEAKING_ALLOWED = frozenset({"granted", "13_plus_not_required"})
 _MISSING = object()
 
 
@@ -59,5 +62,5 @@ async def require_speaking_consent(db, user_id: str) -> None:
     if is_guest(user_id):
         return
     status = await _fetch_consent_status(db, user_id)
-    if status is _MISSING or status == "pending":
+    if status is _MISSING or status not in _SPEAKING_ALLOWED:
         raise HTTPException(status_code=403, detail={"error": CONSENT_REQUIRED})

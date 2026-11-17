@@ -12,7 +12,7 @@ as a silence-trimmed 16 kHz mono WAV, sequentially. Steps, in order:
   1. access mode   EXAM_PRONUNCIATION_ACCESS = off | admin | all (default off)
   2. auth          verify_supabase_jwt — no guests; user_id is the JWT `sub`
                    and is never taken from the request
-  3. consent       require_speaking_consent (pending / no profile -> 403)
+  3. consent       require_speaking_consent (anything but granted / 13+ -> 403)
   4. cache         a stored (user, session, turn, assessor_version) row is
                    returned with no Azure call and no charge
   5. daily quota   feature `exam_pronunciation`, key exam-pron:{session}:{part}

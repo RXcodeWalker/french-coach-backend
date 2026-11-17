@@ -11,7 +11,10 @@ Contract:
 - a guest (``guest:<ip>``, lib/guest.py) has no account and no profile row;
   guest access is a separate, switchable opening and is not consent-gated
   here, matching the client gate (which only blocks a signed-in `pending`
-  account);
+  account). So the gate binds signed-in sessions only: a `pending` account
+  that drops its Authorization header is a guest and is let through while
+  guest access is on. Accepted by the owner, 2026-11-17 (security review F2),
+  so guests keep spoken practice;
 - only `granted` and `13_plus_not_required` pass; `pending`, `revoked` (a
   guardian withdrew consent) and anything else -> 403 {"error":
   "consent_required"} (security review F15: it used to refuse `pending` only);

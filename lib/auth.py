@@ -29,6 +29,8 @@ import httpx
 import jwt as pyjwt
 from fastapi import Header, HTTPException
 
+from lib.observability import identify_from_jwt_payload
+
 # Kept as module globals (not read fresh from os.getenv on every use) because
 # the test-suite monkeypatches these names directly. They are re-read from the
 # environment at call time when blank, because main.py imports this module
@@ -152,6 +154,8 @@ def decode_supabase_jwt(token: str, *, hs_secret: str | None = None) -> dict:
 
     if not isinstance(payload, dict) or not payload.get("sub"):
         raise HTTPException(status_code=401, detail="Invalid token")
+    # Verified: attribute this request's Sentry events to the learner (no-op without Sentry).
+    identify_from_jwt_payload(payload)
     return payload
 
 

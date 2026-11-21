@@ -27,12 +27,23 @@ import main
 # SYSTEM_PROMPT is half of what LEARN_PROMPT_VERSION versions; the user-prompt
 # half is pinned in test_learn_demands.py. Bump LEARN_PROMPT_VERSION and this
 # hash together.
-SYSTEM_PROMPT_HASH = "0a259ffdad9e0191789f0e06cc9da3cd8a09fe24f80e2390035f798bd02594d6"
+SYSTEM_PROMPT_HASH = "3aa1b3f7b66526bb8cd384e2199c7d73dfdbbeef51c2d2710fc498e2e963b730"
 
 
 def test_prompt_version():
-    # v10 (2026-10-31) kept everything v6 asks for and added SELF-CORRECTION and VOCABULARY.
-    assert main.LEARN_PROMPT_VERSION == "learn-prompt-v10"
+    # v10 (2026-10-31) kept everything v6 asks for and added SELF-CORRECTION and VOCABULARY;
+    # v11 (2026-11-21) added SPEECH RECOGNITION and KEEP THEIR MEANING.
+    assert main.LEARN_PROMPT_VERSION == "learn-prompt-v11"
+
+
+def test_system_prompt_never_turns_a_misheard_expression_into_a_different_idea():
+    # Owner report 2026-11-21: « la graisse matinée » was "corrected" to « le petit déjeuner ».
+    p = main.SYSTEM_PROMPT
+    assert "SPEECH RECOGNITION —" in p
+    assert "« la grasse matinée »" in p
+    assert "it is NOT a grammar or vocabulary error" in p
+    assert "KEEP THEIR MEANING —" in p
+    assert "never drop a whole idea" in p
 
 
 def test_system_prompt_does_not_count_a_self_corrected_slip():

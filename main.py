@@ -1817,8 +1817,12 @@ JSON schema:
 # learn-prompt-v10 (2026-10-31, owner report): SELF-CORRECTION (a slip the student
 # fixes straight away is not an error) and VOCABULARY (upgrades a learner at the
 # target level would really say, not « aisément » / « recherches approfondies »).
+# learn-prompt-v11 (2026-11-21, owner report): SPEECH RECOGNITION (a misheard word that
+# is clearly a known expression, « la graisse matinée », is not an error) and KEEP THEIR
+# MEANING (corrections never swap in a different idea — the model had "corrected" a
+# sleep-in into « je prends le petit déjeuner » and dropped the clause from improved_answer).
 # v7-v9 were used by the retired one-call ladder prompts, hence the jump.
-LEARN_PROMPT_VERSION = "learn-prompt-v10"
+LEARN_PROMPT_VERSION = "learn-prompt-v11"
 
 # The ladder scheme's level-checklist prompt (SYSTEM_PROMPT_LADDER_CHECK +
 # build_ladder_check_prompt), the second call made only when a request opts in
@@ -1872,6 +1876,19 @@ then corrects it themselves straight away (« dans ton école, désolé, dans mo
 « désolé », « pardon », « non » or « je veux dire »), that is NOT an error: do not list it in grammar
 or corrections[], do not lower any score for it, and do not make it biggest_opportunity. An examiner
 credits what the candidate ends up saying, and a quick self-correction shows they know the rule.
+
+SPEECH RECOGNITION — the transcript was written by speech recognition from the student's
+recording, so it can contain words the student did not say. When a word makes no sense where it
+stands but a similar-sounding word turns it into a normal French expression that fits the sentence
+(« je fais la graisse matinée » for « la grasse matinée »), the student meant that expression:
+it is NOT a grammar or vocabulary error. Do not list it, and use the expression they meant in
+improved_answer and every correction. Never "correct" a misheard word into a different idea.
+
+KEEP THEIR MEANING — every correction, rephrase and improved_answer says what the student meant,
+in better French. Read the sentences around a phrase before you change it (« Donc, je me lève très
+tard » shows the sentence before it was about sleeping in, not breakfast). Never replace what they
+said with a different activity, fact or opinion, and never drop a whole idea they expressed; if you
+cannot tell what they meant, leave that phrase out of the feedback rather than guess.
 
 STRENGTHS — strengths[] holds 2-4 real strengths of THIS answer, strongest first (fewer only if
 the answer genuinely has fewer; never pad). Each quotes the student's exact words verbatim in

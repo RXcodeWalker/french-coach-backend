@@ -108,7 +108,7 @@ except Exception:  # pragma: no cover - google libs may be absent in local dev
 load_dotenv()
 
 # Sentry first, so it sees everything below (no-op without SENTRY_DSN).
-from lib.observability import capture_provider_failure, capture_route_error, init_sentry, tag_request_route
+from lib.observability import capture_provider_failure, capture_route_error, init_sentry, record_request, tag_request_route, traced_provider
 init_sentry()
 
 log = logging.getLogger("french-coach")
@@ -601,6 +601,7 @@ async def _observability_middleware(request: Request, call_next):
                     pron_metrics["by_recognition_status"][recognition_status] = (
                         pron_metrics["by_recognition_status"].get(recognition_status, 0) + 1
                     )
+        record_request(endpoint_key, status, latency_ms, provider=provider, cached=bool(cached))
         log.info(json.dumps({
             "ts": datetime.now(timezone.utc).isoformat(),
             "request_id": req_id,
@@ -2607,6 +2608,7 @@ class LadderCheckUnavailable(RuntimeError):
     """No provider returned a usable level checklist."""
 
 
+@traced_provider("groq", "ladder_check")
 async def _call_groq_ladder_check(prompt: str) -> dict[str, Any]:
     groq = get_groq()
     if not groq:
@@ -2628,6 +2630,7 @@ async def _call_groq_ladder_check(prompt: str) -> dict[str, Any]:
     )
 
 
+@traced_provider("gemini", "ladder_check")
 async def _call_gemini_ladder_check(prompt: str) -> dict[str, Any]:
     gemini = get_gemini_ladder_check()
     if not gemini:
@@ -3067,6 +3070,7 @@ def _groq_ladder_check_kwargs(prompt: str) -> dict[str, Any]:
     }
 
 
+@traced_provider("groq", "feedback")
 async def _call_groq(prompt: str, depth: FeedbackDepth = "standard") -> dict[str, Any]:
     groq = get_groq()
     if not groq:
@@ -3324,6 +3328,7 @@ async def _stream_groq(
     return result
 
 
+@traced_provider("gemini", "feedback")
 async def _call_gemini(prompt: str) -> dict[str, Any]:
     """Text-only Gemini call (standard feedback prompt)."""
     gemini = get_gemini()
@@ -3343,6 +3348,7 @@ async def _call_gemini(prompt: str) -> dict[str, Any]:
         raise
 
 
+@traced_provider("gemini", "feedback_audio")
 async def _call_gemini_multimodal(
     prompt: str,
     audio_path: str,
@@ -3660,6 +3666,7 @@ def get_gemini_examiner():
     return _gemini_examiner_model
 
 
+@traced_provider("groq", "examiner")
 async def _call_groq_examiner(prompt: str, max_tokens: int) -> dict[str, Any]:
     groq = get_groq()
     if not groq:
@@ -3682,6 +3689,7 @@ async def _call_groq_examiner(prompt: str, max_tokens: int) -> dict[str, Any]:
     return await _run_with_retries(f"groq/{GROQ_MODEL}-examiner", operation)
 
 
+@traced_provider("gemini", "examiner")
 async def _call_gemini_examiner(prompt: str, max_tokens: int) -> dict[str, Any]:
     gemini = get_gemini_examiner()
     if not gemini:
@@ -5134,6 +5142,7 @@ def truncate_whisper_prompt(prompt: str | None, max_chars: int = _WHISPER_PROMPT
     return f"{question} {tail}" if tail else question
 
 
+@traced_provider("groq", "transcribe")
 async def _groq_whisper(tmp_path: str, language: str, prompt: str | None = None) -> dict[str, Any]:
     """Transcribe via Groq's hosted Whisper (fast, free-tier, no local model).
 
@@ -5983,6 +5992,7 @@ _configure_pronunciation(
 from services.pronunciation.coach_narrator import _SYSTEM_PROMPT as _COACH_SYSTEM_PROMPT
 
 
+@traced_provider("groq", "coach")
 async def _call_groq_coach(prompt: str) -> dict[str, Any]:
     groq = get_groq()
     if not groq:
@@ -6005,6 +6015,7 @@ async def _call_groq_coach(prompt: str) -> dict[str, Any]:
     return await _run_with_retries("groq-pronunciation-coach", operation)
 
 
+@traced_provider("gemini", "coach")
 async def _call_gemini_coach(prompt: str) -> dict[str, Any]:
     if not GEMINI_API_KEY:
         raise RuntimeError("Gemini not configured")

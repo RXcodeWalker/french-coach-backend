@@ -40,6 +40,7 @@ from typing import Any, Callable
 from fastapi import Request
 
 from lib.auth import verify_supabase_jwt
+from lib.observability import identify_user
 
 GUEST_PREFIX = "guest:"
 _DEFAULT_LIMIT = 5
@@ -107,7 +108,9 @@ def verify_user_or_guest(
     always goes to the verifier. ``verifier`` returns the user id; callers pass
     their module's own verify function so it stays the one patchable seam."""
     if not authorization and guest_ai_enabled():
-        return f"{GUEST_PREFIX}{client_ip(request)}"
+        guest_id = f"{GUEST_PREFIX}{client_ip(request)}"
+        identify_user(guest_id, is_guest=True)
+        return guest_id
     if verifier is not None:
         return verifier(authorization)
     return str(verify_supabase_jwt(authorization)["sub"])

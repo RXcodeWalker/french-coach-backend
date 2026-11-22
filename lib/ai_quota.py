@@ -25,6 +25,7 @@ from typing import Any
 
 from fastapi import HTTPException
 
+from lib.ai_cost import bind_usage
 from lib.guest import consume_guest_quota, is_guest, release_guest_grant
 
 log = logging.getLogger("uvicorn.error")
@@ -50,6 +51,9 @@ async def consume_ai_quota_or_503(db, user_id: str, feature: str, idempotency_ke
     A guest id (``guest:<ip>``, lib/guest.py) never reaches Supabase: it is
     charged against the in-process guest cap instead.
     """
+    # Attribute this request's provider calls (lib/ai_cost.py) to the user being
+    # charged, before any outcome: a denied or failed charge makes no provider call.
+    bind_usage(user_id, feature)
     if is_guest(user_id):
         return consume_guest_quota(user_id, feature, idempotency_key)
     if db is None:

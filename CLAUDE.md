@@ -81,3 +81,14 @@ that references it. The main repo's git history is no safety net here.
   teacher of the class, `_class_owner` = owner only (archive, managing teachers); teacher-table RLS goes through the SECURITY
   DEFINER `is_class_teacher()` (a policy querying `class_teachers` directly would recurse). SQL behaviour specs:
   `supabase/tests/plain_pg/` (plain local Postgres, or `run_all_migrations.mjs`, which applies every migration on PGlite).
+- **AI cost per active user and gross margin (migration `20261122090000`, `lib/ai_cost.py`, `GET /api/admin/ai-cost?days=30`).** Every
+  Groq chat/stream, Groq Whisper and Gemini call is recorded in `ai_usage_events` (raw tokens/audio seconds, never dollars) by
+  SDK-level hooks installed in `main.py` (`install_usage_hooks`) — so a new call site is metered with no edit, but a **new provider
+  needs its own hook there or its spend is invisible**. The user + feature come from a ContextVar that `consume_ai_quota_or_503`
+  binds when it charges, so a provider call must happen after the quota charge in the same request (anything else is
+  `unattributed`). Dollars are applied at read time from `ai_model_pricing` (seeded rows are `verified=false`; a model with no row is
+  reported as `unpriced`, never costed at 0; Gemini has no seed row). Metering never fails or slows a request (bounded queue,
+  daemon writer, errors dropped with a WARNING); `AI_COST_TRACKING=0` turns it off. Azure is read from its own ledgers, not
+  duplicated. Margin needs `ai_cost_settings.premium_price_usd_monthly` (NULL until Premium has a price → `price_set: false`);
+  `complete: false` means unpriced/unmeasured calls make the totals a floor. Spec: `supabase/tests/plain_pg/ai_cost_tracking_test.sql`
+  (run with `ai_cost_prelude.sql`; see that folder's README); Python: `tests/test_ai_cost.py`.

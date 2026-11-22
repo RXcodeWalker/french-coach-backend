@@ -21,6 +21,9 @@ Parent view email links: `-f prelude.sql -f parent_view_prelude.sql -f ../../mig
 -f ../../migrations/20261104100000_parent_report_exam_columns.sql -f ../../migrations/20261107100000_parent_digest_dashboard_link.sql
 -f parent_digest_link_test.sql`.
 
+AI cost summary: `-f prelude.sql -f ai_cost_prelude.sql -f ../../migrations/20261122090000_ai_cost_tracking.sql
+-f ai_cost_tracking_test.sql`.
+
 ## Whole-schema tests (PGlite, no Postgres install)
 
 `run_all_migrations.mjs` applies **every** migration in order to an in-memory Postgres (PGlite) behind

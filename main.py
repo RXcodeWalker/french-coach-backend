@@ -58,6 +58,7 @@ from lib.guest import guest_usage, is_guest, verify_user_or_guest
 from lib.ai_quota import QuotaDenied, consume_ai_quota_or_503, release_ai_quota_grant
 from lib.consent import require_speaking_consent
 from lib.assignment_allowance import ASSIGNMENT_HEADER, homework_learn_key, parse_assignment_id
+from lib import ai_cost as _ai_cost
 from lib.auth import require_admin, verify_supabase_jwt
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
@@ -374,6 +375,11 @@ def get_supabase():
         from supabase import create_client
         _supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
     return _supabase
+
+# AI cost metering (lib/ai_cost.py): every Groq/Gemini/Whisper call is recorded
+# in ai_usage_events by SDK-level hooks; read it at GET /api/admin/ai-cost.
+_ai_cost.configure(get_supabase)
+_ai_cost.install_usage_hooks()
 
 # ── Whisper lazy init ─────────────────────────────────────────────────────────
 _whisper = None

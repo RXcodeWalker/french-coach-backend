@@ -13,6 +13,7 @@ from __future__ import annotations
 import asyncio
 import os
 import secrets
+from datetime import datetime, timedelta, timezone
 from typing import Any, Callable
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -370,6 +371,23 @@ async def revoke_invite_code(code: str, _=Depends(require_admin)):
 async def azure_usage(_=Depends(require_admin)):
     db = _db()
     res = await _run(db.rpc("azure_speech_usage_summary", {}))
+    return res.data or {}
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# AI cost per active user and gross margin (migration 20261122090000,
+# lib/ai_cost.py). `days` is the trailing window; the definitions (active user,
+# premium cohort, revenue, margin) are in the migration header. `complete` is
+# false while any call in the window is unpriced or unmeasured — the totals are
+# then a floor, so fix that before trusting a margin.
+# ════════════════════════════════════════════════════════════════════════════
+@router.get("/ai-cost")
+async def ai_cost(days: int = 30, _=Depends(require_admin)):
+    if not 1 <= days <= 366:
+        raise HTTPException(status_code=422, detail="days must be between 1 and 366")
+    db = _db()
+    since = datetime.now(timezone.utc) - timedelta(days=days)
+    res = await _run(db.rpc("ai_cost_summary", {"p_from": since.isoformat()}))
     return res.data or {}
 
 

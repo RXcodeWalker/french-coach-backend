@@ -205,7 +205,10 @@ def get_groq():
     global _groq_client
     if _groq_client is None and GROQ_API_KEY:
         from groq import AsyncGroq
-        _groq_client = AsyncGroq(api_key=GROQ_API_KEY)
+        # max_retries=0: the SDK's own hidden retries (4 s, then 11 s) ran under our
+        # retry layer and pushed one answer past the browser's 15 s limit. All retrying
+        # now happens in _run_with_retries, where it is capped and logged.
+        _groq_client = AsyncGroq(api_key=GROQ_API_KEY, max_retries=0)
     return _groq_client
 
 def _groq_reasoning_kwargs() -> dict[str, Any]:
@@ -2938,8 +2941,8 @@ def _log_feedback_latency(
 # Groq's tokens-per-minute 429 says when the window frees up (`retry-after`,
 # typically a few seconds). Waiting that long turns the retry into a success
 # instead of a second 429; anything longer than this cap isn't worth holding
-# the request open for, so the normal backoff applies and the fallback runs.
-_MAX_RETRY_AFTER_SEC = 10.0
+# the request open for: past this cap the request fails at once (see _retry_after_too_long).
+_MAX_RETRY_AFTER_SEC = 3.0
 
 
 def _retry_after_seconds(exc: Exception) -> float:
@@ -2955,6 +2958,18 @@ def _retry_after_seconds(exc: Exception) -> float:
     return value if 0 < value <= _MAX_RETRY_AFTER_SEC else 0.0
 
 
+def _retry_after_too_long(exc: Exception) -> bool:
+    """True when the provider says to wait longer than we will hold a request open:
+    a retry would hit the same limit, so fail now and let the client use its offline path."""
+    headers = getattr(getattr(exc, "response", None), "headers", None)
+    if headers is None:
+        return False
+    try:
+        return float(headers.get("retry-after") or 0) > _MAX_RETRY_AFTER_SEC
+    except (TypeError, ValueError):
+        return False
+
+
 async def _run_with_retries(
     provider: str,
     operation,
@@ -2968,7 +2983,7 @@ async def _run_with_retries(
             return await asyncio.wait_for(operation(), timeout=timeout_sec)
         except Exception as exc:
             last_exc = exc
-            final = attempt >= attempts or not _is_retryable(exc)
+            final = attempt >= attempts or not _is_retryable(exc) or _retry_after_too_long(exc)
             _log_provider_failure(provider, exc, attempt, report=final)
             if final:
                 break

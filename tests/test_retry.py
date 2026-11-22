@@ -131,7 +131,8 @@ def test_is_retryable_false_for_gemini_daily_quota():
 def test_retry_after_seconds_honours_short_hint_only():
     import main
 
-    assert main._retry_after_seconds(_make_groq_error(429, "rate_limit_exceeded", {"retry-after": "7"})) == 7.0
+    assert main._retry_after_seconds(_make_groq_error(429, "rate_limit_exceeded", {"retry-after": "2"})) == 2.0
+    assert main._retry_after_seconds(_make_groq_error(429, "rate_limit_exceeded", {"retry-after": "7"})) == 0.0
     assert main._retry_after_seconds(_make_groq_error(429, "rate_limit_exceeded", {"retry-after": "3600"})) == 0.0
     assert main._retry_after_seconds(_make_groq_error(429, "rate_limit_exceeded")) == 0.0
     assert main._retry_after_seconds(_make_http_status_error(429)) == 0.0
@@ -152,12 +153,32 @@ def test_run_with_retries_waits_for_retry_after(monkeypatch):
     async def operation():
         attempts.append(1)
         if len(attempts) < 2:
-            raise _make_groq_error(429, "rate_limit_exceeded", {"retry-after": "7"})
+            raise _make_groq_error(429, "rate_limit_exceeded", {"retry-after": "2"})
         return {"ok": True}
 
     result = asyncio.run(main._run_with_retries("test-provider", operation, attempts=2))
     assert result == {"ok": True}
-    assert slept == [7.0]
+    assert slept == [2.0]
+
+
+def test_run_with_retries_fails_at_once_when_retry_after_is_long(monkeypatch):
+    import main
+
+    slept: list[float] = []
+
+    async def fake_sleep(seconds: float) -> None:
+        slept.append(seconds)
+
+    monkeypatch.setattr(main.asyncio, "sleep", fake_sleep)
+    attempts: list[int] = []
+
+    async def operation():
+        attempts.append(1)
+        raise _make_groq_error(429, "rate_limit_exceeded", {"retry-after": "8"})
+
+    with pytest.raises(Exception):
+        asyncio.run(main._run_with_retries("test-provider", operation, attempts=2))
+    assert len(attempts) == 1 and slept == []
 
 
 if __name__ == "__main__":

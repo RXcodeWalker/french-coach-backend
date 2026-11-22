@@ -59,27 +59,32 @@ def test_groq_preference_calls_groq_first(monkeypatch):
     assert result["engineMeta"]["fallbackUsed"] is False
 
 
-def test_groq_preference_falls_back_to_gemini(monkeypatch):
+def test_a_groq_failure_never_reaches_gemini(monkeypatch):
+    """Gemini's free daily quota is kept for exam mode: Learn feedback is Groq-only, and a Groq
+    failure is a 502 the client turns into its offline evaluator."""
+    from fastapi import HTTPException
+
     calls: list[str] = []
     _stub_providers(monkeypatch, calls, groq_ok=False)
 
-    result = asyncio.run(main.call_ai_feedback(_request("groq")))
+    try:
+        asyncio.run(main.call_ai_feedback(_request("groq")))
+    except HTTPException as exc:
+        assert exc.status_code == 502
+    else:  # pragma: no cover
+        raise AssertionError("expected a 502 when Groq fails")
+    assert calls == ["groq"]
 
-    assert calls == ["groq", "gemini"]
-    assert result["engineMeta"]["actualEngine"] == "gemini"
-    assert result["engineMeta"]["fallbackUsed"] is True
-    assert result["providerErrors"][0]["provider"].startswith("groq/")
 
-
-def test_default_and_gemini_preference_stay_gemini_first(monkeypatch):
+def test_default_and_gemini_preference_use_groq_only(monkeypatch):
     for requested in (None, "gemini"):
         calls: list[str] = []
         _stub_providers(monkeypatch, calls)
 
         result = asyncio.run(main.call_ai_feedback(_request(requested)))
 
-        assert calls == ["gemini"], f"preference {requested!r} should try Gemini first"
-        assert result["engineMeta"]["actualEngine"] == "gemini"
+        assert calls == ["groq"], f"preference {requested!r} must not reach Gemini"
+        assert result["engineMeta"]["actualEngine"] == "groq"
 
 
 def test_engine_preference_field_is_read_from_json_body(monkeypatch):

@@ -347,16 +347,14 @@ def test_v3_returns_the_computed_scores_and_the_level_check(e2e, ladder_on, monk
     assert data["ladderCheckMeta"]["modelUsed"] == "groq/test"
 
 
-def test_a_bad_checklist_falls_back_to_the_other_provider(e2e, ladder_on, monkeypatch):
+def test_a_bad_checklist_does_not_fall_back_to_gemini(e2e, ladder_on, monkeypatch):
     bad = _check_reply()
     del bad["levelCheck"]["F"]  # an applicable ladder is missing
     calls = _stub_providers(monkeypatch, check=bad, check_fallback=_check_reply(modelUsed="gemini/test"))
     data = e2e.post("/api/feedback/v3", json=_ladder_body(), headers={"Authorization": "Bearer x"}).json()
-    assert calls == [("groq", "feedback"), ("groq", "check"), ("gemini", "check")]
-    assert data["providerStatus"] == "primary"  # the feedback came from the first provider
-    assert data["ladderCheckMeta"]["modelUsed"] == "gemini/test"
-    assert data["ladderCheckMeta"]["providerErrors"][0]["type"] == "malformed_response"
-    _assert_scored_ladder_reply(data)
+    assert calls == [("groq", "feedback"), ("groq", "check")]
+    assert data["providerStatus"] == "primary"
+    assert "levelCheck" not in data and data["ladderCheckError"]
 
 
 def test_no_usable_checklist_keeps_the_feedback_unscored_by_the_ladder_and_uncached(e2e, ladder_on, monkeypatch):

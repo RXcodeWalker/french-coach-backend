@@ -368,21 +368,20 @@ def test_the_checklist_runs_on_groq_first_with_the_built_prompt(monkeypatch):
     assert check["modelUsed"] == "groq/test" and "providerErrors" not in check
 
 
-def test_an_unusable_checklist_falls_back_to_the_other_provider(monkeypatch):
+def test_an_unusable_checklist_does_not_fall_back_to_gemini(monkeypatch):
     bad = _good_check()
     del bad["levelCheck"]["F"]  # an applicable ladder is missing
     calls = _stub_check(monkeypatch, groq=bad, gemini=_good_check())
-    check = asyncio.run(main.call_ladder_check(_req(transcript=HOL_TRANSCRIPT, model="groq"), FB))
-    assert [c[0] for c in calls] == ["groq", "gemini"]
-    assert check["modelUsed"] == "gemini/test"
-    assert check["providerErrors"][0]["type"] == "malformed_response"
+    with pytest.raises(main.LadderCheckUnavailable):
+        asyncio.run(main.call_ladder_check(_req(transcript=HOL_TRANSCRIPT, model="groq"), FB))
+    assert [c[0] for c in calls] == ["groq"]
 
 
 @pytest.mark.parametrize("model", ["gemini", None])
-def test_without_a_groq_preference_gemini_goes_first_as_in_call_ai_feedback(monkeypatch, model):
+def test_the_checklist_is_groq_only_whatever_the_preference(monkeypatch, model):
     calls = _stub_check(monkeypatch, groq=_good_check(), gemini=_good_check())
     asyncio.run(main.call_ladder_check(_req(transcript=HOL_TRANSCRIPT, model=model), FB))
-    assert [c[0] for c in calls] == ["gemini"]
+    assert [c[0] for c in calls] == ["groq"]
 
 
 def test_no_usable_checklist_raises(monkeypatch):

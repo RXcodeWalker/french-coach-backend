@@ -634,10 +634,9 @@ def verify_jwt(authorization: str | None) -> str:
 async def health() -> dict[str, Any]:
     cached_probe = await _cache_get("health:probes")
     if cached_probe:
-        groq_status, gemini_status = cached_probe["groq"], cached_probe["gemini"]
+        groq_status = cached_probe["groq"]
     else:
         groq_status = await _probe_groq()
-        gemini_status = await _probe_gemini()
         # "ok" is cached for a full minute to avoid hammering the providers on every
         # poll. A failure (cold start, transient network blip) is cached for a
         # shorter TTL so the next client poll re-probes soon instead of being stuck
@@ -645,11 +644,12 @@ async def health() -> dict[str, Any]:
         # 30s (was 5s, phase-3-plan-tidy-widget.md §3) — 5s meant a health-check
         # poller hitting /health during any provider blip re-probed both providers
         # up to 12x/minute instead of the intended once-a-minute cadence.
-        both_ok = groq_status == "ok" and gemini_status == "ok"
+        # Gemini is never probed: its free tier is a small daily request quota that a
+        # health poller used up, and it is kept for exam-mode calls only.
         await _cache_set(
             "health:probes",
-            {"groq": groq_status, "gemini": gemini_status},
-            60 if both_ok else 30,
+            {"groq": groq_status},
+            60 if groq_status == "ok" else 30,
         )
 
     db_path = Path(os.getenv("IGCSE_DB_PATH", str(APP_DIR / "data" / "igcse_speaking.db")))
@@ -665,7 +665,7 @@ async def health() -> dict[str, Any]:
         "ok": True,
         "service": "french-ai-backend",
         "groq": groq_status,
-        "gemini": gemini_status,
+        "gemini": "not_probed",
         "whisper_loaded": _whisper is not None,
         "local_whisper_enabled": LOCAL_WHISPER_ENABLED,
         "db_connected": db_ok,
@@ -2663,7 +2663,8 @@ async def call_ladder_check(req: FeedbackRequest, fb: dict[str, Any]) -> dict[st
         "groq": (f"groq/{GROQ_MODEL}", checked(lambda: _call_groq_ladder_check(prompt))),
         "gemini": (f"gemini/{GEMINI_MODEL}", checked(lambda: _call_gemini_ladder_check(prompt))),
     }
-    order = ["groq", "gemini"] if (req.model or "").strip().lower() == "groq" else ["gemini", "groq"]
+    # Learn marking is Groq-only: Gemini's free daily quota is kept for exam mode.
+    order = ["groq"]
     errors: list[dict[str, str]] = []
     for engine in order:
         name, operation = providers[engine]
@@ -3429,8 +3430,9 @@ async def call_ai_feedback(
     # Gemini-first, so a client that asked for Groq (and budgeted a short Groq
     # timeout) still paid the full Gemini latency before Groq was even called —
     # which read on the client as "Groq timed out".
-    requested = (req.model or "").strip().lower()
-    order = ["groq", "gemini"] if requested == "groq" else ["gemini", "groq"]
+    # Learn/general feedback is Groq-only: Gemini's free daily quota is kept for exam
+    # mode, and a Groq failure goes straight to the client's offline evaluator.
+    order = ["groq"]
 
     for index, engine in enumerate(order):
         name, operation = providers[engine]
@@ -3449,7 +3451,7 @@ async def call_ai_feedback(
             result["fallbackReason"] = provider_errors[0]["type"] if provider_errors else "primary_unavailable"
             result["providerErrors"] = provider_errors
         result["engineMeta"] = {
-            "requestedEngine": req.model or "gemini",
+            "requestedEngine": req.model or "groq",
             "actualEngine": engine,
             "fallbackUsed": index > 0,
             **({"failoverReason": failover_reason} if index > 0 else {}),

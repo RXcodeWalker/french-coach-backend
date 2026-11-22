@@ -31,6 +31,12 @@ that references it. The main repo's git history is no safety net here.
   `exam_turn` → `exam_turn_transcribe`, `junior` → `junior_transcribe`, default `transcribe`); any new feature must be seeded in
   `ai_quota_limits` by a migration first (FK), and `lib/guest.py`'s `_AUDIO_FEATURES` must list it so
   guests keep the audio backstop.
+- **Chat provider switch (Together):** every chat-completion call (feedback, ladder check, examiner, coach, scenario, interpret) uses
+  `main.get_llm()` — Together (`openai` SDK, `lib/llm_client.py`) when `LLM_PROVIDER=together` **and** `TOGETHER_API_KEY` is set, else Groq
+  exactly as before (unset `LLM_PROVIDER` = rollback). The model is `LLM_MODEL` (`TOGETHER_MODEL`, default `openai/gpt-oss-120b`, same weights
+  as `GROQ_MODEL`); `modelUsed` reads `together/...`. Whisper transcription/pronunciation never moves: it stays on `get_groq()` + `GROQ_API_KEY`.
+  A new chat call site uses `get_llm()`/`LLM_MODEL`, not `get_groq()`/`GROQ_MODEL`. Not yet measured: French marking quality and JSON-mode
+  reliability on Together — run `scripts/learn_marking_eval.py` before switching production.
 - Groq's on_demand tier refuses (413 "Request too large") any call whose prompt + `max_tokens` is over its
   8,000 tokens-per-minute limit, before the model runs. Check that sum before raising a Groq token budget:
   the one-call Learn ladder prompt (`learn-prompt-v9`) reached ~8,150 on six-ladder questions, one reason the

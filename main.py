@@ -135,6 +135,8 @@ GROQ_WHISPER_MODEL  = _model_config.GROQ_WHISPER_MODEL
 # current general-purpose chat model on the account. Override via env if Groq
 # moves the goalposts again.
 GROQ_MODEL          = _model_config.GROQ_MODEL
+LLM_MODEL           = _model_config.LLM_MODEL
+LLM_PROVIDER_NAME   = _model_config.LLM_PROVIDER_NAME
 # gpt-oss is a reasoning model: it spends completion tokens thinking before it
 # answers. "low" holds that to ~50-250 tokens, which is all this workload needs,
 # and keeps time-to-first-content short on the streaming path. Its reasoning
@@ -210,6 +212,16 @@ def get_groq():
         # now happens in _run_with_retries, where it is capped and logged.
         _groq_client = AsyncGroq(api_key=GROQ_API_KEY, max_retries=0)
     return _groq_client
+
+def get_llm():
+    """Chat-completion client: Together when active, else Groq (Whisper uses get_groq)."""
+    from lib.llm_client import get_together
+    return get_together() or get_groq()
+
+
+def _llm_configured() -> bool:
+    return bool(GROQ_API_KEY) or _model_config.TOGETHER_ACTIVE
+
 
 def _groq_reasoning_kwargs() -> dict[str, Any]:
     """Extra chat-completion params for a reasoning GROQ_MODEL; empty otherwise."""
@@ -673,6 +685,7 @@ async def health() -> dict[str, Any]:
         "local_whisper_enabled": LOCAL_WHISPER_ENABLED,
         "db_connected": db_ok,
         "groq_configured": bool(GROQ_API_KEY),
+        "llm_provider": LLM_PROVIDER_NAME,
         "gemini_configured": bool(GEMINI_API_KEY),
         "azure_speech_configured": bool(os.getenv("AZURE_SPEECH_KEY")) and bool(os.getenv("AZURE_SPEECH_REGION")),
     }
@@ -2611,14 +2624,14 @@ class LadderCheckUnavailable(RuntimeError):
 
 
 async def _call_groq_ladder_check(prompt: str) -> dict[str, Any]:
-    groq = get_groq()
+    groq = get_llm()
     if not groq:
         raise RuntimeError("Groq not configured")
 
     async def operation() -> dict[str, Any]:
         resp = await groq.chat.completions.create(**_groq_ladder_check_kwargs(prompt))
         result = extract_json(resp.choices[0].message.content)
-        result["modelUsed"] = f"groq/{GROQ_MODEL}"
+        result["modelUsed"] = f"{LLM_PROVIDER_NAME}/{LLM_MODEL}"
         return result
 
     # One attempt with room to wait: the checklist follows the feedback call within
@@ -2627,7 +2640,7 @@ async def _call_groq_ladder_check(prompt: str) -> dict[str, Any]:
     # which the default 25 s timeout cut off. The frontend's /v3 budget adds the
     # same 60 s (apiClient.ts LADDER_CHECK_GRACE_MS); the stream has no client timeout.
     return await _run_with_retries(
-        f"groq/{GROQ_MODEL} ladder-check", operation, attempts=1, timeout_sec=LADDER_CHECK_TIMEOUT_SEC,
+        f"{LLM_PROVIDER_NAME}/{LLM_MODEL} ladder-check", operation, attempts=1, timeout_sec=LADDER_CHECK_TIMEOUT_SEC,
     )
 
 
@@ -2663,7 +2676,7 @@ async def call_ladder_check(req: FeedbackRequest, fb: dict[str, Any]) -> dict[st
         return run
 
     providers = {
-        "groq": (f"groq/{GROQ_MODEL}", checked(lambda: _call_groq_ladder_check(prompt))),
+        "groq": (f"{LLM_PROVIDER_NAME}/{LLM_MODEL}", checked(lambda: _call_groq_ladder_check(prompt))),
         "gemini": (f"gemini/{GEMINI_MODEL}", checked(lambda: _call_gemini_ladder_check(prompt))),
     }
     # Learn marking is Groq-only: Gemini's free daily quota is kept for exam mode.
@@ -2912,6 +2925,14 @@ def _is_retryable(exc: Exception) -> bool:
     except ImportError:
         pass
     try:
+        import openai as _openai  # Together's client
+        if isinstance(exc, _openai.RateLimitError):
+            return True
+        if isinstance(exc, _openai.APIStatusError) and getattr(exc, "status_code", None) == 503:
+            return True
+    except ImportError:
+        pass
+    try:
         import groq as _groq
         if isinstance(exc, _groq.RateLimitError):
             return True
@@ -3008,13 +3029,13 @@ def _metric_float(value: Any, default: float | None = None) -> float | None:
 # ── Provider health probes ────────────────────────────────────────────────────
 async def _probe_groq() -> str:
     """Returns 'ok' | 'degraded' | 'not_configured'. Never raises."""
-    if not GROQ_API_KEY:
+    if not _llm_configured():
         return "not_configured"
     try:
-        groq = get_groq()
+        groq = get_llm()
         await asyncio.wait_for(
             groq.chat.completions.create(
-                model=GROQ_MODEL,
+                model=LLM_MODEL,
                 messages=[{"role": "user", "content": "Hi"}],
                 max_tokens=1,
                 **_groq_reasoning_kwargs(),
@@ -3054,7 +3075,7 @@ def _groq_feedback_kwargs(prompt: str, depth: FeedbackDepth) -> dict[str, Any]:
     eval harness (scripts/learn_marking_eval.py), so the harness measures the
     exact production call."""
     return {
-        "model": GROQ_MODEL,
+        "model": LLM_MODEL,
         "response_format": {"type": "json_object"},
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
@@ -3071,7 +3092,7 @@ def _groq_ladder_check_kwargs(prompt: str) -> dict[str, Any]:
     with the eval harness like _groq_feedback_kwargs. Temperature 0: the same
     answer should get the same verdicts (gate G9)."""
     return {
-        "model": GROQ_MODEL,
+        "model": LLM_MODEL,
         "response_format": {"type": "json_object"},
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT_LADDER_CHECK},
@@ -3084,17 +3105,17 @@ def _groq_ladder_check_kwargs(prompt: str) -> dict[str, Any]:
 
 
 async def _call_groq(prompt: str, depth: FeedbackDepth = "standard") -> dict[str, Any]:
-    groq = get_groq()
+    groq = get_llm()
     if not groq:
         raise RuntimeError("Groq not configured")
 
     async def operation() -> dict[str, Any]:
         resp = await groq.chat.completions.create(**_groq_feedback_kwargs(prompt, depth))
         result = extract_json(resp.choices[0].message.content)
-        result["modelUsed"] = f"groq/{GROQ_MODEL}"
+        result["modelUsed"] = f"{LLM_PROVIDER_NAME}/{LLM_MODEL}"
         return result
 
-    return await _run_with_retries(f"groq/{GROQ_MODEL}", operation)
+    return await _run_with_retries(f"{LLM_PROVIDER_NAME}/{LLM_MODEL}", operation)
 
 
 # ── Streaming Groq + section detector ────────────────────────────────────────
@@ -3319,7 +3340,7 @@ async def _stream_groq(
     on_section,  # async callable(type: str, data: dict)
 ) -> dict[str, Any]:
     """Stream a Groq completion, calling on_section for each detected section."""
-    groq = get_groq()
+    groq = get_llm()
     if not groq:
         raise RuntimeError("Groq not configured")
 
@@ -3336,7 +3357,7 @@ async def _stream_groq(
                 await on_section(event_type, data)
 
     result = extract_json(buffer)
-    result["modelUsed"] = f"groq/{GROQ_MODEL}"
+    result["modelUsed"] = f"{LLM_PROVIDER_NAME}/{LLM_MODEL}"
     return result
 
 
@@ -3438,7 +3459,7 @@ async def call_ai_feedback(
 
     providers: dict[str, tuple[str, Any]] = {
         "gemini": (gemini_name, _call_gemini_either),
-        "groq": (f"groq/{GROQ_MODEL}", lambda: _call_groq(prompt, depth)),
+        "groq": (f"{LLM_PROVIDER_NAME}/{LLM_MODEL}", lambda: _call_groq(prompt, depth)),
     }
 
     # Honour the client's engine preference. Without this the chain was always
@@ -3678,13 +3699,13 @@ def get_gemini_examiner():
 
 
 async def _call_groq_examiner(prompt: str, max_tokens: int) -> dict[str, Any]:
-    groq = get_groq()
+    groq = get_llm()
     if not groq:
         raise RuntimeError("Groq not configured")
 
     async def operation() -> dict[str, Any]:
         resp = await groq.chat.completions.create(
-            model=GROQ_MODEL,
+            model=LLM_MODEL,
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": _EXAMINER_MODE_SYSTEM_PROMPT},
@@ -3696,7 +3717,7 @@ async def _call_groq_examiner(prompt: str, max_tokens: int) -> dict[str, Any]:
         )
         return extract_json(resp.choices[0].message.content)
 
-    return await _run_with_retries(f"groq/{GROQ_MODEL}-examiner", operation)
+    return await _run_with_retries(f"{LLM_PROVIDER_NAME}/{LLM_MODEL}-examiner", operation)
 
 
 async def _call_gemini_examiner(prompt: str, max_tokens: int) -> dict[str, Any]:
@@ -4833,7 +4854,7 @@ async def feedback_stream(request: Request, authorization: str | None = Header(N
                 yield json.dumps({"type": "status", "data": {"phase": "generating"}}) + "\n"
 
                 # ── determine if we can stream (Groq only) ───────────────────
-                use_groq_stream = bool(GROQ_API_KEY and get_groq())
+                use_groq_stream = bool(_llm_configured() and get_llm())
 
                 if use_groq_stream:
                     section_queue: asyncio.Queue = asyncio.Queue()
@@ -5600,11 +5621,11 @@ async def get_grammar_lesson(request: Request, topic: str, authorization: str | 
     raw = None
 
     # Try Groq first (faster)
-    groq = get_groq()
+    groq = get_llm()
     if groq:
         try:
             resp = await groq.chat.completions.create(
-                model=GROQ_MODEL,
+                model=LLM_MODEL,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=_groq_token_budget(400),
                 temperature=0.3,
@@ -5838,11 +5859,11 @@ async def roleplay_turn(request: Request, req: RoleplayTurnRequest, authorizatio
     raw = None
 
     # Try Groq first (faster for chat)
-    groq = get_groq()
+    groq = get_llm()
     if groq:
         try:
             resp = await groq.chat.completions.create(
-                model=GROQ_MODEL,
+                model=LLM_MODEL,
                 messages=[{"role": "system", "content": system}] + messages,
                 max_tokens=_groq_token_budget(300),
                 temperature=0.7,
@@ -6001,13 +6022,13 @@ from services.pronunciation.coach_narrator import _SYSTEM_PROMPT as _COACH_SYSTE
 
 
 async def _call_groq_coach(prompt: str) -> dict[str, Any]:
-    groq = get_groq()
+    groq = get_llm()
     if not groq:
         raise RuntimeError("Groq not configured")
 
     async def operation() -> dict[str, Any]:
         resp = await groq.chat.completions.create(
-            model=GROQ_MODEL,
+            model=LLM_MODEL,
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": _COACH_SYSTEM_PROMPT},

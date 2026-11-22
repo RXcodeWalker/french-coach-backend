@@ -23,7 +23,7 @@ from pydantic import BaseModel
 
 from lib.auth import verify_supabase_jwt
 from lib.guest import verify_user_or_guest
-from lib.model_config import GROQ_MODEL, groq_reasoning_kwargs, groq_token_budget
+from lib.model_config import GROQ_MODEL, LLM_MODEL, groq_reasoning_kwargs, groq_token_budget
 
 load_dotenv()
 
@@ -39,7 +39,13 @@ _groq_client: Any = None
 
 
 def _get_groq() -> Any:
+    """Chat client for /api/exam/interpret: Together when active, else Groq."""
     global _groq_client
+    from lib.llm_client import get_together
+
+    together = get_together()
+    if together is not None:
+        return together
     if _groq_client is None and _GROQ_API_KEY:
         from groq import AsyncGroq
 
@@ -143,7 +149,7 @@ async def exam_interpret(
 
     try:
         resp = await groq.chat.completions.create(
-            model=GROQ_MODEL,
+            model=LLM_MODEL,
             messages=[
                 {"role": "system", "content": _INTERPRET_SYSTEM_PROMPT},
                 {"role": "user", "content": user_content},

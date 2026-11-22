@@ -33,3 +33,20 @@ def groq_reasoning_kwargs() -> dict[str, Any]:
 def groq_token_budget(answer_tokens: int) -> int:
     """Grow an answer-token budget so the reasoning phase cannot consume it."""
     return answer_tokens + (GROQ_REASONING_TOKEN_RESERVE if GROQ_REASONING_EFFORT else 0)
+
+
+# ── Chat-completion provider (Groq or Together) ──────────────────────────────
+# Chat/feedback/examiner calls go to Together when LLM_PROVIDER=together AND
+# TOGETHER_API_KEY is set; otherwise to Groq exactly as before (the rollback is
+# unsetting LLM_PROVIDER). Whisper transcription is NOT affected: it stays on
+# Groq (GROQ_WHISPER_MODEL / GROQ_API_KEY).
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "groq").strip().lower()
+TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY", "").strip()
+TOGETHER_BASE_URL = os.getenv("TOGETHER_BASE_URL", "https://api.together.xyz/v1").strip()
+# Same open-weight model as GROQ_MODEL's default, so marking quality is unchanged.
+TOGETHER_MODEL = os.getenv("TOGETHER_MODEL", "openai/gpt-oss-120b").strip()
+
+TOGETHER_ACTIVE = LLM_PROVIDER == "together" and bool(TOGETHER_API_KEY)
+LLM_PROVIDER_NAME = "together" if TOGETHER_ACTIVE else "groq"
+# The model every chat-completion call site sends.
+LLM_MODEL = TOGETHER_MODEL if TOGETHER_ACTIVE else GROQ_MODEL

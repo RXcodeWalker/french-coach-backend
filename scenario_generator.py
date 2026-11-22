@@ -7,7 +7,7 @@ from typing import Any, Dict
 
 log = logging.getLogger("french-coach.scenario")
 
-from lib.model_config import GEMINI_MODEL, GROQ_MODEL, groq_reasoning_kwargs, groq_token_budget
+from lib.model_config import GEMINI_MODEL, GROQ_MODEL, LLM_MODEL, groq_reasoning_kwargs, groq_token_budget
 
 _SCENARIO_SYSTEM_PROMPT = """\
 You are a French Language Learning Architect. Your goal is to take a user's description of a scenario and turn it into a structured, high-quality roleplay module.
@@ -65,13 +65,16 @@ async def generate_scenario(user_description: str) -> Dict[str, Any]:
     prompt = f"User Description: {user_description}\n\nGenerate the structured JSON scenario following the system instructions."
     
     # 1. Try Groq - usually very fast and generous quota
+    from lib.llm_client import get_together
     groq_key = os.getenv("GROQ_API_KEY", "").strip()
-    if groq_key:
+    client = get_together()
+    if client is not None or groq_key:
         try:
-            from groq import AsyncGroq
-            client = AsyncGroq(api_key=groq_key)
+            if client is None:
+                from groq import AsyncGroq
+                client = AsyncGroq(api_key=groq_key)
             resp = await client.chat.completions.create(
-                model=GROQ_MODEL,
+                model=LLM_MODEL,
                 messages=[
                     {"role": "system", "content": _SCENARIO_SYSTEM_PROMPT},
                     {"role": "user", "content": prompt}

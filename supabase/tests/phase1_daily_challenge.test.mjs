@@ -1,3 +1,8 @@
+// SUPERSEDED (2026-11-26): migration 20261126090000 retired the exam-based Daily Challenge
+// from clients (start_daily_challenge / submit_daily_challenge_attempt EXECUTE revoked,
+// daily_challenge_leaderboard dropped). The current Daily Challenge is pinned by
+// plain_pg/daily_challenge_and_leagues_test.sql. Kept as the record of the old path.
+//
 // Daily Challenge Phase 1 — DB integration tests (revised plan, all fixes).
 // Run against the LOCAL Supabase stack only (`npx supabase start` from backend/),
 // never the hosted project.

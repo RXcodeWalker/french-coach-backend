@@ -1,3 +1,8 @@
+// SUPERSEDED IN PART (2026-11-26): migration 20261126090000 replaced the 3000 rolling cap
+// (which RAISED rolling_24h_xp_cap_exceeded) with per-source limits (xp_source_limits) and a
+// 1500 overall cap that CLAMPS and answers ok. Cap assertions here describe the old rule; the
+// current one is pinned by plain_pg/daily_challenge_and_leagues_test.sql.
+//
 // League Power prerequisite — XP event hardening DB integration tests
 // (plan i-am-implementing-phase-hashed-karp.md, Part A5). Run against the
 // LOCAL Supabase stack only (`npx supabase start` from backend/), never the

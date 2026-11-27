@@ -81,3 +81,11 @@ that references it. The main repo's git history is no safety net here.
   teacher of the class, `_class_owner` = owner only (archive, managing teachers); teacher-table RLS goes through the SECURITY
   DEFINER `is_class_teacher()` (a policy querying `class_teachers` directly would recurse). SQL behaviour specs:
   `supabase/tests/plain_pg/` (plain local Postgres, or `run_all_migrations.mjs`, which applies every migration on PGlite).
+- **Daily Challenge, Leagues and the XP caps** (migrations `20261126090000` + generated `20261126090100`; main repo
+  `docs/systems/daily-challenge-and-leagues.md`; SQL spec `supabase/tests/plain_pg/daily_challenge_and_leagues_test.sql`).
+  `submit_xp_event` clamps per source (`xp_source_limits`) and at 1500 per rolling 24 h and answers ok: a new client XP
+  source needs a row there or it is worth 0. Leagues join on first XP (AFTER INSERT trigger on `xp_events` — it must
+  never fail the write) and finalize past weeks lazily (`_league_rollover`); zones live only in `_league_zones`. The
+  Daily Challenge bank (`daily_challenge_bank`, service-only, answer keys) is seeded by a migration GENERATED in the
+  main repo (`npm run daily-challenge:seed -- <timestamp>`) — never hand-edit it. Cross-user reads (`get_my_league`,
+  `daily_challenge_board`) are SECURITY DEFINER, scoped by `auth.uid()`, and return no user ids.

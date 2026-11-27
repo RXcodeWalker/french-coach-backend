@@ -1,3 +1,9 @@
+// SUPERSEDED IN PART (2026-11-26): migration 20261126090000 replaced the Monday
+// pre-build with lazy joins on first XP, dropped league_cohort_roster for get_my_league(),
+// changed the zone rule (_league_zones) and reset_league_week's rule. Assertions about the
+// pre-build, the roster view or 15% zones describe the old design. The current behaviour is
+// pinned by plain_pg/daily_challenge_and_leagues_test.sql.
+//
 // League Power — DB integration tests (plan
 // i-am-implementing-phase-hashed-karp.md, Part B). Run against the LOCAL
 // Supabase stack only (`npx supabase start` from backend/), never the
